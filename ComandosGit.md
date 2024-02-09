@@ -1,7 +1,7 @@
 # Comandos de git esenciales, recomendaciones y guía de estilos
 
 ## Rama principal
-main</code>
+<code>main</code>
 
 ## Traer cambios de la rama principal
 Estando en main hacemos <code>git pull origin main</code> y <code>git fetch origin main</code> (no es necesario poner el <code>origin main</code> si ya estamos en <code>main</code>).
