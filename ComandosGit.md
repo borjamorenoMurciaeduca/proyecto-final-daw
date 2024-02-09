@@ -1,10 +1,10 @@
-# Comandos de git esenciales
+# Comandos de git esenciales, recomendaciones y guía de estilos
 
 ## Rama principal
-<code>main</code>
+main</code>
 
 ## Traer cambios de la rama principal
-Estando en main hacemos <code>git pull origin main</code> y <code>git fetch origin main</code> (no es necesario poner el <code>origin main</code> si ya estamos en main).
+Estando en main hacemos <code>git pull origin main</code> y <code>git fetch origin main</code> (no es necesario poner el <code>origin main</code> si ya estamos en <code>main</code>).
 
 ## Crear rama nueva
 Desde la rama principal hacemos un <code>git checkout -b nombre-de-tu-rama`</code>
