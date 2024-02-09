@@ -1,21 +1,21 @@
 # Comandos de git esenciales
 
 ## Rama principal
-<code>`main`</code>
+<code>main</code>
 
 ## Traer cambios de la rama principal
-Estando en main hacemos <code>`git pull origin main`</code> y <code>`git fetch origin main`</code> (no es necesario poner el <code>`origin main`</code> si ya estamos en main).
+Estando en main hacemos <code>git pull origin main</code> y <code>git fetch origin main</code> (no es necesario poner el <code>origin main</code> si ya estamos en main).
 
 ## Crear rama nueva
-<code>Desde la rama principal hacemos un `git checkout -b nombre-de-tu-rama`</code>
+Desde la rama principal hacemos un <code>git checkout -b nombre-de-tu-rama`</code>
 
 ## Cambiar a una rama ya existente
-<code>Desde cualquier rama hacemos un `git checkout nombre-de-tu-rama`</code>
+Desde cualquier rama hacemos un <code>git checkout nombre-de-tu-rama`</code>
 
 ## Hacer commits y añadirlos al respositorio
-- <code>`git add .` para añadirlos</code>
-- <code>`git commit -m "mensaje"` para commitear los cambios</code>
-- <code>`git push origin nombre-de-tu-rama` para subir los cambios a tu rama remota</code>
+- <code>git add .</code> para añadirlos
+- <code>git commit -m "mensaje"</code> para commitear los cambios
+- <code>git push origin nombre-de-tu-rama</code> para subir los cambios a tu rama remota
 
 ## Recomendaciones y guía de estilos
 - La información de los commits tienen que ser representativa y significativa
