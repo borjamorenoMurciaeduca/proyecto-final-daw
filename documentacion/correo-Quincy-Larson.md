@@ -1,0 +1,21 @@
+Here are this week's five freeCodeCamp resources that are worth your time:
+
+1. This new freeCodeCamp course will walk you step-by-step through coding 25 different front-end React projects. I've always said: the best way to improve your coding skills is to code a lot. Well, this course will build up your JavaScript muscle memory, and help you internalize key concepts through repetition. Projects include: the classic Tic Tac Toe game, a recipe app, an image slider, an expense tracker, and even a full-blown blog. Dive in and get some reps. (10 hour YouTube course): https://www.freecodecamp.org/news/master-react-by-building-25-projects/
+
+2. freeCodeCamp alum Zubin Pratap worked as a corporate lawyer for years. But deep down inside, he knew he wanted to get into software development. After years of starting – and stopping – learning to code, he eventually became a developer. He even worked as a software engineer at Google. Zubin created this career change course to help other folks learn how to transition into tech as well. In this course, he busts common myths around learning to program. He also shares open industry secrets, and gives you a framework for mapping out your path into tech. (3 hour YouTube course): https://www.freecodecamp.org/news/career-change-to-code-guide/
+
+3. Gavin Lon has been a C# developer for two decades, writing software for companies around London. And now he's distilled his C# wisdom and his love of the programming language into this comprehensive book. Over the past few years, freeCodeCamp Press has published more than 100 freely available books that you can read and bookmark as a reference. And this is one of our most ambitious books. It explores C# data types, operators, classes, structs, inheritance, abstraction, events, reflection, and even asynchronous programming. In short, if you want to learn C#, read Gavin's book. (full-length book): https://www.freecodecamp.org/news/learn-csharp-book/
+
+4. Roughly 1 out of every 7 Americans lives with a disability. As developers, we should keep these folks in mind when building our apps. Thankfully, there's a well-established field called Accessibility (sometimes shortened to “a11y” because there are 11 letters in the word that fall between the A and the Y). This nuts-and-bolts freeCodeCamp course will teach you about Web Content Accessibility Guidelines, Accessible Rich Internet Applications, Semantic HTML, and other tools for your toolbox. (2 hour YouTube course): https://www.freecodecamp.org/news/how-to-make-your-web-sites-accessible/
+
+5. On this week's freeCodeCamp Podcast, I interview the creator of one of the most successful open source projects ever. Robby Russell first released the Oh My Zsh command line tool 15 years ago. We talk about his web development consultancy, which has built projects for Nike and other Portland-area companies. We also talk about his career-long obsession with code maintainability, and his post-rock band. (2 hour watch on YouTube, or listen in your favorite podcast app): https://www.freecodecamp.org/news/podcast-oh-my-zsh-creator-and-ceo-robby-russell/
+
+freeCodeCamp is a charity with a simple mission: to create open source courses on math, programming, and computer science, for folks all around the world. More than a million people use freeCodeCamp every day. But as you can imagine, it costs a lot to keep our 104 servers running and our staff of 36 teachers teaching. If you have the means, please join 8,063 kind people in supporting our mission each month: https://www.freecodecamp.org/donate
+
+Quote of the Week: “I tried to teach myself to code THREE times. In 2014, in 2015, and in 2017. And all three times I quit because I tried to jump too high, set myself up for failure, and then assumed I was not smart enough. But actually, I had just tried to run before I’d learned to walk.” — Zubin Pratap, freeCodeCamp alum who went on to become a software engineer at Google
+
+Until next week, happy coding.
+
+-- Quincy Larson
+
+Teacher and founder of freeCodeCamp.org
