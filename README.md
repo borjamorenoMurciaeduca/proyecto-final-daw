@@ -6,6 +6,7 @@
 
 ## propuestas temáticas
 - Web de seguimiento de casas de idealista
+		- [Librerías para web scraping](https://scrape-it.cloud/blog/best-javascript-web-scraping-libraries)
 - Marketplace de Productos Artesanales
 - Sistema de Reservas y Gestión de Eventos
 - Plataforma de Gestión de Recursos Humanos
