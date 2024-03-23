@@ -1,3 +1,5 @@
+# RECOMENDACIONES
+
 ## Udemy
 
 - Fernando Herrera - [React: De cero a experto ( Hooks y MERN )](https://www.udemy.com/course/react-cero-experto/)
@@ -9,3 +11,7 @@
 ## TOH
 
 - The Odin Project - [TOH REACT](https://www.theodinproject.com/paths/full-stack-javascript/courses/react)
+
+## Laravel
+
+- [Vídeo autentificación y creación de token](https://youtu.be/1e0ahYLmJjg?si=CbZ7JFP38HpCaRgC)
