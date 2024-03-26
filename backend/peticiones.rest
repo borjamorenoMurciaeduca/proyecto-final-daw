@@ -4,7 +4,7 @@ Content-type: application/json
 Accept: application/json
 
 { 
-  "username": "jorge2s",
+  "username": "jorge2",
   "password": "1234",
   "remember": true
 }
@@ -15,7 +15,7 @@ Content-type: application/json
 Accept: application/json
 
 {
-  "username": "jorge2s",
+  "username": "jorge2",
   "password": 1234,
   "password_confirmation": 1234
 }
@@ -39,19 +39,19 @@ Authorization: Bearer 71|YHc9xmb3F6BCXzIsk9t2dODE1ATAq3lKvS0blFHH824ee27
 
 ###
 POST http://127.0.0.1:8000/api/inmueble
-Authorization:Bearer 83|riX3uphYfI2su1Uqc8gwcXCZzPZc9Gwup8cYTJeGb68bd413
+Authorization:Bearer 91|03WoILnndOgSpKUSO5MdWS2FEBMEgLM5r6NV1a1D1b706887
 Content-Type: application/json
 Accept: application/json
 
 {
-  "referencia": 123221441,
-  "ubicacion": "Calle Pascual, 12",
+  "referencia": 131131322,
+  "ubicacion": "Calle Rey, 12",
   "tamano": 120,
   "habitaciones": 4,
   "garaje": true,
   "trastero": false,
   "fechaBajaAnuncio": "2021-06-01",
-  "precio": 100000,
+  "precio": 159000,
   "fechaRegistro": "2021-10-05"
 }
 

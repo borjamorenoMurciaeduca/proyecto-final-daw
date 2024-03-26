@@ -23,11 +23,14 @@ class InmuebleController extends Controller {
         try {
             // Iniciar una transacción de base de datos
             DB::beginTransaction();
-
             $validateInmueble = $request->validate([
                 'referencia' => 'numeric|required',
                 'fechaBajaAnuncio' => 'date|required',
             ]);
+            // Si el usuario ya tiene el inmueble registrado, no se puede registrar de nuevo
+            if (UsuarioInmueble::where('referenciaInmueble', $validateInmueble['referencia'])->where('userId', Auth::user()->id)->exists()) {
+                return response()->json(['error' => 'El usuario ya tiene el inmueble registrado'], 400);
+            }
 
             $validateUsuarioInmueble = $request->validate([
                 'ubicacion' => 'string|required',
@@ -42,14 +45,23 @@ class InmuebleController extends Controller {
                 'fechaRegistro' => 'date|required',
             ]);
 
-            Inmueble::create($validateInmueble);
-            $historial = HistorialPrecio::create([
-                'referenciaInmueble' => $validateInmueble['referencia'],
-                'precio' => $validateHistorial['precio'],
-                'fechaRegistro' => $validateHistorial['fechaRegistro'],
-            ]);
+            // Si el inmueble no existe, lo creamos
+            if (!Inmueble::where('referencia', $validateInmueble['referencia'])->exists()) {
+                Inmueble::create($validateInmueble);
+            }
 
-            $userID = Auth::user()->id;
+            if ($historial = HistorialPrecio::where('referenciaInmueble', $validateInmueble['referencia'])->first()) {
+                $historial->precio = $validateHistorial['precio'];
+                $historial->save();
+            } else {
+                $historial = HistorialPrecio::create([
+                    'referenciaInmueble' => $validateInmueble['referencia'],
+                    'precio' => $validateHistorial['precio'],
+                    'fechaRegistro' => $validateHistorial['fechaRegistro'],
+                ]);
+            }
+
+
             UsuarioInmueble::create([
                 'userId' => Auth::user()->id,
                 'referenciaInmueble' => $validateInmueble['referencia'],
@@ -75,7 +87,6 @@ class InmuebleController extends Controller {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-
 
     /**
      * Display the specified resource.
