@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\Inmueble;
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\UsuarioInmueble;
 
 class DatabaseSeeder extends Seeder {
     /**
@@ -18,8 +19,8 @@ class DatabaseSeeder extends Seeder {
         User::factory(10)->create();
         User::factory()->create([
             'username' => 'jorge',
-            'email' => 'jorge@jorge.com',
             'password' => bcrypt('1234'),
         ]);
+        UsuarioInmueble::factory(10)->create();
     }
 }

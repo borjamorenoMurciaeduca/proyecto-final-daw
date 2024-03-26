@@ -4,7 +4,7 @@ Content-type: application/json
 Accept: application/json
 
 { 
-  "username": "jorge",
+  "username": "jorge4",
   "password": "1234",
   "remember": true
 }
@@ -15,8 +15,7 @@ Content-type: application/json
 Accept: application/json
 
 {
-  "username": "test pedd",
-  "email": "testa@testa",
+  "username": "jorge5",
   "password": 1234,
   "password_confirmation": 1234
 }
@@ -29,7 +28,7 @@ Authorization: 2|aQRIn2V08xeZ8tRMhh8qG2s6V7mqWYlURwTs2Qpx84422874
 
 ###
 GET http://127.0.0.1:8000/api/users
-Authorization:Bearer 22|2AmhkkmABRHboGqTeJtLuWVEYHWKeGt0A8xdG1yL19cca89
+Authorization:Bearer 2|oyiOu8jkzTd2HUFKLFd6s4aBEZXLccoRr7eHrpiy4475ced1
 Accept: application/json
 
 ###
@@ -40,12 +39,12 @@ Authorization:Bearer 23|IO8jYkD85GHr94NUmRDPkZwSo8r3HtanZulA8myYb928dc65
 
 ###
 POST http://127.0.0.1:8000/api/inmueble
-Authorization:Bearer 23|Y2mfkFGCawZYGq3WJ739RzJApWExR4fAg5Jn5YFh15a25486
+Authorization:Bearer 2|oyiOu8jkzTd2HUFKLFd6s4aBEZXLccoRr7eHrpiy4475ced1
 Content-Type: application/json
 Accept: application/json
 
 {
-  "referencia": "xaxsa122",
+  "referencia": 123213214,
   "ubicacion": "Calle de la Rosa, 12",
   "tamano": 100,
   "habitaciones": 4,

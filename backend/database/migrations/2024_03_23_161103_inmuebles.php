@@ -10,12 +10,7 @@ return new class extends Migration {
      */
     public function up(): void {
         Schema::create("inmuebles", function (Blueprint $table) {
-            $table->string('referencia')->unique();
-            $table->string("ubicacion");
-            $table->integer("tamano")->unsigned();
-            $table->integer("habitaciones")->unsigned();
-            $table->boolean("garaje");
-            $table->boolean("trastero");
+            $table->bigInteger('referencia')->unique();
             $table->date("fechaBajaAnuncio");
             $table->timestamps();
         });

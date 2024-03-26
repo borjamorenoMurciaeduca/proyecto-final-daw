@@ -4,6 +4,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { Inmueble } from './inmueble/Inmueble';
 import { Login } from './login/Login';
+
 const App = () => {
   return (
     <>

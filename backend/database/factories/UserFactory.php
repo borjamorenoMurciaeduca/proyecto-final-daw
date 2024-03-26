@@ -24,8 +24,7 @@ class UserFactory extends Factory {
         $username = preg_replace('/\s+/', '', $this->faker->name());
         return [
             'username' => $username,
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
+            // 'email' => fake()->unique()->safeEmail(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
