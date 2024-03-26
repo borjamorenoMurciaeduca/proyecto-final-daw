@@ -1,5 +1,6 @@
-import InmuebleService from '../services/inmueble';
-export const Inmueble = () => {
+import InmuebleService from '../services/inmuebleService.js';
+
+const Inmueble = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const referencia = e.target.referencia.value;
@@ -69,3 +70,5 @@ export const Inmueble = () => {
     </>
   );
 };
+
+export default Inmueble;

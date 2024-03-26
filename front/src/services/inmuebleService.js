@@ -6,12 +6,6 @@ const setToken = (newToken) => {
   token = `Bearer ${newToken}`;
 };
 const addInmueble = async (inmueble) => {
-  // let headersList = {
-  //   Authorization: token,
-  // };
-  // let response = await axios.get(userUrl, { headers: headersList });
-  // console.log(response.data);
-
   let headers = {
     headers: {
       Authorization: token,

@@ -1,8 +1,8 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
+  Alert,
   Box,
   Button,
-  Container,
   FormControl,
   IconButton,
   InputAdornment,
@@ -10,101 +10,80 @@ import {
   OutlinedInput,
   TextField,
 } from '@mui/material';
-import { useState } from 'react';
-import InmuebleService from '../../services/inmueble.js';
-import LoginService from '../../services/login.js';
+import { useContext, useState } from 'react';
+import { AppContext } from '../../context/AppContext.jsx';
+import InmuebleService from '../../services/inmuebleService.js';
+import LoginService from '../../services/loginService.js';
 
-export const LoginForm = () => {
-  const [username, setUserName] = useState('');
-  const [userPassword, setUserPassword] = useState('');
+const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-
+  const { handleLogin } = useContext(AppContext);
+  const [error, setError] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  const handleUserNameChange = (e) => setUserName(e.target.value);
-  const handlePasswordChange = (e) => setUserPassword(e.target.value);
 
-  const handleLogin = async (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    console.log(e.target.username.value);
+    const username = e.target.username.value;
+    const password = e.target.password.value;
+
     try {
-      if (!username) throw new Error('Username is required');
-      if (!userPassword) throw new Error('Password is required');
-      console.log({ username, userPassword });
+      if (!password) throw new Error('Password is required');
       const user = await LoginService.login({
         username,
-        password: userPassword,
+        password,
       });
-      console.log(user);
-      console.log(user.token);
       InmuebleService.setToken(user.token);
+      handleLogin(user);
+      console.log('ingresando a ', user);
+      window.localStorage.setItem('user', JSON.stringify(user));
+      e.target.username.value = '';
+      e.target.password.value = '';
+      setError(false);
     } catch (error) {
       console.log(error);
-    } finally {
-      // e.target.username.value = '';
-      // e.target.password.value = '';
-      setUserName('');
-      setUserPassword('');
+      setError(true);
     }
   };
 
   return (
     <>
-      <Container maxWidth="xs">
-        <form onSubmit={handleLogin}>
-          <Box mb={2}>
-            <FormControl fullWidth>
-              <TextField
-                helperText=""
-                id="username"
-                label="Name"
-                value={username}
-                onChange={handleUserNameChange}
-              />
-            </FormControl>
-          </Box>
+      {error && <Alert severity="error">Error en las credenciales</Alert>}
+      <form onSubmit={handleLoginSubmit}>
+        <Box mb={2}>
           <FormControl fullWidth>
-            <InputLabel htmlFor="outlined-adornment-password">
-              Password
-            </InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-password"
-              type={showPassword ? 'text' : 'password'}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Password"
-              onChange={handlePasswordChange}
-              value={userPassword}
-            />
-            <Box mt={2}>
-              <Button type="submit" variant="contained" fullWidth>
-                Login
-              </Button>
-            </Box>
+            <TextField helperText="" id="username" label="Name" />
           </FormControl>
-        </form>
-      </Container>
-      {/* 
-      <form onSubmit={handleLogin}>
-        <label htmlFor="username">Username</label>
-        <input type="text" name="username" id="username" />
-        <label htmlFor="password">Password</label>
-        <input type="password" name="password" id="password" />
-        <input type="submit" value="Submit" />
-      </form> */}
+        </Box>
+        <FormControl fullWidth>
+          <InputLabel htmlFor="password">Password</InputLabel>
+          <OutlinedInput
+            id="password"
+            type={showPassword ? 'text' : 'password'}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
+          />
+          <Box mt={2}>
+            <Button type="submit" variant="contained" fullWidth>
+              Login
+            </Button>
+          </Box>
+        </FormControl>
+      </form>
     </>
   );
 };

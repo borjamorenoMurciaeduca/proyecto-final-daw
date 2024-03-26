@@ -1,7 +1,9 @@
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
+import { AppProvider } from './context/AppProvider.jsx';
 import './index.css';
 
 const darkTheme = createTheme({
@@ -10,8 +12,12 @@ const darkTheme = createTheme({
   },
 });
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <ThemeProvider theme={darkTheme}>
-    <CssBaseline />
-    <App />
-  </ThemeProvider>
+  <StrictMode>
+    <AppProvider>
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
+        <App />
+      </ThemeProvider>
+    </AppProvider>
+  </StrictMode>
 );

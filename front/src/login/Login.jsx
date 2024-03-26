@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import LoginForm from './components/LoginForm';
 
-export const Login = () => {
+const Login = () => {
   return (
     <>
       <Typography variant="h1">LOGIN FORM</Typography>
@@ -9,3 +9,5 @@ export const Login = () => {
     </>
   );
 };
+
+export default Login;
