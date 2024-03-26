@@ -18,7 +18,7 @@ import LoginService from '../../services/loginService.js';
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { handleLogin } = useContext(AppContext);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
@@ -45,13 +45,16 @@ const LoginForm = () => {
       setError(false);
     } catch (error) {
       console.log(error);
-      setError(true);
+      setError('Error en las credenciales`');
+      setTimeout(() => {
+        setError(null);
+      }, 5000);
     }
   };
 
   return (
     <>
-      {error && <Alert severity="error">Error en las credenciales</Alert>}
+      {error && <Alert severity="error">{error}</Alert>}
       <form onSubmit={handleLoginSubmit}>
         <Box mb={2}>
           <FormControl fullWidth>

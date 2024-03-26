@@ -4,7 +4,7 @@ export const AppReducer = (state, action) => {
     case 'LOGIN':
       return {
         ...state,
-        user: action.payload,
+        user: { ...action.payload.user, token: action.payload.token },
       };
     case 'LOGOUT':
       return {

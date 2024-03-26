@@ -22,7 +22,7 @@ const TopMenu = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const { handleLogout, state } = useContext(AppContext);
 
-  let name = state.user?.user.username || 'X';
+  let name = state.user?.username || 'X';
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
