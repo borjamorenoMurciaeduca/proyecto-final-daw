@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import DashboardCard from './components/DashboardCard';
 
-export const Dashboard = () => {
+const Dashboard = () => {
   const numRepeticiones = 6;
   const repeticiones = Array.from({ length: numRepeticiones }, (_, index) => (
     <DashboardCard key={index} />
@@ -22,3 +22,4 @@ export const Dashboard = () => {
     </>
   );
 };
+export default Dashboard;

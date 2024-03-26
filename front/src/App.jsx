@@ -5,7 +5,7 @@ import '@fontsource/roboto/700.css';
 import { Container } from '@mui/material';
 import { useContext, useEffect } from 'react';
 import { AppContext } from './context/AppContext';
-import { Dashboard } from './dashboard/Dashboard';
+import Dashboard from './dashboard/Dashboard';
 import InmuebleForm from './inmuebleForm/InmuebleForm';
 import Login from './login/Login';
 import inmuebleService from './services/inmuebleService';
@@ -35,18 +35,7 @@ const App = () => {
           </Container>
         </>
       ) : (
-        <Container
-          maxWidth="md"
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            minHeight: ' 100vh',
-            justifyContent: 'center',
-            gap: '2rem',
-          }}
-        >
-          <Login />
-        </Container>
+        <Login />
       )}
     </>
   );

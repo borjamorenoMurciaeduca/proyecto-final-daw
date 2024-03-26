@@ -32,14 +32,13 @@ const LoginForm = () => {
 
     try {
       if (!password) throw new Error('Password is required');
-      const user = await LoginService.login({
+      const { data } = await LoginService.login({
         username,
         password,
       });
-      InmuebleService.setToken(user.token);
-      handleLogin(user);
-      console.log('ingresando a ', user);
-      window.localStorage.setItem('user', JSON.stringify(user));
+      InmuebleService.setToken(data.token);
+      handleLogin(data);
+      window.localStorage.setItem('user', JSON.stringify(data));
       e.target.username.value = '';
       e.target.password.value = '';
       setError(false);
