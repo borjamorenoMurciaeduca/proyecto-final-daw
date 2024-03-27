@@ -12,4 +12,12 @@ class Inmueble extends Model {
         'referencia',
         'fechaBajaAnuncio'
     ];
+
+    //Establece la relación entre Inmueble e HistorialPrecio
+    //hasMany: Establece que un registro de Inmueble puede tener varios registros de HistorialPrecio
+    //referenciaInmueble: Nombre de la columna en HistorialPrecio que hace referencia a Inmueble
+    //referencia: Nombre de la columna en Inmueble que hace referencia a HistorialPrecio
+    public function historialPrecio() {
+        return $this->hasMany(HistorialPrecio::class, 'referenciaInmueble', 'referencia');
+    }
 }
