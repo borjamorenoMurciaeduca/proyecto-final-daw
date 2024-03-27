@@ -50,17 +50,21 @@ class InmuebleController extends Controller {
                 Inmueble::create($validateInmueble);
             }
 
-            if ($historial = HistorialPrecio::where('referenciaInmueble', $validateInmueble['referencia'])->first()) {
-                $historial->precio = $validateHistorial['precio'];
-                $historial->save();
-            } else {
-                $historial = HistorialPrecio::create([
-                    'referenciaInmueble' => $validateInmueble['referencia'],
-                    'precio' => $validateHistorial['precio'],
-                    'fechaRegistro' => $validateHistorial['fechaRegistro'],
-                ]);
-            }
-
+            // if ($historial = HistorialPrecio::where('referenciaInmueble', $validateInmueble['referencia'])->first()) {
+            //     $historial->precio = $validateHistorial['precio'];
+            //     $historial->save();
+            // } else {
+            //     $historial = HistorialPrecio::create([
+            //         'referenciaInmueble' => $validateInmueble['referencia'],
+            //         'precio' => $validateHistorial['precio'],
+            //         'fechaRegistro' => $validateHistorial['fechaRegistro'],
+            //     ]);
+            // }
+            $historial = HistorialPrecio::create([
+                'referenciaInmueble' => $validateInmueble['referencia'],
+                'precio' => $validateHistorial['precio'],
+                'fechaRegistro' => $validateHistorial['fechaRegistro'],
+            ]);
 
             UsuarioInmueble::create([
                 'userId' => Auth::user()->id,
@@ -70,7 +74,6 @@ class InmuebleController extends Controller {
                 'habitaciones' => $validateUsuarioInmueble['habitaciones'],
                 'garaje' => $validateUsuarioInmueble['garaje'],
                 'trastero' => $validateUsuarioInmueble['trastero'],
-                'fechaBajaAnuncio' => $validateInmueble['fechaBajaAnuncio'],
             ]);
 
             DB::commit();
@@ -100,6 +103,43 @@ class InmuebleController extends Controller {
         }
     }
 
+    public function storeNewPrice(Request $request) {
+        try {
+            DB::beginTransaction();
+
+            $validateInmueble = $request->validate([
+                'referencia' => 'numeric|required',
+            ]);
+
+            $validateHistorial = $request->validate([
+                'precio' => 'numeric|required',
+                'fechaRegistro' => 'date|required',
+            ]);
+
+            // Si el inmueble no existe, no se puede añadir un precio, devolvemos un 400 
+            if (!Inmueble::where('referencia', $validateInmueble['referencia'])->exists()) {
+                return response()->json(['error' => 'El inmueble no existe'], 400);
+            }
+
+            $historial = HistorialPrecio::create([
+                'referenciaInmueble' => $validateInmueble['referencia'],
+                'precio' => $validateHistorial['precio'],
+                'fechaRegistro' => $validateHistorial['fechaRegistro'],
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'message' => 'Precio añadido exitosamente',
+                'data' => [
+                    'historial' => $historial
+                ]
+            ], 201);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
     /**
      * Show the form for editing the specified resource.
      */
