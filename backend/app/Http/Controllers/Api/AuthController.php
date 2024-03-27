@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\HistorialPrecio;
 use App\Models\User;
 use App\Models\UsuarioInmueble;
 use Illuminate\Http\Request;
@@ -55,20 +56,32 @@ class AuthController extends Controller {
         }
     }
 
-    public function userProfile() {
+    public function user() {
         $userId = Auth::id();
         $user = User::find($userId);
 
-        $usuarioInmuebles = UsuarioInmueble::where('userId', $userId)->get();
+        // Buscamos los inmuebles del usuario y sus precios
+        // inmueble e historialPrecio son relaciones definidas en los modelos
+        $usuarioInmuebles = UsuarioInmueble::with('inmueble.historialPrecio')->where('userId', $userId)->get();
+
         return response()->json([
             'message' => 'success',
             'data' => ['user' => $user, 'usuarioInmuebles' => $usuarioInmuebles]
         ], 200);
     }
 
-    public function users() {
-        return response()->json(User::all(), 200);
-    }
+    // public function userOld() {
+    //     $userId = Auth::id();
+    //     $user = User::find($userId);
+
+    //     $usuarioInmuebles = UsuarioInmueble::where('userId', $userId)->get();
+    //     $referencias = $usuarioInmuebles->pluck('referenciaInmueble');
+    //     $precio = HistorialPrecio::whereIn('referenciaInmueble', $referencias)->get();
+    //     return response()->json([
+    //         'message' => 'success',
+    //         'data' => ['user' => $user, 'usuarioInmuebles' => $usuarioInmuebles, "precio" => $precio]
+    //     ], 200);
+    // }
 
     public function logout(Request $request) {
         try {
