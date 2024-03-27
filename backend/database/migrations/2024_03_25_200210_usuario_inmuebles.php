@@ -18,7 +18,6 @@ return new class extends Migration {
             $table->integer("habitaciones")->unsigned();
             $table->boolean("garaje");
             $table->boolean("trastero");
-            $table->date("fechaBajaAnuncio");
             $table->timestamps();
             $table->foreign('referenciaInmueble')->references('referencia')->on('inmuebles')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('userId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');

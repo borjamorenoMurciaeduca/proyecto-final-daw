@@ -24,7 +24,6 @@ class UsuarioInmuebleFactory extends Factory {
             'habitaciones' => $this->faker->randomNumber(),
             'garaje' => $this->faker->boolean(),
             'trastero' => $this->faker->boolean(),
-            'fechaBajaAnuncio' => $this->faker->date(),
         ];
     }
 }
