@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Models\HistorialPrecio;
 use App\Models\Inmueble;
@@ -9,12 +10,12 @@ use App\Models\UsuarioInmueble;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class InmuebleController extends Controller {
     public function index() {
         //
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -27,9 +28,11 @@ class InmuebleController extends Controller {
                 'referencia' => 'numeric|required',
                 'fechaBajaAnuncio' => 'date|required',
             ]);
+
             // Si el usuario ya tiene el inmueble registrado, no se puede registrar de nuevo
             if (UsuarioInmueble::where('referenciaInmueble', $validateInmueble['referencia'])->where('userId', Auth::user()->id)->exists()) {
-                return response()->json(['error' => 'El usuario ya tiene el inmueble registrado'], 400);
+                return ApiResponse::error('El usuario ya tiene el inmueble registrado',  400);
+                // return response()->json(['error' => 'El usuario ya tiene el inmueble registrado'], 400);
             }
 
             $validateUsuarioInmueble = $request->validate([
@@ -66,7 +69,7 @@ class InmuebleController extends Controller {
                 'fechaRegistro' => $validateHistorial['fechaRegistro'],
             ]);
 
-            UsuarioInmueble::create([
+            $userInmueble = UsuarioInmueble::create([
                 'userId' => Auth::user()->id,
                 'referenciaInmueble' => $validateInmueble['referencia'],
                 'ubicacion' => $validateUsuarioInmueble['ubicacion'],
@@ -77,17 +80,18 @@ class InmuebleController extends Controller {
             ]);
 
             DB::commit();
-
-            return response()->json([
-                'message' => 'Inmueble creado exitosamente',
-                'data' => [
-                    'inmueble' => $validateInmueble,
-                    'historial' => $historial
-                ]
-            ], 201);
+            $data = [
+                "usuarioInmueble" => $userInmueble,
+                'inmueble' => $validateInmueble,
+                'historial' => $historial
+            ];
+            return ApiResponse::success('Inmueble creado exitosamente', $data, 201);
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return ApiResponse::error('Error de validación', 400, $e->validator->errors());
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['error' => $e->getMessage()], 500);
+            return ApiResponse::error('Error:' . $e->getMessage(), 500);
         }
     }
 
@@ -95,11 +99,11 @@ class InmuebleController extends Controller {
      * Display the specified resource.
      */
     public function show(string $id) {
-        $inmueble = Inmueble::find($id);
-        if ($inmueble) {
-            return response()->json($inmueble, 200);
-        } else {
-            return response()->json('Inmueble no encontrado', 404);
+        try {
+            $inmueble = Inmueble::findOrFail($id);
+            return ApiResponse::success('Inmueble encontrado', $inmueble, 200);
+        } catch (\Exception $e) {
+            return ApiResponse::error('Inmueble no encontrado', 404);
         }
     }
 
@@ -118,7 +122,7 @@ class InmuebleController extends Controller {
 
             // Si el inmueble no existe, no se puede añadir un precio, devolvemos un 400 
             if (!Inmueble::where('referencia', $validateInmueble['referencia'])->exists()) {
-                return response()->json(['error' => 'El inmueble no existe'], 400);
+                return ApiResponse::error('El inmueble no existe', 400);
             }
 
             $historial = HistorialPrecio::create([
@@ -128,16 +132,16 @@ class InmuebleController extends Controller {
             ]);
 
             DB::commit();
-
-            return response()->json([
-                'message' => 'Precio añadido exitosamente',
-                'data' => [
-                    'historial' => $historial
-                ]
-            ], 201);
+            $data = [
+                'historial' => $historial
+            ];
+            return ApiResponse::success('Precio añadido exitosamente', $data, 201);
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return ApiResponse::error('Error de validación', 400, $e->validator->errors());
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['error' => $e->getMessage()], 500);
+            return ApiResponse::error('Error:' . $e->getMessage(), 500);
         }
     }
     /**
