@@ -1,6 +1,18 @@
+import { Alert, Slide, Snackbar } from '@mui/material';
+import { useState } from 'react';
+import useAppStateHook from '../hooks/useAppStateHook.jsx';
 import InmuebleService from '../services/inmuebleService.js';
+import loginService from '../services/loginService.js';
 
+function SlideTransition(props) {
+  return <Slide {...props} direction="up" />;
+}
 const Inmueble = () => {
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState('');
+  const [severity, setSeverity] = useState('success');
+  const { handleLogin } = useAppStateHook();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const referencia = e.target.referencia.value;
@@ -23,10 +35,30 @@ const Inmueble = () => {
       precio,
       fechaRegistro,
     };
-    const data = await InmuebleService.addInmueble(inmueble);
-    console.log(data.res);
-  };
+    try {
+      const data = await InmuebleService.addInmueble(inmueble);
+      if (data.status === 201) {
+        const { data } = await loginService.user();
+        handleLogin(data);
+        setSeverity('success');
+        setMessage('Vivienda añadida con éxito');
 
+        console.log('Datos nuevos al añadir', data);
+      }
+    } catch (error) {
+      setSeverity('error');
+      setMessage('Error al añadir vivienda');
+      console.error('Error al obtener datos del usuario:', error);
+    } finally {
+      setOpen(true);
+    }
+  };
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
   return (
     <>
       <h1>Form Nuevo Vivivenda !TESTEO INSERTAR VIVIENDAS NUEVAS!</h1>
@@ -67,6 +99,21 @@ const Inmueble = () => {
         />
         <input type="submit" value="Submit" />
       </form>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        TransitionComponent={SlideTransition}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={severity}
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

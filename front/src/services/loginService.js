@@ -1,22 +1,30 @@
 import axios from 'axios';
-// const baseUrl = '/api/login';
-
 const baseUrl = 'http://127.0.0.1:8000/api/';
+
+let token = null;
+const setToken = (newToken) => {
+  token = `Bearer ${newToken}`;
+};
 
 const login = async (credentials) => {
   const { data } = await axios.post(baseUrl + 'login', credentials);
   return data;
 };
-const logout = async () => {
-  const { token } = JSON.parse(window.localStorage.getItem('user'));
-  window.localStorage.removeItem('user');
-  const header = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+
+const user = async () => {
+  const config = {
+    headers: { Authorization: token },
   };
-  const { data } = await axios.post(baseUrl + 'logout', null, header);
+  const { data } = await axios.get(baseUrl + 'user', config);
   return data;
 };
 
-export default { login, logout };
+const logout = async () => {
+  const config = {
+    headers: { Authorization: token },
+  };
+  const { data } = await axios.post(baseUrl + 'logout', null, config);
+  return data;
+};
+
+export default { login, logout, user, setToken };

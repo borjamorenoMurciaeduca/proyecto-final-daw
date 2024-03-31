@@ -4,7 +4,7 @@ import { AppReducer } from './AppReducer';
 
 const initialState = {
   user: null,
-  viviendasUsuario: [],
+  usuarioInmuebles: [],
 };
 
 // eslint-disable-next-line react/prop-types

@@ -10,15 +10,16 @@ import {
   OutlinedInput,
   TextField,
 } from '@mui/material';
-import { useContext, useState } from 'react';
-import { AppContext } from '../../context/AppContext.jsx';
+import { useState } from 'react';
+import useAppStateHook from '../../hooks/useAppStateHook.jsx';
 import InmuebleService from '../../services/inmuebleService.js';
 import LoginService from '../../services/loginService.js';
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { handleLogin } = useContext(AppContext);
   const [error, setError] = useState(null);
+  const { handleLogin } = useAppStateHook();
+
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
@@ -32,19 +33,26 @@ const LoginForm = () => {
 
     try {
       if (!password) throw new Error('Password is required');
-      const { data } = await LoginService.login({
+      const res = await LoginService.login({
         username,
         password,
       });
-      InmuebleService.setToken(data.token);
+      let { token } = res.data;
+      //Añadir los tokens a los servicios de Inmueble y Login
+      InmuebleService.setToken(token);
+      LoginService.setToken(token);
+      //Guardar el usuario y el token en el localStorage
+      window.localStorage.setItem('user', JSON.stringify(res.data));
+      //Obtener los datos del usuario y los inmuebles
+      const { data } = await LoginService.user();
+      //Guardamos los datos del usuario en el estado global
       handleLogin(data);
-      window.localStorage.setItem('user', JSON.stringify(data));
       e.target.username.value = '';
       e.target.password.value = '';
       setError(false);
     } catch (error) {
       console.log(error);
-      setError('Error en las credenciales`');
+      setError('Error en las credenciales');
       setTimeout(() => {
         setError(null);
       }, 5000);

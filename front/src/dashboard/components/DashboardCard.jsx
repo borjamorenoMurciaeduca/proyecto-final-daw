@@ -6,7 +6,7 @@ import {
   Typography,
 } from '@mui/material';
 
-const DashboardCard = () => {
+const DashboardCard = ({ ubicacion }) => {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
@@ -24,7 +24,7 @@ const DashboardCard = () => {
             Vivienda
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Casa de pueblo en venta en calle Esperanza Castillo, 17
+            {ubicacion}
           </Typography>
         </CardContent>
       </CardActionArea>

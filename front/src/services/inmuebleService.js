@@ -5,17 +5,15 @@ let token = null;
 const setToken = (newToken) => {
   token = `Bearer ${newToken}`;
 };
+
 const addInmueble = async (inmueble) => {
-  let headers = {
-    headers: {
-      Authorization: token,
-      'Content-Type': 'application/json',
-    },
+  const config = {
+    headers: { Authorization: token },
   };
 
   let data = JSON.stringify(inmueble);
-  let res = await axios.post(baseUrl, data, headers);
-  console.log(res.data);
+  let res = await axios.post(baseUrl, data, config);
+
   return res;
 };
 
