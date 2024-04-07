@@ -10,6 +10,7 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
+import InmuebleForm from '../../inmuebleForm/InmuebleForm';
 
 const AddButtonModal = () => {
   const [open, setOpen] = useState(false);
@@ -167,13 +168,8 @@ const AddButtonModal = () => {
                 La URL debe tener el formato correcto
               </Typography>
             )}
-            <div>
-              {precio ? (
-                <p>Precio del inmueble: {precio}</p>
-              ) : (
-                <p>Cargando...</p>
-              )}
-            </div>
+            { /* Formulario edición */ } 
+            <InmuebleForm />
           </Box>
         </Box>
       </Modal>

@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import useAppStateHook from '../hooks/useAppStateHook';
 import DashboardCard from './components/DashboardCard';
-import AddButtonModal from './components/ModalAddButton';
+import AddButtonModal from './components/AddButtonModal';
 
 const Dashboard = () => {
   // const numRepeticiones = 6;

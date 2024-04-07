@@ -2,7 +2,6 @@ import { Container } from '@mui/material';
 import { useEffect } from 'react';
 import Dashboard from './dashboard/Dashboard';
 import useAppStateHook from './hooks/useAppStateHook';
-import InmuebleForm from './inmuebleForm/InmuebleForm';
 import Login from './login/Login';
 import InmuebleService from './services/inmuebleService';
 import LoginService from './services/loginService';
@@ -42,7 +41,6 @@ const App = () => {
           <TopMenu />
           <Container maxWidth="lg">
             <Dashboard />
-            <InmuebleForm />
           </Container>
         </>
       ) : (
