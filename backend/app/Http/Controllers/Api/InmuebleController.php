@@ -12,13 +12,40 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * @OA\Tag(
+ *     name="Inmueble",
+ *     description="Endpoints para operaciones relacionadas con los inmuebles"
+ * )
+ */
 class InmuebleController extends Controller {
     public function index() {
         //
     }
 
     /**
-     * Store a newly created resource in storage.
+    * @OA\Post(
+     *    path="/api/store",
+     *    summary="Store a newly created resource in storage.",
+     *    tags={"Inmueble"},
+     *    @OA\Parameter(
+     *        name="referencia",
+     *         in="query",
+     *        description="Referencia",
+     *        required=true,
+     *        @OA\Schema(type="numeric")
+     *    ),
+     *    @OA\Parameter(
+     *        name="fechaBajaAnuncio",
+     *        in="query",
+     *        description="fecha baja anuncio",
+     *        required=true,
+     *        @OA\Schema(type="date")
+     *    ),
+     *    @OA\Response(response="201", description="Inmueble creado exitosamente"),
+     *    @OA\Response(response="400", description="Error de validación"),
+     *    @OA\Response(response="500", description="Error")
+     * )
      */
     public function store(Request $request) {
         try {
@@ -95,8 +122,21 @@ class InmuebleController extends Controller {
         }
     }
 
-    /**
-     * Display the specified resource.
+     /**
+    * @OA\Post(
+     *    path="/api/show",
+     *    summary=" Display the specified resource.",
+     *    tags={"Inmueble"},
+     *    @OA\Parameter(
+     *        name="id",
+     *         in="query",
+     *        description="id",
+     *        required=true,
+     *        @OA\Schema(type="string")
+     *    ),
+     *    @OA\Response(response="200", description="Inmueble encontrado"),
+     *    @OA\Response(response="404", description="Inmueble encontrado")
+     * )
      */
     public function show(string $id) {
         try {
@@ -107,6 +147,23 @@ class InmuebleController extends Controller {
         }
     }
 
+    /**
+    * @OA\Post(
+     *    path="/api/storeNewPrice",
+     *    summary=" Store a new price.",
+     *    tags={"Inmueble"},
+     *    @OA\Parameter(
+     *        name="id",
+     *         in="query",
+     *        description="id",
+     *        required=true,
+     *        @OA\Schema(type="string")
+     *    ),
+     *    @OA\Response(response="201", description="Precio añadido exitosamente"),
+     *    @OA\Response(response="400", description="El inmueble no existe"),
+     *    @OA\Response(response="500", description="Error genérico")
+     * )
+     */
     public function storeNewPrice(Request $request) {
         try {
             DB::beginTransaction();

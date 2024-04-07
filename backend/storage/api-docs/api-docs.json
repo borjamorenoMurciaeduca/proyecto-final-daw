@@ -1,0 +1,236 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "IdealistaWatch API - Plataforma para el Monitoreo de Propiedades en Idealista",
+        "description": "IdealistaWatch API proporciona acceso a datos y funciones para monitorear propiedades en la plataforma Idealista. Con esta API, los desarrolladores pueden acceder a información detallada sobre propiedades en venta o alquiler, recibir notificaciones de cambios en listados, y realizar análisis avanzados de mercado. Optimiza tu experiencia con IdealistaWatch y maximiza tus oportunidades en el mercado inmobiliario.",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Autenticación"
+                ],
+                "summary": "Register a new user",
+                "operationId": "8e4e3cb7b46126f4696379d3c7eeb4ad",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "description": "User's name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "User's password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Usuario creado con éxito"
+                    },
+                    "404": {
+                        "description": "No se ha podido procesar"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Autenticación"
+                ],
+                "summary": "Log in a known user",
+                "operationId": "222b2625838e3c57e017987f73598fda",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "description": "User's name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "User's password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "remember",
+                        "in": "query",
+                        "description": "Flag to remember the user",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        },
+        "/api/user": {
+            "get": {
+                "tags": [
+                    "Autenticación"
+                ],
+                "summary": "Show the user panel",
+                "operationId": "961ad57987905b44ae2e2f40b82e76de",
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    },
+                    "404": {
+                        "description": "No se ha podido procesar"
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Autenticación"
+                ],
+                "summary": "Log out the user session",
+                "operationId": "ad65cbbd4e9f201619eae184a5961a98",
+                "responses": {
+                    "200": {
+                        "description": "Successfully logged out"
+                    },
+                    "400": {
+                        "description": "Error logging out"
+                    }
+                }
+            }
+        },
+        "/api/store": {
+            "post": {
+                "tags": [
+                    "Inmueble"
+                ],
+                "summary": "Store a newly created resource in storage.",
+                "operationId": "4ff8b29d85e3a1a47c1073c7dd88eead",
+                "parameters": [
+                    {
+                        "name": "referencia",
+                        "in": "query",
+                        "description": "Referencia",
+                        "required": true,
+                        "schema": {
+                            "type": "numeric"
+                        }
+                    },
+                    {
+                        "name": "fechaBajaAnuncio",
+                        "in": "query",
+                        "description": "fecha baja anuncio",
+                        "required": true,
+                        "schema": {
+                            "type": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Inmueble creado exitosamente"
+                    },
+                    "400": {
+                        "description": "Error de validación"
+                    },
+                    "500": {
+                        "description": "Error"
+                    }
+                }
+            }
+        },
+        "/api/show": {
+            "post": {
+                "tags": [
+                    "Inmueble"
+                ],
+                "summary": " Display the specified resource.",
+                "operationId": "14bfa8ea11e3e0d09fe6a580a7bed6ad",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Inmueble encontrado"
+                    },
+                    "404": {
+                        "description": "Inmueble encontrado"
+                    }
+                }
+            }
+        },
+        "/api/storeNewPrice": {
+            "post": {
+                "tags": [
+                    "Inmueble"
+                ],
+                "summary": " Store a new price.",
+                "operationId": "19be59e3681a84876bcb0dbe1c441846",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Precio añadido exitosamente"
+                    },
+                    "400": {
+                        "description": "El inmueble no existe"
+                    },
+                    "500": {
+                        "description": "Error genérico"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Autenticación",
+            "description": "Endpoints para operaciones relacionadas con la autenticación"
+        },
+        {
+            "name": "Inmueble",
+            "description": "Endpoints para operaciones relacionadas con los inmuebles"
+        }
+    ]
+}

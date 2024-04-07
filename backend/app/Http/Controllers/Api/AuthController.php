@@ -13,7 +13,38 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Validation\ValidationException;
 use Spatie\FlareClient\Api;
 
+/**
+ * @OA\Tag(
+ *     name="Autenticación",
+ *     description="Endpoints para operaciones relacionadas con la autenticación"
+ * )
+ */
 class AuthController extends Controller {
+
+    /**
+    * @OA\Post(
+     *    path="/api/register",
+     *    summary="Register a new user",
+     *    tags={"Autenticación"},
+     *    @OA\Parameter(
+     *        name="username",
+     *         in="query",
+     *        description="User's name",
+     *        required=true,
+     *        @OA\Schema(type="string")
+     *    ),
+     *    @OA\Parameter(
+     *        name="password",
+     *        in="query",
+     *        description="User's password",
+     *        required=true,
+     *        @OA\Schema(type="string")
+     *    ),
+     *    @OA\Response(response="201", description="Usuario creado con éxito"),
+     *    @OA\Response(response="404", description="No se ha podido procesar"),
+     *    @OA\Response(response="422", description="Error de validación")
+     * )
+     */
     public function register(Request $request) {
         try {
             $validatedData = $request->validate([
@@ -32,6 +63,35 @@ class AuthController extends Controller {
         }
     }
 
+    /**
+    * @OA\Post(
+    *    path="/api/login",
+    *    summary="Log in a known user",
+    *    tags={"Autenticación"},
+    *    @OA\Parameter(
+    *        name="username",
+    *         in="query",
+    *        description="User's name",
+    *        required=true,
+    *        @OA\Schema(type="string")
+    *    ),
+    *    @OA\Parameter(
+    *        name="password",
+    *        in="query",
+    *        description="User's password",
+    *        required=true,
+    *        @OA\Schema(type="string")
+    *    ),
+    *    @OA\Parameter(
+    *        name="remember",
+    *        in="query",
+    *        description="Flag to remember the user",
+    *        required=false,
+    *        @OA\Schema(type="string")
+    *    ),
+    *    @OA\Response(response="401", description="Unauthenticated")
+    * )
+    */
     public function login(Request $request) {
         $credentials = $request->only('username', 'password');
         $remember = $request->filled('remember');
@@ -48,6 +108,15 @@ class AuthController extends Controller {
         }
     }
 
+    /**
+    * @OA\Get(
+    *    path="/api/user",
+    *    summary="Show the user panel",
+    *    tags={"Autenticación"},
+    *    @OA\Response(response="200", description="success"),
+    *    @OA\Response(response="404", description="No se ha podido procesar")
+    * )
+    */
     public function user() {
         try {
             $userId = Auth::id();
@@ -63,19 +132,15 @@ class AuthController extends Controller {
         }
     }
 
-    // public function userOld() {
-    //     $userId = Auth::id();
-    //     $user = User::find($userId);
-
-    //     $usuarioInmuebles = UsuarioInmueble::where('userId', $userId)->get();
-    //     $referencias = $usuarioInmuebles->pluck('referenciaInmueble');
-    //     $precio = HistorialPrecio::whereIn('referenciaInmueble', $referencias)->get();
-    //     return response()->json([
-    //         'message' => 'success',
-    //         'data' => ['user' => $user, 'usuarioInmuebles' => $usuarioInmuebles, "precio" => $precio]
-    //     ], 200);
-    // }
-
+    /**
+  * @OA\Post(
+  *      path="/api/logout",
+  *      summary="Log out the user session",
+  *      tags={"Autenticación"},
+  *      @OA\Response(response="200", description="Successfully logged out"),
+  *     @OA\Response(response="400", description="Error logging out")
+  * ) 
+  */   
     public function logout(Request $request) {
         try {
             $cookie = Cookie::forget('cookie_token');
