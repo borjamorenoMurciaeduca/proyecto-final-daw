@@ -1,6 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import useAppStateHook from '../hooks/useAppStateHook';
 import DashboardCard from './components/DashboardCard';
+import AddButtonModal from './components/ModalAddButton';
 
 const Dashboard = () => {
   // const numRepeticiones = 6;
@@ -12,6 +13,7 @@ const Dashboard = () => {
   console.log(usuarioInmuebles);
   return (
     <>
+      <AddButtonModal/>
       <Typography variant="h1">Mis viviendas</Typography>
       <Box
         sx={{
