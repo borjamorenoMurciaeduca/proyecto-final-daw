@@ -10,22 +10,29 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
+import DeleteIcon from '@mui/icons-material/Delete';
 import InmuebleForm from '../../inmuebleForm/InmuebleForm';
+import inputValidatorService from '../../services/inputValidatorService';
+import InmuebleService from '../../services/inmuebleService.js';
 
 const AddButtonModal = () => {
   const [open, setOpen] = useState(false);
-  const [textValue, setTextValue] = useState("");
+  const [textValue, setTextValue] = useState('');
   const [error, setError] = useState(false);
   const [precio, setPrecio] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const [inmuebleData, setInmuebleData] = useState(null);
 
   const handleOpen = () => {
     setOpen(true);
     setTextValue("");
     setError(false);
+    setShowForm(false);
   };
 
   const handleClose = () => {
     setOpen(false);
+    setShowForm(false);
   };
 
   const handleTextChange = (event) => {
@@ -34,11 +41,21 @@ const AddButtonModal = () => {
     setError(false);
   };
 
-  const handleSearch = () => {
-    const urlPattern = /^https:\/\/www\.idealista\.com\/inmueble\/\d+\/$/;
+  const handleSearch = async () => {
+    const idInmueble = inputValidatorService.validateIdealistaURL(textValue);
 
-    if (urlPattern.test(textValue)) {
-      setOpen(false);
+    if (idInmueble.length > 0) { 
+      //setOpen(false);
+      try {
+        const data = await InmuebleService.prepareInmuebleForm(idInmueble)
+        console.log("data: ", data);
+        data.idInmueble = idInmueble;
+        setInmuebleData(data);
+        setShowForm(true);
+      
+      } catch (error) {
+        console.error('Error al obtener datos:', error);
+      } 
     } else {
       setError(true);
     }
@@ -50,40 +67,10 @@ const AddButtonModal = () => {
     }
   };
 
-  // Crear una instancia de XMLHttpRequest
-  var xhr = new XMLHttpRequest();
-
-  // Configurar la solicitud GET
-  xhr.open("GET", "https://cors-anywhere.herokuapp.com/corsdemo/https://www.idealista.com/inmueble/103018393/", true);
-
-  // Configurar el manejo de la respuesta
-  xhr.onload = function () {
-    if (xhr.status >= 200 && xhr.status < 300) {
-      // La solicitud fue exitosa, manejar la respuesta aquí
-      setPrecio(obtenerPrecioDesdeHTML(xhr.responseText));
-      console.log("Precio:", precio);
-    } else {
-      // La solicitud falló, manejar el error aquí
-      console.error("Error al realizar la solicitud:", xhr.statusText);
-    }
-  };
-
-  // Configurar el manejo de errores de red
-  xhr.onerror = function () {
-    console.error("Error de red al realizar la solicitud");
-  };
-
-  // Enviar la solicitud
-  xhr.send();
-
-  // Función para extraer el precio del HTML
-  function obtenerPrecioDesdeHTML(html) {
-    var parser = new DOMParser();
-    var doc = parser.parseFromString(html, "text/html");
-    var precioElemento = doc.querySelector(
-      "div.info-data span.info-data-price"
-    );
-    return precioElemento ? precioElemento.textContent : null;
+  const handleClear = () => {
+    setShowForm(false);
+    setError(false);
+    setTextValue("");
   }
 
   return (
@@ -157,6 +144,14 @@ const AddButtonModal = () => {
               <IconButton
                 type="button"
                 sx={{ p: "10px" }}
+                aria-label="clear"
+                onClick={handleClear}
+              >
+                <DeleteIcon />
+              </IconButton>
+              <IconButton
+                type="button"
+                sx={{ p: "10px" }}
                 aria-label="search"
                 onClick={handleSearch}
               >
@@ -169,7 +164,10 @@ const AddButtonModal = () => {
               </Typography>
             )}
             { /* Formulario edición */ } 
-            <InmuebleForm />
+            <Box
+              display= {showForm ? 'block' : 'none'}>
+             <InmuebleForm inmuebleData={inmuebleData} />
+            </Box>
           </Box>
         </Box>
       </Modal>

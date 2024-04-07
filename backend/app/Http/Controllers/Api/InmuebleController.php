@@ -24,6 +24,42 @@ class InmuebleController extends Controller {
     }
 
     /**
+    * @OA\Get(
+     *    path="/api/prepare-inmueble",
+     *    summary=" Display the specified resource.",
+     *    tags={"Inmueble"},
+     *    @OA\Parameter(
+     *        name="id",
+     *         in="query",
+     *        description="id",
+     *        required=true,
+     *        @OA\Schema(type="string")
+     *    ),
+     *    @OA\Response(response="200", description="Inmueble encontrado"),
+     *    @OA\Response(response="404", description="Inmueble encontrado")
+     * )
+     */
+    public function prepare(string $id) {
+        try {
+
+            $pythonScriptPath = base_path('storage/python/python-scrapping.py');
+
+            info('Entrando a prepare con id: ' . $id . ' en la ruta ' . $pythonScriptPath);
+
+            $output = shell_exec('python3 ' . escapeshellarg($pythonScriptPath) . ' ' . escapeshellarg($id));
+            
+            info('output: ' . $output);
+
+            $properties = json_decode($output, true);
+            
+            return $properties;
+
+        } catch (\Exception $e) {
+            return ApiResponse::error('Inmueble no encontrado', 404);
+        }
+    }
+
+    /**
     * @OA\Post(
      *    path="/api/store",
      *    summary="Store a newly created resource in storage.",

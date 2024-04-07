@@ -7,22 +7,26 @@ import loginService from '../services/loginService.js';
 function SlideTransition(props) {
   return <Slide {...props} direction="up" />;
 }
-const Inmueble = () => {
+const Inmueble = ({ inmuebleData }) => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [severity, setSeverity] = useState('success');
   const { handleLogin } = useAppStateHook();
 
+  const referenciaValue = inmuebleData?.idInmueble || '';
+  const ubicacionValue = inmuebleData?.data?.location || '';
+  const precioValue = inmuebleData?.data?.price || '';
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const referencia = e.target.referencia.value;
-    const ubicacion = e.target.ubicacion.value;
+    const referencia = inmuebleData?.idInmueble || e.target.referencia.value;
+    const ubicacion = inmuebleData?.location || e.target.ubicacion.value;
     const tamano = e.target.tamano.value;
     const habitaciones = e.target.habitaciones.value;
     const garaje = e.target.garaje.checked;
     const trastero = e.target.trastero.checked;
     const fechaBajaAnuncio = e.target.fechaBajaAnuncio.value;
-    const precio = e.target.precio.value;
+    const precio = inmuebleData?.price || e.target.precio.value;
     const fechaRegistro = e.target.fechaRegistro.value;
     const inmueble = {
       referencia,
@@ -35,6 +39,7 @@ const Inmueble = () => {
       precio,
       fechaRegistro,
     };
+    
     try {
       const data = await InmuebleService.addInmueble(inmueble);
       if (data.status === 201) {
@@ -68,12 +73,15 @@ const Inmueble = () => {
           name="referencia"
           id="referencia"
           placeholder="Referencia"
+          value={referenciaValue}
+          readOnly
         />
         <input
           type="text"
           name="ubicacion"
           id="ubicacion"
           placeholder="Ubicación"
+          value={ubicacionValue}
         />
         <input type="number" name="tamano" id="tamano" placeholder="Tamaño" />
         <input
@@ -90,7 +98,7 @@ const Inmueble = () => {
           id="fechaBajaAnuncio"
           placeholder="Fecha Baja Anuncio"
         />
-        <input type="number" name="precio" id="precio" placeholder="Precio" />
+        <input type="number" name="precio" id="precio" placeholder="Precio" value={precioValue} />
         <input
           type="date"
           name="fechaRegistro"
