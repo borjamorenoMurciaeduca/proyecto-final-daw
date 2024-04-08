@@ -11,6 +11,7 @@ import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
 import DeleteIcon from '@mui/icons-material/Delete';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import InmuebleForm from '../../inmuebleForm/InmuebleForm';
 import inputValidatorService from '../../services/inputValidatorService';
 import InmuebleService from '../../services/inmuebleService.js';
@@ -19,7 +20,7 @@ const AddButtonModal = () => {
   const [open, setOpen] = useState(false);
   const [textValue, setTextValue] = useState('');
   const [error, setError] = useState(false);
-  const [precio, setPrecio] = useState(null);
+  const [showCheckIcon, setShowCheckIcon] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [inmuebleData, setInmuebleData] = useState(null);
 
@@ -28,29 +29,33 @@ const AddButtonModal = () => {
     setTextValue("");
     setError(false);
     setShowForm(false);
+    setShowCheckIcon(false);
   };
 
   const handleClose = () => {
     setOpen(false);
     setShowForm(false);
+    setShowCheckIcon(false);
   };
 
   const handleTextChange = (event) => {
     const value = event.target.value;
     setTextValue(value);
     setError(false);
+    setShowForm(false);
+    setShowCheckIcon(false);
   };
 
   const handleSearch = async () => {
     const idInmueble = inputValidatorService.validateIdealistaURL(textValue);
 
     if (idInmueble.length > 0) { 
-      //setOpen(false);
+      setShowCheckIcon(true);
       try {
         const data = await InmuebleService.prepareInmuebleForm(idInmueble)
-        console.log("data: ", data);
         data.idInmueble = idInmueble;
-        setInmuebleData(data);
+        const dataModify = inputValidatorService.createInmueble(data);
+        setInmuebleData(dataModify);
         setShowForm(true);
       
       } catch (error) {
@@ -58,6 +63,8 @@ const AddButtonModal = () => {
       } 
     } else {
       setError(true);
+      setShowCheckIcon(false);
+      setShowForm(false);
     }
   };
 
@@ -71,6 +78,7 @@ const AddButtonModal = () => {
     setShowForm(false);
     setError(false);
     setTextValue("");
+    setShowCheckIcon(false);
   }
 
   return (
@@ -141,6 +149,15 @@ const AddButtonModal = () => {
                 placeholder="Introduce la URL"
                 inputProps={{ "aria-label": "Introduce la URL" }}
               />
+              {showCheckIcon && (
+              <IconButton
+                type="button"
+                sx={{ p: "10px" }}
+                aria-label="clear"
+              >
+                < CheckCircleIcon style={{ color: 'green' }}/>
+              </IconButton>
+              )}
               <IconButton
                 type="button"
                 sx={{ p: "10px" }}

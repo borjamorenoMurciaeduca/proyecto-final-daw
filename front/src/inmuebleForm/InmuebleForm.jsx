@@ -13,9 +13,15 @@ const Inmueble = ({ inmuebleData }) => {
   const [severity, setSeverity] = useState('success');
   const { handleLogin } = useAppStateHook();
 
-  const referenciaValue = inmuebleData?.idInmueble || '';
-  const ubicacionValue = inmuebleData?.data?.location || '';
-  const precioValue = inmuebleData?.data?.price || '';
+  const referenciaValue = inmuebleData?.referenciaInmueble || '';
+  const ubicacionValue = inmuebleData?.ubicacion || '';
+  const precioValue = inmuebleData?.precio || '';
+  const tamanioValue = inmuebleData?.tamanio || '';
+  const habitacionesValue = inmuebleData?.habitaciones || '';
+  const garajeValue = inmuebleData?.garaje || false;
+  const trasteroValue = inmuebleData?.trastero || false;
+  const baniosValue = inmuebleData?.banios || '';
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,7 +32,7 @@ const Inmueble = ({ inmuebleData }) => {
     const garaje = e.target.garaje.checked;
     const trastero = e.target.trastero.checked;
     const fechaBajaAnuncio = e.target.fechaBajaAnuncio.value;
-    const precio = inmuebleData?.price || e.target.precio.value;
+    const precio = inmuebleData?.precio || e.target.precio.value;
     const fechaRegistro = e.target.fechaRegistro.value;
     const inmueble = {
       referencia,
@@ -83,22 +89,23 @@ const Inmueble = ({ inmuebleData }) => {
           placeholder="Ubicación"
           value={ubicacionValue}
         />
-        <input type="number" name="tamano" id="tamano" placeholder="Tamaño" />
+        <input type="number" name="tamano" id="tamano" placeholder="Tamaño" value={tamanioValue} />
         <input
           type="number"
           name="habitaciones"
           id="habitaciones"
           placeholder="Habitaciones"
+          value ={habitacionesValue}
         />
-        garaje <input type="checkbox" name="garaje" id="garaje" />
-        trastero <input type="checkbox" name="trastero" id="trastero" />
+        garaje <input type="checkbox" name="garaje" id="garaje"  defaultChecked={garajeValue}/>
+        trastero <input type="checkbox" name="trastero" id="trastero" defaultChecked={trasteroValue}/>
         <input
           type="date"
           name="fechaBajaAnuncio"
           id="fechaBajaAnuncio"
           placeholder="Fecha Baja Anuncio"
         />
-        <input type="number" name="precio" id="precio" placeholder="Precio" value={precioValue} />
+        <input type="number" name="precio" id="precio" placeholder="Precio" defaultValue={precioValue} />
         <input
           type="date"
           name="fechaRegistro"
