@@ -1,0 +1,36 @@
+{
+    "welcome": "Welcome to my app!",
+    "hello": "Hello, {{name}}!",
+    "languages": {
+        "es": "Spanish",
+        "en": "English"
+    },
+    "tooltip": {
+        "open-settings": "Open settings",
+        "change-language": "Change language"
+    },
+    "login-form": {
+        "title": "Login form",
+        "form": {
+            "password": "Password",
+            "name": "Name",
+            "login": "Login"
+        }
+    },
+    "top-menu": {
+        "settings": {
+            "profile": "Profile",
+            "account": "Account",
+            "dashboard": "Dashboard",
+            "logout": "Logout",
+            "logout-v2": "Logout V2"
+        }
+    }, 
+    "my-homes": "My homes",
+    "addButtonModal": {
+        "url": "Enter the URL",
+        "validation": {
+            "error": "The URL must be in the correct format"
+        }
+    }
+  }

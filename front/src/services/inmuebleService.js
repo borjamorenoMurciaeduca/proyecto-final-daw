@@ -1,4 +1,5 @@
 import axios from 'axios';
+import inputValidatorService from './inputValidatorService';
 const baseUrl = 'http://127.0.0.1:8000/api/inmueble';
 const prepareInmuebleUrl = 'http://127.0.0.1:8000/api/prepare-inmueble/';
 // const baseUrl = '/api/inmueble';
@@ -25,7 +26,9 @@ const prepareInmuebleForm = async (idInmueble) => {
 
   let res = await axios.get(prepareInmuebleUrl + idInmueble, config);
 
-  return res;
+  let data = inputValidatorService.createInmueble(res, idInmueble);
+
+  return data;
 };
 
 export default { addInmueble, prepareInmuebleForm, setToken };

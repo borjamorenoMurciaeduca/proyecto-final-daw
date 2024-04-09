@@ -1,18 +1,20 @@
-import { Container } from '@mui/material';
-import { useEffect } from 'react';
-import Dashboard from './dashboard/Dashboard';
-import useAppStateHook from './hooks/useAppStateHook';
-import Login from './login/Login';
-import InmuebleService from './services/inmuebleService';
-import LoginService from './services/loginService';
-import TopMenu from './topMenu/TopMenu';
+import { Container } from "@mui/material";
+import { useEffect } from "react";
+import Dashboard from "./dashboard/Dashboard";
+import useAppStateHook from "./hooks/useAppStateHook";
+import Login from "./login/Login";
+import InmuebleService from "./services/inmuebleService";
+import LoginService from "./services/loginService";
+import TopMenu from "./topMenu/TopMenu";
+import { I18nextProvider } from "react-i18next";
+import i18n from "./commons/i18n/i18n";
 
 const App = () => {
   const { state, handleLogin } = useAppStateHook();
   const { user } = state;
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('user');
+    const loggedUserJSON = window.localStorage.getItem("user");
     if (loggedUserJSON) {
       const { token } = JSON.parse(loggedUserJSON);
       const setLoginService = async () => {
@@ -23,7 +25,7 @@ const App = () => {
             const { data } = await LoginService.user();
             handleLogin(data);
           } catch (error) {
-            console.error('Error al obtener datos del usuario:', error);
+            console.error("Error al obtener datos del usuario:", error);
           }
         }
       };
@@ -36,16 +38,18 @@ const App = () => {
   // se muestra la vista de la "app" o la vista del login
   return (
     <>
-      {user ? (
-        <>
-          <TopMenu />
-          <Container maxWidth="lg">
-            <Dashboard />
-          </Container>
-        </>
-      ) : (
-        <Login />
-      )}
+      <I18nextProvider i18n={i18n}>
+        {user ? (
+          <>
+            <TopMenu />
+            <Container maxWidth="lg">
+              <Dashboard />
+            </Container>
+          </>
+        ) : (
+          <Login />
+        )}
+      </I18nextProvider>
     </>
   );
 };

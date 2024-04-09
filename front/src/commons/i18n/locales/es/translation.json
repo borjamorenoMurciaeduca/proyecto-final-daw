@@ -1,0 +1,36 @@
+{
+    "welcome": "¡Bienvenido a mi aplicación!",
+    "hello": "¡Hola, {{name}}!",
+    "languages": {
+        "es": "Español",
+        "en": "Inglés"
+    },
+    "tooltip": {
+        "open-settings": "Abrir configuración",
+        "change-language": "Cambiar idioma"
+    },
+    "login-form": {
+        "title": "Formulario de login",
+        "form": {
+            "password": "Contraseña",
+            "name": "Nombre",
+            "login": "Enviar"
+        }
+    }, 
+    "top-menu": {
+        "settings": {
+            "profile": "Perfil",
+            "account": "Cuenta",
+            "dashboard": "Escritorio",
+            "logout": "Salir",
+            "logout-v2": "Salir V2"
+        }
+    }, 
+    "my-homes": "Mis viviendas",
+    "addButtonModal": {
+        "url": "Introduce la URL",
+        "validation": {
+            "error": "La URL debe tener el formato correcto"
+        }
+    }
+  }

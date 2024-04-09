@@ -1,7 +1,8 @@
-import { Box, Typography } from '@mui/material';
-import useAppStateHook from '../hooks/useAppStateHook';
-import DashboardCard from './components/DashboardCard';
-import AddButtonModal from './components/AddButtonModal';
+import { Box, Typography } from "@mui/material";
+import useAppStateHook from "../hooks/useAppStateHook";
+import DashboardCard from "./components/DashboardCard";
+import AddButtonModal from "./components/AddButtonModal";
+import { useTranslation } from "react-i18next";
 
 const Dashboard = () => {
   // const numRepeticiones = 6;
@@ -9,17 +10,18 @@ const Dashboard = () => {
   //   <DashboardCard key={index} />
   // ));
   const { state } = useAppStateHook();
+  const { t } = useTranslation();
   const { usuarioInmuebles } = state;
   console.log(usuarioInmuebles);
   return (
     <>
-      <AddButtonModal/>
-      <Typography variant="h1">Mis viviendas</Typography>
+      <AddButtonModal />
+      <Typography variant="h1">{t("my-homes")}</Typography>
       <Box
         sx={{
-          display: 'grid',
+          display: "grid",
           gap: 4,
-          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
         }}
       >
         {usuarioInmuebles.map((inmueble) => (

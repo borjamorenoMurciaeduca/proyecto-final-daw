@@ -10,15 +10,17 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
-import DeleteIcon from '@mui/icons-material/Delete';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import InmuebleForm from '../../inmuebleForm/InmuebleForm';
-import inputValidatorService from '../../services/inputValidatorService';
-import InmuebleService from '../../services/inmuebleService.js';
+import DeleteIcon from "@mui/icons-material/Delete";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import InmuebleForm from "../../inmuebleForm/InmuebleForm";
+import inputValidatorService from "../../services/inputValidatorService";
+import InmuebleService from "../../services/inmuebleService.js";
+import { useTranslation } from "react-i18next";
 
 const AddButtonModal = () => {
   const [open, setOpen] = useState(false);
-  const [textValue, setTextValue] = useState('');
+  const { t } = useTranslation();
+  const [textValue, setTextValue] = useState("");
   const [error, setError] = useState(false);
   const [showCheckIcon, setShowCheckIcon] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -49,18 +51,15 @@ const AddButtonModal = () => {
   const handleSearch = async () => {
     const idInmueble = inputValidatorService.validateIdealistaURL(textValue);
 
-    if (idInmueble.length > 0) { 
+    if (idInmueble.length > 0) {
       setShowCheckIcon(true);
       try {
-        const data = await InmuebleService.prepareInmuebleForm(idInmueble)
-        data.idInmueble = idInmueble;
-        const dataModify = inputValidatorService.createInmueble(data);
-        setInmuebleData(dataModify);
+        const data = await InmuebleService.prepareInmuebleForm(idInmueble);
+        setInmuebleData(data);
         setShowForm(true);
-      
       } catch (error) {
-        console.error('Error al obtener datos:', error);
-      } 
+        console.error("Error al obtener datos:", error);
+      }
     } else {
       setError(true);
       setShowCheckIcon(false);
@@ -79,7 +78,7 @@ const AddButtonModal = () => {
     setError(false);
     setTextValue("");
     setShowCheckIcon(false);
-  }
+  };
 
   return (
     <Box
@@ -136,7 +135,7 @@ const AddButtonModal = () => {
                 variant="h6"
                 component="h2"
               >
-                Introduce la URL
+                {t("addButtonModal.url")}
               </Typography>
             </Box>
             <Box sx={{ display: "flex" }}>
@@ -146,17 +145,20 @@ const AddButtonModal = () => {
                 value={textValue}
                 onChange={handleTextChange}
                 onKeyPress={handleKeyPress}
-                placeholder="Introduce la URL"
+                placeholder={t("addButtonModal.url")}
                 inputProps={{ "aria-label": "Introduce la URL" }}
               />
               {showCheckIcon && (
-              <IconButton
-                type="button"
-                sx={{ p: "10px" }}
-                aria-label="clear"
-              >
-                < CheckCircleIcon style={{ color: 'green' }}/>
-              </IconButton>
+                <div
+                  style={{
+                    pointerEvents: "none",
+                    display: "inline-flex",
+                    alignItems: "center",
+                  }}
+                  aria-label="check"
+                >
+                  <CheckCircleIcon style={{ color: "green" }} />
+                </div>
               )}
               <IconButton
                 type="button"
@@ -177,13 +179,12 @@ const AddButtonModal = () => {
             </Box>
             {error && (
               <Typography sx={{ color: "red", fontSize: "0.8rem" }}>
-                La URL debe tener el formato correcto
+                {t("addButtonModal.validation.error")}
               </Typography>
             )}
-            { /* Formulario edición */ } 
-            <Box
-              display= {showForm ? 'block' : 'none'}>
-             <InmuebleForm inmuebleData={inmuebleData} />
+            {/* Formulario edición */}
+            <Box display={showForm ? "block" : "none"}>
+              <InmuebleForm inmuebleData={inmuebleData} />
             </Box>
           </Box>
         </Box>
