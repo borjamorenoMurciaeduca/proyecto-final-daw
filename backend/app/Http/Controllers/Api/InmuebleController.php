@@ -44,11 +44,11 @@ class InmuebleController extends Controller {
 
             $pythonScriptPath = base_path('storage/python/python-scrapping.py');
 
-            info('Entrando a prepare con id: ' . $id . ' en la ruta ' . $pythonScriptPath);
+            //info('Entrando a prepare con id: ' . $id . ' en la ruta ' . $pythonScriptPath);
 
             $output = shell_exec('python3 ' . escapeshellarg($pythonScriptPath) . ' ' . escapeshellarg($id));
             
-            info('output: ' . $output);
+            //info('output: ' . $output);
 
             $properties = json_decode($output, true);
             
