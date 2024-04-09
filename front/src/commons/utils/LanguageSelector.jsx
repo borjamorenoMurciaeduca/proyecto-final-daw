@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
+import { DEFAULT_LANGUAGES } from "../config/config";
 
 const LanguageSelector = () => {
   const { i18n, t } = useTranslation();
@@ -53,12 +54,15 @@ const LanguageSelector = () => {
         open={Boolean(anchorElI18N)}
         onClose={handleCloseI18NMenu}
       >
-        <MenuItem onClick={() => handleChangeLanguage("es")}>
-          {getLanguageFlag("es")} {t("languages.es")}
-        </MenuItem>
-        <MenuItem onClick={() => handleChangeLanguage("en")}>
-          {getLanguageFlag("en")} {t("languages.en")}
-        </MenuItem>
+        {DEFAULT_LANGUAGES.map((language) => (
+          <MenuItem
+            key={language}
+            onClick={() => handleChangeLanguage(`${language.toLowerCase()}`)}
+          >
+            {getLanguageFlag(`${language.toLowerCase()}`)}{" "}
+            {t(`languages.${language.toLowerCase()}`)}
+          </MenuItem>
+        ))}
       </Menu>
     </div>
   );

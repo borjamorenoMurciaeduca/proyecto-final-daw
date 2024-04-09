@@ -1,5 +1,6 @@
 import axios from 'axios';
-const baseUrl = 'http://127.0.0.1:8000/api/';
+import { API_URL } from '../commons/config/config';
+const baseUrl = `${API_URL}/`;
 
 let token = null;
 const setToken = (newToken) => {
