@@ -1,21 +1,43 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {
   Alert,
+  Avatar,
   Box,
   Button,
   FormControl,
+  Grid,
   IconButton,
   InputAdornment,
   InputLabel,
+  Link,
   OutlinedInput,
   TextField,
+  Typography,
 } from '@mui/material';
 import { useState } from 'react';
 import useAppStateHook from '../../hooks/useAppStateHook.jsx';
 import InmuebleService from '../../services/inmuebleService.js';
 import LoginService from '../../services/loginService.js';
+function Copyright(props) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {'Copyright © '}
+      <Link color="inherit" href="https://mui.com/">
+        Your Website
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 
-const LoginForm = () => {
+const LoginForm = ({ setView }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const { handleLogin } = useAppStateHook();
@@ -25,12 +47,18 @@ const LoginForm = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-
+  const handleView = (e) => {
+    e.preventDefault();
+    setView('register');
+  };
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    const username = e.target.username.value;
-    const password = e.target.password.value;
-
+    const data = new FormData(e.currentTarget);
+    const username = data.get('username');
+    const password = data.get('password');
+    // const username = data.username;
+    // const password = e.target.password.value;
+    console.log({ username, password });
     try {
       if (!password) throw new Error('Password is required');
       const res = await LoginService.login({
@@ -60,41 +88,81 @@ const LoginForm = () => {
   };
 
   return (
-    <>
-      {error && <Alert severity="error">{error}</Alert>}
-      <form onSubmit={handleLoginSubmit}>
-        <Box mb={2}>
-          <FormControl fullWidth>
-            <TextField helperText="" id="username" label="Name" />
-          </FormControl>
-        </Box>
-        <FormControl fullWidth>
-          <InputLabel htmlFor="password">Password</InputLabel>
-          <OutlinedInput
-            id="password"
-            type={showPassword ? 'text' : 'password'}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
-          />
-          <Box mt={2}>
-            <Button type="submit" variant="contained" fullWidth>
-              Login
-            </Button>
-          </Box>
-        </FormControl>
-      </form>
-    </>
+    <Box
+      sx={{
+        marginTop: 8,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+        <LockOutlinedIcon />
+      </Avatar>
+      <Typography component="h1" variant="h5">
+        Sign in
+      </Typography>
+      <Box
+        component="form"
+        noValidate
+        onSubmit={handleLoginSubmit}
+        sx={{ mt: 3 }}
+      >
+        {error && (
+          <Alert severity="error" sx={{ margin: '10px 0px' }}>
+            {error}
+          </Alert>
+        )}
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              helperText=""
+              id="username"
+              name="username"
+              label="Name"
+              fullWidth
+              autoFocus
+            />
+          </Grid>{' '}
+          <Grid item xs={12}>
+            <FormControl fullWidth>
+              <InputLabel htmlFor="password">Password</InputLabel>
+              <OutlinedInput
+                id="password"
+                name="password"
+                type={showPassword ? 'text' : 'password'}
+                label="Password"
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+              <Box mt={2} mb={2}>
+                <Button type="submit" variant="contained" fullWidth>
+                  Login
+                </Button>
+              </Box>
+            </FormControl>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link href="" variant="body2" onClick={handleView}>
+                  {'¿No tienes cuenta? Crea una'}
+                </Link>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Box>
+      <Copyright sx={{ mt: 5 }} />
+    </Box>
   );
 };
 

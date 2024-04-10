@@ -19,12 +19,18 @@ const user = async () => {
   return data;
 };
 
+const register = async (credentials) => {
+  const { data } = await axios.post(baseUrl + 'register', credentials);
+  return data;
+};
+
 const logout = async () => {
   const config = {
     headers: { Authorization: token },
   };
+  localStorage.removeItem('user');
   const { data } = await axios.post(baseUrl + 'logout', null, config);
   return data;
 };
 
-export default { login, logout, user, setToken };
+export default { login, logout, user, register, setToken };

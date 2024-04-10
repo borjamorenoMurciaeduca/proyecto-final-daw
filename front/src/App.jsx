@@ -1,13 +1,15 @@
 import { Container } from '@mui/material';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Dashboard from './dashboard/Dashboard';
 import useAppStateHook from './hooks/useAppStateHook';
 import Login from './login/Login';
+import Register from './register/Register';
 import InmuebleService from './services/inmuebleService';
 import LoginService from './services/loginService';
 import TopMenu from './topMenu/TopMenu';
 
 const App = () => {
+  const [view, setView] = useState('login');
   const { state, handleLogin } = useAppStateHook();
   const { user } = state;
 
@@ -31,6 +33,7 @@ const App = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  console.log(view);
 
   // Aquí se maneja el estado de la app, si el usuario existe y esta en el estado global
   // se muestra la vista de la "app" o la vista del login
@@ -44,8 +47,12 @@ const App = () => {
           </Container>
         </>
       ) : (
-        <Login />
+        <>
+          {view === 'login' && <Login setView={setView} />}
+          {view === 'register' && <Register setView={setView} />}
+        </>
       )}
+      {/* <SignUp /> */}
     </>
   );
 };

@@ -1,20 +1,10 @@
-import { Container, Typography } from '@mui/material';
+import { Container } from '@mui/material';
 import LoginForm from './components/LoginForm';
 
-const Login = () => {
+const Login = ({ setView }) => {
   return (
-    <Container
-      maxWidth="md"
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: ' 100vh',
-        justifyContent: 'center',
-        gap: '2rem',
-      }}
-    >
-      <Typography variant="h1">LOGIN FORM</Typography>
-      <LoginForm />
+    <Container component="main" maxWidth="xs">
+      <LoginForm setView={setView} />
     </Container>
   );
 };

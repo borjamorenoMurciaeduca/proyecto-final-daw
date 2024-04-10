@@ -1,20 +1,20 @@
-import React, { useState } from "react";
+import AddIcon from '@mui/icons-material/Add';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CloseIcon from '@mui/icons-material/Close';
+import DeleteIcon from '@mui/icons-material/Delete';
+import SearchIcon from '@mui/icons-material/Search';
 import {
   Box,
   Fab,
-  Modal,
-  Typography,
   IconButton,
   InputBase,
-} from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import CloseIcon from "@mui/icons-material/Close";
-import SearchIcon from "@mui/icons-material/Search";
-import DeleteIcon from '@mui/icons-material/Delete';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+  Modal,
+  Typography,
+} from '@mui/material';
+import { useState } from 'react';
 import InmuebleForm from '../../inmuebleForm/InmuebleForm';
-import inputValidatorService from '../../services/inputValidatorService';
 import InmuebleService from '../../services/inmuebleService.js';
+import inputValidatorService from '../../services/inputValidatorService';
 
 const AddButtonModal = () => {
   const [open, setOpen] = useState(false);
@@ -26,7 +26,7 @@ const AddButtonModal = () => {
 
   const handleOpen = () => {
     setOpen(true);
-    setTextValue("");
+    setTextValue('');
     setError(false);
     setShowForm(false);
     setShowCheckIcon(false);
@@ -49,18 +49,17 @@ const AddButtonModal = () => {
   const handleSearch = async () => {
     const idInmueble = inputValidatorService.validateIdealistaURL(textValue);
 
-    if (idInmueble.length > 0) { 
+    if (idInmueble.length > 0) {
       setShowCheckIcon(true);
       try {
-        const data = await InmuebleService.prepareInmuebleForm(idInmueble)
+        const data = await InmuebleService.prepareInmuebleForm(idInmueble);
         data.idInmueble = idInmueble;
         const dataModify = inputValidatorService.createInmueble(data);
         setInmuebleData(dataModify);
         setShowForm(true);
-      
       } catch (error) {
         console.error('Error al obtener datos:', error);
-      } 
+      }
     } else {
       setError(true);
       setShowCheckIcon(false);
@@ -69,7 +68,7 @@ const AddButtonModal = () => {
   };
 
   const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       handleSearch();
     }
   };
@@ -77,16 +76,16 @@ const AddButtonModal = () => {
   const handleClear = () => {
     setShowForm(false);
     setError(false);
-    setTextValue("");
+    setTextValue('');
     setShowCheckIcon(false);
-  }
+  };
 
   return (
     <Box
       sx={{
-        display: "flex",
-        justifyContent: "flex-end",
-        marginTop: "10px",
+        display: 'flex',
+        justifyContent: 'flex-end',
+        marginTop: '10px',
         p: 0,
       }}
     >
@@ -99,37 +98,37 @@ const AddButtonModal = () => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         <Box
           sx={{
-            position: "fixed",
+            position: 'fixed',
             top: 0,
             left: 0,
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
           <Box
             sx={{
-              width: "100%",
-              height: "100%",
-              bgcolor: "background.paper",
+              width: '100%',
+              height: '100%',
+              bgcolor: 'background.paper',
               p: 2,
             }}
           >
-            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
               <IconButton onClick={handleClose} sx={{ ml: 1 }}>
                 <CloseIcon />
               </IconButton>
             </Box>
-            <Box sx={{ display: "flex" }}>
+            <Box sx={{ display: 'flex' }}>
               <Typography
                 sx={{ flex: 1 }}
                 id="modal-modal-title"
@@ -139,7 +138,7 @@ const AddButtonModal = () => {
                 Introduce la URL
               </Typography>
             </Box>
-            <Box sx={{ display: "flex" }}>
+            <Box sx={{ display: 'flex' }}>
               <InputBase
                 sx={{ flex: 1 }}
                 variant="outlined"
@@ -147,20 +146,16 @@ const AddButtonModal = () => {
                 onChange={handleTextChange}
                 onKeyPress={handleKeyPress}
                 placeholder="Introduce la URL"
-                inputProps={{ "aria-label": "Introduce la URL" }}
+                inputProps={{ 'aria-label': 'Introduce la URL' }}
               />
               {showCheckIcon && (
-              <IconButton
-                type="button"
-                sx={{ p: "10px" }}
-                aria-label="clear"
-              >
-                < CheckCircleIcon style={{ color: 'green' }}/>
-              </IconButton>
+                <IconButton type="button" sx={{ p: '10px' }} aria-label="clear">
+                  <CheckCircleIcon style={{ color: 'green' }} />
+                </IconButton>
               )}
               <IconButton
                 type="button"
-                sx={{ p: "10px" }}
+                sx={{ p: '10px' }}
                 aria-label="clear"
                 onClick={handleClear}
               >
@@ -168,7 +163,7 @@ const AddButtonModal = () => {
               </IconButton>
               <IconButton
                 type="button"
-                sx={{ p: "10px" }}
+                sx={{ p: '10px' }}
                 aria-label="search"
                 onClick={handleSearch}
               >
@@ -176,14 +171,13 @@ const AddButtonModal = () => {
               </IconButton>
             </Box>
             {error && (
-              <Typography sx={{ color: "red", fontSize: "0.8rem" }}>
+              <Typography sx={{ color: 'red', fontSize: '0.8rem' }}>
                 La URL debe tener el formato correcto
               </Typography>
             )}
-            { /* Formulario edición */ } 
-            <Box
-              display= {showForm ? 'block' : 'none'}>
-             <InmuebleForm inmuebleData={inmuebleData} />
+            {/* Formulario edición */}
+            <Box display={showForm ? 'block' : 'none'}>
+              <InmuebleForm inmuebleData={inmuebleData} />
             </Box>
           </Box>
         </Box>
