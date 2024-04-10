@@ -13,9 +13,9 @@ const validateIdealistaURL = (url) => {
   }
 };
 
-const createInmueble = (data) => {
+const createInmueble = (data, idInmueble) => {
   const inmueble = new Inmueble();
-  inmueble.referenciaInmueble = data?.idInmueble; 
+  inmueble.referenciaInmueble = idInmueble; 
   inmueble.ubicacion = data?.data?.location;
   inmueble.precio = data?.data?.price;
   inmueble.currency = data?.data?.currency;

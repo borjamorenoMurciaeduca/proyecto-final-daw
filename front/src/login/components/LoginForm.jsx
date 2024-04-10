@@ -16,32 +16,17 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import useAppStateHook from '../../hooks/useAppStateHook.jsx';
+import { Copyright } from '../../register/Register.jsx';
 import InmuebleService from '../../services/inmuebleService.js';
 import LoginService from '../../services/loginService.js';
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const LoginForm = ({ setView }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const { handleLogin } = useAppStateHook();
-
+  const { t } = useTranslation();
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
@@ -94,13 +79,14 @@ const LoginForm = ({ setView }) => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        justifyContent: 'flex-start',
       }}
     >
       <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
         <LockOutlinedIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
-        Sign in
+        {t('login-form.title')}
       </Typography>
       <Box
         component="form"
@@ -119,19 +105,22 @@ const LoginForm = ({ setView }) => {
               helperText=""
               id="username"
               name="username"
-              label="Name"
+              label={t('login-form.form.name')}
               fullWidth
               autoFocus
             />
           </Grid>{' '}
           <Grid item xs={12}>
             <FormControl fullWidth>
-              <InputLabel htmlFor="password">Password</InputLabel>
+              <InputLabel htmlFor="password">
+                {' '}
+                {t('login-form.form.password')}
+              </InputLabel>
               <OutlinedInput
                 id="password"
                 name="password"
                 type={showPassword ? 'text' : 'password'}
-                label="Password"
+                label={t('login-form.form.password')}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -147,14 +136,14 @@ const LoginForm = ({ setView }) => {
               />
               <Box mt={2} mb={2}>
                 <Button type="submit" variant="contained" fullWidth>
-                  Login
+                  {t('login-form.form.login')}
                 </Button>
               </Box>
             </FormControl>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="" variant="body2" onClick={handleView}>
-                  {'¿No tienes cuenta? Crea una'}
+                  {t('login-form.register')}
                 </Link>
               </Grid>
             </Grid>

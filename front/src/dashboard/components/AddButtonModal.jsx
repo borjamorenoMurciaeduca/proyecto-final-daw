@@ -12,12 +12,14 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import InmuebleForm from '../../inmuebleForm/InmuebleForm';
 import InmuebleService from '../../services/inmuebleService.js';
 import inputValidatorService from '../../services/inputValidatorService';
 
 const AddButtonModal = () => {
   const [open, setOpen] = useState(false);
+  const { t } = useTranslation();
   const [textValue, setTextValue] = useState('');
   const [error, setError] = useState(false);
   const [showCheckIcon, setShowCheckIcon] = useState(false);
@@ -53,9 +55,7 @@ const AddButtonModal = () => {
       setShowCheckIcon(true);
       try {
         const data = await InmuebleService.prepareInmuebleForm(idInmueble);
-        data.idInmueble = idInmueble;
-        const dataModify = inputValidatorService.createInmueble(data);
-        setInmuebleData(dataModify);
+        setInmuebleData(data);
         setShowForm(true);
       } catch (error) {
         console.error('Error al obtener datos:', error);
@@ -135,7 +135,7 @@ const AddButtonModal = () => {
                 variant="h6"
                 component="h2"
               >
-                Introduce la URL
+                {t('addButtonModal.url')}
               </Typography>
             </Box>
             <Box sx={{ display: 'flex' }}>
@@ -145,13 +145,20 @@ const AddButtonModal = () => {
                 value={textValue}
                 onChange={handleTextChange}
                 onKeyPress={handleKeyPress}
-                placeholder="Introduce la URL"
+                placeholder={t('addButtonModal.url')}
                 inputProps={{ 'aria-label': 'Introduce la URL' }}
               />
               {showCheckIcon && (
-                <IconButton type="button" sx={{ p: '10px' }} aria-label="clear">
+                <div
+                  style={{
+                    pointerEvents: 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                  }}
+                  aria-label="check"
+                >
                   <CheckCircleIcon style={{ color: 'green' }} />
-                </IconButton>
+                </div>
               )}
               <IconButton
                 type="button"
@@ -172,7 +179,7 @@ const AddButtonModal = () => {
             </Box>
             {error && (
               <Typography sx={{ color: 'red', fontSize: '0.8rem' }}>
-                La URL debe tener el formato correcto
+                {t('addButtonModal.validation.error')}
               </Typography>
             )}
             {/* Formulario edición */}
