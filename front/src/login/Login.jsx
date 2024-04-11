@@ -5,6 +5,7 @@ import {
   Avatar,
   Box,
   Button,
+  Container,
   FormControl,
   Grid,
   IconButton,
@@ -12,17 +13,19 @@ import {
   InputLabel,
   Link,
   OutlinedInput,
+  Snackbar,
   TextField,
   Typography,
 } from '@mui/material';
+import Slide from '@mui/material/Slide';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import Copyright from '../copyright';
 import useAppStateHook from '../hooks/useAppStateHook.jsx';
-import { Copyright } from '../register/Register.jsx';
 import InmuebleService from '../services/inmuebleService.js';
 import LoginService from '../services/loginService.js';
 
-const Login = ({ setView }) => {
+const Login = ({ setView, openSnack, setOpenSnack }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const { handleLogin } = useAppStateHook();
@@ -36,6 +39,17 @@ const Login = ({ setView }) => {
     e.preventDefault();
     setView('register');
   };
+
+  function SlideTransition(props) {
+    return <Slide {...props} direction="up" />;
+  }
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnack(false);
+  };
+
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
@@ -73,7 +87,9 @@ const Login = ({ setView }) => {
   };
 
   return (
-    <Box
+    <Container
+      maxWidth="xs"
+      component="main"
       sx={{
         marginTop: 8,
         display: 'flex',
@@ -133,24 +149,39 @@ const Login = ({ setView }) => {
                   </InputAdornment>
                 }
               />
-              <Box mt={2} mb={2}>
-                <Button type="submit" variant="contained" fullWidth>
-                  {t('login-form.form.login')}
-                </Button>
-              </Box>
             </FormControl>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="" variant="body2" onClick={handleView}>
-                  {t('login-form.register')}
-                </Link>
-              </Grid>
-            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={12} sx={{ mt: 3, mb: 2 }}>
+          <Button type="submit" variant="contained" fullWidth>
+            {t('login-form.form.login')}
+          </Button>
+        </Grid>
+        <Grid container xs={12} justifyContent="flex-end">
+          <Grid item>
+            <Link href="" variant="body2" onClick={handleView}>
+              {t('login-form.register')}
+            </Link>
           </Grid>
         </Grid>
       </Box>
       <Copyright sx={{ mt: 5 }} />
-    </Box>
+      <Snackbar
+        open={openSnack}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        TransitionComponent={SlideTransition}
+      >
+        <Alert
+          onClose={handleClose}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {t('register-form.success')}
+        </Alert>
+      </Snackbar>
+    </Container>
   );
 };
 export default Login;

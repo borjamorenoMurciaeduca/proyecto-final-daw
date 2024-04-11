@@ -11,6 +11,7 @@ import LoginService from './services/loginService';
 import TopMenu from './topMenu/TopMenu';
 const App = () => {
   const [view, setView] = useState('login');
+  const [openSnack, setOpenSnack] = useState(false);
   const { state, handleLogin } = useAppStateHook();
   const { user } = state;
 
@@ -49,8 +50,16 @@ const App = () => {
         </>
       ) : (
         <>
-          {view === 'login' && <Login setView={setView} />}
-          {view === 'register' && <Register setView={setView} />}
+          {view === 'login' && (
+            <Login
+              setView={setView}
+              openSnack={openSnack}
+              setOpenSnack={setOpenSnack}
+            />
+          )}
+          {view === 'register' && (
+            <Register setView={setView} setOpenSnack={setOpenSnack} />
+          )}
         </>
       )}
       {/* <SignUp /> */}

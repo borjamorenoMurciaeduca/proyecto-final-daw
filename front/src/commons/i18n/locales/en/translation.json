@@ -22,7 +22,9 @@
   "register-form": {
     "title": "Sign up",
     "confirm": "Confirm",
-    "register": "Register"
+    "register": "Register",
+    "login": "Already have an account? Sign in",
+    "success": "User registered successfully"
   },
   "top-menu": {
     "settings": {

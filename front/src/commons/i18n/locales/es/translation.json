@@ -22,7 +22,9 @@
   "register-form": {
     "title": "Regístrate",
     "confirm": "Confirmar",
-    "register": "Registrar"
+    "register": "Registrar",
+    "login": "¿Ya tienes cuenta? Inicia sesión",
+    "success": "¡Registro completado con éxito!"
   },
   "top-menu": {
     "settings": {

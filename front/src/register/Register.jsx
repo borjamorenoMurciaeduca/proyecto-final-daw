@@ -1,37 +1,42 @@
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import {
+  FormControl,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+} from '@mui/material';
 import Alert from '@mui/material/Alert';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import Copyright from '../copyright';
 import LoginService from '../services/loginService';
 
-export const Copyright = (props) => {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {'Copyright © '}
-      <Link color="inherit" href="#">
-        IdealistaWatch
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-};
-
-const Register = ({ setView }) => {
+const Register = ({ setView, setOpenSnack }) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState(null);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleClickShowConfirmPassword = () =>
+    setShowConfirmPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   const { t } = useTranslation();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const dataForm = new FormData(e.currentTarget);
@@ -41,13 +46,19 @@ const Register = ({ setView }) => {
       password_confirmation: dataForm.get('password_confirmation'),
     };
     try {
-      console.log(credentials);
-      const data = await LoginService.register(credentials);
-      console.log(data);
+      const res = await LoginService.register(credentials);
+
+      if (res.error) {
+        throw new Error(res.error);
+      }
+
+      if (res.statusCode === 201) {
+        setOpenSnack(true);
+        setView('login');
+      }
       e.target.username.value = '';
       e.target.password.value = '';
       e.target.password_confirmation.value = '';
-      setView('login');
     } catch (error) {
       console.log(error);
       setError('Error en las credenciales');
@@ -63,7 +74,9 @@ const Register = ({ setView }) => {
   };
 
   return (
-    <Box
+    <Container
+      maxWidth="xs"
+      component="main"
       sx={{
         marginTop: 8,
         display: 'flex',
@@ -97,47 +110,71 @@ const Register = ({ setView }) => {
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              id="password"
-              label={t('login-form.form.password')}
-              name="password"
-              type="password"
-              autoComplete="new-password"
-            />
+            <FormControl fullWidth>
+              <InputLabel htmlFor="password">
+                {t('login-form.form.password')}
+              </InputLabel>
+              <OutlinedInput
+                id="password"
+                name="password"
+                type={showPassword ? 'text' : 'password'}
+                label={t('login-form.form.password')}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              name="password_confirmation"
-              label={t('login-form.form.confirm-password')}
-              type="password"
-              id="password_confirmation"
-              autoComplete="new-password"
-            />
+            <FormControl fullWidth>
+              <InputLabel htmlFor="password_confirmation">
+                {t('login-form.form.confirm-password')}
+              </InputLabel>
+              <OutlinedInput
+                id="password_confirmation"
+                type={showConfirmPassword ? 'text' : 'password'}
+                name="password_confirmation"
+                label={t('login-form.form.confirm-password')}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowConfirmPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
           </Grid>
         </Grid>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-        >
-          {t('register-form.register')}
-        </Button>
-        <Grid container justifyContent="flex-end">
+        <Grid item xs={12} sx={{ mt: 3, mb: 2 }}>
+          <Button type="submit" fullWidth variant="contained">
+            {t('register-form.register')}
+          </Button>
+        </Grid>
+        <Grid container xs={12} justifyContent="flex-end">
           <Grid item>
             <Link href="#" variant="body2" onClick={handleView}>
-              {/* Already have an account? Sign in */}
-              ¿Ya tienes una cuenta? Inicia sesión
+              {t('register-form.login')}
             </Link>
           </Grid>
         </Grid>
       </Box>
       <Copyright sx={{ mt: 5 }} />
-    </Box>
+    </Container>
   );
 };
 
