@@ -19,6 +19,7 @@ import useAppStateHook from "../hooks/useAppStateHook.jsx";
 import LoginService from "../services/loginService.js";
 import LanguageSelector from "../commons/utils/LanguageSelector.jsx";
 import { useTranslation } from "react-i18next";
+import { APP_NAME } from "../commons/config/config.js";
 
 const pages = ["Mis viviendas", "Pricing"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -46,7 +47,9 @@ const TopMenu = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          <Box sx={{ display: { xs: "none", md: "flex" }, mr: 2 }}>
+            <img src="/logo/logo-idealistawatch.png" alt="" height="42px" width="42px" />
+          </Box>
           <Typography
             variant="h6"
             noWrap
@@ -55,14 +58,13 @@ const TopMenu = () => {
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
+              fontFamily: "Roboto, Helvetica, Arial, sans-serif",
               fontWeight: 700,
-              letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
             }}
           >
-            LOGO
+            { APP_NAME }
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -101,25 +103,9 @@ const TopMenu = () => {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
-          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <img src="/logo/logo-idealistawatch.png" alt="" height="40px" width="40px" />
+          </Box>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
