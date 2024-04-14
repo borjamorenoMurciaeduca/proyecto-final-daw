@@ -1,6 +1,6 @@
 import axios from 'axios';
-import inputValidatorService from './inputValidatorService';
 import { API_URL } from '../commons/config/config';
+import inputValidatorService from './inputValidatorService';
 const baseInmuebleUrl = `${API_URL}/inmueble`;
 const basePrepareInmuebleUrl = `${API_URL}/prepare-inmueble/`;
 
@@ -9,14 +9,12 @@ const setToken = (newToken) => {
   token = `Bearer ${newToken}`;
 };
 
-const addInmueble = async (inmueble) => {
+const addInmueble = async ({ inmuebleToAdd }) => {
   const config = {
     headers: { Authorization: token },
   };
 
-  let data = JSON.stringify(inmueble);
-  let res = await axios.post(baseInmuebleUrl, data, config);
-
+  let res = await axios.post(baseInmuebleUrl, inmuebleToAdd, config);
   return res;
 };
 
