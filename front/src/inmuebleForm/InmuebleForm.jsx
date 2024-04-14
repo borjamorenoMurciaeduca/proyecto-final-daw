@@ -18,7 +18,7 @@ import loginService from '../services/loginService.js';
 function SlideTransition(props) {
   return <Slide {...props} direction="up" />;
 }
-const Inmueble = ({ inmuebleData }) => {
+const Inmueble = ({ inmuebleData = {} }) => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [severity, setSeverity] = useState('success');
@@ -27,7 +27,7 @@ const Inmueble = ({ inmuebleData }) => {
     referencia: '',
     ubicacion: '',
     precio: '',
-    tamanio: '',
+    tamano: '',
     habitaciones: '',
     garaje: false,
     trastero: false,
@@ -76,7 +76,8 @@ const Inmueble = ({ inmuebleData }) => {
       }
     } catch (error) {
       setSeverity('error');
-      setMessage('Error al añadir vivienda');
+      const msg = error?.response?.data?.message || 'Error al añadir vivienda';
+      setMessage(msg);
       console.error('Error al obtener datos del usuario:', error);
     } finally {
       setOpen(true);
