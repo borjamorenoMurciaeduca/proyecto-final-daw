@@ -157,7 +157,7 @@ const Login = ({ setView, openSnack, setOpenSnack }) => {
             {t('login-form.form.login')}
           </Button>
         </Grid>
-        <Grid container xs={12} justifyContent="flex-end">
+        <Grid container item justifyContent="flex-end">
           <Grid item>
             <Link href="" variant="body2" onClick={handleView}>
               {t('login-form.register')}
