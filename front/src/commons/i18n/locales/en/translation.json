@@ -35,6 +35,16 @@
       "logout-v2": "Logout V2"
     }
   },
+  "add-home-form": {
+    "reference": "Reference",
+    "location": "Location",
+    "price": "Price",
+    "size": "Size",
+    "rooms": "Rooms",
+    "garage": "Garage",
+    "storage": "Storage",
+    "add-home": "Add home"
+  },
   "my-homes": "My homes",
   "addButtonModal": {
     "url": "Enter the URL",

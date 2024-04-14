@@ -35,6 +35,16 @@
       "logout-v2": "Salir V2"
     }
   },
+  "add-home-form": {
+    "reference": "Referencia",
+    "location": "Localización",
+    "price": "Precio",
+    "size": "Tamaño",
+    "rooms": "Habitaciones",
+    "garage": "Garaje",
+    "storage": "Trastero",
+    "add-home": "Añadir vivienda"
+  },
   "my-homes": "Mis viviendas",
   "addButtonModal": {
     "url": "Introduce la URL",
