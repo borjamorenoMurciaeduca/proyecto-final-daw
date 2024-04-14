@@ -1,8 +1,6 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {
   Alert,
-  Avatar,
   Box,
   Button,
   Container,
@@ -98,9 +96,13 @@ const Login = ({ setView, openSnack, setOpenSnack }) => {
         justifyContent: 'flex-start',
       }}
     >
-      <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-        <LockOutlinedIcon />
-      </Avatar>
+      <Box sx={{ maxWidth: '80px', marginBottom: 1 }}>
+        <img
+          src="../../public/logo/logo-idealistawatch.png"
+          alt="logo"
+          style={{ objectFit: 'cover', width: '100%' }}
+        />
+      </Box>
       <Typography component="h1" variant="h5">
         {t('login-form.title')}
       </Typography>
