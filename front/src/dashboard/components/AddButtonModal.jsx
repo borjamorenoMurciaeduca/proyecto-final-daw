@@ -79,7 +79,6 @@ const AddButtonModal = () => {
     setTextValue('');
     setShowCheckIcon(false);
   };
-
   return (
     <Box
       sx={{
@@ -182,10 +181,7 @@ const AddButtonModal = () => {
                 {t('addButtonModal.validation.error')}
               </Typography>
             )}
-            {/* Formulario edición */}
-            <Box display={showForm ? 'block' : 'none'}>
-              <InmuebleForm inmuebleData={inmuebleData} />
-            </Box>
+            {showForm && <InmuebleForm inmuebleData={inmuebleData} />}
           </Box>
         </Box>
       </Modal>
