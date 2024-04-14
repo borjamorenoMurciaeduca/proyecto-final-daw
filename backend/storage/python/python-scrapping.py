@@ -8,6 +8,8 @@ from typing_extensions import TypedDict
 from collections import defaultdict
 import re
 from typing import Dict
+import re
+from datetime import datetime
 
 # Establecer cabeceras HTTP similares a las de un navegador para evitar bloqueos
 BASE_HEADERS = {
@@ -23,8 +25,7 @@ async def scrape_property(property_id: str) -> Dict:
         url = f"https://www.idealista.com/inmueble/{property_id}/"
         response = await session.get(url)
         if response.status_code != 200:
-            print(f"Failed to scrape property {property_id}")
-            return {}
+            return parse_property_error(response)
         return parse_property(response)
 
 def parse_property(response: httpx.Response) -> Dict:
@@ -73,6 +74,41 @@ def parse_property(response: httpx.Response) -> Dict:
             data['plans'].append(url)
         else:
             data['images'][image['tag']].append(url)
+    return data
+
+def parse_property_error(response: httpx.Response) -> Dict:
+    """Parse property error from Idealista.com"""
+    selectorError = Selector(text=response.text)
+    cssError = lambda y: selectorError.css(y).get("").strip()
+
+    data = {}
+    # Meta data
+    data["url"] = str(response.url)
+
+    # Basic information
+    idFeature = cssError("p.feature-id::text")
+    patron_referencia = r'(\d+)'
+    resultado_idFeature = re.search(patron_referencia, idFeature)
+    numero_referencia = ''
+
+    if resultado_idFeature:
+        numero_referencia = resultado_idFeature.group(1)
+
+    textoFechaBaja = cssError("p.deactivated-detail_date::text")
+    patron_fecha = r'(\d{2}/\d{2}/\d{4})'
+    resultado_fechaBaja = re.search(patron_fecha, textoFechaBaja)
+    fecha_str_seria = ''
+    if resultado_fechaBaja:
+        fecha_str = resultado_fechaBaja.group(1)
+        fecha = datetime.strptime(fecha_str, "%d/%m/%Y")
+        fecha_str_seria = fecha.strftime("%d/%m/%Y")
+
+    if numero_referencia.strip() and fecha_str_seria.strip():
+        data["status"] = "baja"
+        data["id"] = numero_referencia
+        data['fechaBaja'] = fecha_str_seria
+    else: 
+        data["status"] = "error"
     return data
 
 async def run(property_id: str) -> None:
