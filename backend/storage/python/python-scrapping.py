@@ -26,9 +26,9 @@ async def scrape_property(property_id: str) -> Dict:
         response = await session.get(url)
         if response.status_code != 200:
             return parse_property_error(response)
-        return parse_property(response)
+        return parse_property(response, property_id)
 
-def parse_property(response: httpx.Response) -> Dict:
+def parse_property(response: httpx.Response, property_id: str) -> Dict:
     """Parse property details from Idealista.com"""
     selector = Selector(text=response.text)
     css = lambda x: selector.css(x).get("").strip()
@@ -37,6 +37,8 @@ def parse_property(response: httpx.Response) -> Dict:
     data = {}
     # Meta data
     data["url"] = str(response.url)
+
+    data["id"] = property_id
 
     # Basic information
     data['title'] = css("h1 .main-info__title-main::text")

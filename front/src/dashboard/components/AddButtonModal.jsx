@@ -120,15 +120,18 @@ const AddButtonModal = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            overflow:'scroll',
+            overflowY:'scroll',
+            overflowX:'hidden',
           }}
         >
           <Box
             sx={{
-              width: '100%',
-              height: '100%',
+              width: '70%',
+              height: '50%',
               bgcolor: 'background.paper',
               p: 2,
+              overflowY:'scroll',
+              overflowX:'hidden',
             }}
           >
             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
