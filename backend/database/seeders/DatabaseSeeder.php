@@ -21,6 +21,10 @@ class DatabaseSeeder extends Seeder {
             'username' => 'jorge',
             'password' => bcrypt('1234'),
         ]);
+        User::factory()->create([
+            'username' => 'borja',
+            'password' => bcrypt('1234'),
+        ]);
         UsuarioInmueble::factory(10)->create();
     }
 }

@@ -12,6 +12,7 @@ return new class extends Migration {
         Schema::create("inmuebles", function (Blueprint $table) {
             $table->bigInteger('referencia')->unique();
             $table->date("fechaBajaAnuncio")->nullable();
+            $table->string('url_imagen');
             $table->timestamps();
         });
     }
