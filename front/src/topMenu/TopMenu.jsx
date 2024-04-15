@@ -20,6 +20,7 @@ import LoginService from "../services/loginService.js";
 import LanguageSelector from "../commons/utils/LanguageSelector.jsx";
 import { useTranslation } from "react-i18next";
 import { APP_NAME } from "../commons/config/config.js";
+import DayNightSwitch from "../commons/utils/DayNightSwitch.jsx";
 
 const pages = ["Mis viviendas", "Pricing"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -44,11 +45,11 @@ const TopMenu = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ bgcolor: '#00c375' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box sx={{ display: { xs: "none", md: "flex" }, mr: 2 }}>
-            <img src="/logo/logo-idealistawatch.png" alt="" height="42px" width="42px" />
+            <img src="/logo/logo-idealistawatch.png" alt="" height="42px" width="42px" style={{border: '2px solid #000', borderRadius: '8px'}}/>
           </Box>
           <Typography
             variant="h6"
@@ -159,6 +160,9 @@ const TopMenu = () => {
           </Box>
           <Box sx={{ flexGrow: 0, ml: 1 }}>
             <LanguageSelector />
+          </Box>
+          <Box sx={{ flexGrow: 0, ml: 1 }}>
+            <DayNightSwitch />
           </Box>
         </Toolbar>
       </Container>

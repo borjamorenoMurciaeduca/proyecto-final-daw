@@ -98,7 +98,7 @@ const Login = ({ setView, openSnack, setOpenSnack }) => {
     >
       <Box sx={{ maxWidth: '80px', marginBottom: 1 }}>
         <img
-          src="../../public/logo/logo-idealistawatch.png"
+          src="/logo/logo-idealistawatch.png"
           alt="logo"
           style={{ objectFit: 'cover', width: '100%' }}
         />

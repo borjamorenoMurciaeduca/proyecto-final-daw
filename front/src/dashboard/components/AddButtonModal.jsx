@@ -50,13 +50,20 @@ const AddButtonModal = () => {
 
   const handleSearch = async () => {
     const idInmueble = inputValidatorService.validateIdealistaURL(textValue);
-
     if (idInmueble.length > 0) {
       setShowCheckIcon(true);
       try {
         const data = await InmuebleService.prepareInmuebleForm(idInmueble);
-        setInmuebleData(data);
-        setShowForm(true);
+        
+        if (data) {
+          setInmuebleData(data);
+          setShowForm(true);
+        } else {
+          setError(true);
+          setShowCheckIcon(false);
+          setShowForm(false);
+        }
+        
       } catch (error) {
         console.error('Error al obtener datos:', error);
       }
@@ -89,7 +96,7 @@ const AddButtonModal = () => {
         p: 0,
       }}
     >
-      <Fab color="primary" aria-label="add" onClick={handleOpen}>
+      <Fab sx={{ bgcolor: '#fecd00' }} aria-label="add" onClick={handleOpen}>
         <AddIcon />
       </Fab>
       <Modal

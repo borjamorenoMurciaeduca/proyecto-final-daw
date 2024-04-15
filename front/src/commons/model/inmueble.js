@@ -10,6 +10,7 @@ class Inmueble {
     this.currency = null;
     this.banios = null;
     this.tipoPropiedad = null;
+    this.fechaBaja = null;
   }
 }
 

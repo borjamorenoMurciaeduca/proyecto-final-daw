@@ -74,6 +74,7 @@ def parse_property(response: httpx.Response) -> Dict:
             data['plans'].append(url)
         else:
             data['images'][image['tag']].append(url)
+    data["status"] = "ok"
     return data
 
 def parse_property_error(response: httpx.Response) -> Dict:

@@ -25,11 +25,13 @@ const prepareInmuebleForm = async (idInmueble) => {
 
   let res = await axios.get(basePrepareInmuebleUrl + idInmueble, config);
 
-  let data = inputValidatorService.createInmueble(res, idInmueble);
+  let data = inputValidatorService.createInmueble(res);
 
-  //console.log("data inmueble: ", data);
+  if (data) {
+    return data;
+  }
+  return null;
 
-  return data;
 };
 
 export default { addInmueble, prepareInmuebleForm, setToken };

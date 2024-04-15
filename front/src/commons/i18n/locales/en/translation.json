@@ -9,6 +9,10 @@
     "open-settings": "Open settings",
     "change-language": "Change language"
   },
+  "theme-mode": {
+    "light": "Day mode",
+    "dark": "Night mode"
+  },
   "login-form": {
     "title": "Sign in",
     "form": {

@@ -9,6 +9,10 @@
     "open-settings": "Abrir configuración",
     "change-language": "Cambiar idioma"
   },
+  "theme-mode": {
+    "light": "Modo día",
+    "dark": "Modo noche"
+  },
   "login-form": {
     "title": "Iniciar sesión",
     "form": {
