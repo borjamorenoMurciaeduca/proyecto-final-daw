@@ -20,6 +20,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Copyright from '../copyright';
 import LoginService from '../services/loginService';
+import LanguageSelector from '../commons/utils/LanguageSelector';
 
 const Register = ({ setView, setOpenSnack }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -173,6 +174,7 @@ const Register = ({ setView, setOpenSnack }) => {
           </Grid>
         </Grid>
       </Box>
+      <LanguageSelector />
       <Copyright sx={{ mt: 5 }} />
     </Container>
   );

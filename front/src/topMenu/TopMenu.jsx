@@ -17,7 +17,7 @@ import {
 import { useState } from "react";
 import useAppStateHook from "../hooks/useAppStateHook.jsx";
 import LoginService from "../services/loginService.js";
-import LanguageSelector from "../commons/utils/LanguageSelector.jsx";
+import LanguageFlagSelector from "../commons/utils/LanguageFlagSelector.jsx";
 import { useTranslation } from "react-i18next";
 import { APP_NAME } from "../commons/config/config.js";
 import DayNightSwitch from "../commons/utils/DayNightSwitch.jsx";
@@ -159,7 +159,7 @@ const TopMenu = () => {
             </Menu>
           </Box>
           <Box sx={{ flexGrow: 0, ml: 1 }}>
-            <LanguageSelector />
+            <LanguageFlagSelector />
           </Box>
           <Box sx={{ flexGrow: 0, ml: 1 }}>
             <DayNightSwitch />

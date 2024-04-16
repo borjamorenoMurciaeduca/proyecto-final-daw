@@ -1,70 +1,41 @@
 import { React, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
-import { DEFAULT_LANGUAGES } from "../config/config";
+import { DEFAULT_LANGUAGES, INIT_LANGUAGE } from "../config/config";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 const LanguageSelector = () => {
   const { i18n, t } = useTranslation();
-  const [anchorElI18N, setAnchorElI18N] = useState(null);
+  const [lng, setLng] = useState('');
+  let lang = i18n.language ? i18n.language : INIT_LANGUAGE;
 
-  const handleOpenI18NMenu = (event) => setAnchorElI18N(event.currentTarget);
-  const handleCloseI18NMenu = () => setAnchorElI18N(null);
-
-  const handleChangeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-    handleCloseI18NMenu();
-  };
-
-  const getLanguageFlag = (lng, size = 24, isMain = false) => {
-    const iconUrl = `languages/icons/${lng}.png`;
-
-    return (
-      <img
-        src={iconUrl}
-        alt={lng}
-        style={{
-          width: `${size}px`,
-          height: `${size}px`,
-          marginRight: `${isMain ? `0px` : `8px`}`,
-        }}
-      />
-    );
+  const handleChangeLanguage = (event) => {
+    i18n.changeLanguage(event.target.value);
+    setLng(event.target.value);
+    lang = event.target.value;
   };
 
   return (
-    <div>
-      <Tooltip title={t("tooltip.change-language")}>
-        <IconButton onClick={handleOpenI18NMenu} sx={{ p: 0 }}>
-          {getLanguageFlag(i18n.language, 38, true)}
-        </IconButton>
-      </Tooltip>
-      <Menu
-        sx={{ mt: "45px" }}
-        id="menu-appbar"
-        anchorEl={anchorElI18N}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        keepMounted
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        open={Boolean(anchorElI18N)}
-        onClose={handleCloseI18NMenu}
-      >
-        {DEFAULT_LANGUAGES.map((language) => (
-          <MenuItem
-            key={language}
-            onClick={() => handleChangeLanguage(`${language.toLowerCase()}`)}
-          >
-            {getLanguageFlag(`${language.toLowerCase()}`)}{" "}
-            {t(`languages.${language.toLowerCase()}`)}
-          </MenuItem>
-        ))}
-      </Menu>
-    </div>
+    <FormControl sx={{ m: 1, minWidth: 120 }}>
+        <InputLabel id="select-language-autowidth-label">{t('languages.select-input')}</InputLabel>
+        <Select
+          labelId="select-language-autowidth-label"
+          id="select-language-autowidth"
+          value={lang}
+          onChange={handleChangeLanguage}
+          label={t('languages.select-input')}
+        >
+            {DEFAULT_LANGUAGES.map((language) => (
+                <MenuItem
+                key={language}
+                value={language}>
+                    {t(`languages.${language.toLowerCase()}`)}
+                </MenuItem>
+            ))}
+        </Select>
+      </FormControl>
   );
 };
 

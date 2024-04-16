@@ -22,6 +22,7 @@ import Copyright from '../copyright';
 import useAppStateHook from '../hooks/useAppStateHook.jsx';
 import InmuebleService from '../services/inmuebleService.js';
 import LoginService from '../services/loginService.js';
+import LanguageSelector from '../commons/utils/LanguageSelector.jsx';
 
 const Login = ({ setView, openSnack, setOpenSnack }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -167,6 +168,7 @@ const Login = ({ setView, openSnack, setOpenSnack }) => {
           </Grid>
         </Grid>
       </Box>
+      <LanguageSelector />
       <Copyright sx={{ mt: 5 }} />
       <Snackbar
         open={openSnack}

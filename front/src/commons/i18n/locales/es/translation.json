@@ -2,6 +2,7 @@
   "welcome": "¡Bienvenido a mi aplicación!",
   "hello": "¡Hola, {{name}}!",
   "languages": {
+    "select-input": "Idioma",
     "es": "Español",
     "en": "Inglés"
   },
