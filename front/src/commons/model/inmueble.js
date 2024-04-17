@@ -11,6 +11,7 @@ class Inmueble {
     this.banios = null;
     this.tipoPropiedad = null;
     this.fechaBaja = null;
+    this.dataStatus = null;
   }
 }
 

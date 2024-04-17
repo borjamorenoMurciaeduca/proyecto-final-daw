@@ -1,6 +1,4 @@
 {
-  "welcome": "¡Bienvenido a mi aplicación!",
-  "hello": "¡Hola, {{name}}!",
   "languages": {
     "select-input": "Idioma",
     "es": "Español",
@@ -55,6 +53,17 @@
     "url": "Introduce la URL",
     "validation": {
       "error": "La URL debe tener el formato correcto"
+    }
+  },
+  "snackbar": {
+    "url-validation": {
+      "ok": "URL válida",
+      "ko": "La URL proporcionada no devuelve resultados",
+      "ko-format": "La URL proporcionada no tiene el formato esperado",
+      "baja": "El inmueble seleccionado ha sido dado de baja"
+    },
+    "prepare-inmueble-form": {
+      "error": "Se ha producido un error al obtener los datos"
     }
   }
 }

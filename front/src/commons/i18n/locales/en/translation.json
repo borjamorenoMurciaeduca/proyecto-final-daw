@@ -1,6 +1,4 @@
 {
-  "welcome": "Welcome to my app!",
-  "hello": "Hello, {{name}}!",
   "languages": {
     "select-input": "Language",
     "es": "Spanish",
@@ -55,6 +53,17 @@
     "url": "Enter the URL",
     "validation": {
       "error": "The URL must be in the correct format"
+    }
+  },
+  "snackbar": {
+    "url-validation": {
+      "ok": "Valid URL",
+      "ko": "The provided URL does not return results",
+      "ko-format": "The provided URL is not in the expected format",
+      "baja": "The selected property has been deregistered"
+    },
+    "prepare-inmueble-form": {
+      "error": "An error occurred while obtaining data"
     }
   }
 }

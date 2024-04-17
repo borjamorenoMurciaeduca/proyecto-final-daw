@@ -18,6 +18,7 @@ const createInmueble = (data, idioma = "es") => {
   const inmueble = new Inmueble();
 
   inmueble.referenciaInmueble = data?.data?.id;
+  inmueble.dataStatus = data?.data?.status;
 
   if (data.data.status == "ok") {
     inmueble.ubicacion = data?.data?.location;

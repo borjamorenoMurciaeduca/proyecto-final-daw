@@ -8,9 +8,10 @@ import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import { AppProvider } from './context/AppProvider.jsx';
-import { AppDarkModeProvider } from './context/AppDarkModeContext';
+import { AppDarkModeProvider } from './context/AppDarkModeProvider.jsx';
 import { createTheme } from "@mui/material";
 import useDarkMode from "./hooks/useDarkMode.jsx"
+import { NotificationProvider } from './context/AppNotificationContext.jsx';
 
 const lightTheme = createTheme({
   palette: {
@@ -28,7 +29,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AppProvider>
       <AppDarkModeProvider>
-        <AppWithTheme />
+        <NotificationProvider>
+          <AppWithTheme />
+        </NotificationProvider>
       </AppDarkModeProvider>
     </AppProvider>
   </StrictMode>

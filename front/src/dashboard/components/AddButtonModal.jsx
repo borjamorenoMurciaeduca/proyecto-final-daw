@@ -1,5 +1,4 @@
 import AddIcon from '@mui/icons-material/Add';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SearchIcon from '@mui/icons-material/Search';
@@ -16,28 +15,27 @@ import { useTranslation } from 'react-i18next';
 import InmuebleForm from '../../inmuebleForm/InmuebleForm';
 import InmuebleService from '../../services/inmuebleService.js';
 import inputValidatorService from '../../services/inputValidatorService';
+import { useNotification } from '../../context/AppNotificationContext.jsx';
 
 const AddButtonModal = () => {
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
   const [textValue, setTextValue] = useState('');
   const [error, setError] = useState(false);
-  const [showCheckIcon, setShowCheckIcon] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [inmuebleData, setInmuebleData] = useState(null);
+  const { notify } = useNotification();
 
   const handleOpen = () => {
     setOpen(true);
     setTextValue('');
     setError(false);
     setShowForm(false);
-    setShowCheckIcon(false);
   };
 
   const handleClose = () => {
     setOpen(false);
     setShowForm(false);
-    setShowCheckIcon(false);
   };
 
   const handleTextChange = (event) => {
@@ -45,32 +43,34 @@ const AddButtonModal = () => {
     setTextValue(value);
     setError(false);
     setShowForm(false);
-    setShowCheckIcon(false);
   };
 
   const handleSearch = async () => {
     const idInmueble = inputValidatorService.validateIdealistaURL(textValue);
     if (idInmueble.length > 0) {
-      setShowCheckIcon(true);
+      notify(t('snackbar.url-validation.ok'), 'success');
       try {
         const data = await InmuebleService.prepareInmuebleForm(idInmueble);
         
-        if (data) {
+        if (data?.dataStatus == "ok") {
           setInmuebleData(data);
           setShowForm(true);
         } else {
-          setError(true);
-          setShowCheckIcon(false);
           setShowForm(false);
+          if (data?.dataStatus == "baja") {
+            notify(t('snackbar.url-validation.baja'), 'info'); 
+          } else {
+            notify(t('snackbar.url-validation.ko'), 'error'); 
+          }
         }
-        
       } catch (error) {
+        notify(t('snackbar.prepare-inmueble-form.error'), 'error'); 
         console.error('Error al obtener datos:', error);
       }
     } else {
       setError(true);
-      setShowCheckIcon(false);
       setShowForm(false);
+      notify(t('snackbar.url-validation.ko-format'), 'error'); 
     }
   };
 
@@ -84,7 +84,6 @@ const AddButtonModal = () => {
     setShowForm(false);
     setError(false);
     setTextValue('');
-    setShowCheckIcon(false);
   };
 
   return (
@@ -159,18 +158,6 @@ const AddButtonModal = () => {
                 placeholder={t('addButtonModal.url')}
                 inputProps={{ 'aria-label': 'Introduce la URL' }}
               />
-              {showCheckIcon && (
-                <div
-                  style={{
-                    pointerEvents: 'none',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                  }}
-                  aria-label="check"
-                >
-                  <CheckCircleIcon style={{ color: 'green' }} />
-                </div>
-              )}
               <IconButton
                 type="button"
                 sx={{ p: '10px' }}
