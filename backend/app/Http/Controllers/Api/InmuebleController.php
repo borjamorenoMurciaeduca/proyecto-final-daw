@@ -90,6 +90,7 @@ class InmuebleController extends Controller {
             $validateInmueble = $request->validate([
                 'referencia' => 'numeric|required',
                 'fechaBajaAnuncio' => 'date|nullable',
+                'url_image' => 'string|nullable',
             ]);
 
             // Si el usuario ya tiene el inmueble registrado, no se puede registrar de nuevo
