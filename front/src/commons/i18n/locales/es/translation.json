@@ -6,7 +6,10 @@
   },
   "tooltip": {
     "open-settings": "Abrir configuración",
-    "change-language": "Cambiar idioma"
+    "change-language": "Cambiar idioma",
+    "close": "Cerrar",
+    "search": "Buscar",
+    "clear": "Limpiar búsqueda"
   },
   "theme-mode": {
     "light": "Modo día",
@@ -46,10 +49,13 @@
     "rooms": "Habitaciones",
     "garage": "Garaje",
     "storage": "Trastero",
-    "add-home": "Añadir vivienda"
+    "add-home": "Añadir vivienda",
+    "cancel": "Cancelar",
+    "description": "Descripción..."
   },
   "my-homes": "Mis viviendas",
   "addButtonModal": {
+    "title": "Buscar con IdealistaWatch",
     "url": "Introduce la URL",
     "validation": {
       "error": "La URL debe tener el formato correcto"

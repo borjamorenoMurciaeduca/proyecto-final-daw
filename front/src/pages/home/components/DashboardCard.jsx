@@ -6,9 +6,15 @@ import {
   Typography,
 } from '@mui/material';
 
-const DashboardCard = ({ ubicacion }) => {
+const DashboardCard = ({ inmueble }) => {
+  const { referenciaInmueble, ubicacion } = inmueble;
+  const lastPrice =
+    inmueble.inmueble.historial_precio[
+      inmueble.inmueble.historial_precio.length - 1
+    ].precio;
+
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card>
       <CardActionArea>
         <CardMedia
           component="img"
@@ -18,13 +24,16 @@ const DashboardCard = ({ ubicacion }) => {
         />
         <CardContent>
           <Typography variant="h5" color="text.secondary">
-            Inmobiliaria Rosa & Porta
+            [title]
           </Typography>
           <Typography gutterBottom variant="h6" component="div">
             Vivienda
           </Typography>
           <Typography variant="body2" color="text.secondary">
             {ubicacion}
+          </Typography>
+          <Typography gutterBottom variant="span" component="span">
+            Ref: {referenciaInmueble} | {lastPrice} €
           </Typography>
         </CardContent>
       </CardActionArea>

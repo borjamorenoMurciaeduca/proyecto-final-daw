@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { API_URL } from '../commons/config/config';
-const baseUrl = `${API_URL}/`;
+const baseURL = import.meta.env.VITE_API_URL;
 
 let token = null;
 const setToken = (newToken) => {
@@ -8,7 +7,7 @@ const setToken = (newToken) => {
 };
 
 const login = async (credentials) => {
-  const { data } = await axios.post(baseUrl + 'login', credentials);
+  const { data } = await axios.post(baseURL + 'login', credentials);
   return data;
 };
 
@@ -16,12 +15,12 @@ const user = async () => {
   const config = {
     headers: { Authorization: token },
   };
-  const { data } = await axios.get(baseUrl + 'user', config);
+  const { data } = await axios.get(baseURL + 'user', config);
   return data;
 };
 
 const register = async (credentials) => {
-  const { data } = await axios.post(baseUrl + 'register', credentials);
+  const { data } = await axios.post(baseURL + 'register', credentials);
   return data;
 };
 
@@ -30,7 +29,7 @@ const logout = async () => {
     headers: { Authorization: token },
   };
   localStorage.removeItem('user');
-  const { data } = await axios.post(baseUrl + 'logout', null, config);
+  const { data } = await axios.post(baseURL + 'logout', null, config);
   return data;
 };
 

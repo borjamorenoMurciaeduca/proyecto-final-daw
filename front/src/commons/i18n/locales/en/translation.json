@@ -6,7 +6,10 @@
   },
   "tooltip": {
     "open-settings": "Open settings",
-    "change-language": "Change language"
+    "change-language": "Change language",
+    "close": "Close",
+    "search": "Search",
+    "clear": "Clear search"
   },
   "theme-mode": {
     "light": "Day mode",
@@ -46,10 +49,13 @@
     "rooms": "Rooms",
     "garage": "Garage",
     "storage": "Storage",
-    "add-home": "Add home"
+    "add-home": "Add home",
+    "cancel": "Cancel",
+    "description": "Description..."
   },
   "my-homes": "My homes",
   "addButtonModal": {
+    "title": "Search with IdealistaWatch",
     "url": "Enter the URL",
     "validation": {
       "error": "The URL must be in the correct format"

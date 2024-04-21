@@ -1,15 +1,16 @@
-import { useReducer } from 'react';
-import { AppContext } from './AppContext';
+import { createContext, useReducer } from 'react';
 import { AppReducer } from './AppReducer';
+
+export const AppContext = createContext();
 
 const initialState = {
   user: null,
   usuarioInmuebles: [],
 };
-
 // eslint-disable-next-line react/prop-types
 export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
+
   const handleLogin = (usuario) => {
     dispatch({
       type: 'LOGIN',
@@ -21,9 +22,17 @@ export const AppProvider = ({ children }) => {
       type: 'LOGOUT',
     });
   };
+  const addVivienda = (vivienda) => {
+    dispatch({
+      type: 'ADD_VIVIENDA',
+      payload: vivienda,
+    });
+  };
 
   return (
-    <AppContext.Provider value={{ state, handleLogin, handleLogout }}>
+    <AppContext.Provider
+      value={{ state, handleLogin, handleLogout, addVivienda }}
+    >
       {children}
     </AppContext.Provider>
   );

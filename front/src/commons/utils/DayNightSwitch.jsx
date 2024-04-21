@@ -1,21 +1,21 @@
-import { Switch } from "@mui/material";
-import { AppDarkModeContext } from "../../context/AppDarkModeContext";
-import { useContext } from "react";
-import { useTranslation } from 'react-i18next';
+import useDarkMode from '@/hooks/useDarkMode';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { IconButton } from '@mui/material';
 
 const DayNightSwitch = () => {
-  const { darkMode, setDarkMode } = useContext(AppDarkModeContext);
-  const { t } = useTranslation();
+  const { darkMode, setDarkMode } = useDarkMode();
+  // const { t } = useTranslation();
 
   const toggleDarkMode = () => {
     setDarkMode((prevMode) => !prevMode);
   };
 
   return (
-    <div>
-      <Switch checked={darkMode} onChange={toggleDarkMode} />
-      <span>{darkMode ? t('theme-mode.dark') : t('theme-mode.light')}</span>
-    </div>
+    <IconButton onClick={toggleDarkMode}>
+      {/* <Switch checked={darkMode} onChange={toggleDarkMode} /> */}
+      {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+    </IconButton>
   );
 };
 

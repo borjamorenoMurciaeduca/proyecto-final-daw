@@ -1,25 +1,27 @@
-import { Container } from '@mui/material';
+import { Box, CircularProgress, Container } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './commons/i18n/i18n';
-import Dashboard from './dashboard/Dashboard';
-import useAppStateHook from './hooks/useAppStateHook';
-import Login from './login/Login';
-import Register from './register/Register';
+import useAppState from './hooks/useAppState.js';
+import Layout from './layout/';
+import Login from './pages/auth/Login';
+import Register from './pages/auth/register/Register';
+import Home from './pages/home/Home';
 import InmuebleService from './services/inmuebleService';
 import LoginService from './services/loginService';
-import TopMenu from './topMenu/TopMenu';
+
 const App = () => {
   const [view, setView] = useState('login');
-  const [openSnack, setOpenSnack] = useState(false);
-  const { state, handleLogin } = useAppStateHook();
+  const { state, handleLogin } = useAppState();
+  const [loading, setLoading] = useState(false);
   const { user } = state;
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('user');
     if (loggedUserJSON) {
+      setLoading(true);
       const { token } = JSON.parse(loggedUserJSON);
-      const setLoginService = async () => {
+      (async () => {
         if (token) {
           try {
             LoginService.setToken(token);
@@ -28,41 +30,50 @@ const App = () => {
             handleLogin(data);
           } catch (error) {
             console.error('Error al obtener datos del usuario:', error);
+          } finally {
+            setTimeout(() => {
+              setLoading(false);
+            }, 1000);
           }
+        } else {
+          setLoading(false);
         }
-      };
-      setLoginService();
+      })();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(view);
 
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: ' center',
+          alignItems: 'center',
+          minHeight: '100vh',
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
   // Aquí se maneja el estado de la app, si el usuario existe y esta en el estado global
   // se muestra la vista de la "app" o la vista del login
   return (
     <I18nextProvider i18n={i18n}>
       {user ? (
         <>
-          <TopMenu />
-          <Container maxWidth="lg">
-            <Dashboard />
+          <Layout />
+          <Container maxWidth="lg" sx={{ paddingBottom: 5 }}>
+            <Home />
           </Container>
         </>
       ) : (
         <>
-          {view === 'login' && (
-            <Login
-              setView={setView}
-              openSnack={openSnack}
-              setOpenSnack={setOpenSnack}
-            />
-          )}
-          {view === 'register' && (
-            <Register setView={setView} setOpenSnack={setOpenSnack} />
-          )}
+          {view === 'login' && <Login setView={setView} />}
+          {view === 'register' && <Register setView={setView} />}
         </>
       )}
-      {/* <SignUp /> */}
     </I18nextProvider>
   );
 };

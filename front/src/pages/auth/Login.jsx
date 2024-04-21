@@ -1,3 +1,7 @@
+import LanguageSelector from '@/commons/utils/LanguageSelector.jsx';
+import useAppState from '@/hooks/useAppState.js';
+import InmuebleService from '@/services/inmuebleService.js';
+import LoginService from '@/services/loginService.js';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
   Alert,
@@ -11,23 +15,17 @@ import {
   InputLabel,
   Link,
   OutlinedInput,
-  Snackbar,
   TextField,
   Typography,
 } from '@mui/material';
-import Slide from '@mui/material/Slide';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Copyright from '../copyright';
-import useAppStateHook from '../hooks/useAppStateHook.jsx';
-import InmuebleService from '../services/inmuebleService.js';
-import LoginService from '../services/loginService.js';
-import LanguageSelector from '../commons/utils/LanguageSelector.jsx';
+import Copyright from './components/copyright/index.jsx';
 
-const Login = ({ setView, openSnack, setOpenSnack }) => {
+const Login = ({ setView }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
-  const { handleLogin } = useAppStateHook();
+  const { handleLogin } = useAppState();
   const { t } = useTranslation();
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -37,16 +35,6 @@ const Login = ({ setView, openSnack, setOpenSnack }) => {
   const handleView = (e) => {
     e.preventDefault();
     setView('register');
-  };
-
-  function SlideTransition(props) {
-    return <Slide {...props} direction="up" />;
-  }
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpenSnack(false);
   };
 
   const handleLoginSubmit = async (e) => {
@@ -124,6 +112,7 @@ const Login = ({ setView, openSnack, setOpenSnack }) => {
               helperText=""
               id="username"
               name="username"
+              autoComplete="username"
               label={t('login-form.form.name')}
               fullWidth
               autoFocus
@@ -137,6 +126,7 @@ const Login = ({ setView, openSnack, setOpenSnack }) => {
               <OutlinedInput
                 id="password"
                 name="password"
+                autoComplete="current-password"
                 type={showPassword ? 'text' : 'password'}
                 label={t('login-form.form.password')}
                 endAdornment={
@@ -170,21 +160,6 @@ const Login = ({ setView, openSnack, setOpenSnack }) => {
       </Box>
       <LanguageSelector />
       <Copyright sx={{ mt: 5 }} />
-      <Snackbar
-        open={openSnack}
-        autoHideDuration={6000}
-        onClose={handleClose}
-        TransitionComponent={SlideTransition}
-      >
-        <Alert
-          onClose={handleClose}
-          severity="success"
-          variant="filled"
-          sx={{ width: '100%' }}
-        >
-          {t('register-form.success')}
-        </Alert>
-      </Snackbar>
     </Container>
   );
 };

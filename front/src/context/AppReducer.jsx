@@ -18,6 +18,11 @@ export const AppReducer = (state, action) => {
         ...state,
         usuarioInmuebles: action.payload,
       };
+    case 'ADD_VIVIENDA':
+      return {
+        ...state,
+        usuarioInmuebles: [...state.usuarioInmuebles, action.payload],
+      };
     default:
       return state;
   }

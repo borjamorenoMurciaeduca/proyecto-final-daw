@@ -1,5 +1,4 @@
-import AdbIcon from "@mui/icons-material/Adb";
-import MenuIcon from "@mui/icons-material/Menu";
+import MenuIcon from '@mui/icons-material/Menu';
 import {
   AppBar,
   Avatar,
@@ -12,26 +11,25 @@ import {
   Toolbar,
   Tooltip,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 
-import { useState } from "react";
-import useAppStateHook from "../hooks/useAppStateHook.jsx";
-import LoginService from "../services/loginService.js";
-import LanguageFlagSelector from "../commons/utils/LanguageFlagSelector.jsx";
-import { useTranslation } from "react-i18next";
-import { APP_NAME } from "../commons/config/config.js";
-import DayNightSwitch from "../commons/utils/DayNightSwitch.jsx";
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '../commons/config/config.js';
+import DayNightSwitch from '../commons/utils/DayNightSwitch.jsx';
+import LanguageFlagSelector from '../commons/utils/LanguageFlagSelector.jsx';
+import useAppState from '../hooks/useAppState.js';
+import LoginService from '../services/loginService.js';
 
-const pages = ["Mis viviendas", "Pricing"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const pages = ['Mis viviendas', 'Pricing'];
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const TopMenu = () => {
+const Layout = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const { handleLogout, state } = useAppStateHook();
+  const { handleLogout, state } = useAppState();
   const { t } = useTranslation();
-
-  let name = state.user?.username || "";
+  let name = state.user?.username || '';
 
   const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
   const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
@@ -45,30 +43,43 @@ const TopMenu = () => {
   };
 
   return (
-    <AppBar position="static" sx={{ bgcolor: '#00c375' }}>
+    <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Box sx={{ display: { xs: "none", md: "flex" }, mr: 2 }}>
-            <img src="/logo/logo-idealistawatch.png" alt="" height="42px" width="42px" style={{border: '2px solid #000', borderRadius: '8px'}}/>
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 2 }}>
+            <img
+              src="/logo/logo-idealistawatch.png"
+              alt=""
+              height="42px"
+              width="42px"
+              style={{ border: '2px solid #000', borderRadius: '8px' }}
+            />
           </Box>
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
+            // component="a"
+            // href="#"
             sx={{
               mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
               fontWeight: 700,
-              color: "inherit",
-              textDecoration: "none",
+              // color: 'inherit',
+              textDecoration: 'none',
+              color: 'palette.error.dark',
             }}
           >
-            { APP_NAME }
+            {APP_NAME}
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <img
+              src="/logo/logo-idealistawatch.png"
+              alt=""
+              height="40px"
+              width="40px"
+            />
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -83,18 +94,18 @@ const TopMenu = () => {
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
+                vertical: 'bottom',
+                horizontal: 'left',
               }}
               keepMounted
               transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
+                vertical: 'top',
+                horizontal: 'left',
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: "block", md: "none" },
+                display: { xs: 'block', md: 'none' },
               }}
             >
               {pages.map((page) => (
@@ -104,15 +115,12 @@ const TopMenu = () => {
               ))}
             </Menu>
           </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <img src="/logo/logo-idealistawatch.png" alt="" height="40px" width="40px" />
-          </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+                sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
               </Button>
@@ -120,7 +128,7 @@ const TopMenu = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title={t("tooltip.open-settings")}>
+            <Tooltip title={t('tooltip.open-settings')}>
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar
                   alt={name.toUpperCase()}
@@ -129,17 +137,17 @@ const TopMenu = () => {
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: "45px" }}
+              sx={{ mt: '45px' }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
+                vertical: 'top',
+                horizontal: 'right',
               }}
               keepMounted
               transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
+                vertical: 'top',
+                horizontal: 'right',
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
@@ -153,7 +161,7 @@ const TopMenu = () => {
               ))}
               <MenuItem onClick={handleLogoutMenu}>
                 <Typography textAlign="center">
-                  {t("top-menu.settings.logout-v2")}
+                  {t('top-menu.settings.logout-v2')}
                 </Typography>
               </MenuItem>
             </Menu>
@@ -169,4 +177,4 @@ const TopMenu = () => {
     </AppBar>
   );
 };
-export default TopMenu;
+export default Layout;

@@ -1,3 +1,6 @@
+import LanguageSelector from '@//commons/utils/LanguageSelector';
+import LoginService from '@//services/loginService';
+import useNotification from '@/hooks/useNotification';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {
@@ -18,14 +21,14 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Copyright from '../copyright';
-import LoginService from '../services/loginService';
-import LanguageSelector from '../commons/utils/LanguageSelector';
+import Copyright from '../components/copyright';
 
-const Register = ({ setView, setOpenSnack }) => {
+const Register = ({ setView }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState(null);
+  const { t } = useTranslation();
+  const { notify } = useNotification();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -36,8 +39,6 @@ const Register = ({ setView, setOpenSnack }) => {
     event.preventDefault();
   };
 
-  const { t } = useTranslation();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const dataForm = new FormData(e.currentTarget);
@@ -47,6 +48,8 @@ const Register = ({ setView, setOpenSnack }) => {
       password_confirmation: dataForm.get('password_confirmation'),
     };
     try {
+      if (credentials.password !== credentials.password_confirmation)
+        throw new Error('Las contraseñas no coinciden');
       const res = await LoginService.register(credentials);
 
       if (res.error) {
@@ -54,7 +57,7 @@ const Register = ({ setView, setOpenSnack }) => {
       }
 
       if (res.statusCode === 201) {
-        setOpenSnack(true);
+        notify('Usuario registrado correctamente', 'success');
         setView('login');
       }
       e.target.username.value = '';
@@ -62,10 +65,12 @@ const Register = ({ setView, setOpenSnack }) => {
       e.target.password_confirmation.value = '';
     } catch (error) {
       console.log(error);
-      setError('Error en las credenciales');
+      let msg = error.response?.data?.message || error.message;
+      notify(msg, 'error');
+      setError(msg);
       setTimeout(() => {
         setError(null);
-      }, 5000);
+      }, 3000);
     }
   };
 
@@ -118,6 +123,7 @@ const Register = ({ setView, setOpenSnack }) => {
               <OutlinedInput
                 id="password"
                 name="password"
+                autoComplete="new-password"
                 type={showPassword ? 'text' : 'password'}
                 label={t('login-form.form.password')}
                 endAdornment={
@@ -142,6 +148,7 @@ const Register = ({ setView, setOpenSnack }) => {
               </InputLabel>
               <OutlinedInput
                 id="password_confirmation"
+                autoComplete="new-password"
                 type={showConfirmPassword ? 'text' : 'password'}
                 name="password_confirmation"
                 label={t('login-form.form.confirm-password')}

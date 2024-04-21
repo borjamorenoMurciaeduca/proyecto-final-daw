@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { API_URL } from '../commons/config/config';
 import inputValidatorService from './inputValidatorService';
-const baseInmuebleUrl = `${API_URL}/inmueble`;
-const basePrepareInmuebleUrl = `${API_URL}/prepare-inmueble/`;
+const baseURL = import.meta.env.VITE_API_URL;
+
+const baseInmuebleUrl = baseURL + 'inmueble';
+const basePrepareInmuebleUrl = baseURL + 'prepare-inmueble/';
 
 let token = null;
 const setToken = (newToken) => {
@@ -31,7 +32,6 @@ const prepareInmuebleForm = async (idInmueble) => {
     return data;
   }
   return null;
-
 };
 
 export default { addInmueble, prepareInmuebleForm, setToken };
