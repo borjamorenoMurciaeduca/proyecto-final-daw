@@ -1,4 +1,5 @@
 import axios from 'axios';
+import axiosInterceptor from '../utils/http';
 const baseURL = import.meta.env.VITE_API_URL;
 
 let token = null;
@@ -12,10 +13,7 @@ const login = async (credentials) => {
 };
 
 const user = async () => {
-  const config = {
-    headers: { Authorization: token },
-  };
-  const { data } = await axios.get(baseURL + 'user', config);
+  const { data } = await axiosInterceptor.get(baseURL + 'user');
   return data;
 };
 

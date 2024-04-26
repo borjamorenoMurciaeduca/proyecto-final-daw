@@ -1,31 +1,17 @@
-import axios from 'axios';
+import axiosInterceptor from '../utils/http';
 import inputValidatorService from './inputValidatorService';
 const baseURL = import.meta.env.VITE_API_URL;
 
-const baseInmuebleUrl = baseURL + 'inmueble';
-const basePrepareInmuebleUrl = baseURL + 'prepare-inmueble/';
-
-let token = null;
-const setToken = (newToken) => {
-  token = `Bearer ${newToken}`;
-};
-
 const addInmueble = async ({ inmuebleToAdd }) => {
-  const config = {
-    headers: { Authorization: token },
-  };
-
-  let res = await axios.post(baseInmuebleUrl, inmuebleToAdd, config);
+  let res = await axiosInterceptor.post(baseURL + 'inmueble', inmuebleToAdd);
   return res;
 };
 
 const prepareInmuebleForm = async (idInmueble) => {
-  const config = {
-    headers: { Authorization: token },
-  };
-
-  let res = await axios.get(basePrepareInmuebleUrl + idInmueble, config);
-
+  // let res = await axios.get(basePrepareInmuebleUrl + idInmueble, config);
+  let res = await axiosInterceptor.get(
+    `${baseURL}prepare-inmueble/${idInmueble}`
+  );
   let data = inputValidatorService.createInmueble(res);
 
   if (data) {
@@ -34,4 +20,4 @@ const prepareInmuebleForm = async (idInmueble) => {
   return null;
 };
 
-export default { addInmueble, prepareInmuebleForm, setToken };
+export default { addInmueble, prepareInmuebleForm };

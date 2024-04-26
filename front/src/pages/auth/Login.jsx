@@ -1,6 +1,5 @@
 import LanguageSelector from '@/commons/utils/LanguageSelector.jsx';
 import useAppState from '@/hooks/useAppState.js';
-import InmuebleService from '@/services/inmuebleService.js';
 import LoginService from '@/services/loginService.js';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
@@ -52,9 +51,10 @@ const Login = ({ setView }) => {
         password,
       });
       let { token } = res.data;
+      window.localStorage.setItem('token', token);
       //Añadir los tokens a los servicios de Inmueble y Login
-      InmuebleService.setToken(token);
-      LoginService.setToken(token);
+      // InmuebleService.setToken(token);
+      // LoginService.setToken(token);
       //Guardar el usuario y el token en el localStorage
       window.localStorage.setItem('user', JSON.stringify(res.data));
       //Obtener los datos del usuario y los inmuebles
