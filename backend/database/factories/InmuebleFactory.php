@@ -14,7 +14,7 @@ class InmuebleFactory extends Factory {
         return [
             'referencia' => $this->faker->unique()->randomNumber(9),
             'fechaBajaAnuncio' => $this->faker->date(),
-            'url_imagen' => $this->faker->imageUrl(),
+            'urlImagen' => $this->faker->imageUrl(),
         ];
     }
 }
