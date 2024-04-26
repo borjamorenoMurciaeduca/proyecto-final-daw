@@ -1,5 +1,10 @@
 # instalación de python
 
+```
+sudo apt install python3
+sudo apt install python3-pip
+```
+
 ## comandos para la instalación de python
 
 Asegúrate de tener Python instalado en tu sistema. Puedes verificar ejecutando python --version en tu terminal o símbolo del sistema.

@@ -4,13 +4,11 @@ export const AppReducer = (state, action) => {
     case 'LOGIN':
       return {
         ...state,
-        user: action.payload.user,
-        usuarioInmuebles: action.payload.usuarioInmuebles,
+        usuarioInmuebles: action.payload,
       };
     case 'LOGOUT':
       return {
         ...state,
-        user: null,
         usuarioInmuebles: [],
       };
     case 'GET_VIVIENDAS_USUARIO':

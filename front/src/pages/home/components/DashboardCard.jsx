@@ -11,7 +11,7 @@ const DashboardCard = ({ inmueble }) => {
   const lastPrice =
     inmueble.inmueble.historial_precio[
       inmueble.inmueble.historial_precio.length - 1
-    ].precio;
+    ]?.precio;
 
   return (
     <Card>

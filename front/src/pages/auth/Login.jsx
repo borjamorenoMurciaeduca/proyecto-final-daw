@@ -1,6 +1,7 @@
 import LanguageSelector from '@/commons/utils/LanguageSelector.jsx';
 import useAppState from '@/hooks/useAppState.js';
-import LoginService from '@/services/loginService.js';
+import loginService from '@/services/loginService.js';
+import { USER_LOCAL_TOKEN } from '@/strings/defaults.js';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
   Alert,
@@ -19,6 +20,7 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import Copyright from './components/copyright/index.jsx';
 
 const Login = ({ setView }) => {
@@ -26,6 +28,8 @@ const Login = ({ setView }) => {
   const [error, setError] = useState(null);
   const { handleLogin } = useAppState();
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
@@ -46,24 +50,26 @@ const Login = ({ setView }) => {
     console.log({ username, password });
     try {
       if (!password) throw new Error('Password is required');
-      const res = await LoginService.login({
+      const res = await loginService.login({
         username,
         password,
       });
       let { token } = res.data;
-      window.localStorage.setItem('token', token);
+      window.localStorage.setItem(USER_LOCAL_TOKEN, token);
       //Añadir los tokens a los servicios de Inmueble y Login
       // InmuebleService.setToken(token);
       // LoginService.setToken(token);
       //Guardar el usuario y el token en el localStorage
       window.localStorage.setItem('user', JSON.stringify(res.data));
       //Obtener los datos del usuario y los inmuebles
-      const { data } = await LoginService.user();
+      const { data } = await loginService.user();
       //Guardamos los datos del usuario en el estado global
       handleLogin(data);
       e.target.username.value = '';
       e.target.password.value = '';
       setError(false);
+
+      navigate('/app');
     } catch (error) {
       console.log(error);
       setError('Error en las credenciales');

@@ -1,16 +1,16 @@
+import useAppState from '@/hooks/useAppState.js';
 import loginService from '@/services/loginService.js';
 import { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import PageLoader from '../../components/PageLoader.jsx';
 import { useUser } from '../../context/userProvider.jsx';
 import { USER_LOCAL_TOKEN } from '../../strings/defaults.js';
-import Cookie from '../../utils/cookie.js';
 
 const AuthGuard = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { setUpdateUser } = useUser();
-
+  const { handleLogin } = useAppState();
   useEffect(() => {
     (async () => {
       const token = window.localStorage.getItem(USER_LOCAL_TOKEN);
@@ -18,9 +18,12 @@ const AuthGuard = () => {
         if (token) {
           let res = await loginService.user();
           if (res?.data?.user?.id) {
-            setLoading(false);
+            console.log('res', res);
             // guardar datos del usuario en contexto
-            setUpdateUser(res?.data?.user?.id);
+            setUpdateUser(res?.data?.user);
+            console.log('inm ', res?.data?.usuarioInmuebles);
+            handleLogin(res?.data?.usuarioInmuebles);
+            // setLoading(false);
           } else {
             throw new Error('No se encontró el usuario');
           }
@@ -40,7 +43,7 @@ const AuthGuard = () => {
 
   const handleSessionError = (message) => {
     console.warn(message);
-    Cookie.clear();
+    window.localStorage.clear();
     navigate('/auth');
   };
 

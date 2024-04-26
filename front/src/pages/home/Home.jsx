@@ -6,8 +6,8 @@ import DashboardCard from './components/DashboardCard';
 
 const Dashboard = () => {
   const { state } = useAppState();
-  const { t } = useTranslation();
   const { usuarioInmuebles } = state;
+  const { t } = useTranslation();
   console.log(usuarioInmuebles);
   return (
     <>
