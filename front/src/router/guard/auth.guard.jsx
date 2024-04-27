@@ -1,11 +1,11 @@
+import PageLoader from '@/components/PageLoader.jsx';
 import useUser from '@/hooks/useUser.js';
 import useViviendas from '@/hooks/useViviendas.js';
 import loginService from '@/services/loginService.js';
+import { USER_COOKIE_TOKEN } from '@/strings/defaults.js';
 import cookie from '@/utils/cookie.js';
 import { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import PageLoader from '../../components/PageLoader.jsx';
-import { USER_COOKIE_TOKEN } from '../../strings/defaults.js';
 
 const AuthGuard = () => {
   const [loading, setLoading] = useState(true);

@@ -1,5 +1,5 @@
+import { ViviendasContext } from '@/contexts/ViviendasProvider';
 import { useContext } from 'react';
-import { ViviendasContext } from '../contexts/ViviendasProvider';
 
 const useViviendas = () => {
   const { state, setViviendas, addVivienda, handleLogout } =

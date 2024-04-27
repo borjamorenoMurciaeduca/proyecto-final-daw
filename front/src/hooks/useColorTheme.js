@@ -1,5 +1,5 @@
+import { ColorThemeContext } from '@/contexts/ColorThemeProvider';
 import { useContext } from 'react';
-import { ColorThemeContext } from '../contexts/ColorThemeProvider';
 
 const useColorTheme = () => {
   const { colorMode } = useContext(ColorThemeContext);

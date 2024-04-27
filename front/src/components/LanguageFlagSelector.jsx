@@ -1,7 +1,7 @@
+import { DEFAULT_LANGUAGES } from '@/commons/config/config';
 import { IconButton, Menu, MenuItem, Tooltip } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DEFAULT_LANGUAGES } from '../commons/config/config';
 
 const LanguageFlagSelector = () => {
   const { i18n, t } = useTranslation();

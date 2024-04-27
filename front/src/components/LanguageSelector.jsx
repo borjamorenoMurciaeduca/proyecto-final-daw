@@ -1,10 +1,10 @@
+import { DEFAULT_LANGUAGES, INIT_LANGUAGE } from '@/commons/config/config';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DEFAULT_LANGUAGES, INIT_LANGUAGE } from '../commons/config/config';
 
 const LanguageSelector = () => {
   const { i18n, t } = useTranslation();

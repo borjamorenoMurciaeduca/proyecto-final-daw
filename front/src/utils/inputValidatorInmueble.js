@@ -1,5 +1,5 @@
+import { PALABRAS_CLAVE } from '@/commons/config/config';
 import Inmueble from '@/models/inmueble';
-import { PALABRAS_CLAVE } from '../commons/config/config';
 
 const validateIdealistaURL = (url) => {
   const regex = /^https?:\/\/(www\.)?idealista\.com\/inmueble\/(\d+)\/?$/;
