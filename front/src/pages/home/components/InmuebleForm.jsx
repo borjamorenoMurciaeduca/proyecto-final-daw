@@ -81,9 +81,7 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
       if (data.status === 201) {
         const { data } = await loginService.user();
         setViviendas(data?.usuarioInmuebles);
-        // SI LA RESPUESTA ES CORRECTA, SE AÑADE LA VIVIENDA AL ESTADO GLOBAL
-        // no hacemos petición al servidor para obtener las viviendas del usuario
-        console.log(data);
+        // console.log(data);
         // addVivienda(inmuebleToAdd);
         // setSeverity('success');
         // setMessage('Vivienda añadida con éxito');

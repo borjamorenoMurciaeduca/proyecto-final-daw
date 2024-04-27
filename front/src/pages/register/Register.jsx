@@ -63,7 +63,7 @@ const Register = () => {
       e.target.password.value = '';
       e.target.password_confirmation.value = '';
     } catch (error) {
-      console.log(error);
+      console.warn(error);
       let msg = error.response?.data?.message || error.message;
       notify(msg, 'error');
       setError(msg);

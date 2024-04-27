@@ -90,7 +90,7 @@ const Login = () => {
       setError(false);
       navigate('/app', { replace: true });
     } catch (error) {
-      console.log(error);
+      console.warn(error);
       setError('Error en las credenciales');
       setTimeout(() => {
         setError(null);
