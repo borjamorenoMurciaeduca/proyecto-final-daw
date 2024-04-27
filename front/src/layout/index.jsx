@@ -6,6 +6,7 @@ import {
   Button,
   Container,
   IconButton,
+  Link,
   Menu,
   MenuItem,
   Toolbar,
@@ -13,15 +14,15 @@ import {
   Typography,
 } from '@mui/material';
 
+import logoIdealista from '@/assets/logo/logo-idealistawatch.png';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, Link as RouterLink, useNavigate } from 'react-router-dom';
 import { APP_NAME } from '../commons/config/config.js';
-import DayNightSwitch from '../commons/utils/DayNightSwitch.jsx';
 import LanguageFlagSelector from '../commons/utils/LanguageFlagSelector.jsx';
+import DayNightSwitch from '../components/DayNightSwitch.jsx';
 import useAppState from '../hooks/useAppState.js';
 import LoginService from '../services/loginService.js';
-
 const pages = ['Mis viviendas', 'Pricing'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -53,39 +54,37 @@ const Layout = () => {
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 2 }}>
-              <img
-                src="/logo/logo-idealistawatch.png"
-                alt=""
-                height="42px"
-                width="42px"
-                style={{ border: '2px solid #000', borderRadius: '8px' }}
-              />
+              <Link component={RouterLink} to="/app">
+                <img
+                  src={logoIdealista}
+                  alt="logo"
+                  height="42px"
+                  width="42px"
+                  style={{ border: '2px solid #000', borderRadius: '8px' }}
+                />
+              </Link>
             </Box>
-            <Typography
-              variant="h6"
-              noWrap
-              // component="a"
-              // href="#"
-              sx={{
-                mr: 2,
-                display: { xs: 'none', md: 'flex' },
-                fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-                fontWeight: 700,
-                // color: 'inherit',
-                textDecoration: 'none',
-                color: 'palette.error.dark',
-              }}
+            <Link
+              component={RouterLink}
+              to="/app"
+              sx={{ textDecoration: 'none' }}
+              color="inherit"
             >
-              {APP_NAME}
-            </Typography>
-
+              <Typography
+                variant="h6"
+                noWrap
+                sx={{
+                  mr: 2,
+                  display: { xs: 'none', md: 'flex' },
+                  fontWeight: 700,
+                  textDecoration: 'none',
+                  color: 'palette.error.dark',
+                }}
+              >
+                {APP_NAME}
+              </Typography>
+            </Link>
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-              <img
-                src="/logo/logo-idealistawatch.png"
-                alt=""
-                height="40px"
-                width="40px"
-              />
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -181,7 +180,7 @@ const Layout = () => {
           </Toolbar>
         </Container>
       </AppBar>
-      <Container maxWidth="xl">
+      <Container maxWidth="lg" sx={{ pb: 5 }}>
         <Outlet />
       </Container>
     </>

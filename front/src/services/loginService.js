@@ -1,5 +1,5 @@
 import axios from 'axios';
-import axiosInterceptor from '../utils/http';
+import axiosInterceptor from '../utils/httpInterceptor';
 const baseURL = import.meta.env.VITE_API_URL;
 
 let token = null;

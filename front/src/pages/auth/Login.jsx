@@ -1,4 +1,6 @@
+import idealistaWatchLogo from '@/assets/logo/logo-idealistawatch.png';
 import LanguageSelector from '@/commons/utils/LanguageSelector.jsx';
+import Copyright from '@/components/Copyright';
 import useAppState from '@/hooks/useAppState.js';
 import loginService from '@/services/loginService.js';
 import { USER_LOCAL_TOKEN } from '@/strings/defaults.js';
@@ -20,10 +22,9 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
-import Copyright from './components/copyright/index.jsx';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
-const Login = ({ setView }) => {
+const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const { handleLogin } = useAppState();
@@ -35,10 +36,10 @@ const Login = ({ setView }) => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  const handleView = (e) => {
-    e.preventDefault();
-    setView('register');
-  };
+  // const handleView = (e) => {
+  //   e.preventDefault();
+  //   setView('register');
+  // };
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
@@ -93,7 +94,7 @@ const Login = ({ setView }) => {
     >
       <Box sx={{ maxWidth: '80px', marginBottom: 1 }}>
         <img
-          src="/logo/logo-idealistawatch.png"
+          src={idealistaWatchLogo}
           alt="logo"
           style={{ objectFit: 'cover', width: '100%' }}
         />
@@ -158,7 +159,7 @@ const Login = ({ setView }) => {
         </Grid>
         <Grid container item justifyContent="flex-end">
           <Grid item>
-            <Link href="" variant="body2" onClick={handleView}>
+            <Link component={RouterLink} to="/register" variant="body2">
               {t('login-form.register')}
             </Link>
           </Grid>
@@ -169,4 +170,5 @@ const Login = ({ setView }) => {
     </Container>
   );
 };
+
 export default Login;

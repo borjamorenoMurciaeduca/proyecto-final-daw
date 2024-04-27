@@ -1,5 +1,5 @@
-import axiosInterceptor from '../utils/http';
-import inputValidatorService from './inputValidatorService';
+import axiosInterceptor from '@/utils/httpInterceptor';
+import inputValidatorInmueble from '@/utils/inputValidatorInmueble';
 const baseURL = import.meta.env.VITE_API_URL;
 
 const addInmueble = async ({ inmuebleToAdd }) => {
@@ -12,7 +12,7 @@ const prepareInmuebleForm = async (idInmueble) => {
   let res = await axiosInterceptor.get(
     `${baseURL}prepare-inmueble/${idInmueble}`
   );
-  let data = inputValidatorService.createInmueble(res);
+  let data = inputValidatorInmueble.createInmueble(res);
 
   if (data) {
     return data;

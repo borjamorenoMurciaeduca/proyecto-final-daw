@@ -17,7 +17,8 @@ const Dashboard = () => {
         {usuarioInmuebles.map((inmueble) => (
           <Grid
             xs={12}
-            md={4}
+            md={6}
+            lg={4}
             item
             key={inmueble.id}
             // sx={{

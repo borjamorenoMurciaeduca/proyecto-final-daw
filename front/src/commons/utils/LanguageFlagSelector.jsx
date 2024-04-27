@@ -1,7 +1,7 @@
-import { React, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
-import { DEFAULT_LANGUAGES } from "../config/config";
+import { IconButton, Menu, MenuItem, Tooltip } from '@mui/material';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { DEFAULT_LANGUAGES } from '../config/config';
 
 const LanguageFlagSelector = () => {
   const { i18n, t } = useTranslation();
@@ -33,23 +33,23 @@ const LanguageFlagSelector = () => {
 
   return (
     <div>
-      <Tooltip title={t("tooltip.change-language")}>
+      <Tooltip title={t('tooltip.change-language')}>
         <IconButton onClick={handleOpenI18NMenu} sx={{ p: 0 }}>
           {getLanguageFlag(i18n.language, 38, true)}
         </IconButton>
       </Tooltip>
       <Menu
-        sx={{ mt: "45px" }}
+        sx={{ mt: '45px' }}
         id="menu-appbar"
         anchorEl={anchorElI18N}
         anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
+          vertical: 'top',
+          horizontal: 'right',
         }}
         keepMounted
         transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
+          vertical: 'top',
+          horizontal: 'right',
         }}
         open={Boolean(anchorElI18N)}
         onClose={handleCloseI18NMenu}
@@ -59,7 +59,7 @@ const LanguageFlagSelector = () => {
             key={language}
             onClick={() => handleChangeLanguage(`${language.toLowerCase()}`)}
           >
-            {getLanguageFlag(`${language.toLowerCase()}`)}{" "}
+            {getLanguageFlag(`${language.toLowerCase()}`)}{' '}
             {t(`languages.${language.toLowerCase()}`)}
           </MenuItem>
         ))}

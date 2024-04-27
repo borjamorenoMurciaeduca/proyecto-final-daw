@@ -1,6 +1,6 @@
 import { useNotification } from '@/hooks/useNotification.js';
 import InmuebleService from '@/services/inmuebleService.js';
-import inputValidatorService from '@/services/inputValidatorService.js';
+import inputValidatorInmueble from '@/utils/inputValidatorInmueble.js';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -52,7 +52,7 @@ const AddButtonModal = () => {
   };
 
   const handleSearch = async () => {
-    const idInmueble = inputValidatorService.validateIdealistaURL(textValue);
+    const idInmueble = inputValidatorInmueble.validateIdealistaURL(textValue);
     if (idInmueble.length > 0) {
       notify(t('snackbar.url-validation.ok'), 'success');
       try {
@@ -101,7 +101,19 @@ const AddButtonModal = () => {
         p: 0,
       }}
     >
-      <Fab sx={{ bgcolor: 'navOr.main' }} aria-label="add" onClick={handleOpen}>
+      <Fab
+        sx={{
+          bgcolor: 'navOr.main',
+          position: 'fixed',
+          // top: 90,
+          top: { xs: 'auto', md: 90 },
+          bottom: { xs: 20, md: 'auto' },
+          // right: 50,
+          right: { xs: 20, md: 20, lg: 50 },
+        }}
+        aria-label="add"
+        onClick={handleOpen}
+      >
         <AddIcon />
       </Fab>
       <Dialog
@@ -146,15 +158,6 @@ const AddButtonModal = () => {
               onKeyDown={handleKeyPress}
               inputProps={{ 'aria-label': t('addButtonModal.url') }}
             />
-            {/* <InputBase
-              fullWidth
-              variant="outlined"
-              value={textValue}
-              onChange={handleTextChange}
-              onKeyPress={handleKeyPress}
-              placeholder="https://www.idealista.com/inmueble/xxxxx/"
-              inputProps={{ 'aria-label': 'Introduce la URL' }}
-            /> */}
           </Grid>
           <Box>
             <Tooltip title={t('tooltip.search')}>

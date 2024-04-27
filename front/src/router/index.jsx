@@ -6,11 +6,12 @@ import {
 import AuthGuard from './guard/auth.guard';
 import app from './routes/app';
 import auth from './routes/auth';
+import register from './routes/register';
 
 const router = createBrowserRouter([
   { path: '/app', element: <AuthGuard />, children: app },
   { path: '/auth', children: auth },
-  { path: '/register', children: auth },
+  { path: '/register', children: register },
   { path: '*', element: <Navigate to="/app" /> },
 ]);
 

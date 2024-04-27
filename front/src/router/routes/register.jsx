@@ -1,4 +1,4 @@
-import Register from '@/pages/auth/register/Register';
+import Register from '@/pages/register/Register';
 
 const LayoutRoutes = [
   {

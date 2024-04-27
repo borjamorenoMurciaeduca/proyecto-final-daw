@@ -1,9 +1,9 @@
 import useAppState from '@/hooks/useAppState.js';
+import useUser from '@/hooks/useUser.js';
 import loginService from '@/services/loginService.js';
 import { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import PageLoader from '../../components/PageLoader.jsx';
-import { useUser } from '../../context/userProvider.jsx';
 import { USER_LOCAL_TOKEN } from '../../strings/defaults.js';
 
 const AuthGuard = () => {

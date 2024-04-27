@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { AppContext } from '../context/AppProvider.jsx';
+import { AppContext } from '../contexts/AppProvider';
 
 const useAppState = () => {
   const { state, handleLogin, handleLogout, addVivienda } =
