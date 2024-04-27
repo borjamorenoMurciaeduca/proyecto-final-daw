@@ -1,14 +1,14 @@
-import useAppState from '@/hooks/useAppState';
+import useViviendas from '@/hooks/useViviendas';
 import { Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import AddButtonModal from './components/AddButtonModal';
 import DashboardCard from './components/DashboardCard';
 
 const Dashboard = () => {
-  const { state } = useAppState();
+  const { state } = useViviendas();
   const { usuarioInmuebles } = state;
   const { t } = useTranslation();
-  console.log(usuarioInmuebles);
+
   return (
     <>
       <AddButtonModal />

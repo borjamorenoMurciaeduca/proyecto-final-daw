@@ -1,22 +1,22 @@
 import { I18nextProvider } from 'react-i18next';
 import i18n from './commons/i18n/i18n';
 import { NotificationProvider } from './contexts/AppNotificationProvider';
-import { AppProvider } from './contexts/AppProvider';
 import { ColorThemeProvider } from './contexts/ColorThemeProvider';
 import { UserProvider } from './contexts/UserProvider';
+import { ViviendasProvider } from './contexts/ViviendasProvider';
 import Router from './router';
 
 const App = () => {
   return (
     <ColorThemeProvider>
       <I18nextProvider i18n={i18n}>
-        <AppProvider>
+        <ViviendasProvider>
           <UserProvider>
             <NotificationProvider>
               <Router />
             </NotificationProvider>
           </UserProvider>
-        </AppProvider>
+        </ViviendasProvider>
       </I18nextProvider>
     </ColorThemeProvider>
   );

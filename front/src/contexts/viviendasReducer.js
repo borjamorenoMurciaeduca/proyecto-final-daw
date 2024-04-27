@@ -1,7 +1,7 @@
-export const AppReducer = (state, action) => {
+export const viviendasReducer = (state, action) => {
   console.log('Action payload ->', action.payload);
   switch (action.type) {
-    case 'LOGIN':
+    case 'SET_VIVIENDAS_USUARIO':
       return {
         ...state,
         usuarioInmuebles: action.payload,
@@ -10,11 +10,6 @@ export const AppReducer = (state, action) => {
       return {
         ...state,
         usuarioInmuebles: [],
-      };
-    case 'GET_VIVIENDAS_USUARIO':
-      return {
-        ...state,
-        usuarioInmuebles: action.payload,
       };
     case 'ADD_VIVIENDA':
       return {

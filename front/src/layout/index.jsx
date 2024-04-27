@@ -15,25 +15,23 @@ import {
 } from '@mui/material';
 
 import logoIdealista from '@/assets/logo/logo-idealistawatch.png';
+import { APP_NAME } from '@/commons/config/config.js';
+import DayNightSwitch from '@/components/DayNightSwitch.jsx';
+import LanguageFlagSelector from '@/components/LanguageFlagSelector.jsx';
+import useUser from '@/hooks/useUser.js';
+import cookie from '@/utils/cookie.js';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Outlet, Link as RouterLink, useNavigate } from 'react-router-dom';
-import { APP_NAME } from '../commons/config/config.js';
-import LanguageFlagSelector from '../commons/utils/LanguageFlagSelector.jsx';
-import DayNightSwitch from '../components/DayNightSwitch.jsx';
-import useAppState from '../hooks/useAppState.js';
-import LoginService from '../services/loginService.js';
 const pages = ['Mis viviendas', 'Pricing'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Layout = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const { handleLogout, state } = useAppState();
+  const { user } = useUser();
   const { t } = useTranslation();
   const navigate = useNavigate();
-
-  let name = state.user?.username || '';
 
   const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
   const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
@@ -42,9 +40,7 @@ const Layout = () => {
 
   const handleLogoutMenu = async () => {
     setAnchorElUser(null);
-    handleLogout();
-    LoginService.logout();
-    window.localStorage.clear();
+    cookie.clear();
     navigate('/auth');
   };
 
@@ -136,7 +132,7 @@ const Layout = () => {
               <Tooltip title={t('tooltip.open-settings')}>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar
-                    alt={name.toUpperCase()}
+                    alt={user.username.toUpperCase()}
                     src="/static/images/avatar/2.jpg"
                   />
                 </IconButton>

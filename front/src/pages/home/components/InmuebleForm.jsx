@@ -1,5 +1,5 @@
-import useAppState from '@/hooks/useAppState.js';
 import { useNotification } from '@/hooks/useNotification';
+import useViviendas from '@/hooks/useViviendas.js';
 import inmuebleService from '@/services/inmuebleService.js';
 import loginService from '@/services/loginService.js';
 import {
@@ -24,7 +24,7 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
   const [message, setMessage] = useState('');
   const [severity, setSeverity] = useState('success');
   // const { addVivienda } = useAppState();
-  const { handleLogin } = useAppState();
+  const { setViviendas } = useViviendas();
   const [inmuebleValue, setInmuebleValue] = useState({
     referencia: '',
     ubicacion: '',
@@ -69,10 +69,18 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
         referencia: Number(inmuebleValue.referencia),
         fechaRegistro: formattedDate,
       };
+      // el inmueble se guarda
       const data = await inmuebleService.addInmueble({ inmuebleToAdd });
+      /**
+       * * NO DEBEMOS LLAMAR A LA API PARA OBTENER LOS DATOS DEL USUARIO
+       * ! DEBEMOS AÑADIR LA VIVIENDA AL ESTADO GLOBAL
+       * estamos recibiendo otra vez los datos del usuario y las viviendas
+       * cuando los datos del usuario lo tenemos y las viviendas también
+       * solo necesitamos añadir la vivienda con la estructura correcta al estado global
+       */
       if (data.status === 201) {
         const { data } = await loginService.user();
-        handleLogin(data?.usuarioInmuebles);
+        setViviendas(data?.usuarioInmuebles);
         // SI LA RESPUESTA ES CORRECTA, SE AÑADE LA VIVIENDA AL ESTADO GLOBAL
         // no hacemos petición al servidor para obtener las viviendas del usuario
         console.log(data);

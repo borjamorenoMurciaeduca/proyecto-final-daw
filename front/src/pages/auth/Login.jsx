@@ -1,9 +1,11 @@
 import idealistaWatchLogo from '@/assets/logo/logo-idealistawatch.png';
-import LanguageSelector from '@/commons/utils/LanguageSelector.jsx';
 import Copyright from '@/components/Copyright';
-import useAppState from '@/hooks/useAppState.js';
+import LanguageSelector from '@/components/LanguageSelector.jsx';
+import useUser from '@/hooks/useUser';
+import useViviendas from '@/hooks/useViviendas.js';
 import loginService from '@/services/loginService.js';
-import { USER_LOCAL_TOKEN } from '@/strings/defaults.js';
+import { USER_COOKIE_TOKEN } from '@/strings/defaults';
+import cookie from '@/utils/cookie';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
   Alert,
@@ -27,10 +29,10 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
-  const { handleLogin } = useAppState();
   const { t } = useTranslation();
   const navigate = useNavigate();
-
+  const { setViviendas } = useViviendas();
+  const { setUpdateUser } = useUser();
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
@@ -48,7 +50,6 @@ const Login = () => {
     const password = data.get('password');
     // const username = data.username;
     // const password = e.target.password.value;
-    console.log({ username, password });
     try {
       if (!password) throw new Error('Password is required');
       const res = await loginService.login({
@@ -56,21 +57,38 @@ const Login = () => {
         password,
       });
       let { token } = res.data;
-      window.localStorage.setItem(USER_LOCAL_TOKEN, token);
+
+      /**
+       * Guardamos el token en una cookie con una duración de 8 horas
+       */
+      const expirationDateCookie = Date.now() + 8 * 60 * 60 * 1000;
+      const expirationSeconds = parseInt(
+        ((expirationDateCookie - Date.now()) / 1000).toFixed()
+      );
+      cookie.set(USER_COOKIE_TOKEN, token, expirationSeconds);
+
+      // window.localStorage.setItem(USER_LOCAL_TOKEN, token);
       //Añadir los tokens a los servicios de Inmueble y Login
       // InmuebleService.setToken(token);
       // LoginService.setToken(token);
       //Guardar el usuario y el token en el localStorage
-      window.localStorage.setItem('user', JSON.stringify(res.data));
+      // window.localStorage.setItem('user', JSON.stringify(res.data));
       //Obtener los datos del usuario y los inmuebles
+
+      /**
+       * Obtenemos los datos del usuario
+       *   guardamos en el estado global de UserProvider los datos del usuario
+       * Obtenemos los inmuebles del usuario
+       *  guardamos en el estado global de ViviendasProvider los inmuebles del usuario
+       */
       const { data } = await loginService.user();
-      //Guardamos los datos del usuario en el estado global
-      handleLogin(data);
+      setUpdateUser(data.user);
+      setViviendas(data.usuarioInmuebles);
+
       e.target.username.value = '';
       e.target.password.value = '';
       setError(false);
-
-      navigate('/app');
+      navigate('/app', { replace: true });
     } catch (error) {
       console.log(error);
       setError('Error en las credenciales');
@@ -170,5 +188,4 @@ const Login = () => {
     </Container>
   );
 };
-
 export default Login;

@@ -1,24 +1,35 @@
+import { USER_COOKIE_TOKEN } from '@/strings/defaults';
 import axios from 'axios';
-import { USER_LOCAL_TOKEN } from '../strings/defaults';
+import cookie from './cookie';
 // const LogServiceWorker = new Worker('/workers/LoggerWorker.js');
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   headers: {
     Accept: 'application/json',
+    'Content-Type': 'application/json',
   },
 });
 
 instance.interceptors.request.use((config) => {
   if (typeof window !== 'undefined') {
-    // const token = Cookie.get(USER_COOKIE_TOKEN);
-    const token = window.localStorage.getItem(USER_LOCAL_TOKEN);
-    console.log(`Bearer ${token}`);
+    const token = cookie.get(USER_COOKIE_TOKEN);
+
     if (token !== null && token !== undefined)
       config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 });
+
+// instance.interceptors.request.use((config) => {
+//   console.log(' config', config);
+//   if (typeof window !== 'undefined') {
+//     const token = window.localStorage.getItem(USER_LOCAL_TOKEN);
+//     if (token !== null && token !== undefined)
+//       config.headers.Authorization = `Bearer ${token}`;
+//   }
+//   return config;
+// });
 
 // const handleAPIError = (error) => {
 //   if (error.response?.status === 401) {

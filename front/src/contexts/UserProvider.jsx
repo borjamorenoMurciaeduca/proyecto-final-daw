@@ -2,9 +2,12 @@ import { createContext, useState } from 'react';
 
 export const UserContext = createContext();
 
+/**
+ * ESTADO GLOBAL CON LOS DATOS DEL USUARIO
+ */
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState({});
-
+  console.log('user', user);
   const setUpdateUser = (newUser) => {
     setUser(newUser);
   };

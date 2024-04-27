@@ -1,6 +1,6 @@
-import LanguageSelector from '@//commons/utils/LanguageSelector';
 import LoginService from '@//services/loginService';
 import Copyright from '@/components/Copyright';
+import LanguageSelector from '@/components/LanguageSelector';
 import useNotification from '@/hooks/useNotification';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
