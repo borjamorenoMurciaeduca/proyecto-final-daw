@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Inmueble extends Model {
+class Properties extends Model {
     use HasFactory;
-    protected $primaryKey = 'referencia';
+    protected $primaryKey = 'property_id';
     protected $fillable = [
-        'referencia',
-        'fechaBajaAnuncio'
+        'property_id',
+        'cancellation_date'
     ];
 
     //Establece la relación entre Inmueble e HistorialPrecio
@@ -18,6 +18,6 @@ class Inmueble extends Model {
     //referenciaInmueble: Nombre de la columna en HistorialPrecio que hace referencia a Inmueble
     //referencia: Nombre de la columna en Inmueble que hace referencia a HistorialPrecio
     public function historialPrecio() {
-        return $this->hasMany(HistorialPrecio::class, 'referenciaInmueble', 'referencia');
+        return $this->hasMany(PriceHistories::class, 'property_id_fk', 'property_id');
     }
 }

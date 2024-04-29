@@ -9,12 +9,12 @@ return new class extends Migration {
      * Run the migrations.
      */
     public function up(): void {
-        Schema::create("historial_precios", function (Blueprint $table) {
+        Schema::create("price_histories", function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('referenciaInmueble');
-            $table->decimal("precio", 10, 2)->unsigned();
+            $table->bigInteger('property_id_fk');
+            $table->decimal("price", 10, 2)->unsigned();
             $table->timestamp('created_at')->useCurrent();
-            $table->foreign('referenciaInmueble')->references('referencia')->on('inmuebles')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('property_id_fk')->references('property_id')->on('properties')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -22,6 +22,6 @@ return new class extends Migration {
      * Reverse the migrations.
      */
     public function down(): void {
-        Schema::dropIfExists('historial_precios');
+        Schema::dropIfExists('price_histories');
     }
 };

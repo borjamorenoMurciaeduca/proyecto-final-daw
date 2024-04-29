@@ -9,11 +9,11 @@ return new class extends Migration {
      * Run the migrations.
      */
     public function up(): void {
-        Schema::create("inmuebles", function (Blueprint $table) {
-            $table->bigInteger('referencia')->unique();
-            $table->decimal('ultimo_precio', 10, 2)->nullable();
-            $table->date("fechaBajaAnuncio")->nullable();
-            $table->string('urlImagen')->nullable();
+        Schema::create("properties", function (Blueprint $table) {
+            $table->bigInteger('property_id')->unique();
+            $table->decimal('last_price', 10, 2)->nullable();
+            $table->date("cancellation_date")->nullable();
+            $table->string('url_image')->nullable();
             $table->timestamps();
         });
     }
@@ -22,6 +22,6 @@ return new class extends Migration {
      * Reverse the migrations.
      */
     public function down(): void {
-        Schema::dropIfExists('inmuebles');
+        Schema::dropIfExists('properties');
     }
 };

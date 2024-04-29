@@ -4,12 +4,13 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\HistorialPrecio;
-use App\Models\Inmueble;
+use App\Models\PriceHistories;
+use App\Models\Properties;
+use App\Models\Property;
 use Illuminate\Database\Seeder;
 use App\Models\User;
-use App\Models\UsuarioInmueble;
-use Database\Factories\HistorialPrecioFactory;
+use App\Models\UserProperties;
+use App\Models\UsersProperties;
 
 class DatabaseSeeder extends Seeder {
     /**
@@ -17,13 +18,13 @@ class DatabaseSeeder extends Seeder {
      */
     public function run(): void {
 
-        Inmueble::factory(15)->create();
-        $inmuebles = Inmueble::all();
-        $inmuebles->each(function ($inmueble) {
-            HistorialPrecio::factory()->create([
-                'referenciaInmueble' => $inmueble->referencia,
-            ]);
-        });
+        Properties::factory(15)->create();
+        $inmuebles = Properties::all();
+        // $inmuebles->each(function ($inmueble) {
+        //     PriceHistories::factory()->create([
+        //         'property_id_fk' => $inmueble->property_id,
+        //     ]);
+        // });
         User::factory(10)->create();
         User::factory()->create([
             'username' => 'jorge',
@@ -33,7 +34,7 @@ class DatabaseSeeder extends Seeder {
             'username' => 'borja',
             'password' => bcrypt('1234'),
         ]);
-        UsuarioInmueble::factory(10)->create();
-        HistorialPrecio::factory(50)->create();
+        UsersProperties::factory(10)->create();
+        PriceHistories::factory(50)->create();
     }
 }
