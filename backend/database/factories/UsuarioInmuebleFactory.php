@@ -20,8 +20,8 @@ class UsuarioInmuebleFactory extends Factory {
             'userId' => $this->faker->randomElement($referenciasUserID),
             'referenciaInmueble' => $this->faker->randomElement($referenciasInmuebles),
             'ubicacion' => $this->faker->word(),
-            'tamano' => $this->faker->randomNumber(),
-            'habitaciones' => $this->faker->randomNumber(),
+            'tamano' => $this->faker->numberBetween(50, 300),
+            'habitaciones' => $this->faker->randomNumber(1),
             'garaje' => $this->faker->boolean(),
             'trastero' => $this->faker->boolean(),
         ];

@@ -11,6 +11,7 @@ return new class extends Migration {
     public function up(): void {
         Schema::create("inmuebles", function (Blueprint $table) {
             $table->bigInteger('referencia')->unique();
+            $table->decimal('ultimo_precio', 10, 2)->nullable();
             $table->date("fechaBajaAnuncio")->nullable();
             $table->string('urlImagen')->nullable();
             $table->timestamps();

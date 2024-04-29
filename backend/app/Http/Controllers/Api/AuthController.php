@@ -54,8 +54,10 @@ class AuthController extends Controller {
             $validatedData['password'] = bcrypt($request->password);
             $user = User::create($validatedData);
             $token = $user->createToken('authToken')->plainTextToken;
+            $cookie = cookie('user_token', $token, 60 * 8);
             $data = ['user' => $user, 'token' => $token];
-            return ApiResponse::success('Usuario creado con éxito', $data, 201);
+            return ApiResponse::success('Usuario creado con éxito', $data, 201)->withCookie($cookie);
+            // return ApiResponse::success('Usuario creado con éxito', $data, 201);
         } catch (ValidationException $e) {
             return ApiResponse::error("Error de validación", 422, $e->validator->errors());
         } catch (\Exception $e) {
@@ -100,8 +102,11 @@ class AuthController extends Controller {
             /** @var \App\Models\User $user **/
             $user = Auth::user();
             $token = $user->createToken('authToken')->plainTextToken;
-            $cookie = cookie('cookie_token', $token, 60 * 24);
+            $cookie = cookie('user_token', $token, 60 * 8); 
+
             $data = ['user' => $user, 'token' => $token];
+            //return con cookie
+            // return ApiResponse::success('Acceso exitoso!',  $data, 200)->withCookie($cookie);
             return ApiResponse::success('Acceso exitoso!',  $data, 200);
         } else {
             return ApiResponse::error('Unauthenticated', 401);
@@ -143,7 +148,7 @@ class AuthController extends Controller {
   */   
     public function logout(Request $request) {
         try {
-            $cookie = Cookie::forget('cookie_token');
+            $cookie = Cookie::forget('user_token');
             $request->user()->tokens()->delete();
             Auth::guard('web')->logout();
             return ApiResponse::success('Successfully logged out', [], 200)->withCookie($cookie);

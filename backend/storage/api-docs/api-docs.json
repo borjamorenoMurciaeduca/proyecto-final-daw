@@ -123,53 +123,13 @@
                 }
             }
         },
-        "/api/store": {
-            "post": {
-                "tags": [
-                    "Inmueble"
-                ],
-                "summary": "Store a newly created resource in storage.",
-                "operationId": "4ff8b29d85e3a1a47c1073c7dd88eead",
-                "parameters": [
-                    {
-                        "name": "referencia",
-                        "in": "query",
-                        "description": "Referencia",
-                        "required": true,
-                        "schema": {
-                            "type": "numeric"
-                        }
-                    },
-                    {
-                        "name": "fechaBajaAnuncio",
-                        "in": "query",
-                        "description": "fecha baja anuncio",
-                        "required": true,
-                        "schema": {
-                            "type": "date"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Inmueble creado exitosamente"
-                    },
-                    "400": {
-                        "description": "Error de validación"
-                    },
-                    "500": {
-                        "description": "Error"
-                    }
-                }
-            }
-        },
-        "/api/show": {
-            "post": {
+        "/api/prepare-inmueble": {
+            "get": {
                 "tags": [
                     "Inmueble"
                 ],
                 "summary": " Display the specified resource.",
-                "operationId": "14bfa8ea11e3e0d09fe6a580a7bed6ad",
+                "operationId": "78cf3182557080939a229ceead193285",
                 "parameters": [
                     {
                         "name": "id",
@@ -189,6 +149,134 @@
                         "description": "Inmueble encontrado"
                     }
                 }
+            }
+        },
+        "/api/inmueble": {
+            "get": {
+                "tags": [
+                    "Inmueble"
+                ],
+                "summary": " Display the specified resource.",
+                "operationId": "43261e5c1c31a8be3633cb041cd8a2f2",
+                "responses": {
+                    "200": {
+                        "description": "Inmuebles encontrados"
+                    },
+                    "404": {
+                        "description": "Inmuebles no encontrados"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Inmueble"
+                ],
+                "summary": "Store a newly created resource in storage.",
+                "operationId": "7cef008ae823717ea855b2450a27f0e7",
+                "parameters": [
+                    {
+                        "name": "referencia",
+                        "in": "query",
+                        "description": "Referencia",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "ubicacion",
+                        "in": "query",
+                        "description": "Ubicación",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "tamano",
+                        "in": "query",
+                        "description": "Tamaño",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "habitaciones",
+                        "in": "query",
+                        "description": "Habitaciones",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "garaje",
+                        "in": "query",
+                        "description": "Garaje",
+                        "required": true,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "trastero",
+                        "in": "query",
+                        "description": "Trastero",
+                        "required": true,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "precio",
+                        "in": "query",
+                        "description": "Precio",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "urlImagen",
+                        "in": "query",
+                        "description": "URL de la imagen",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "fechaBajaAnuncio",
+                        "in": "query",
+                        "description": "fecha baja anuncio",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Inmueble creado exitosamente"
+                    },
+                    "400": {
+                        "description": "Error de validación"
+                    },
+                    "500": {
+                        "description": "Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "/api/storeNewPrice": {
@@ -232,5 +320,15 @@
             "name": "Inmueble",
             "description": "Endpoints para operaciones relacionadas con los inmuebles"
         }
-    ]
+    ],
+    "components": {
+        "securitySchemes": {
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    }
 }

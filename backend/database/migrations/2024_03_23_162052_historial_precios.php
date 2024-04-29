@@ -13,8 +13,7 @@ return new class extends Migration {
             $table->id();
             $table->bigInteger('referenciaInmueble');
             $table->decimal("precio", 10, 2)->unsigned();
-            $table->date("fechaRegistro");
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
             $table->foreign('referenciaInmueble')->references('referencia')->on('inmuebles')->onDelete('cascade')->onUpdate('cascade');
         });
     }
