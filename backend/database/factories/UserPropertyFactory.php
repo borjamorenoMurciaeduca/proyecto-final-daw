@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Properties;
 use App\Models\Property;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -10,9 +9,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UsuarioInmueble>
  */
-class UsersPropertiesFactory extends Factory {
+class UserPropertyFactory extends Factory {
     public function definition(): array {
-        $referenciasInmuebles = Properties::pluck('property_id')->toArray();
+        $referenciasInmuebles = Property::pluck('property_id')->toArray();
         // $referenciaInmueble = InmuebleFactory::new()->create()->referencia;
         $referenciasUserID = User::pluck('id')->toArray();
         return [

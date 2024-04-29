@@ -13,7 +13,7 @@ return new class extends Migration {
             $table->id();
             $table->bigInteger('property_id_fk');
             $table->decimal("price", 10, 2)->unsigned();
-            $table->timestamp('created_at')->useCurrent();
+            $table->timestamps();
             $table->foreign('property_id_fk')->references('property_id')->on('properties')->onDelete('cascade')->onUpdate('cascade');
         });
     }
