@@ -261,7 +261,7 @@ class InmuebleController extends Controller {
                 $property = $userProperty->property;
                 return [
                     'user_id' => $userProperty->user_id_fk,
-                    "propery_id" => $userProperty->property_id_fk,
+                    "property_id" => $userProperty->property_id_fk,
                     'location' => $userProperty->location,
                     'size' => $userProperty->size,
                     'rooms' => $userProperty->rooms,
