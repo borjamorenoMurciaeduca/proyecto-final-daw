@@ -252,12 +252,13 @@ class InmuebleController extends Controller {
      * userId = usuario que está autenticado
      * with('property') = traer los datos del inmueble (property es el nombre de la relación en UserProperty)
      */
-    public function getAll() {
+    public function getAllUserProperties() {
         try {
             $userId = Auth::id();
             $userProperty = UserProperty::where('user_id_fk', $userId)->with('property')->get();
             // Mapear los datos para combinarlos en un solo JSON
             $inmuebles = $userProperty->map(function ($userProperty) {
+                $property = $userProperty->property;
                 return [
                     'user_id' => $userProperty->user_id_fk,
                     "propery_id" => $userProperty->property_id_fk,
@@ -266,9 +267,9 @@ class InmuebleController extends Controller {
                     'rooms' => $userProperty->rooms,
                     'garage' => $userProperty->garage  == 1 ? true : false,
                     'storage_room' => $userProperty->storage_room  == 1 ? true : false,
-                    'price' => $userProperty->price,
-                    'url_image' => $userProperty->url_image,
-                    'cancellation_date' => $userProperty->cancellation_date,
+                    'price' => $property->last_price,
+                    'url_image' => $property->url_image,
+                    'cancellation_date' => $property->cancellation_date,
                     'created_at' => $userProperty->created_at,
                     'updated_at' => $userProperty->updated_at,
                 ];

@@ -35,6 +35,6 @@ class PriceHistory extends Model {
     }
 
     public function property() {
-        return $this->belongsTo('App\Models\Property', 'property_id_fk', 'property_id');
+        return $this->belongsTo(Property::class, 'property_id_fk', 'property_id');
     }
 }
