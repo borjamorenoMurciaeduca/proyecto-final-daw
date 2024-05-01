@@ -360,6 +360,23 @@ class PropertyController extends Controller {
             return ApiResponse::error('Error:' . $e->getMessage(), 500);
         }
     }
+
+
+    public function getPrices(string $id) {
+        try {
+            $property = Property::findOrFail($id);
+            $prices = PriceHistory::where('property_id_fk', $id)->get();
+            $data = [
+                'property_id' => $id,
+                'prices' => $prices,
+                'created_at' => $property->created_at,
+                'updated_at' => $property->updated_at,
+            ];
+            return ApiResponse::success('Prices found', $data, 200);
+        } catch (\Exception $e) {
+            return ApiResponse::error('Prices not found', 404);
+        }
+    }
     /**
      * Show the form for editing the specified resource.
      */
