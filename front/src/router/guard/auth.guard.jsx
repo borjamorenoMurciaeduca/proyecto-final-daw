@@ -41,7 +41,7 @@ const AuthGuard = () => {
         handleSessionError(e.message);
         console.log(e);
       } finally {
-        await new Promise((r) => setTimeout(r, 2000));
+        await new Promise((r) => setTimeout(r, 1000));
         setLoading(false);
       }
     })();
@@ -57,7 +57,6 @@ const AuthGuard = () => {
   if (loading) {
     return <PageLoader />;
   }
-
   return <Outlet />;
 };
 

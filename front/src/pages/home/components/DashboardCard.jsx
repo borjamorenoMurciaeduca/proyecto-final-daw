@@ -5,12 +5,15 @@ import {
   CardMedia,
   Typography,
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const DashboardCard = ({ property }) => {
   const { property_id, location, price } = property;
+  const navigate = useNavigate();
 
   const handleCLickCard = (id) => {
     console.log('Click en la card', id);
+    navigate(`/app/property/${id}`);
   };
 
   return (
