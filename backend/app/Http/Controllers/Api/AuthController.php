@@ -55,7 +55,14 @@ class AuthController extends Controller {
             $user = User::create($validatedData);
             $token = $user->createToken('authToken')->plainTextToken;
             $cookie = cookie('user_token', $token, 60 * 8);
-            $data = ['user' => $user, 'token' => $token];
+            // $data = ['user'=> $user, 'token' => $token];
+            $data = (object) [
+                'id' => $user->id,
+                'username' => $user->username,
+                'created_at' => $user->created_at,
+                'updated_at' => $user->updated_at,
+                'token' => $token,
+            ];
             return ApiResponse::success('User created successfully!', $data, 201)->withCookie($cookie);
             // return ApiResponse::success('Usuario creado con éxito', $data, 201);
         } catch (ValidationException $e) {
@@ -104,8 +111,14 @@ class AuthController extends Controller {
             $token = $user->createToken('authToken')->plainTextToken;
             $cookie = cookie('user_token', $token, 60 * 8);
 
-            $data = [$user,  $token];
-
+            $data = ["user" => $user, "token" => $token];
+            // $data = (object) [
+            //     'id' => $user->id,
+            //     'username' => $user->username,
+            //     'created_at' => $user->created_at,
+            //     'updated_at' => $user->updated_at,
+            //     'token' => $token,
+            // ];
             // return ApiResponse::success('Acceso exitoso!',  $data, 200)->withCookie($cookie);
             return ApiResponse::success('Successfully logged in!',  $data, 200);
         } else {
@@ -137,6 +150,14 @@ class AuthController extends Controller {
     //         return ApiResponse::error('No se ha podido procesar: ' . $e->getMessage(), 404);
     //     }
     // }
+    public function user() {
+        try {
+            $user = User::find(Auth::id());
+            return ApiResponse::success('success', $user, 200);
+        } catch (\Exception $e) {
+            return ApiResponse::error('No se ha podido procesar: ' . $e->getMessage(), 404);
+        }
+    }
 
     /**
      * @OA\Post(

@@ -22,11 +22,7 @@ use Illuminate\Validation\ValidationException;
  *     description="Endpoints para operaciones relacionadas con los inmuebles"
  * )
  */
-class InmuebleController extends Controller {
-    public function index() {
-        //
-    }
-
+class PropertyController extends Controller {
     /**
      * @OA\Get(
      *    path="/api/prepare-inmueble",
@@ -179,16 +175,16 @@ class InmuebleController extends Controller {
                 // 'fechaRegistro' => $validateHistorial['fechaRegistro'],
             ]);
 
-            $userInmueble = UserProperty::create([
-                'user_id_fk' => Auth::user()->id,
+            $userProperty = UserProperty::create([
+                'user_id_fk' => Auth::id(),
                 'property_id_fk' => $validateProperty['property_id'],
                 'location' => $validateUserProperty['location'],
                 'size' => $validateUserProperty['size'],
                 'rooms' => $validateUserProperty['rooms'],
-                // 'garaje' => $validateUsuarioInmueble['garaje'],
-                // 'trastero' => $validateUsuarioInmueble['trastero'],
                 'garage' => $garage,
                 'storage_room' => $storage_room,
+                // 'garaje' => $validateUsuarioInmueble['garaje'],
+                // 'trastero' => $validateUsuarioInmueble['trastero'],
             ]);
 
             DB::commit();
@@ -201,6 +197,7 @@ class InmuebleController extends Controller {
             // ];
             // devolver respuesta con los datos del inmueble y userInmueble
             $data = [
+                'user_id' => Auth::id(),
                 'property_id' => $validateProperty['property_id'],
                 'location' => $validateUserProperty['location'],
                 'size' => $validateUserProperty['size'],
@@ -210,8 +207,8 @@ class InmuebleController extends Controller {
                 'price' => $history->price,
                 'url_image' => $validateProperty['url_image'] ?? null,
                 'cancellation_date' => $validateProperty['cancellation_date'] ?? null,
-                'created_at' => $userInmueble->created_at,
-                'updated_at' => $userInmueble->updated_at,
+                'created_at' => $userProperty->created_at,
+                'updated_at' => $userProperty->updated_at,
             ];
 
             // $data = [
@@ -283,7 +280,22 @@ class InmuebleController extends Controller {
     public function show(string $id) {
         try {
             $property = Property::findOrFail($id);
-            return ApiResponse::success('Property found', $property, 200);
+            $userProperty = UserProperty::where('property_id_fk', $id)->first();
+            $data = [
+                'user_id' => $userProperty->user_id_fk,
+                'property_id' => $userProperty->property_id_fk,
+                'location' => $userProperty->location,
+                'size' => $userProperty->size,
+                'rooms' => $userProperty->rooms,
+                'garage' => $userProperty->garage,
+                'storage_room' => $userProperty->storage_room,
+                'price' => $property->last_price,
+                'url_image' => $property->url_image,
+                'cancellation_date' => $property->cancellation_date,
+                'created_at' => $userProperty->created_at,
+                'updated_at' => $userProperty->updated_at,
+            ];
+            return ApiResponse::success('Property found', $data, 200);
         } catch (\Exception $e) {
             return ApiResponse::error('Property not found', 404);
         }
@@ -310,9 +322,10 @@ class InmuebleController extends Controller {
         try {
             DB::beginTransaction();
 
-            $validateProperty = $request->validate([
-                'property_id' => 'numeric|required',
-            ]);
+            // $validateProperty = $request->validate([
+            //     'property_id' => 'numeric|required',
+            // ]);
+            $propertyId = $request->route('id');
 
             $validateHistory = $request->validate([
                 'price' => 'numeric|required',
@@ -320,17 +333,20 @@ class InmuebleController extends Controller {
             ]);
 
             // Si el inmueble no existe, no se puede añadir un precio, devolvemos un 400 
-            if (!Property::where('property_id', $validateProperty['property_id'])->exists()) {
+            //  if (!Property::where('property_id', $validateProperty['property_id'])->exists()) {
+            //     return ApiResponse::error('El inmueble no existe', 400);
+            // }  
+            if (!Property::where('property_id', $propertyId)->exists()) {
                 return ApiResponse::error('El inmueble no existe', 400);
             }
 
             $history = PriceHistory::create([
-                'property_id_fk' => $validateProperty['property_id'],
+                'property_id_fk' => $propertyId,
                 'price' => $validateHistory['price'],
             ]);
 
             $data = [
-                'property_id' => $validateProperty['property_id'],
+                'property_id' =>  $propertyId,
                 'price' => $history->price,
                 'created_at' => $history->created_at,
             ];

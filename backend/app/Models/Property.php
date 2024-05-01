@@ -10,7 +10,8 @@ class Property extends Model {
     protected $primaryKey = 'property_id';
     protected $fillable = [
         'property_id',
-        'cancellation_date'
+        'cancellation_date',
+        'url_image',
     ];
 
     //Establece la relación entre Inmueble e HistorialPrecio
