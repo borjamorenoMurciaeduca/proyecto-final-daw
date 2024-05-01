@@ -4,17 +4,17 @@ export const viviendasReducer = (state, action) => {
     case 'SET_VIVIENDAS_USUARIO':
       return {
         ...state,
-        usuarioInmuebles: action.payload,
+        properties: action.payload,
       };
     case 'LOGOUT':
       return {
         ...state,
-        usuarioInmuebles: [],
+        properties: [],
       };
     case 'ADD_VIVIENDA':
       return {
         ...state,
-        usuarioInmuebles: [...state.usuarioInmuebles, action.payload],
+        properties: [...state.properties, action.payload],
       };
     default:
       return state;

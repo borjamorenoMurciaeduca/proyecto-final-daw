@@ -1,5 +1,5 @@
 import { useNotification } from '@/hooks/useNotification.js';
-import InmuebleService from '@/services/inmuebleService.js';
+import propertyService from '@/services/propertyService.js';
 import inputValidatorInmueble from '@/utils/inputValidatorInmueble.js';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
@@ -56,8 +56,8 @@ const AddButtonModal = () => {
     if (idInmueble.length > 0) {
       notify(t('snackbar.url-validation.ok'), 'success');
       try {
-        const data = await InmuebleService.prepareInmuebleForm(idInmueble);
-
+        const data = await propertyService.prepareInmuebleForm(idInmueble);
+        console.log('data', data);
         if (data?.dataStatus == 'ok') {
           setInmuebleData(data);
           setShowForm(true);

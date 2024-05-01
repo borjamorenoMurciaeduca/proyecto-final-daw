@@ -35,7 +35,7 @@ export default App;
 //       if (token) {
 //         try {
 //           // LoginService.setToken(token);
-//           // InmuebleService.setToken(token);
+//           // propertyService.setToken(token);
 //           const { data } = await LoginService.user();
 //           handleLogin(data);
 //           navigate('/app');

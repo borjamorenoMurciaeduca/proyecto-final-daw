@@ -4,6 +4,7 @@ import LanguageSelector from '@/components/LanguageSelector.jsx';
 import useUser from '@/hooks/useUser';
 import useViviendas from '@/hooks/useViviendas.js';
 import loginService from '@/services/loginService.js';
+import propertyService from '@/services/propertyService';
 import { USER_COOKIE_TOKEN } from '@/strings/defaults';
 import cookie from '@/utils/cookie';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -52,15 +53,24 @@ const Login = () => {
     // const password = e.target.password.value;
     try {
       if (!password) throw new Error('Password is required');
-      const res = await loginService.login({
+
+      /**
+       * loginservice.login
+       * Obtenemos los datos del usuario
+       *   guardamos en el estado global de UserProvider los datos del usuario
+       *
+       * propertyService.getAllUserProperties
+       * Obtenemos los inmuebles del usuario
+       *  guardamos en el estado global de ViviendasProvider los inmuebles del usuario
+       */
+      const resUser = await loginService.login({
         username,
         password,
       });
-      let { token } = res.data;
+      let { token, user } = resUser.data;
 
-      /**
-       * Guardamos el token en una cookie con una duración de 8 horas
-       */
+      // Guardamos el token en una cookie con una duración de 8 horas
+
       const expirationDateCookie = Date.now() + 8 * 60 * 60 * 1000;
       const expirationSeconds = parseInt(
         ((expirationDateCookie - Date.now()) / 1000).toFixed()
@@ -68,22 +78,13 @@ const Login = () => {
       cookie.set(USER_COOKIE_TOKEN, token, expirationSeconds);
 
       // window.localStorage.setItem(USER_LOCAL_TOKEN, token);
-      //Añadir los tokens a los servicios de Inmueble y Login
-      // InmuebleService.setToken(token);
-      // LoginService.setToken(token);
       //Guardar el usuario y el token en el localStorage
       // window.localStorage.setItem('user', JSON.stringify(res.data));
       //Obtener los datos del usuario y los inmuebles
 
-      /**
-       * Obtenemos los datos del usuario
-       *   guardamos en el estado global de UserProvider los datos del usuario
-       * Obtenemos los inmuebles del usuario
-       *  guardamos en el estado global de ViviendasProvider los inmuebles del usuario
-       */
-      const { data } = await loginService.user();
-      setUpdateUser(data.user);
-      setViviendas(data.usuarioInmuebles);
+      const property = await propertyService.getAllUserProperties();
+      setUpdateUser(user);
+      setViviendas(property.data);
 
       e.target.username.value = '';
       e.target.password.value = '';

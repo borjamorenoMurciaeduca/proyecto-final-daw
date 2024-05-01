@@ -6,12 +6,8 @@ import {
   Typography,
 } from '@mui/material';
 
-const DashboardCard = ({ inmueble }) => {
-  const { referenciaInmueble, ubicacion } = inmueble;
-  const lastPrice =
-    inmueble.inmueble.historial_precio[
-      inmueble.inmueble.historial_precio.length - 1
-    ]?.precio;
+const DashboardCard = ({ property }) => {
+  const { property_id, location, price } = property;
 
   return (
     <Card>
@@ -30,10 +26,10 @@ const DashboardCard = ({ inmueble }) => {
             Vivienda
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {ubicacion}
+            {location}
           </Typography>
           <Typography gutterBottom variant="span" component="span">
-            Ref: {referenciaInmueble} | {lastPrice} €
+            Ref: {property_id} | {price} €
           </Typography>
         </CardContent>
       </CardActionArea>

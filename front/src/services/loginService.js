@@ -1,11 +1,6 @@
 import axiosInterceptor from '@/utils/httpInterceptor';
 const baseURL = import.meta.env.VITE_API_URL;
 
-let token = null;
-const setToken = (newToken) => {
-  token = `Bearer ${newToken}`;
-};
-
 const login = async (credentials) => {
   const { data } = await axiosInterceptor.post(`${baseURL}login`, credentials);
   return data;
@@ -25,16 +20,8 @@ const register = async (credentials) => {
 };
 
 const logout = async () => {
-  const config = {
-    headers: { Authorization: token },
-  };
-
-  const { data } = await axiosInterceptor.post(
-    `${baseURL}logout`,
-    null,
-    config
-  );
+  const { data } = await axiosInterceptor.post(`${baseURL}logout`, null);
   return data;
 };
 
-export default { login, logout, user, register, setToken };
+export default { login, logout, user, register };

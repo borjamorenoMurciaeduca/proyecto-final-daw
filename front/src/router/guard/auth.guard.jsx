@@ -2,6 +2,7 @@ import PageLoader from '@/components/PageLoader.jsx';
 import useUser from '@/hooks/useUser.js';
 import useViviendas from '@/hooks/useViviendas.js';
 import loginService from '@/services/loginService.js';
+import propertyService from '@/services/propertyService';
 import { USER_COOKIE_TOKEN } from '@/strings/defaults.js';
 import cookie from '@/utils/cookie.js';
 import { useEffect, useState } from 'react';
@@ -18,12 +19,17 @@ const AuthGuard = () => {
       const token = cookie.get(USER_COOKIE_TOKEN);
       try {
         if (token) {
-          let res = await loginService.user();
-          if (res?.data?.user?.id) {
+          let user = await loginService.user();
+          let properties = await propertyService.getAllUserProperties();
+          if (user?.data && properties?.data) {
+            console.log({
+              user: user.data,
+              properties: properties.data,
+            });
             // guardar datos del usuario en contexto
-            setUpdateUser(res?.data?.user);
+            setUpdateUser(user.data);
             // guardar los datos de las viviendas en contexto
-            setViviendas(res?.data?.usuarioInmuebles);
+            setViviendas(properties.data);
             // setLoading(false);
           } else {
             throw new Error('No se encontró el usuario');

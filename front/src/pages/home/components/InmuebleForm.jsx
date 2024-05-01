@@ -1,7 +1,7 @@
 import { useNotification } from '@/hooks/useNotification';
 import useViviendas from '@/hooks/useViviendas.js';
-import inmuebleService from '@/services/inmuebleService.js';
 import loginService from '@/services/loginService.js';
+import propertyService from '@/services/propertyService.js';
 import {
   Alert,
   Button,
@@ -26,27 +26,28 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
   // const { addVivienda } = useAppState();
   const { setViviendas } = useViviendas();
   const [inmuebleValue, setInmuebleValue] = useState({
-    referencia: '',
-    ubicacion: '',
-    precio: '',
-    tamano: '',
-    habitaciones: '',
-    garaje: false,
-    trastero: false,
+    property_id: '',
+    location: '',
+    price: '',
+    size: '',
+    rooms: '',
+    garage: false,
+    storage_room: false,
   });
 
   const { t } = useTranslation();
   const { notify } = useNotification();
+
   useEffect(() => {
     if (inmuebleData) {
       setInmuebleValue({
-        referencia: inmuebleData.referenciaInmueble || '',
-        ubicacion: inmuebleData?.ubicacion || '',
-        precio: inmuebleData?.precio || '',
-        tamano: inmuebleData?.tamanio || '',
-        habitaciones: inmuebleData?.habitaciones || '',
-        garaje: inmuebleData?.garaje || false,
-        trastero: inmuebleData?.trastero || false,
+        property_id: inmuebleData.referenciaInmueble || '',
+        location: inmuebleData?.ubicacion || '',
+        price: inmuebleData?.precio || '',
+        size: inmuebleData?.tamanio || '',
+        roooms: inmuebleData?.habitaciones || '',
+        garage: inmuebleData?.garaje || false,
+        storage_room: inmuebleData?.trastero || false,
       });
     }
   }, [inmuebleData]);
@@ -62,15 +63,16 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const date = new Date();
-      const formattedDate = date.toISOString().split('T')[0];
+      // const date = new Date();
+      // const formattedDate = date.toISOString().split('T')[0];
       const inmuebleToAdd = {
         ...inmuebleValue,
-        referencia: Number(inmuebleValue.referencia),
-        fechaRegistro: formattedDate,
+        property_id: Number(inmuebleValue.property_id),
+        // fechaRegistro: formattedDate,
       };
       // el inmueble se guarda
-      const data = await inmuebleService.addInmueble({ inmuebleToAdd });
+      const data = await propertyService.addInmueble({ inmuebleToAdd });
+      return;
       /**
        * * NO DEBEMOS LLAMAR A LA API PARA OBTENER LOS DATOS DEL USUARIO
        * ! DEBEMOS AÑADIR LA VIVIENDA AL ESTADO GLOBAL

@@ -4,8 +4,7 @@ import { viviendasReducer } from './viviendasReducer.js';
 export const ViviendasContext = createContext();
 
 const initialState = {
-  user: null,
-  usuarioInmuebles: [],
+  properties: [],
 };
 // eslint-disable-next-line react/prop-types
 /**

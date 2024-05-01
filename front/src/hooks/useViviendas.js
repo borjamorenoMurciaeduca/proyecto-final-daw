@@ -6,6 +6,7 @@ const useViviendas = () => {
     useContext(ViviendasContext);
   return {
     state,
+    properties: state.properties,
     setViviendas,
     addVivienda,
     handleLogout,
