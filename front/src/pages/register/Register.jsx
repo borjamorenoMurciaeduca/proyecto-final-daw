@@ -55,7 +55,7 @@ const Register = () => {
         throw new Error(res.error);
       }
 
-      if (res.statusCode === 201) {
+      if (res.status === 201) {
         notify('Usuario registrado correctamente', 'success');
         navigate('/auth');
       }

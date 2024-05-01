@@ -24,7 +24,7 @@ export const ViviendasProvider = ({ children }) => {
       type: 'LOGOUT',
     });
   };
-  const addVivienda = (vivienda) => {
+  const addProperty = (vivienda) => {
     dispatch({
       type: 'ADD_VIVIENDA',
       payload: vivienda,
@@ -33,7 +33,7 @@ export const ViviendasProvider = ({ children }) => {
 
   return (
     <ViviendasContext.Provider
-      value={{ state, setViviendas, handleLogout, addVivienda }}
+      value={{ state, setViviendas, handleLogout, addProperty }}
     >
       {children}
     </ViviendasContext.Provider>

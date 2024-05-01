@@ -12,6 +12,7 @@ const user = async () => {
 };
 
 const register = async (credentials) => {
+  console.log('creden', credentials);
   const { data } = await axiosInterceptor.post(
     `${baseURL}register`,
     credentials
@@ -24,4 +25,4 @@ const logout = async () => {
   return data;
 };
 
-export default { login, logout, user, register };
+export default { login, user, register, logout };

@@ -1,6 +1,5 @@
 import { useNotification } from '@/hooks/useNotification';
 import useViviendas from '@/hooks/useViviendas.js';
-import loginService from '@/services/loginService.js';
 import propertyService from '@/services/propertyService.js';
 import {
   Alert,
@@ -19,13 +18,14 @@ import UnstyledTextareaIntroduction from './TextAreaAutoSize.jsx';
 function SlideTransition(props) {
   return <Slide {...props} direction="up" />;
 }
+
 const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [severity, setSeverity] = useState('success');
-  // const { addVivienda } = useAppState();
-  const { setViviendas } = useViviendas();
-  const [inmuebleValue, setInmuebleValue] = useState({
+  const { addProperty } = useViviendas();
+
+  const [propertiesValues, setPropertiesValues] = useState({
     property_id: '',
     location: '',
     price: '',
@@ -40,12 +40,12 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
 
   useEffect(() => {
     if (inmuebleData) {
-      setInmuebleValue({
+      setPropertiesValues({
         property_id: inmuebleData.referenciaInmueble || '',
         location: inmuebleData?.ubicacion || '',
         price: inmuebleData?.precio || '',
         size: inmuebleData?.tamanio || '',
-        roooms: inmuebleData?.habitaciones || '',
+        rooms: inmuebleData?.habitaciones || '',
         garage: inmuebleData?.garaje || false,
         storage_room: inmuebleData?.trastero || false,
       });
@@ -55,7 +55,7 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
   const handleInputChange = (event) => {
     const { name, value, type, checked } = event.target;
     const newValue = type === 'checkbox' ? checked : value;
-    setInmuebleValue({ ...inmuebleValue, [name]: newValue });
+    setPropertiesValues({ ...propertiesValues, [name]: newValue });
   };
 
   // const baniosValue = inmuebleData?.banios || '';
@@ -66,13 +66,13 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
       // const date = new Date();
       // const formattedDate = date.toISOString().split('T')[0];
       const inmuebleToAdd = {
-        ...inmuebleValue,
-        property_id: Number(inmuebleValue.property_id),
+        ...propertiesValues,
+        property_id: Number(propertiesValues.property_id),
         // fechaRegistro: formattedDate,
       };
       // el inmueble se guarda
-      const data = await propertyService.addInmueble({ inmuebleToAdd });
-      return;
+      const res = await propertyService.addInmueble({ inmuebleToAdd });
+      console.log('data', res);
       /**
        * * NO DEBEMOS LLAMAR A LA API PARA OBTENER LOS DATOS DEL USUARIO
        * ! DEBEMOS AÑADIR LA VIVIENDA AL ESTADO GLOBAL
@@ -80,13 +80,9 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
        * cuando los datos del usuario lo tenemos y las viviendas también
        * solo necesitamos añadir la vivienda con la estructura correcta al estado global
        */
-      if (data.status === 201) {
-        const { data } = await loginService.user();
-        setViviendas(data?.usuarioInmuebles);
-        // console.log(data);
-        // addVivienda(inmuebleToAdd);
-        // setSeverity('success');
-        // setMessage('Vivienda añadida con éxito');
+      if (res.status === 201) {
+        console.log('vivienda a añadir:', res.data);
+        addProperty(res.data);
         notify('Vivienda añadida con éxito', 'success');
         handleCloseDialog();
       }
@@ -99,10 +95,9 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
       setOpen(true);
     }
   };
+
   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
+    if (reason === 'clickaway') return;
     setOpen(false);
   };
 
@@ -126,7 +121,7 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
           type="number"
           disabled
           fullWidth
-          value={inmuebleValue.referencia}
+          value={propertiesValues.property_id}
           onChange={handleInputChange}
         />
       </Grid>
@@ -138,7 +133,7 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
           label={t('add-home-form.location')}
           fullWidth
           autoFocus
-          value={inmuebleValue.ubicacion}
+          value={propertiesValues.location}
           onChange={handleInputChange}
         />
       </Grid>
@@ -150,7 +145,7 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
           label={t('add-home-form.price')}
           fullWidth
           type="number"
-          value={inmuebleValue.precio}
+          value={propertiesValues.price}
           onChange={handleInputChange}
         />
       </Grid>
@@ -162,7 +157,7 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
           label={t('add-home-form.size')}
           type="number"
           fullWidth
-          value={inmuebleValue.tamano}
+          value={propertiesValues.size}
           onChange={handleInputChange}
         />
       </Grid>
@@ -174,7 +169,7 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
           label={t('add-home-form.rooms')}
           fullWidth
           type="number"
-          value={inmuebleValue.habitaciones}
+          value={propertiesValues.rooms}
           onChange={handleInputChange}
         />
       </Grid>
@@ -184,7 +179,7 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
           <FormControlLabel
             control={
               <Checkbox
-                checked={inmuebleValue.garaje}
+                checked={propertiesValues.garage}
                 name="garaje"
                 onChange={handleInputChange}
               />
@@ -194,7 +189,7 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
           <FormControlLabel
             control={
               <Checkbox
-                checked={inmuebleValue.trastero}
+                checked={propertiesValues.storage_room}
                 name="trastero"
                 onChange={handleInputChange}
               />

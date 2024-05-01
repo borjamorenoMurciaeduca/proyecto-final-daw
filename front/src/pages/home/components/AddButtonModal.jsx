@@ -57,7 +57,7 @@ const AddButtonModal = () => {
       notify(t('snackbar.url-validation.ok'), 'success');
       try {
         const data = await propertyService.prepareInmuebleForm(idInmueble);
-        console.log('data', data);
+        console.log('data from propertyService', data);
         if (data?.dataStatus == 'ok') {
           setInmuebleData(data);
           setShowForm(true);

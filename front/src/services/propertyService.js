@@ -3,8 +3,11 @@ import inputValidatorInmueble from '@/utils/inputValidatorInmueble';
 const baseURL = import.meta.env.VITE_API_URL;
 
 const addProperty = async ({ inmuebleToAdd }) => {
-  let res = await axiosInterceptor.post(baseURL + 'properties', inmuebleToAdd);
-  return res;
+  let { data } = await axiosInterceptor.post(
+    baseURL + 'properties',
+    inmuebleToAdd
+  );
+  return data;
 };
 
 const getAllUserProperties = async () => {
@@ -13,11 +16,10 @@ const getAllUserProperties = async () => {
 };
 
 const prepareInmuebleForm = async (idInmueble) => {
-  // let res = await axios.get(basePrepareInmuebleUrl + idInmueble, config);
   let res = await axiosInterceptor.get(
     `${baseURL}prepare-inmueble/${idInmueble}`
   );
-  console.log(' res', res);
+
   let data = inputValidatorInmueble.createInmueble(res);
 
   if (data) {

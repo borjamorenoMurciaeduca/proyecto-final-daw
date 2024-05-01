@@ -9,9 +9,13 @@ import {
 const DashboardCard = ({ property }) => {
   const { property_id, location, price } = property;
 
+  const handleCLickCard = (id) => {
+    console.log('Click en la card', id);
+  };
+
   return (
     <Card>
-      <CardActionArea>
+      <CardActionArea onClick={() => handleCLickCard(property_id)}>
         <CardMedia
           component="img"
           height="140"
