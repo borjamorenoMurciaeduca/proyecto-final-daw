@@ -10,6 +10,7 @@ use App\Models\Property;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\UserProperty;
+use Faker\Factory as Faker;
 
 class DatabaseSeeder extends Seeder {
     /**
@@ -17,23 +18,49 @@ class DatabaseSeeder extends Seeder {
      */
     public function run(): void {
 
-        Property::factory(15)->create();
-        $inmuebles = Property::all();
-        $inmuebles->each(function ($inmueble) {
-            PriceHistory::factory()->create([
-                'property_id_fk' => $inmueble->property_id,
-            ]);
-        });
+        // Crea 10 usuarios usando la fábrica User
         User::factory(10)->create();
-        User::factory()->create([
+
+        // Crea un usuario adicional con nombre de usuario 'jorge' y contraseña '1234'
+        $jorge = User::factory()->create([
             'username' => 'jorge',
             'password' => bcrypt('1234'),
         ]);
-        User::factory()->create([
+
+        // Crea otro usuario adicional con nombre de usuario 'borja' y contraseña '1234'
+        $borja = User::factory()->create([
             'username' => 'borja',
             'password' => bcrypt('1234'),
         ]);
-        UserProperty::factory(10)->create();
+
+        //  Crea 10 propiedades usando la fábrica Property
+        Property::factory(10)->create();
+        Property::factory(15)->create()->each(function ($property) use ($jorge, $borja) {
+            $faker = Faker::create();
+            $user = rand(0, 1) ? $jorge : $borja;
+            UserProperty::factory()->create([
+                'user_id_fk' => $user->id,
+                'property_id_fk' => $property->property_id,
+                'location' => $faker->word(),
+                'size' => $faker->numberBetween(50, 300),
+                'rooms' => $faker->randomNumber(1),
+                'garage' => $faker->boolean(),
+                'storage_room' => $faker->boolean(),
+            ]);
+            //añadir 10 registros al historial de precios
+            PriceHistory::factory(10)->create([
+                'property_id_fk' => $property->property_id,
+
+            ]);
+        });
+
+
+        // Crea 40 relaciones entre usuarios y propiedades utilizando la fábrica UserProperty
+        // UserProperty::factory(8)->create();
+        // Obtener todos los property_id no utilizados
+
+
+        // Crea 50 registros de historial de precios utilizando la fábrica PriceHistory
         PriceHistory::factory(50)->create();
     }
 }
