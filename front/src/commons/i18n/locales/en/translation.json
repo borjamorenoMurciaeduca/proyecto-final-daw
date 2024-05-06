@@ -43,6 +43,7 @@
   },
   "add-home-form": {
     "reference": "Reference",
+    "title": "Title",
     "location": "Location",
     "price": "Price",
     "size": "Size",

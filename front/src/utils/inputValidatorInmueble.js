@@ -20,9 +20,11 @@ const createInmueble = (data, idioma = 'es') => {
   inmueble.dataStatus = data?.data?.status;
 
   if (data.data.status == 'ok') {
+    inmueble.titulo = data?.data?.title;
     inmueble.ubicacion = data?.data?.location;
     inmueble.precio = data?.data?.price;
     inmueble.currency = data?.data?.currency;
+    inmueble.descripcion = data?.data?.description;
 
     let caracteristicasBasicas =
       data?.data?.features['Características básicas'];

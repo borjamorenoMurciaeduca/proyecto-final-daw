@@ -41,11 +41,13 @@ class DatabaseSeeder extends Seeder {
             UserProperty::factory()->create([
                 'user_id_fk' => $user->id,
                 'property_id_fk' => $property->property_id,
+                'title' => $faker->word(),
                 'location' => $faker->word(),
                 'size' => $faker->numberBetween(50, 300),
                 'rooms' => $faker->randomNumber(1),
                 'garage' => $faker->boolean(),
                 'storage_room' => $faker->boolean(),
+                'description' => $faker->word()
             ]);
             //añadir 10 registros al historial de precios
             PriceHistory::factory(10)->create([

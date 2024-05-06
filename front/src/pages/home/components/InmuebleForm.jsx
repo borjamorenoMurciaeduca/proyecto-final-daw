@@ -27,12 +27,14 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
 
   const [propertiesValues, setPropertiesValues] = useState({
     property_id: '',
+    title: '',
     location: '',
     price: '',
     size: '',
     rooms: '',
     garage: false,
     storage_room: false,
+    description: ''
   });
 
   const { t } = useTranslation();
@@ -42,12 +44,14 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
     if (inmuebleData) {
       setPropertiesValues({
         property_id: inmuebleData.referenciaInmueble || '',
+        title: inmuebleData?.titulo || '',
         location: inmuebleData?.ubicacion || '',
         price: inmuebleData?.precio || '',
         size: inmuebleData?.tamanio || '',
         rooms: inmuebleData?.habitaciones || '',
         garage: inmuebleData?.garaje || false,
         storage_room: inmuebleData?.trastero || false,
+        description: inmuebleData.descripcion || ''
       });
     }
   }, [inmuebleData]);
@@ -125,6 +129,18 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
           onChange={handleInputChange}
         />
       </Grid>
+      <Grid item xs={6} md={8}>
+        <TextField
+          helperText=""
+          id="titulo"
+          name="titulo"
+          label={t('add-home-form.title')}
+          fullWidth
+          autoFocus
+          value={propertiesValues.title}
+          onChange={handleInputChange}
+        />
+      </Grid>
       <Grid item xs={6} md={4}>
         <TextField
           helperText=""
@@ -199,7 +215,7 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <UnstyledTextareaIntroduction desc={t('add-home-form.description')} />
+        <UnstyledTextareaIntroduction desc={propertiesValues.description} />
       </Grid>
       <Grid item xs={12} md={8}>
         <Button type="submit" variant="contained" fullWidth>
