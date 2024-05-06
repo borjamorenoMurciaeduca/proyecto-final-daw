@@ -2,6 +2,7 @@ import { DEFAULT_LANGUAGES } from '@/commons/config/config';
 import { IconButton, Menu, MenuItem, Tooltip } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import flags from '@/assets/languages/icons';
 
 const LanguageFlagSelector = () => {
   const { i18n, t } = useTranslation();
@@ -16,7 +17,14 @@ const LanguageFlagSelector = () => {
   };
 
   const getLanguageFlag = (lng, size = 24, isMain = false) => {
-    const iconUrl = `languages/icons/${lng}.png`;
+
+    let iconUrl;
+
+    if (lng) {
+      iconUrl = flags[lng];
+    } else {
+      iconUrl = flags.defaultFlag;
+    }
 
     return (
       <img
