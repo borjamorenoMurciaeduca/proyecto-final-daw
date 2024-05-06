@@ -19,10 +19,10 @@ class UserProperty extends Model {
         'storage_room',
         // 'fechaBajaAnuncio'
     ];
-    // Establece la relación entre UsuarioInmueble e Inmueble
-    // belongsTo: Establece que pertenece a un registro de la tabla Inmueble
-    // referenciaInmueble: Nombre de la columna en UsuarioInmueble que hace referencia a Inmueble
-    // referencia: Nombre de la columna en Inmueble que hace referencia a UsuarioInmueble
+    // Establece la relación entre UserProperty y Property
+    // belongsTo: Establece que pertenece a un registro de la tabla Properties
+    // property_id_fk: Nombre de la columna en UsuarioInmueble que hace referencia Properties
+    // property_id: Nombre de la columna en Inmueble que hace referencia a UserProperty
     public function property() {
         return $this->belongsTo(Property::class, 'property_id_fk', 'property_id');
     }
