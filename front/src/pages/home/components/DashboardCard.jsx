@@ -1,3 +1,4 @@
+import FormateadorPrecio from '@/components/FormateadorPrecio';
 import {
   Card,
   CardActionArea,
@@ -36,7 +37,7 @@ const DashboardCard = ({ property }) => {
             {location}
           </Typography>
           <Typography gutterBottom variant="span" component="span">
-            Ref: {property_id} | {price} €
+            Ref: {property_id} | <FormateadorPrecio precio={price} />
           </Typography>
         </CardContent>
       </CardActionArea>
