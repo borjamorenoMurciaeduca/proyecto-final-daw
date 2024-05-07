@@ -75,7 +75,7 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
         // fechaRegistro: formattedDate,
       };
       // el inmueble se guarda
-      const res = await propertyService.addInmueble({ inmuebleToAdd });
+      const res = await propertyService.addProperty({ inmuebleToAdd });
       console.log('data', res);
       /**
        * * NO DEBEMOS LLAMAR A LA API PARA OBTENER LOS DATOS DEL USUARIO
