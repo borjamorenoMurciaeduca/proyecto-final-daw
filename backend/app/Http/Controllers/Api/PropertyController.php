@@ -149,11 +149,13 @@ class PropertyController extends Controller {
             }
 
             $validateUserProperty = $request->validate([
+                'title' => 'string|required',
                 'location' => 'string|required',
                 'size' => 'numeric|required',
                 'rooms' => 'integer|required',
                 'garage' => 'required',
                 'storage_room' => 'required',
+                'description' => 'string|required'
             ]);
             // Convertir 'true' de string a boolean si es necesario
             $garage = filter_var($request->input('garage'), FILTER_VALIDATE_BOOLEAN);
@@ -178,11 +180,13 @@ class PropertyController extends Controller {
             $userProperty = UserProperty::create([
                 'user_id_fk' => Auth::id(),
                 'property_id_fk' => $validateProperty['property_id'],
+                'title' => $validateUserProperty['title'],
                 'location' => $validateUserProperty['location'],
                 'size' => $validateUserProperty['size'],
                 'rooms' => $validateUserProperty['rooms'],
                 'garage' => $garage,
                 'storage_room' => $storage_room,
+                'description' => $validateUserProperty['description'],
                 // 'garaje' => $validateUsuarioInmueble['garaje'],
                 // 'trastero' => $validateUsuarioInmueble['trastero'],
             ]);
@@ -199,11 +203,13 @@ class PropertyController extends Controller {
             $data = [
                 'user_id' => Auth::id(),
                 'property_id' => $validateProperty['property_id'],
+                'title' => $validateUserProperty['title'],
                 'location' => $validateUserProperty['location'],
                 'size' => $validateUserProperty['size'],
                 'rooms' => $validateUserProperty['rooms'],
                 'garage' => $garage,
                 'storage_room' => $storage_room,
+                'description' => $validateUserProperty['description'],
                 'price' => $history->price,
                 'url_image' => $validateProperty['url_image'] ?? null,
                 'cancellation_date' => $validateProperty['cancellation_date'] ?? null,
@@ -259,11 +265,13 @@ class PropertyController extends Controller {
                 return [
                     'user_id' => $userProperty->user_id_fk,
                     "property_id" => $userProperty->property_id_fk,
+                    'title' => $userProperty->title,
                     'location' => $userProperty->location,
                     'size' => $userProperty->size,
                     'rooms' => $userProperty->rooms,
                     'garage' => $userProperty->garage  == 1 ? true : false,
                     'storage_room' => $userProperty->storage_room  == 1 ? true : false,
+                    'description' => $userProperty->description,
                     'price' => $property->last_price,
                     'url_image' => $property->url_image,
                     'cancellation_date' => $property->cancellation_date,
@@ -284,11 +292,13 @@ class PropertyController extends Controller {
             $data = [
                 'user_id' => $userProperty->user_id_fk,
                 'property_id' => $userProperty->property_id_fk,
+                'title' => $userProperty->title,
                 'location' => $userProperty->location,
                 'size' => $userProperty->size,
                 'rooms' => $userProperty->rooms,
                 'garage' => $userProperty->garage,
                 'storage_room' => $userProperty->storage_room,
+                'description' => $userProperty->description,
                 'price' => $property->last_price,
                 'url_image' => $property->url_image,
                 'cancellation_date' => $property->cancellation_date,

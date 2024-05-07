@@ -12,11 +12,13 @@ return new class extends Migration {
         Schema::create('users_properties', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id_fk');
             $table->bigInteger('property_id_fk')->unique();
+            $table->string("title");
             $table->string("location");
             $table->integer("size")->unsigned();
             $table->integer("rooms")->unsigned();
             $table->boolean("garage");
             $table->boolean("storage_room");
+            $table->longText("description");
             $table->timestamps();
             $table->foreign('property_id_fk')->references('property_id')->on('properties')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('user_id_fk')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');

@@ -27,12 +27,14 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
 
   const [propertiesValues, setPropertiesValues] = useState({
     property_id: '',
+    title: '',
     location: '',
     price: '',
     size: '',
     rooms: '',
     garage: false,
     storage_room: false,
+    description: ''
   });
 
   const { t } = useTranslation();
@@ -42,12 +44,14 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
     if (inmuebleData) {
       setPropertiesValues({
         property_id: inmuebleData.referenciaInmueble || '',
+        title: inmuebleData?.titulo || '',
         location: inmuebleData?.ubicacion || '',
         price: inmuebleData?.precio || '',
         size: inmuebleData?.tamanio || '',
         rooms: inmuebleData?.habitaciones || '',
         garage: inmuebleData?.garaje || false,
         storage_room: inmuebleData?.trastero || false,
+        description: inmuebleData.descripcion || ''
       });
     }
   }, [inmuebleData]);
@@ -115,8 +119,8 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
       <Grid item xs={12} md={4}>
         <TextField
           helperText=""
-          id="referencia"
-          name="referencia"
+          id="property_id"
+          name="property_id"
           label={t('add-home-form.reference')}
           type="number"
           disabled
@@ -125,11 +129,23 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
           onChange={handleInputChange}
         />
       </Grid>
+      <Grid item xs={6} md={8}>
+        <TextField
+          helperText=""
+          id="title"
+          name="title"
+          label={t('add-home-form.title')}
+          fullWidth
+          autoFocus
+          value={propertiesValues.title}
+          onChange={handleInputChange}
+        />
+      </Grid>
       <Grid item xs={6} md={4}>
         <TextField
           helperText=""
-          id="ubicacion"
-          name="ubicacion"
+          id="location"
+          name="location"
           label={t('add-home-form.location')}
           fullWidth
           autoFocus
@@ -140,8 +156,8 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
       <Grid item xs={6} md={4}>
         <TextField
           helperText=""
-          id="precio"
-          name="precio"
+          id="price"
+          name="price"
           label={t('add-home-form.price')}
           fullWidth
           type="number"
@@ -152,8 +168,8 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
       <Grid item xs={6} md={4}>
         <TextField
           helperText=""
-          id="tamanioValue"
-          name="tamanioValue"
+          id="size"
+          name="size"
           label={t('add-home-form.size')}
           type="number"
           fullWidth
@@ -164,8 +180,8 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
       <Grid item xs={6} md={4}>
         <TextField
           helperText=""
-          id="habitaciones"
-          name="habitaciones"
+          id="rooms"
+          name="rooms"
           label={t('add-home-form.rooms')}
           fullWidth
           type="number"
@@ -180,7 +196,7 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
             control={
               <Checkbox
                 checked={propertiesValues.garage}
-                name="garaje"
+                name="garage"
                 onChange={handleInputChange}
               />
             }
@@ -190,7 +206,7 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
             control={
               <Checkbox
                 checked={propertiesValues.storage_room}
-                name="trastero"
+                name="storage_room"
                 onChange={handleInputChange}
               />
             }
@@ -199,7 +215,7 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <UnstyledTextareaIntroduction desc={t('add-home-form.description')} />
+        <UnstyledTextareaIntroduction desc={t('add-home-form.description')}  name="description" defaultValue={propertiesValues.description} />
       </Grid>
       <Grid item xs={12} md={8}>
         <Button type="submit" variant="contained" fullWidth>

@@ -25,11 +25,13 @@ class UserPropertyFactory extends Factory {
         return [
             'user_id_fk' => $jorgeId,
             'property_id_fk' => $propertyId,
+            'title' => $this->faker->word(),
             'location' => $this->faker->word(),
             'size' => $this->faker->numberBetween(50, 300),
             'rooms' => $this->faker->randomNumber(1),
             'garage' => $this->faker->boolean(),
             'storage_room' => $this->faker->boolean(),
+            'description' => $this->faker->word(),
         ];
     }
 }

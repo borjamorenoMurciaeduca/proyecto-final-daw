@@ -8,7 +8,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 const DashboardCard = ({ property }) => {
-  const { property_id, location, price } = property;
+  const { property_id, location, price, title } = property;
   const navigate = useNavigate();
 
   const handleCLickCard = (id) => {
@@ -27,7 +27,7 @@ const DashboardCard = ({ property }) => {
         />
         <CardContent>
           <Typography variant="h5" color="text.secondary">
-            [title]
+            {title}
           </Typography>
           <Typography gutterBottom variant="h6" component="div">
             Vivienda

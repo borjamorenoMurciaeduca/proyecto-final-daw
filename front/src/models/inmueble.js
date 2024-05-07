@@ -1,6 +1,7 @@
 class Inmueble {
   constructor() {
     this.referenciaInmueble = null;
+    this.titulo = null;
     this.ubicacion = null;
     this.tamanio = null;
     this.habitaciones = null;
@@ -12,6 +13,7 @@ class Inmueble {
     this.tipoPropiedad = null;
     this.fechaBaja = null;
     this.dataStatus = null;
+    this.descripcion = null;
   }
 }
 

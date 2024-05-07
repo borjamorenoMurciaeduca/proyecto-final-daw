@@ -12,11 +12,13 @@ class UserProperty extends Model {
     protected $fillable = [
         "user_id_fk",
         'property_id_fk',
+        'title',
         'location',
         'size',
         'rooms',
         'garage',
         'storage_room',
+        'description'
         // 'fechaBajaAnuncio'
     ];
     // Establece la relación entre UserProperty y Property
