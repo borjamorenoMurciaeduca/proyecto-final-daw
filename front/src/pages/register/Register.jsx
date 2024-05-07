@@ -78,11 +78,11 @@ const Register = () => {
       maxWidth="xs"
       component="main"
       sx={{
-        marginTop: 8,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
+        minHeight: '90vh',
       }}
     >
       <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>

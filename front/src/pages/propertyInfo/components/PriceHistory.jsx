@@ -1,10 +1,50 @@
+import PageLoader from '@/components/PageLoader';
+import propertyService from '@/services/propertyService';
 import parser from '@/utils/parser';
 import { Grid, Typography } from '@mui/material';
 import { LineChart } from '@mui/x-charts';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
-const PriceHistory = ({ xAxis, series }) => {
+const PriceHistory = ({ propertyId }) => {
+  console.log("propertyId", propertyId)
+  const [xAxis, setXAxis] = useState([]);
+  const [series, setSeries] = useState([]);
+
+  const formatDate = (dateString) => {
+    const dateObject = new Date(dateString);
+    const day = dateObject.getDate().toString().padStart(2, '0');
+    const month = (dateObject.getMonth() + 1).toString().padStart(2, '0'); // El mes es indexado desde 0, por eso se le suma 1
+    const year = dateObject.getFullYear().toString().slice(-2);
+    const hours = dateObject.getHours().toString().padStart(2, '0');
+    const minutes = dateObject.getMinutes().toString().padStart(2, '0');
+
+    return `${day}/${month}/${year}`;
+  };
+
+  useEffect(() => {
+    (async () => {
+      try {
+        let { data: propertyPrices } = await propertyService.getPropertyPrices(propertyId);
+        setSeries([]);
+        setXAxis([]);
+        propertyPrices.prices
+          .filter((item) => item.created_at)
+          .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
+          .map((item) => {
+            setSeries((prev) => [...prev, parseFloat(item.price)]);
+            setXAxis((prev) => [...prev, formatDate(item.updated_at)]);
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, [propertyId]);
+
+  if (!xAxis.length) return <PageLoader />;
+
   return (
-    <>
+    <Grid item xs={12}>
       <LineChart
         // colors={['#f00', '#0f0', '#00f']}
         xAxis={[
@@ -64,7 +104,7 @@ const PriceHistory = ({ xAxis, series }) => {
           Con un precio mínimo de: {parser.FixPrice(Math.min(...series))} €
         </Typography>
       </Grid>
-    </>
+    </Grid>
   );
 };
 export default PriceHistory;

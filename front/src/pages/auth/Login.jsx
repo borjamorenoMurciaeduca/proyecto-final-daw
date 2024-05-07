@@ -104,11 +104,11 @@ const Login = () => {
       maxWidth="xs"
       component="main"
       sx={{
-        marginTop: 8,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
+        minHeight: '90vh',
       }}
     >
       <Box sx={{ maxWidth: '80px', marginBottom: 1 }}>

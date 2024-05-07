@@ -13,61 +13,16 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import PriceHistory from './components/PriceHistory';
+import PropertyDetails from './components/PropertyDetails';
 /**
  * https://mui.com/x/api/charts/line-chart/
  * En progreso
  *
  */
 const PropertyInfo = () => {
-  const [xAxis, setXAxis] = useState([]);
-  const [series, setSeries] = useState([]);
   const [view, setView] = useState(0);
   let { property_id } = useParams();
-
-  // const dateArrayN = (n) => {
-  //   return Array.from({ length: n }, (_, i) => {
-  //     const date = new Date();
-  //     date.setDate(date.getDate() - i);
-  //     return date.toLocaleDateString('es-ES', {
-  //       year: 'numeric',
-  //       month: '2-digit',
-  //       day: '2-digit',
-  //     });
-  //   }).reverse();
-  // };
-
-  const formatDate = (dateString) => {
-    const dateObject = new Date(dateString);
-    const day = dateObject.getDate().toString().padStart(2, '0');
-    const month = (dateObject.getMonth() + 1).toString().padStart(2, '0'); // El mes es indexado desde 0, por eso se le suma 1
-    const year = dateObject.getFullYear().toString().slice(-2);
-    const hours = dateObject.getHours().toString().padStart(2, '0');
-    const minutes = dateObject.getMinutes().toString().padStart(2, '0');
-
-    return `${day}/${month}/${year} ${hours}:${minutes}`;
-  };
-
-  useEffect(() => {
-    (async () => {
-      try {
-        let { data } = await propertyService.getPropertyPrices({ property_id });
-        console.log(data);
-        setSeries([]);
-        setXAxis([]);
-        data.prices
-          .filter((item) => item.created_at)
-          .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
-          .map((item) => {
-            setSeries((prev) => [...prev, parseFloat(item.price)]);
-            setXAxis((prev) => [...prev, formatDate(item.updated_at)]);
-          });
-      } catch (error) {
-        console.error(error);
-      }
-    })();
-  }, [property_id]);
-
-  if (!xAxis.length) return <PageLoader />;
+  console.log(property_id)
 
   return (
     <>
@@ -79,10 +34,8 @@ const PropertyInfo = () => {
         justifyContent="center"
         gap={2}
       >
-        <Grid item xs={10}>
-          {view == 0 && <PriceHistory xAxis={xAxis} series={series} />}
-          {view == 1 && <Typography>Información</Typography>}
-        </Grid>
+        {view == 0 && <PriceHistory propertyId={property_id} />}
+        {view == 1 && <PropertyDetails propertyId={property_id} />}
         <Grid item xs={6}>
           <Paper
             elevation={3}
