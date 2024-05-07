@@ -28,15 +28,15 @@ const prepareInmuebleForm = async (idInmueble) => {
   return null;
 };
 
-const getPropertyPrices = async (idInmueble) => {
+const getPropertyPrices = async ({ property_id }) => {
   let { data } = await axiosInterceptor.get(
-    `${baseURL}property/${idInmueble}/prices`
+    `${baseURL}property/${property_id}/prices`
   );
   return data;
 };
 
 export default {
-  addInmueble: addProperty,
+  addProperty,
   prepareInmuebleForm,
   getAllUserProperties,
   getPropertyPrices,

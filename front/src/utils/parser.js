@@ -82,7 +82,15 @@ function AddSpaces(value, spaces) {
   return ' '.repeat(total) + value;
 }
 
+function FixPrice(value) {
+  let partes = value.toFixed(2).split('.');
+  let parteEntera = partes[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  let resultado = parteEntera + ',' + partes[1];
+  return resultado;
+}
+
 export default {
+  FixPrice,
   CleanId,
   DateReceived,
   DateTimeReceived,
