@@ -20,6 +20,7 @@ import {
   InputLabel,
   Link,
   OutlinedInput,
+  Paper,
   TextField,
   Typography,
 } from '@mui/material';
@@ -110,22 +111,22 @@ const Login = () => {
         minHeight: '100vh',
       }}
     >
-      <Box
-        p={5}
+      <Paper
+        elevation={24}
         sx={{
+          padding: 5,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          borderRadius: '10px',
-          boxShadow: '2px 2px 45px -15px rgba(0,0,0,0.75)',
+          // borderRadius: '10px',
+          // boxShadow: '2px 2px 45px -15px rgba(0,0,0,0.75)',
           gap: 2,
         }}
       >
         <Box
           sx={{
             maxWidth: '80px',
-            m: 1,
           }}
         >
           <img
@@ -137,12 +138,7 @@ const Login = () => {
         <Typography component="h1" variant="h5">
           {t('login-form.title')}
         </Typography>
-        <Box
-          component="form"
-          noValidate
-          onSubmit={handleLoginSubmit}
-          // sx={{ mt: 3 }}
-        >
+        <Box component="form" noValidate onSubmit={handleLoginSubmit}>
           {error && (
             <Alert severity="error" sx={{ margin: '10px 0px' }}>
               {error}
@@ -186,23 +182,28 @@ const Login = () => {
                 />
               </FormControl>
             </Grid>
-          </Grid>
-          <Grid item xs={12} sx={{ mt: 3, mb: 2 }}>
-            <Button type="submit" variant="contained" fullWidth>
-              {t('login-form.form.login')}
-            </Button>
-          </Grid>
-          <Grid container item justifyContent="flex-end">
-            <Grid item>
+            <Grid item xs={12}>
+              <Button type="submit" variant="contained" fullWidth>
+                {t('login-form.form.login')}
+              </Button>
+            </Grid>
+            <Grid
+              container
+              item
+              justifyContent="space-between"
+              alignItems="center"
+              spacing={2}
+              mt={1}
+            >
+              <LanguageSelector />
               <Link component={RouterLink} to="/register" variant="body2">
                 {t('login-form.register')}
               </Link>
             </Grid>
           </Grid>
         </Box>
-        <LanguageSelector />
         <Copyright />
-      </Box>
+      </Paper>
     </Container>
   );
 };
