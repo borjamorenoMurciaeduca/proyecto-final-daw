@@ -1,7 +1,7 @@
 import Layout from '@/layout';
 import EditProfile from '@/pages/edit-profile/EditProfile';
 import Home from '@/pages/home/Home';
-import PropertyInfo from '@/pages/propertyInfo/PropertyInfo';
+import PropertyInfo from '@/pages/property-info/PropertyInfo';
 import { Navigate } from 'react-router-dom';
 
 const LayoutRoutes = [

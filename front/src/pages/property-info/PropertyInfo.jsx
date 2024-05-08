@@ -34,33 +34,33 @@ const PropertyInfo = () => {
       >
         {view == 0 && <PriceHistory propertyId={property_id} />}
         {view == 1 && <PropertyDetails propertyId={property_id} />}
-        <Grid item xs={6}>
-          <Paper
-            elevation={3}
-            sx={{
-              width: '100%',
-              position: 'fixed',
-              bottom: 0,
-              left: 0,
-              right: 0,
+        {/* <Grid item xs={12}> */}
+        <Paper
+          elevation={3}
+          sx={{
+            width: '100%',
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            right: 0,
+          }}
+        >
+          <BottomNavigation
+            showLabels
+            value={view}
+            onChange={(event, newValue) => {
+              console.log(newValue);
+              setView(newValue);
             }}
           >
-            <BottomNavigation
-              showLabels
-              value={view}
-              onChange={(event, newValue) => {
-                console.log(newValue);
-                setView(newValue);
-              }}
-            >
-              <BottomNavigationAction
-                label="Price History"
-                icon={<RestoreIcon />}
-              />
-              <BottomNavigationAction label="Data" icon={<TextSnippetIcon />} />
-            </BottomNavigation>
-          </Paper>
-        </Grid>
+            <BottomNavigationAction
+              label="Price History"
+              icon={<RestoreIcon />}
+            />
+            <BottomNavigationAction label="Data" icon={<TextSnippetIcon />} />
+          </BottomNavigation>
+        </Paper>
+        {/* </Grid> */}
       </Grid>
     </>
   );
