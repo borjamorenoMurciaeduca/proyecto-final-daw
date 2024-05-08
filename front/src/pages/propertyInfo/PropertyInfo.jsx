@@ -1,7 +1,5 @@
 import { useParams } from 'react-router-dom';
 
-import PageLoader from '@/components/PageLoader';
-import propertyService from '@/services/propertyService';
 import RestoreIcon from '@mui/icons-material/Restore';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import {
@@ -11,7 +9,7 @@ import {
   Paper,
   Typography,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import PriceHistory from './components/PriceHistory';
 import PropertyDetails from './components/PropertyDetails';
 /**
@@ -22,17 +20,17 @@ import PropertyDetails from './components/PropertyDetails';
 const PropertyInfo = () => {
   const [view, setView] = useState(0);
   let { property_id } = useParams();
-  console.log(property_id)
+  console.log(property_id);
 
   return (
     <>
       <Typography variant="h2">Detalles de vivienda {property_id}</Typography>
       <Grid
         container
-        p={5}
         alignContent="center"
         justifyContent="center"
         gap={2}
+        mt={4}
       >
         {view == 0 && <PriceHistory propertyId={property_id} />}
         {view == 1 && <PropertyDetails propertyId={property_id} />}

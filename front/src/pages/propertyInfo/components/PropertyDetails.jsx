@@ -1,24 +1,35 @@
-import PageLoader from "@/components/PageLoader";
-import useViviendas from "@/hooks/useViviendas";
-import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Chip, Divider, Grid, Typography } from "@mui/material";
-import { Box, Stack } from "@mui/system";
-import { useEffect } from "react";
-import { useState } from "react";
+import PageLoader from '@/components/PageLoader';
+import useViviendas from '@/hooks/useViviendas';
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Chip,
+  Divider,
+  Grid,
+  Typography,
+} from '@mui/material';
+import { Box, Stack } from '@mui/system';
+import { useEffect, useState } from 'react';
 
 const PropertyDetails = ({ propertyId }) => {
-  const [propertie, setPropertie] = useState()
+  const [property, setProperty] = useState();
   const { properties } = useViviendas();
 
   useEffect(() => {
-    const propertieMatch = properties.find(el => el.property_id == propertyId)
-    setPropertie(propertieMatch)
-  }, [propertyId, properties])
+    const propertieMatch = properties.find(
+      (el) => el.property_id == propertyId
+    );
+    setProperty(propertieMatch);
+  }, [propertyId, properties]);
 
-  if (!propertie) return <PageLoader />
+  if (!property) return <PageLoader />;
 
   return (
     <Grid item xs={12}>
-      <Card >
+      <Card>
         <CardMedia
           component="img"
           height="340"
@@ -29,16 +40,20 @@ const PropertyDetails = ({ propertyId }) => {
         <CardContent>
           <Box sx={{ p: 2 }}>
             <Typography gutterBottom variant="h5" component="div">
-              {propertie.location}
+              {property.location}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {propertie.description}
+              {property.description}
             </Typography>
           </Box>
           <Divider />
           <Box sx={{ p: 2 }}>
-            <Stack direction="row" spacing={2}>
-              <Chip color={propertie.storage_room ? "primary" : "default"} label="storage_room" size="small" />
+            <Stack direction="row" spacing={2} useFlexGap flexWrap="wrap">
+              <Chip
+                color={property.storage_room ? 'primary' : 'default'}
+                label="storage_room"
+                size="small"
+              />
               <Chip label="Medium" size="small" />
               <Chip label="Hard" size="small" />
             </Stack>
@@ -52,6 +67,6 @@ const PropertyDetails = ({ propertyId }) => {
       </Card>
     </Grid>
   );
-}
+};
 
-export default PropertyDetails
+export default PropertyDetails;
