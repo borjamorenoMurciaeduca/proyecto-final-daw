@@ -10,6 +10,7 @@ use App\Models\UsuarioInmueble;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Spatie\FlareClient\Api;
 
@@ -159,13 +160,18 @@ class AuthController extends Controller {
         }
     }
 
-    public function editProfile(Request $request){
+    public function editProfile(Request $request) {
         //editar password del usuario
         try {
             $validatedData = $request->validate([
                 'password' => 'required|confirmed',
             ]);
             $user = User::find(Auth::id());
+            // Verificar si la nueva contraseña es igual a la anterior
+            if (Hash::check($request->password, $user->password)) {
+                return ApiResponse::error('Password must be different from the current one', 400);
+            }
+
             $user->password = bcrypt($request->password);
             $user->save();
             return ApiResponse::success('Password updated successfully!', $user, 200);

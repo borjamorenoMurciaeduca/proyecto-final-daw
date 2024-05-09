@@ -17,7 +17,7 @@ Route::middleware('auth:sanctum')->group(function () {
   // Rutas protegidas correspondientes a la autenticación
   Route::get('/user', [AuthController::class, 'user']);
   Route::post('/logout', [AuthController::class, 'logout']);
-  Route::post('/edit-profile', [AuthController::class, 'editProfile']);
+  Route::put('/edit-profile', [AuthController::class, 'editProfile']);
 
   // Rutas protegidas correspondientes a los inmuebles
   Route::get('/properties', [PropertyController::class, 'getAllUserProperties']);
