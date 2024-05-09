@@ -34,9 +34,9 @@ export default App;
 //     (async () => {
 //       if (token) {
 //         try {
-//           // LoginService.setToken(token);
+//           // userService.setToken(token);
 //           // propertyService.setToken(token);
-//           const { data } = await LoginService.user();
+//           const { data } = await userService.user();
 //           handleLogin(data);
 //           navigate('/app');
 //         } catch (error) {

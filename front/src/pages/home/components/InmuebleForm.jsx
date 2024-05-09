@@ -34,7 +34,7 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
     rooms: '',
     garage: false,
     storage_room: false,
-    description: ''
+    description: '',
   });
 
   const { t } = useTranslation();
@@ -51,7 +51,7 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
         rooms: inmuebleData?.habitaciones || '',
         garage: inmuebleData?.garaje || false,
         storage_room: inmuebleData?.trastero || false,
-        description: inmuebleData.descripcion || ''
+        description: inmuebleData.descripcion || '',
       });
     }
   }, [inmuebleData]);
@@ -76,7 +76,6 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
       };
       // el inmueble se guarda
       const res = await propertyService.addProperty({ inmuebleToAdd });
-      console.log('data', res);
       /**
        * * NO DEBEMOS LLAMAR A LA API PARA OBTENER LOS DATOS DEL USUARIO
        * ! DEBEMOS AÑADIR LA VIVIENDA AL ESTADO GLOBAL
@@ -85,7 +84,6 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
        * solo necesitamos añadir la vivienda con la estructura correcta al estado global
        */
       if (res.status === 201) {
-        console.log('vivienda a añadir:', res.data);
         addProperty(res.data);
         notify('Vivienda añadida con éxito', 'success');
         handleCloseDialog();
@@ -215,7 +213,11 @@ const Inmueble = ({ inmuebleData = {}, handleCloseDialog }) => {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <UnstyledTextareaIntroduction desc={t('add-home-form.description')}  name="description" defaultValue={propertiesValues.description} />
+        <UnstyledTextareaIntroduction
+          desc={t('add-home-form.description')}
+          name="description"
+          defaultValue={propertiesValues.description}
+        />
       </Grid>
       <Grid item xs={12} md={8}>
         <Button type="submit" variant="contained" fullWidth>

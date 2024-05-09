@@ -13,7 +13,6 @@ const DashboardCard = ({ property }) => {
   const navigate = useNavigate();
 
   const handleCLickCard = (id) => {
-    console.log('Click en la card', id);
     navigate(`/app/property/${id}`);
   };
 

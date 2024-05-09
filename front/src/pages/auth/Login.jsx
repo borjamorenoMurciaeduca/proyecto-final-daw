@@ -3,8 +3,8 @@ import Copyright from '@/components/Copyright';
 import LanguageSelector from '@/components/LanguageSelector.jsx';
 import useUser from '@/hooks/useUser';
 import useViviendas from '@/hooks/useViviendas.js';
-import loginService from '@/services/loginService.js';
 import propertyService from '@/services/propertyService';
+import userService from '@/services/userService.js';
 import { USER_COOKIE_TOKEN } from '@/strings/defaults';
 import cookie from '@/utils/cookie';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -56,7 +56,7 @@ const Login = () => {
       if (!password) throw new Error('Password is required');
 
       /**
-       * loginservice.login
+       * userService.login
        * Obtenemos los datos del usuario
        *   guardamos en el estado global de UserProvider los datos del usuario
        *
@@ -64,7 +64,7 @@ const Login = () => {
        * Obtenemos los inmuebles del usuario
        *  guardamos en el estado global de ViviendasProvider los inmuebles del usuario
        */
-      const resUser = await loginService.login({
+      const resUser = await userService.login({
         username,
         password,
       });

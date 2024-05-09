@@ -38,6 +38,11 @@ const Layout = () => {
   const handleCloseNavMenu = () => setAnchorElNav(null);
   const handleCloseUserMenu = () => setAnchorElUser(null);
 
+  const handleClickProfile = () => {
+    setAnchorElUser(null);
+    navigate('/app/edit-profile');
+  };
+
   const handleLogoutMenu = async () => {
     setAnchorElUser(null);
     cookie.clear();
@@ -129,7 +134,9 @@ const Layout = () => {
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title={t('tooltip.open-settings')}>
+              <Tooltip
+                title={`${t('tooltip.open-settings')} - ${user.username}`}
+              >
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar
                     alt={user.username.toUpperCase()}
@@ -153,7 +160,7 @@ const Layout = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                <MenuItem onClick={handleCloseUserMenu}>
+                <MenuItem onClick={handleClickProfile}>
                   <Typography textAlign="center">
                     {t(`top-menu.settings.profile`)}
                   </Typography>

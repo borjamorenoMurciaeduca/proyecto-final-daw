@@ -1,6 +1,7 @@
 import PageLoader from '@/components/PageLoader';
 import useViviendas from '@/hooks/useViviendas';
 import parser from '@/utils/parser';
+import { Facebook, Instagram, Twitter } from '@mui/icons-material';
 import {
   Button,
   Card,
@@ -10,6 +11,7 @@ import {
   Chip,
   Divider,
   Grid,
+  IconButton,
   Typography,
 } from '@mui/material';
 import { Box, Stack } from '@mui/system';
@@ -29,7 +31,7 @@ const PropertyDetails = ({ propertyId }) => {
   if (!property) return <PageLoader />;
 
   return (
-    <Grid item xs={8} justifyContent="center" alignSelf="center" pb={5}>
+    <Grid item xs={12} md={8} justifyContent="center" alignSelf="center" pb={5}>
       <Card>
         <CardMedia
           component="img"
@@ -58,12 +60,14 @@ const PropertyDetails = ({ propertyId }) => {
             >
               <Chip
                 color={property.storage_room ? 'success' : 'error'}
-                label="storage_room"
+                label={
+                  property.storage_room ? 'storage room✔️' : 'storage room❌'
+                }
                 size="small"
               />
               <Chip
-                color={property.garage ? 'success' : 'error'}
-                label="garage"
+                color={property.garage ? 'default' : 'error'}
+                label={property.garage ? 'garage✔️' : 'garage❌'}
                 size="small"
               />
               <Chip
@@ -88,6 +92,33 @@ const PropertyDetails = ({ propertyId }) => {
           <Button size="small" color="primary">
             Share
           </Button>
+          <IconButton
+            color="primary"
+            aria-label="Facebook"
+            onClick={() => window.open('https://www.facebook.com/yourpage')}
+          >
+            <Facebook />
+          </IconButton>
+
+          <IconButton
+            color="primary"
+            aria-label="Twitter"
+            onClick={() =>
+              window.open(`https://twitter.com/intent/tweet?url=asdsadad`)
+            }
+          >
+            <Twitter />
+          </IconButton>
+
+          <IconButton
+            color="primary"
+            aria-label="Instagram"
+            onClick={() =>
+              window.open('https://www.instagram.com/yourusername')
+            }
+          >
+            <Instagram />
+          </IconButton>
         </CardActions>
       </Card>
     </Grid>

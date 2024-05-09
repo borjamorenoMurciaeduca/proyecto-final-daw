@@ -6,20 +6,19 @@ import { LineChart } from '@mui/x-charts';
 import { useEffect, useState } from 'react';
 
 const PriceHistory = ({ propertyId }) => {
-  console.log('propertyId', propertyId);
   const [xAxis, setXAxis] = useState([]);
   const [series, setSeries] = useState([]);
 
-  const formatDate = (dateString) => {
-    const dateObject = new Date(dateString);
-    const day = dateObject.getDate().toString().padStart(2, '0');
-    const month = (dateObject.getMonth() + 1).toString().padStart(2, '0'); // El mes es indexado desde 0, por eso se le suma 1
-    const year = dateObject.getFullYear().toString().slice(-2);
-    const hours = dateObject.getHours().toString().padStart(2, '0');
-    const minutes = dateObject.getMinutes().toString().padStart(2, '0');
+  // const formatDate = (dateString) => {
+  //   const dateObject = new Date(dateString);
+  //   const day = dateObject.getDate().toString().padStart(2, '0');
+  //   const month = (dateObject.getMonth() + 1).toString().padStart(2, '0'); // El mes es indexado desde 0, por eso se le suma 1
+  //   const year = dateObject.getFullYear().toString().slice(-2);
+  //   const hours = dateObject.getHours().toString().padStart(2, '0');
+  //   const minutes = dateObject.getMinutes().toString().padStart(2, '0');
 
-    return `${day}/${month}/${year} ${hours}:${minutes}`;
-  };
+  //   return `${day}/${month}/${year} ${hours}:${minutes}`;
+  // };
 
   useEffect(() => {
     (async () => {
@@ -34,7 +33,7 @@ const PriceHistory = ({ propertyId }) => {
           .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
           .map((item) => {
             setSeries((prev) => [...prev, parseFloat(item.price)]);
-            setXAxis((prev) => [...prev, formatDate(item.updated_at)]);
+            setXAxis((prev) => [...prev, item.updated_at]);
           });
       } catch (error) {
         console.error(error);
@@ -42,10 +41,18 @@ const PriceHistory = ({ propertyId }) => {
     })();
   }, [propertyId]);
 
+  const formatDateWithoutTime = (dateString) => {
+    const dateObject = new Date(dateString);
+    const day = dateObject.getDate().toString().padStart(2, '0');
+    const month = (dateObject.getMonth() + 1).toString().padStart(2, '0'); // El mes es indexado desde 0, por eso se le suma 1
+    const year = dateObject.getFullYear().toString();
+    return `${day}/${month}/${year}`;
+  };
+
   if (!xAxis.length) return <PageLoader />;
-  console.log('xAxis', xAxis);
+
   return (
-    <Grid item xs={12} md={10}>
+    <Grid item xs={12} md={8}>
       <LineChart
         // colors={['#f00', '#0f0', '#00f']}
         xAxis={[
@@ -55,12 +62,7 @@ const PriceHistory = ({ propertyId }) => {
             label: 'Fechas',
             axisLabel: 'Fechas',
             // scaleType: 'date',
-            // valueFormatter: (date) =>
-            //   date.toLocaleDateString('fr-FR', {
-            //     year: 'numeric',
-            //     month: '2-digit',
-            //     day: '2-digit',
-            //   }),
+            valueFormatter: (value) => formatDateWithoutTime(value),
 
             // data: [1, 2, 3, 5, 8, 10, 12, 15, 16],
           },

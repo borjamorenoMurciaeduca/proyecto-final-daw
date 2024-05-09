@@ -1,7 +1,7 @@
-import LoginService from '@//services/loginService';
 import Copyright from '@/components/Copyright';
 import LanguageSelector from '@/components/LanguageSelector';
 import useNotification from '@/hooks/useNotification';
+import userService from '@/services/userService';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {
@@ -49,7 +49,7 @@ const Register = () => {
     try {
       if (credentials.password !== credentials.password_confirmation)
         throw new Error('Las contraseñas no coinciden');
-      const res = await LoginService.register(credentials);
+      const res = await userService.register(credentials);
 
       if (res.error) {
         throw new Error(res.error);
