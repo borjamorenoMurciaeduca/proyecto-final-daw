@@ -159,6 +159,21 @@ class AuthController extends Controller {
         }
     }
 
+    public function editProfile(Request $request){
+        //editar password del usuario
+        try {
+            $validatedData = $request->validate([
+                'password' => 'required|confirmed',
+            ]);
+            $user = User::find(Auth::id());
+            $user->password = bcrypt($request->password);
+            $user->save();
+            return ApiResponse::success('Password updated successfully!', $user, 200);
+        } catch (\Exception $e) {
+            return ApiResponse::error('Error updating the password: ' . $e->getMessage(), 404);
+        }
+    }
+
     /**
      * @OA\Post(
      *      path="/api/logout",

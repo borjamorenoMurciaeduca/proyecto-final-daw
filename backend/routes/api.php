@@ -10,10 +10,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::get('/user', [AuthController::class, 'user'])->middleware('auth:sanctum');
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+// Route::get('/user', [AuthController::class, 'user'])->middleware('auth:sanctum');
+// Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->group(function () {
+  // Rutas protegidas correspondientes a la autenticación
+  Route::get('/user', [AuthController::class, 'user']);
+  Route::post('/logout', [AuthController::class, 'logout']);
+  Route::post('/edit-profile', [AuthController::class, 'editProfile']);
+
   // Rutas protegidas correspondientes a los inmuebles
   Route::get('/properties', [PropertyController::class, 'getAllUserProperties']);
   Route::post('/properties', [PropertyController::class, 'store']);
