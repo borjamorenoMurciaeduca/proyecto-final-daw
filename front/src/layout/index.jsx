@@ -23,7 +23,7 @@ import cookie from '@/utils/cookie.js';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Outlet, Link as RouterLink, useNavigate } from 'react-router-dom';
-const pages = ['Mis viviendas', 'Pricing'];
+// const pages = ['Mis viviendas', 'Pricing'];
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Layout = () => {
@@ -35,16 +35,27 @@ const Layout = () => {
 
   const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
   const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
+  // navMenu menu izquierda mvl, userMenu el del usuario
   const handleCloseNavMenu = () => setAnchorElNav(null);
   const handleCloseUserMenu = () => setAnchorElUser(null);
 
   const handleClickProfile = () => {
-    setAnchorElUser(null);
+    handleCloseUserMenu();
     navigate('/app/edit-profile');
   };
 
+  const handleClickHomes = () => {
+    handleCloseNavMenu();
+    navigate('/app/');
+  };
+
+  const handleClickPrices = () => {
+    handleCloseNavMenu();
+    navigate('/app/prices');
+  };
+
   const handleLogoutMenu = async () => {
-    setAnchorElUser(null);
+    handleCloseUserMenu();
     cookie.clear();
     navigate('/auth');
   };
@@ -114,23 +125,21 @@ const Layout = () => {
                   display: { xs: 'block', md: 'none' },
                 }}
               >
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
-                  </MenuItem>
-                ))}
+                <MenuItem onClick={handleClickHomes}>
+                  <Typography textAlign="center">Mis viviendas</Typography>
+                </MenuItem>
+                <MenuItem onClick={handleClickPrices}>
+                  <Typography textAlign="center">Pricing</Typography>
+                </MenuItem>
               </Menu>
             </Box>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              {pages.map((page) => (
-                <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                  {page}
-                </Button>
-              ))}
+              <Button
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                Mis viviendas
+              </Button>
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
