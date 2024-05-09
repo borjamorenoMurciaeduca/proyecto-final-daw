@@ -8,7 +8,10 @@ export const NotificationProvider = ({ children }) => {
   const [message, setMessage] = useState('');
   const [severity, setSeverity] = useState('info');
 
-  const handleClose = () => {
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
     setOpen(false);
   };
 
@@ -22,7 +25,7 @@ export const NotificationProvider = ({ children }) => {
     <NotificationContext.Provider value={{ notify }}>
       {children}
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity={severity}>
+        <Alert onClose={handleClose} severity={severity} variant="filled">
           {message}
         </Alert>
       </Snackbar>
