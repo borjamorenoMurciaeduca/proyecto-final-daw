@@ -36,7 +36,7 @@ $ sudo mv composer.phar /usr/local/bin/composer
 
 - En ./backend debemos tener un archivo .env con al menos esta configuración para el correcto funcionamiento con mysql
 
-```
+```properties
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
@@ -68,12 +68,12 @@ _En este ejemplo instalamos un gestor de versiones de node llamado fnm_
 $ cd ./backend
 $ composer install
 $ php artisan migrate
-( Aceptamos la creación de la tabla)
+ *Aceptamos la creación de la tabla*
 $ php artisan migrate:fresh --seed`
 $ php artisan serve
 ```
 
-_En caso de que tengamos la tabla creada, $php artisan migrate no es necesario ejecutarlo_
+_En caso de que tengamos previamente la tabla ya creada, $ php artisan migrate no es necesario ejecutarlo_
 
 _Una vez tengamos los pasos previos siempre que queramos iniciar la api lo haremos `$ php artisan serve`_
 
@@ -87,8 +87,10 @@ $ pnpm dev
 
 - En ./front tendremos un archivo .env que apunta a la api, en caso de cambiar la dirección de nuestra api tan solo tenemos que cambiarlo en este archivo, tendremos la dirección centralizada en una variable de entorno
 
+```properties
+VITE_API_URL= '{URL_API}'
 ```
-VITE_API_URL= 'xxxx/api/'
-```
+
+_Donde URL_API apuntara a la dirección de nuestra api_
 
 - Para compilar y exportar el proyecto `$ pnpm build`
