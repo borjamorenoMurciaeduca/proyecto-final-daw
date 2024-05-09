@@ -1,3 +1,7 @@
+<p align="center">
+<img src="./front/src/assets/logo/logo-idealistawatch.png" alt="drawing" style="width:200px;" align="center"/>
+</p>
+
 # Proyecto final DAW 2024 - IdealistaWatch
 
 Detalles para puesta en marcha del proyecto IdealistaWatch
@@ -41,7 +45,7 @@ DB_USERNAME={nombre_usuario}
 DB_PASSWORD={password_usuario}
 ```
 
-_Se modifica por datos reales, tales como el nombre de la bbd y el usuario con privilegios de mysql junto su contraseña_
+_Se modifica por datos reales, tales como el nombre de la DB y el usuario con privilegios de mysql junto su contraseña_
 
 ### React (Node y pnpm)
 
@@ -58,7 +62,7 @@ _En este ejemplo instalamos un gestor de versiones de node llamado fnm_
 
 ## Iniciación de la APP
 
-- Instalación/iniciación **Laravel**
+### Instalación de dependencias e iniciación de **Laravel**
 
 ```bash
 $ cd ./backend
@@ -73,7 +77,7 @@ _En caso de que tengamos la tabla creada, $php artisan migrate no es necesario e
 
 _Una vez tengamos los pasos previos siempre que queramos iniciar la api lo haremos `$ php artisan serve`_
 
-- Instalación/iniciación **React**
+### Instalación de dependencias e iniciación de **React**
 
 ```bash
 $ cd ./front
