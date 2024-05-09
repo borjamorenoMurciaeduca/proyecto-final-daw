@@ -37,8 +37,7 @@
       "profile": "Profile",
       "account": "Account",
       "dashboard": "Dashboard",
-      "logout": "Logout",
-      "logout-v2": "Logout V2"
+      "logout": "Logout"
     }
   },
   "add-home-form": {

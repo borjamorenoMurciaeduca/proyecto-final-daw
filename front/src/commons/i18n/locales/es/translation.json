@@ -37,8 +37,7 @@
       "profile": "Perfil",
       "account": "Cuenta",
       "dashboard": "Escritorio",
-      "logout": "Salir",
-      "logout-v2": "Salir V2"
+      "logout": "Salir"
     }
   },
   "add-home-form": {

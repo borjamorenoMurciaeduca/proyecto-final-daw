@@ -24,7 +24,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Outlet, Link as RouterLink, useNavigate } from 'react-router-dom';
 const pages = ['Mis viviendas', 'Pricing'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+// const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Layout = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -47,7 +47,7 @@ const Layout = () => {
   return (
     <>
       <AppBar position="sticky">
-        <Container maxWidth="xl">
+        <Container maxWidth="lg">
           <Toolbar disableGutters>
             <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 2 }}>
               <Link component={RouterLink} to="/app">
@@ -153,16 +153,14 @@ const Layout = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">
-                      {t(`top-menu.settings.${setting.toLowerCase()}`)}
-                    </Typography>
-                  </MenuItem>
-                ))}
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">
+                    {t(`top-menu.settings.profile`)}
+                  </Typography>
+                </MenuItem>
                 <MenuItem onClick={handleLogoutMenu}>
                   <Typography textAlign="center">
-                    {t('top-menu.settings.logout-v2')}
+                    {t('top-menu.settings.logout')}
                   </Typography>
                 </MenuItem>
               </Menu>

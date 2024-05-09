@@ -3,11 +3,10 @@ import propertyService from '@/services/propertyService';
 import parser from '@/utils/parser';
 import { Grid, Typography } from '@mui/material';
 import { LineChart } from '@mui/x-charts';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const PriceHistory = ({ propertyId }) => {
-  console.log("propertyId", propertyId)
+  console.log('propertyId', propertyId);
   const [xAxis, setXAxis] = useState([]);
   const [series, setSeries] = useState([]);
 
@@ -19,13 +18,15 @@ const PriceHistory = ({ propertyId }) => {
     const hours = dateObject.getHours().toString().padStart(2, '0');
     const minutes = dateObject.getMinutes().toString().padStart(2, '0');
 
-    return `${day}/${month}/${year}`;
+    return `${day}/${month}/${year} ${hours}:${minutes}`;
   };
 
   useEffect(() => {
     (async () => {
       try {
-        let { data: propertyPrices } = await propertyService.getPropertyPrices(propertyId);
+        let { data: propertyPrices } = await propertyService.getPropertyPrices(
+          propertyId
+        );
         setSeries([]);
         setXAxis([]);
         propertyPrices.prices
@@ -42,9 +43,9 @@ const PriceHistory = ({ propertyId }) => {
   }, [propertyId]);
 
   if (!xAxis.length) return <PageLoader />;
-
+  console.log('xAxis', xAxis);
   return (
-    <Grid item xs={12}>
+    <Grid item xs={12} md={10}>
       <LineChart
         // colors={['#f00', '#0f0', '#00f']}
         xAxis={[
@@ -53,14 +54,14 @@ const PriceHistory = ({ propertyId }) => {
             scaleType: 'point',
             label: 'Fechas',
             axisLabel: 'Fechas',
-            // scaleType: 'time',
+            // scaleType: 'date',
             // valueFormatter: (date) =>
             //   date.toLocaleDateString('fr-FR', {
-            //     // you can use undefined as first argument
             //     year: 'numeric',
             //     month: '2-digit',
             //     day: '2-digit',
             //   }),
+
             // data: [1, 2, 3, 5, 8, 10, 12, 15, 16],
           },
         ]}

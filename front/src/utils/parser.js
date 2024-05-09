@@ -83,7 +83,8 @@ function AddSpaces(value, spaces) {
 }
 
 function FixPrice(value) {
-  let partes = value.toFixed(2).split('.');
+  let valueParser = Number(value);
+  let partes = valueParser.toFixed(2).split('.');
   let parteEntera = partes[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   let resultado = parteEntera + ',' + partes[1];
   return resultado;
