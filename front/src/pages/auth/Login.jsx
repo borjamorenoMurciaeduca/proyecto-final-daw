@@ -20,6 +20,7 @@ import {
   InputLabel,
   Link,
   OutlinedInput,
+  Paper,
   TextField,
   Typography,
 } from '@mui/material';
@@ -101,91 +102,108 @@ const Login = () => {
 
   return (
     <Container
-      maxWidth="xs"
+      maxWidth="sm"
       component="main"
       sx={{
         display: 'flex',
-        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        minHeight: '90vh',
+        minHeight: '100vh',
       }}
     >
-      <Box sx={{ maxWidth: '80px', marginBottom: 1 }}>
-        <img
-          src={idealistaWatchLogo}
-          alt="logo"
-          style={{ objectFit: 'cover', width: '100%' }}
-        />
-      </Box>
-      <Typography component="h1" variant="h5">
-        {t('login-form.title')}
-      </Typography>
-      <Box
-        component="form"
-        noValidate
-        onSubmit={handleLoginSubmit}
-        sx={{ mt: 3 }}
+      <Paper
+        elevation={24}
+        sx={{
+          padding: 5,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          // borderRadius: '10px',
+          // boxShadow: '2px 2px 45px -15px rgba(0,0,0,0.75)',
+          gap: 2,
+        }}
       >
-        {error && (
-          <Alert severity="error" sx={{ margin: '10px 0px' }}>
-            {error}
-          </Alert>
-        )}
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              helperText=""
-              id="username"
-              name="username"
-              autoComplete="username"
-              label={t('login-form.form.name')}
-              fullWidth
-              autoFocus
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <FormControl fullWidth>
-              <InputLabel htmlFor="password">
-                {t('login-form.form.password')}
-              </InputLabel>
-              <OutlinedInput
-                id="password"
-                name="password"
-                autoComplete="current-password"
-                type={showPassword ? 'text' : 'password'}
-                label={t('login-form.form.password')}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
+        <Box
+          sx={{
+            maxWidth: '80px',
+          }}
+        >
+          <img
+            src={idealistaWatchLogo}
+            alt="logo"
+            style={{ objectFit: 'cover', width: '100%' }}
+          />
+        </Box>
+        <Typography component="h1" variant="h5">
+          {t('login-form.title')}
+        </Typography>
+        <Box component="form" noValidate onSubmit={handleLoginSubmit}>
+          {error && (
+            <Alert severity="error" sx={{ margin: '10px 0px' }}>
+              {error}
+            </Alert>
+          )}
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                helperText=""
+                id="username"
+                name="username"
+                autoComplete="username"
+                label={t('login-form.form.name')}
+                fullWidth
+                autoFocus
               />
-            </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl fullWidth>
+                <InputLabel htmlFor="password">
+                  {t('login-form.form.password')}
+                </InputLabel>
+                <OutlinedInput
+                  id="password"
+                  name="password"
+                  autoComplete="current-password"
+                  type={showPassword ? 'text' : 'password'}
+                  label={t('login-form.form.password')}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <Button type="submit" variant="contained" fullWidth>
+                {t('login-form.form.login')}
+              </Button>
+            </Grid>
+            <Grid
+              container
+              item
+              justifyContent="space-between"
+              alignItems="center"
+              spacing={2}
+              mt={1}
+            >
+              <LanguageSelector />
+              <Link component={RouterLink} to="/register" variant="body2">
+                {t('login-form.register')}
+              </Link>
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid item xs={12} sx={{ mt: 3, mb: 2 }}>
-          <Button type="submit" variant="contained" fullWidth>
-            {t('login-form.form.login')}
-          </Button>
-        </Grid>
-        <Grid container item justifyContent="flex-end">
-          <Grid item>
-            <Link component={RouterLink} to="/register" variant="body2">
-              {t('login-form.register')}
-            </Link>
-          </Grid>
-        </Grid>
-      </Box>
-      <LanguageSelector />
-      <Copyright sx={{ mt: 5 }} />
+        </Box>
+        <Copyright />
+      </Paper>
     </Container>
   );
 };

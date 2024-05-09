@@ -47,7 +47,7 @@ class DatabaseSeeder extends Seeder {
                 'rooms' => $faker->randomNumber(1),
                 'garage' => $faker->boolean(),
                 'storage_room' => $faker->boolean(),
-                'description' => $faker->word()
+                'description' => $faker->sentence(200)
             ]);
             //añadir 10 registros al historial de precios
             PriceHistory::factory(10)->create([

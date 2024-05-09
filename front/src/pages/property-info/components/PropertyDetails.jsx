@@ -29,7 +29,7 @@ const PropertyDetails = ({ propertyId }) => {
   if (!property) return <PageLoader />;
 
   return (
-    <Grid item xs={12} md={8}>
+    <Grid item xs={8} justifyContent="center" alignSelf="center" pb={5}>
       <Card>
         <CardMedia
           component="img"
