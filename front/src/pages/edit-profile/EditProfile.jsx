@@ -63,7 +63,9 @@ const EditProfile = () => {
 
   return (
     <>
-      <Typography variant="h1">Edición de perfil</Typography>
+      <Typography variant="h2" component="h1">
+        👋 {user.username}
+      </Typography>
       <Container
         maxWidth="md"
         component="main"
@@ -87,9 +89,7 @@ const EditProfile = () => {
               onSubmit={handleSubmitProfile}
             >
               <Grid item xs={12}>
-                <Typography variant="h5">
-                  👋 Bienvenido {user.username}, aquí podrás editar tus datos
-                </Typography>
+                <Typography variant="h6">Edición personal de perfil</Typography>
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField

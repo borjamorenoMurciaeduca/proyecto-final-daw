@@ -37,8 +37,9 @@ const PropertyInfo = () => {
   const lessThanMedium = useMediaQuery(theme.breakpoints.down('md'));
   return (
     <>
-      <Typography variant="h2">Detalles de vivienda {property_id}</Typography>
-
+      <Typography component="h1" sx={{ typography: { xs: 'h4', sm: 'h2' } }}>
+        Detalles de vivienda {property_id}
+      </Typography>
       <Grid
         container
         alignContent="center"

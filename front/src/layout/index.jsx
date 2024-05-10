@@ -11,9 +11,11 @@ import {
   ListItemIcon,
   Menu,
   MenuItem,
+  Slide,
   Toolbar,
   Tooltip,
   Typography,
+  useScrollTrigger,
 } from '@mui/material';
 
 import logoIdealista from '@/assets/logo/logo-idealistawatch.png';
@@ -29,7 +31,23 @@ import { Outlet, Link as RouterLink, useNavigate } from 'react-router-dom';
 // const pages = ['Mis viviendas', 'Pricing'];
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const Layout = () => {
+function HideOnScroll(props) {
+  const { children, window } = props;
+  // Note that you normally won't need to set the window ref as useScrollTrigger
+  // will default to window.
+  // This is only being set here because the demo is in an iframe.
+  const trigger = useScrollTrigger({
+    target: window ? window() : undefined,
+  });
+
+  return (
+    <Slide appear={false} direction="down" in={!trigger}>
+      {children}
+    </Slide>
+  );
+}
+
+const Layout = (props) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const { user } = useUser();
@@ -65,170 +83,176 @@ const Layout = () => {
 
   return (
     <>
-      <AppBar position="sticky">
-        <Container maxWidth="lg">
-          <Toolbar disableGutters>
-            <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 2 }}>
-              <Link component={RouterLink} to="/app">
-                <img
-                  src={logoIdealista}
-                  alt="logo"
-                  height="42px"
-                  width="42px"
-                  style={{ border: '2px solid #000', borderRadius: '8px' }}
-                />
-              </Link>
-            </Box>
-            <Link
-              component={RouterLink}
-              to="/app"
-              sx={{ textDecoration: 'none' }}
-              color="inherit"
-            >
-              <Typography
-                variant="h6"
-                noWrap
-                sx={{
-                  mr: 2,
-                  display: { xs: 'none', md: 'flex' },
-                  fontWeight: 700,
-                  textDecoration: 'none',
-                  color: 'palette.error.dark',
-                }}
-              >
-                {APP_NAME}
-              </Typography>
-            </Link>
-            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleOpenNavMenu}
+      <HideOnScroll {...props}>
+        <AppBar>
+          <Container maxWidth="lg">
+            <Toolbar disableGutters>
+              <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 2 }}>
+                <Link component={RouterLink} to="/app">
+                  <img
+                    src={logoIdealista}
+                    alt="logo"
+                    height="42px"
+                    width="42px"
+                    style={{ border: '2px solid #000', borderRadius: '8px' }}
+                  />
+                </Link>
+              </Box>
+              <Link
+                component={RouterLink}
+                to="/app"
+                sx={{ textDecoration: 'none' }}
                 color="inherit"
               >
-                <MenuIcon />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={{
-                  display: { xs: 'block', md: 'none' },
-                }}
-              >
-                <MenuItem onClick={handleClickHomes}>
-                  <Typography textAlign="center">Mis viviendas</Typography>
-                </MenuItem>
-                <MenuItem onClick={handleClickPrices}>
-                  <Typography textAlign="center">Pricing</Typography>
-                </MenuItem>
-              </Menu>
-            </Box>
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              <Button
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                Mis viviendas
-              </Button>
-            </Box>
-
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip
-                title={`${t('tooltip.open-settings')} - ${user.username}`}
-              >
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar
-                    alt={user.username.toUpperCase()}
-                    src="/static/images/avatar/2.jpg"
-                  />
+                <Typography
+                  variant="h6"
+                  noWrap
+                  sx={{
+                    mr: 2,
+                    display: { xs: 'none', md: 'flex' },
+                    fontWeight: 700,
+                    textDecoration: 'none',
+                    color: 'palette.error.dark',
+                  }}
+                >
+                  {APP_NAME}
+                </Typography>
+              </Link>
+              {/* MENU MÓVIL */}
+              <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleOpenNavMenu}
+                  color="inherit"
+                >
+                  <MenuIcon />
                 </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                // slotProps.paper
-                slotProps={{
-                  paper: {
-                    elevation: 0,
-                    sx: {
-                      overflow: 'visible',
-                      filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                      mt: 1.5,
-                      '& .MuiAvatar-root': {
-                        width: 32,
-                        height: 32,
-                        ml: -0.5,
-                        mr: 1,
-                      },
-                      '&::before': {
-                        content: '""',
-                        display: 'block',
-                        position: 'absolute',
-                        top: 0,
-                        right: 14,
-                        width: 10,
-                        height: 10,
-                        bgcolor: 'background.paper',
-                        transform: 'translateY(-50%) rotate(45deg)',
-                        zIndex: 0,
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorElNav}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                  }}
+                  open={Boolean(anchorElNav)}
+                  onClose={handleCloseNavMenu}
+                  sx={{
+                    display: { xs: 'block', md: 'none' },
+                  }}
+                >
+                  <MenuItem onClick={handleClickHomes}>
+                    <Typography textAlign="center">Mis viviendas</Typography>
+                  </MenuItem>
+                  <MenuItem onClick={handleClickPrices}>
+                    <Typography textAlign="center">Pricing</Typography>
+                  </MenuItem>
+                </Menu>
+              </Box>
+              {/* MENÚ DESKTOP */}
+              <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                <Button
+                  component={RouterLink}
+                  to="/app"
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  {t('my-homes')}
+                </Button>
+              </Box>
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip
+                  title={`${t('tooltip.open-settings')} - ${user.username}`}
+                >
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar
+                      alt={user.username.toUpperCase()}
+                      src="/static/images/avatar/2.jpg"
+                    />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: '45px' }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  // slotProps.paper
+                  slotProps={{
+                    paper: {
+                      elevation: 0,
+                      sx: {
+                        overflow: 'visible',
+                        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                        mt: 1.5,
+                        '& .MuiAvatar-root': {
+                          width: 32,
+                          height: 32,
+                          ml: -0.5,
+                          mr: 1,
+                        },
+                        '&::before': {
+                          content: '""',
+                          display: 'block',
+                          position: 'absolute',
+                          top: 0,
+                          right: 14,
+                          width: 10,
+                          height: 10,
+                          bgcolor: 'background.paper',
+                          transform: 'translateY(-50%) rotate(45deg)',
+                          zIndex: 0,
+                        },
                       },
                     },
-                  },
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                <MenuItem style={{ pointerEvents: 'none' }}>
-                  <Avatar /> {user.username || ''}
-                </MenuItem>
-                <Divider />
-                <MenuItem onClick={handleClickProfile}>
-                  <ListItemIcon>
-                    <Settings fontSize="small" />
-                  </ListItemIcon>
-                  {t('top-menu.settings.conf')}
-                </MenuItem>
-                <MenuItem onClick={handleLogoutMenu}>
-                  <ListItemIcon>
-                    <Logout fontSize="small" />
-                  </ListItemIcon>
-                  {t('top-menu.settings.logout')}
-                </MenuItem>
-              </Menu>
-            </Box>
-            <Box sx={{ flexGrow: 0, ml: 1 }}>
-              <LanguageFlagSelector />
-            </Box>
-            <Box sx={{ flexGrow: 0, ml: 1 }}>
-              <DayNightSwitch />
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
-      <Container maxWidth="lg" sx={{ pb: 5 }}>
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  <MenuItem style={{ pointerEvents: 'none' }}>
+                    <Avatar /> {user.username || ''}
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem onClick={handleClickProfile}>
+                    <ListItemIcon>
+                      <Settings fontSize="small" />
+                    </ListItemIcon>
+                    {t('top-menu.settings.conf')}
+                  </MenuItem>
+                  <MenuItem onClick={handleLogoutMenu}>
+                    <ListItemIcon>
+                      <Logout fontSize="small" />
+                    </ListItemIcon>
+                    {t('top-menu.settings.logout')}
+                  </MenuItem>
+                </Menu>
+              </Box>
+              <Box sx={{ flexGrow: 0, ml: 1 }}>
+                <LanguageFlagSelector />
+              </Box>
+              <Box sx={{ flexGrow: 0, ml: 1 }}>
+                <DayNightSwitch />
+              </Box>
+            </Toolbar>
+          </Container>
+        </AppBar>
+      </HideOnScroll>
+      <Toolbar />
+      <Container maxWidth="lg" sx={{ py: 2 }}>
         <Outlet />
       </Container>
     </>

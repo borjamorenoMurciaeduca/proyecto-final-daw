@@ -1,6 +1,6 @@
 import Layout from '@/layout';
+import App from '@/pages/app/App';
 import EditProfile from '@/pages/edit-profile/EditProfile';
-import Home from '@/pages/home/Home';
 import PropertyInfo from '@/pages/property-info/PropertyInfo';
 import { Navigate } from 'react-router-dom';
 
@@ -8,7 +8,7 @@ const LayoutRoutes = [
   {
     element: <Layout />,
     children: [
-      { index: true, element: <Home /> },
+      { index: true, element: <App /> },
       { path: 'property/:property_id', element: <PropertyInfo /> },
       { path: 'edit-profile', element: <EditProfile /> },
       { path: '', element: <Navigate to="/auth" /> },

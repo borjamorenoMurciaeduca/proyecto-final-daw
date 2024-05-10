@@ -19,7 +19,7 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import InmuebleForm from './InmuebleForm.jsx';
+import PropertyForm from './PropertyForm.jsx';
 
 const AddButtonModal = () => {
   const [open, setOpen] = useState(false);
@@ -30,7 +30,7 @@ const AddButtonModal = () => {
   const { notify } = useNotification();
   const { t } = useTranslation();
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const lessThanMedium = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleOpen = () => {
     setOpen(true);
@@ -106,7 +106,7 @@ const AddButtonModal = () => {
           position: 'fixed',
           // top: 90,
           top: { xs: 'auto', md: 90 },
-          bottom: { xs: 20, md: 'auto' },
+          bottom: { xs: 40, md: 'auto' },
           // right: 50,
           right: { xs: 20, md: 20, lg: 50 },
         }}
@@ -120,7 +120,7 @@ const AddButtonModal = () => {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-        fullScreen={fullScreen}
+        fullScreen={lessThanMedium}
         maxWidth="md"
       >
         <Grid
@@ -151,14 +151,14 @@ const AddButtonModal = () => {
               fullWidth
               variant="standard"
               label={t('addButtonModal.url')}
-              placeholder="https://www.idealista.com/inmueble/xxxxx/"
+              placeholder="https://www.idealista.com/inmueble/123456/"
               value={textValue}
               onChange={handleTextChange}
               onKeyDown={handleKeyPress}
               inputProps={{ 'aria-label': t('addButtonModal.url') }}
             />
           </Grid>
-          <Box>
+          <Grid container item xs={2} direction={'row'} wrap="nowrap" p={0}>
             <Tooltip title={t('tooltip.search')}>
               <IconButton
                 type="button"
@@ -177,14 +177,14 @@ const AddButtonModal = () => {
                 <DeleteIcon />
               </IconButton>
             </Tooltip>
-          </Box>
+          </Grid>
           {error && (
             <Typography sx={{ color: 'red', fontSize: '0.8rem' }}>
               {t('addButtonModal.validation.error')}
             </Typography>
           )}
-          {showForm && (
-            <InmuebleForm
+          {!showForm && (
+            <PropertyForm
               inmuebleData={inmuebleData}
               handleCloseDialog={handleClose}
             />
