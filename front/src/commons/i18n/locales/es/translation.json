@@ -37,7 +37,8 @@
       "profile": "Perfil",
       "account": "Cuenta",
       "dashboard": "Escritorio",
-      "logout": "Salir"
+      "logout": "Salir",
+      "conf": "Configuración"
     }
   },
   "add-home-form": {

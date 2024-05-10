@@ -5,8 +5,10 @@ import {
   Box,
   Button,
   Container,
+  Divider,
   IconButton,
   Link,
+  ListItemIcon,
   Menu,
   MenuItem,
   Toolbar,
@@ -20,6 +22,7 @@ import DayNightSwitch from '@/components/DayNightSwitch.jsx';
 import LanguageFlagSelector from '@/components/LanguageFlagSelector.jsx';
 import useUser from '@/hooks/useUser.js';
 import cookie from '@/utils/cookie.js';
+import { Logout, Settings } from '@mui/icons-material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Outlet, Link as RouterLink, useNavigate } from 'react-router-dom';
@@ -166,18 +169,53 @@ const Layout = () => {
                   vertical: 'top',
                   horizontal: 'right',
                 }}
+                // slotProps.paper
+                slotProps={{
+                  paper: {
+                    elevation: 0,
+                    sx: {
+                      overflow: 'visible',
+                      filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                      mt: 1.5,
+                      '& .MuiAvatar-root': {
+                        width: 32,
+                        height: 32,
+                        ml: -0.5,
+                        mr: 1,
+                      },
+                      '&::before': {
+                        content: '""',
+                        display: 'block',
+                        position: 'absolute',
+                        top: 0,
+                        right: 14,
+                        width: 10,
+                        height: 10,
+                        bgcolor: 'background.paper',
+                        transform: 'translateY(-50%) rotate(45deg)',
+                        zIndex: 0,
+                      },
+                    },
+                  },
+                }}
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
+                <MenuItem style={{ pointerEvents: 'none' }}>
+                  <Avatar /> {user.username || ''}
+                </MenuItem>
+                <Divider />
                 <MenuItem onClick={handleClickProfile}>
-                  <Typography textAlign="center">
-                    {t(`top-menu.settings.profile`)}
-                  </Typography>
+                  <ListItemIcon>
+                    <Settings fontSize="small" />
+                  </ListItemIcon>
+                  {t('top-menu.settings.conf')}
                 </MenuItem>
                 <MenuItem onClick={handleLogoutMenu}>
-                  <Typography textAlign="center">
-                    {t('top-menu.settings.logout')}
-                  </Typography>
+                  <ListItemIcon>
+                    <Logout fontSize="small" />
+                  </ListItemIcon>
+                  {t('top-menu.settings.logout')}
                 </MenuItem>
               </Menu>
             </Box>

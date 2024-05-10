@@ -37,7 +37,8 @@
       "profile": "Profile",
       "account": "Account",
       "dashboard": "Dashboard",
-      "logout": "Logout"
+      "logout": "Logout",
+      "conf": "Settings"
     }
   },
   "add-home-form": {
