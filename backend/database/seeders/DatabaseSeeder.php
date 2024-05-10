@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder {
 
         //  Crea 10 propiedades usando la fábrica Property
         Property::factory(10)->create();
-        Property::factory(15)->create()->each(function ($property) use ($jorge, $borja) {
+        Property::factory(100)->create()->each(function ($property) use ($jorge, $borja) {
             $faker = Faker::create();
             $user = rand(0, 1) ? $jorge : $borja;
             UserProperty::factory()->create([
