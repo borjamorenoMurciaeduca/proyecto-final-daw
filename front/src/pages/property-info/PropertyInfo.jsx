@@ -17,6 +17,7 @@ import Tabs from '@mui/material/Tabs';
 import { useState } from 'react';
 import PriceHistory from './components/PriceHistory';
 import PropertyDetails from './components/PropertyDetails';
+import { useTranslation } from 'react-i18next';
 /**
  * https://mui.com/x/api/charts/line-chart/
  * En progreso
@@ -32,13 +33,14 @@ function a11yProps(index) {
 
 const PropertyInfo = () => {
   const [view, setView] = useState(0);
+  const { t } = useTranslation();
   let { property_id } = useParams();
   const theme = useTheme();
   const lessThanMedium = useMediaQuery(theme.breakpoints.down('md'));
   return (
     <>
       <Typography component="h1" sx={{ typography: { xs: 'h4', sm: 'h2' } }}>
-        Detalles de vivienda {property_id}
+      {t('property-info.header')} {property_id}
       </Typography>
       <Grid
         container
@@ -48,8 +50,8 @@ const PropertyInfo = () => {
         gap={2}
         mt={4}
       >
-        {view == 0 && <PriceHistory propertyId={property_id} />}
-        {view == 1 && <PropertyDetails propertyId={property_id} />}
+        {view == 0 && <PropertyDetails propertyId={property_id} />}
+        {view == 1 && <PriceHistory propertyId={property_id} />}
         {!lessThanMedium ? (
           <Box
             sx={{
@@ -69,17 +71,17 @@ const PropertyInfo = () => {
               onChange={(event, newValue) => {
                 setView(newValue);
               }}
-              aria-label="Vertical tabs example"
+              aria-label={t('property-info.side-panel.aria-label')}
               sx={{ borderRight: 1, borderColor: 'divider' }}
             >
               <Tab
-                icon={<RestoreIcon />}
-                label="Price history"
+                icon={<TextSnippetIcon />}
+                label={t('property-info.side-panel.details')}
                 {...a11yProps(0)}
               />
-              <Tab
-                icon={<TextSnippetIcon />}
-                label="Details"
+              <Tab  
+                icon={<RestoreIcon />}
+                label={t('property-info.side-panel.price-history')}
                 {...a11yProps(1)}
               />
             </Tabs>
@@ -109,10 +111,10 @@ const PropertyInfo = () => {
               }}
             >
               <BottomNavigationAction
-                label="Price History"
+                label={t('property-info.side-panel.price-history')}
                 icon={<RestoreIcon />}
               />
-              <BottomNavigationAction label="Data" icon={<TextSnippetIcon />} />
+              <BottomNavigationAction label={t('property-info.side-panel.details')} icon={<TextSnippetIcon />} />
             </BottomNavigation>
           </Paper>
         )}

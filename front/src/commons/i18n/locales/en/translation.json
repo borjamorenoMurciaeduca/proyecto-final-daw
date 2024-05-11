@@ -72,5 +72,22 @@
     "prepare-inmueble-form": {
       "error": "An error occurred while obtaining data"
     }
+  },
+  "property-info": {
+    "header": "Details of housing",
+    "side-panel": {
+      "aria-label": "Housing information",
+      "price-history": "Price history",
+      "details": "Details"
+    },
+    "details": {
+      "title-details": "Details",
+      "storage-room": "Storage room",
+      "garage": "Garage",
+      "price": "Price",
+      "size": "Size",
+      "rooms": "Rooms",
+      "share": "Share"
+    }
   }
 }

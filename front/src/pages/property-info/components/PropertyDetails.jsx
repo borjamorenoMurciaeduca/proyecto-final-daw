@@ -16,10 +16,12 @@ import {
 } from '@mui/material';
 import { Box, Stack } from '@mui/system';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const PropertyDetails = ({ propertyId }) => {
   const [property, setProperty] = useState();
   const { properties } = useViviendas();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const propertieMatch = properties.find(
@@ -49,7 +51,7 @@ const PropertyDetails = ({ propertyId }) => {
               {property.description}
             </Typography>
           </Box>
-          <Divider>Detalles</Divider>
+          <Divider> </Divider>
           <Box sx={{ p: 2 }}>
             <Stack
               direction="row"
@@ -61,28 +63,30 @@ const PropertyDetails = ({ propertyId }) => {
               <Chip
                 color={property.storage_room ? 'success' : 'error'}
                 label={
-                  property.storage_room ? 'storage room✔️' : 'storage room❌'
+                  property.storage_room ? 
+                  `${t('property-info.details.storage-room')}✔️` : 
+                  `${t('property-info.details.storage-room')}❌`
                 }
                 size="small"
               />
               <Chip
                 color={property.garage ? 'default' : 'error'}
-                label={property.garage ? 'garage✔️' : 'garage❌'}
+                label={property.garage ? `${t('property-info.details.garage')}✔️` : `${t('property-info.details.garage')}❌`}
                 size="small"
               />
               <Chip
                 color="default"
-                label={`price ${parser.FixPrice(property.price)}€`}
+                label={`${t('property-info.details.price')} ${parser.FixPrice(property.price)}€`}
                 size="small"
               />
               <Chip
                 color="default"
-                label={`Size ${property.size}m²`}
+                label={`${t('property-info.details.size')} ${property.size}m²`}
                 size="small"
               />
               <Chip
                 color="default"
-                label={`Rooms ${property.rooms}`}
+                label={`${t('property-info.details.rooms')} ${property.rooms}`}
                 size="small"
               />
             </Stack>
@@ -90,7 +94,7 @@ const PropertyDetails = ({ propertyId }) => {
         </CardContent>
         <CardActions>
           <Button size="small" color="primary">
-            Share
+            {t('property-info.details.share')}
           </Button>
           <IconButton
             color="primary"
