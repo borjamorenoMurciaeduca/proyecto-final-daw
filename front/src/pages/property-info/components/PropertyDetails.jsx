@@ -1,3 +1,4 @@
+import i18n from '@/commons/i18n/i18n';
 import PageLoader from '@/components/PageLoader';
 import useViviendas from '@/hooks/useViviendas';
 import parser from '@/utils/parser';
@@ -76,7 +77,7 @@ const PropertyDetails = ({ propertyId }) => {
               />
               <Chip
                 color="default"
-                label={`${t('property-info.details.price')} ${parser.FixPrice(property.price)}€`}
+                label={`${t('property-info.details.price')} ${parser.FormatPrice(property.price, i18n.language)}`}
                 size="small"
               />
               <Chip
