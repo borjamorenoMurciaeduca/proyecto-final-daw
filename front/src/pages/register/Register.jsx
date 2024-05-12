@@ -248,7 +248,7 @@ const Register = () => {
                         />
                       </Grid>
                       <Grid item xs={12} md={6}>
-                        <DatePicker name='birth_date' id="birth_date" label={t('register-form.form.birth-date')} />
+                        <DatePicker name='birth_date' id="birth_date" label={t('register-form.form.birth-date')} sx={{ width: "100%" }} />
                       </Grid>
                     </Grid>
                   </AccordionDetails>
@@ -290,7 +290,6 @@ const Register = () => {
                 <Link component={RouterLink} to="/auth" variant="body2">
                   {t('register-form.login')}
                 </Link>
-
               </Grid>
             </Grid>
           </Box>
