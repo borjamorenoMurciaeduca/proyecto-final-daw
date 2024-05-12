@@ -1,4 +1,3 @@
-import FormateadorPrecio from '@/components/FormateadorPrecio';
 import {
   Card,
   CardActionArea,
@@ -8,6 +7,9 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import house from '@/assets/house.jpg'
+import parser from '@/utils/parser';
+import i18n from '@/commons/i18n/i18n';
+
 const PropertyCard = ({ property }) => {
   const { property_id, location, price, title } = property;
   const navigate = useNavigate();
@@ -36,7 +38,7 @@ const PropertyCard = ({ property }) => {
             {location}
           </Typography>
           <Typography gutterBottom variant="span" component="span">
-            Ref: {property_id} | <FormateadorPrecio precio={price} />
+            Ref: {property_id} | {parser.FormatPrice(price, i18n.language)}
           </Typography>
         </CardContent>
       </CardActionArea>

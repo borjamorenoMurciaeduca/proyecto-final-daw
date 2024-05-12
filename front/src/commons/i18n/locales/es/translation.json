@@ -101,5 +101,22 @@
     "prepare-inmueble-form": {
       "error": "Se ha producido un error al obtener los datos"
     }
+  },
+  "property-info": {
+    "header": "Detalles de la vivienda",
+    "side-panel": {
+      "aria-label": "Información de la vivienda",
+      "price-history": "Histórico de precios",
+      "details": "Detalles"
+    },
+    "details": {
+      "title-details": "Detalles",
+      "storage-room": "Trastero",
+      "garage": "Garaje",
+      "price": "Precio",
+      "size": "Tamaño",
+      "rooms": "Habitaciones",
+      "share": "Compartir"
+    }
   }
 }

@@ -47,6 +47,7 @@ def parse_property(response: httpx.Response, property_id: str) -> Dict:
     price_text = css(".info-data-price span::text")
     data['price'] = int(''.join(filter(str.isdigit, price_text)))
     data['description'] = "\n".join(css_all("div.comment ::text")).strip()
+    #data['main-image'] = 
     data["updated"] = selector.xpath(
         "//p[@class='stats-text']"
         "[contains(text(),'updated on')]/text()"

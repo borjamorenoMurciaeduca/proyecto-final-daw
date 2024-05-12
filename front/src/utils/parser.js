@@ -1,4 +1,5 @@
 import { CheckStringAlphanumeric } from './strings';
+import { CONVERT_EURO_LIBRA } from '@/commons/config/config.js';
 
 function CleanId(id) {
   try {
@@ -90,8 +91,31 @@ function FixPrice(value) {
   return resultado;
 }
 
+function FormatPrice(value, lang) {
+
+  const precioNumero = Number(value);
+
+  let symbol = (lang === 'en') ? "GBP" : "EUR";
+
+  if (symbol === 'EUR') {
+    return precioNumero.toLocaleString(lang, {
+      style: 'currency',
+      currency: symbol,
+      minimumFractionDigits: 2
+    });
+  } else {
+    const precioLibra = precioNumero * CONVERT_EURO_LIBRA;
+    return precioLibra.toLocaleString(lang, {
+      style: 'currency',
+      currency: symbol,
+      minimumFractionDigits: 2
+    });
+  }
+}
+
 export default {
   FixPrice,
+  FormatPrice,
   CleanId,
   DateReceived,
   DateTimeReceived,
