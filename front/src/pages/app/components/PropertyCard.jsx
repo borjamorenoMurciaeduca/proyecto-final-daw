@@ -7,7 +7,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-
+import house from '@/assets/house.jpg'
 const PropertyCard = ({ property }) => {
   const { property_id, location, price, title } = property;
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const PropertyCard = ({ property }) => {
         <CardMedia
           component="img"
           height="140"
-          image="https://img3.idealista.com/blur/WEB_DETAIL_TOP-L-L/0/id.pro.es.image.master/83/4a/70/1208340357.jpg"
+          image={house}
           alt="Vivienda"
         />
         <CardContent>

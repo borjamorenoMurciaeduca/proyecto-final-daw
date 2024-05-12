@@ -15,15 +15,21 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 const EditProfile = () => {
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const { notify } = useNotification();
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleClickShowConfirmPassword = () =>
@@ -36,21 +42,30 @@ const EditProfile = () => {
     const credentials = {
       password: dataForm.get('password'),
       password_confirmation: dataForm.get('password_confirmation'),
+      name: dataForm.get('name'),
+      surname: dataForm.get('surname'),
+      phone: dataForm.get('phone'),
+      birth_date: dataForm.get('birth_date'),
     };
+    setLoading(true);
     try {
       if (credentials.password !== credentials.password_confirmation)
         throw new Error('Las contraseñas no coinciden');
+
       const res = await userService.editProfile(credentials);
-      if (res.status == 400) {
-        throw new Error('No se ha podido actualizar el usuario');
-      }
-      if (res.error) {
-        throw new Error(res.error);
-      }
+
+      if (res.status == 400) throw new Error('No se ha podido actualizar el usuario');
+      if (res.error) throw new Error(res.error);
+
       e.target.password.value = '';
       e.target.password_confirmation.value = '';
 
-      notify('Usuario actualizado correctamente', 'success');
+      setUser((prev) => ({ ...prev, ...res.data }))
+      setTimeout(() => {
+        setLoading(false)
+        navigate('/app');
+        notify('Usuario actualizado correctamente', 'success');
+      }, 1000);
     } catch (error) {
       if (error.response?.data?.message) {
         notify(error.response?.data?.message, 'error');
@@ -58,11 +73,13 @@ const EditProfile = () => {
         notify(error.message, 'error');
       }
       console.warn(error);
+    } finally {
+      setTimeout(() => setLoading(false), 1000);
     }
   };
 
   return (
-    <>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Typography variant="h2" component="h1">
         👋 {user.username}
       </Typography>
@@ -89,44 +106,77 @@ const EditProfile = () => {
               onSubmit={handleSubmitProfile}
             >
               <Grid item xs={12}>
-                <Typography variant="h6">Edición personal de perfil</Typography>
+                <Typography variant="h6">{t('edit-profile-form.title')}</Typography>
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
-                  autoComplete="given-name"
+                  autoComplete="given-username"
                   name="username"
                   required
                   fullWidth
                   disabled
                   value={user.username}
                   id="username"
-                  label={t('login-form.form.name')}
+                  label={t('edit-profile-form.form.username')}
                 />
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
-                  autoComplete="given-name"
-                  name="username"
+                  autoComplete="given-email"
+                  name="email"
                   required
                   fullWidth
                   disabled
                   value={user.email || 'Sin correo asociado'}
                   id="email"
-                  label="email"
+                  label={t('edit-profile-form.form.email')}
                 />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  autoFocus
+                  autoComplete="given-name"
+                  name="name"
+                  fullWidth
+                  defaultValue={user.name || ''}
+                  id="name"
+                  label={t('edit-profile-form.form.name')}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  autoComplete="given-surname"
+                  name="surname"
+                  fullWidth
+                  defaultValue={user.surname || ''}
+                  id="surname"
+                  label={t('edit-profile-form.form.surname')}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  autoComplete="given-phone"
+                  name="phone"
+                  fullWidth
+                  defaultValue={user.phone || ''}
+                  id="phone"
+                  label={t('edit-profile-form.form.phone')}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <DatePicker name='birth_date' id="birth_date" label={t('register-form.form.birth-date')} sx={{ width: '100%' }} defaultValue={dayjs(user.birth_date)} />
               </Grid>
               <Grid item xs={12} md={6}>
                 <FormControl fullWidth>
                   <InputLabel htmlFor="password">
-                    {t('login-form.form.password')}
+                    {t('edit-profile-form.form.password')}
                   </InputLabel>
                   <OutlinedInput
-                    autoFocus
                     id="password"
                     name="password"
                     autoComplete="new-password"
                     type={showPassword ? 'text' : 'password'}
-                    label={t('login-form.form.password')}
+                    label={t('edit-profile-form.form.password')}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
@@ -145,14 +195,14 @@ const EditProfile = () => {
               <Grid item xs={12} md={6}>
                 <FormControl fullWidth>
                   <InputLabel htmlFor="password_confirmation">
-                    {t('login-form.form.confirm-password')}
+                    {t('edit-profile-form.form.confirm-password')}
                   </InputLabel>
                   <OutlinedInput
                     id="password_confirmation"
                     autoComplete="new-password"
                     type={showConfirmPassword ? 'text' : 'password'}
                     name="password_confirmation"
-                    label={t('login-form.form.confirm-password')}
+                    label={t('edit-profile-form.form.confirm-password')}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
@@ -173,15 +223,15 @@ const EditProfile = () => {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <Button type="submit" fullWidth variant="contained">
-                  Actualizar cambios
+                <Button type="submit" fullWidth variant="contained" disabled={loading}>
+                  {t('edit-profile-form.form.save')}
                 </Button>
               </Grid>
             </Grid>
           </Paper>
         </Grid>
       </Container>
-    </>
+    </LocalizationProvider>
   );
 };
 

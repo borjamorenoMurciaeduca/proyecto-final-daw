@@ -1,15 +1,23 @@
 import Copyright from '@/components/Copyright';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import LanguageSelector from '@/components/LanguageSelector';
 import useNotification from '@/hooks/useNotification';
 import userService from '@/services/userService';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  CircularProgress,
   FormControl,
   IconButton,
   InputAdornment,
   InputLabel,
   OutlinedInput,
+  Paper,
 } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import Avatar from '@mui/material/Avatar';
@@ -23,10 +31,12 @@ import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { DatePicker } from '@mui/x-date-pickers';
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { t } = useTranslation();
   const { notify } = useNotification();
@@ -40,11 +50,17 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const dataForm = new FormData(e.currentTarget);
     const credentials = {
       username: dataForm.get('username'),
       password: dataForm.get('password'),
       password_confirmation: dataForm.get('password_confirmation'),
+      name: dataForm.get('name'),
+      surname: dataForm.get('surname'),
+      email: dataForm.get('email'),
+      phone: dataForm.get('phone'),
+      birth_date: dataForm.get('birth_date'),
     };
     try {
       if (credentials.password !== credentials.password_confirmation)
@@ -56,8 +72,11 @@ const Register = () => {
       }
 
       if (res.status === 201) {
-        notify('Usuario registrado correctamente', 'success');
-        navigate('/auth');
+
+        setTimeout(() => {
+          notify('Usuario registrado correctamente', 'success');
+          navigate('/auth');
+        }, 1000);
       }
       e.target.username.value = '';
       e.target.password.value = '';
@@ -70,131 +89,215 @@ const Register = () => {
       setTimeout(() => {
         setError(null);
       }, 3000);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
     }
   };
 
   return (
-    <Container
-      maxWidth="sm"
-      component="main"
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '100vh',
-      }}
-    >
-      <Box
-        p={5}
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <Container
+        maxWidth="sm"
+        component="main"
         sx={{
           display: 'flex',
-          flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          borderRadius: '10px',
-          boxShadow: '2px 2px 45px -15px rgba(0,0,0,0.75)',
-          gap: 2,
+          minHeight: '100vh',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          {t('register-form.title')}
-        </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit}>
-          {error && (
-            <Alert severity="error" sx={{ margin: '10px 0px' }}>
-              {error}
-            </Alert>
-          )}
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                autoComplete="given-name" //???
-                name="username"
-                required
-                fullWidth
-                id="username"
-                label={t('login-form.form.name')}
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl fullWidth>
-                <InputLabel htmlFor="password">
-                  {t('login-form.form.password')}
-                </InputLabel>
-                <OutlinedInput
-                  id="password"
-                  name="password"
-                  autoComplete="new-password"
-                  type={showPassword ? 'text' : 'password'}
-                  label={t('login-form.form.password')}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
+        <Paper
+          elevation={24}
+          sx={{
+            padding: 5,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 2,
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            {t('register-form.title')}
+          </Typography>
+          <Box component="form" noValidate onSubmit={handleSubmit}>
+            <Grid container spacing={2}>
+              <Grid container item xs={12} >
+                <TextField
+                  autoComplete="given-name"
+                  fullWidth
+                  name="username"
+                  required
+                  id="username"
+                  placeholder={t('register-form.form.username-placeholder')}
+                  label={t('register-form.form.username')}
                 />
-              </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel required htmlFor="password">
+                    {t('login-form.form.password')}
+                  </InputLabel>
+                  <OutlinedInput
+                    id="password"
+                    name="password"
+                    required
+                    autoComplete="new-password"
+                    type={showPassword ? 'text' : 'password'}
+                    label={t('login-form.form.password')}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel required htmlFor="password_confirmation">
+                    {t('login-form.form.confirm-password')}
+                  </InputLabel>
+                  <OutlinedInput
+                    id="password_confirmation"
+                    autoComplete="new-password"
+                    required
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    name="password_confirmation"
+                    label={t('login-form.form.confirm-password')}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowConfirmPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showConfirmPassword ? (
+                            <VisibilityOff />
+                          ) : (
+                            <Visibility />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <Accordion>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel-additional-info"
+                    id="panel-additional-info"
+                  >
+                    <Typography>{t('register-form.form.additional-info')}</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12} md={6}>
+                        <TextField
+                          autoComplete="given-name"
+                          name="name"
+                          fullWidth
+                          id="name"
+                          label={t('register-form.form.name')}
+                          autoFocus
+                        />
+                      </Grid>
+                      <Grid item xs={12} md={6}>
+                        <TextField
+                          autoComplete="given-surname"
+                          name="surname"
+                          fullWidth
+                          id="surname"
+                          label={t('register-form.form.surname')}
+                        />
+                      </Grid>
+                      <Grid item xs={12} >
+                        <TextField
+                          autoComplete="given-mail"
+                          name="email"
+                          placeholder="example@gmail.com"
+                          fullWidth
+                          id="email"
+                          label={t('register-form.form.email')}
+                          helperText={t('register-form.form.email-helper')}
+                        />
+                      </Grid>
+                      <Grid item xs={12} md={6}>
+                        <TextField
+                          autoComplete="given-phone"
+                          name="phone"
+                          placeholder="642 xxx xxx"
+                          fullWidth
+                          id="phone"
+                          label={t('register-form.form.phone')}
+                        />
+                      </Grid>
+                      <Grid item xs={12} md={6}>
+                        <DatePicker name='birth_date' id="birth_date" label={t('register-form.form.birth-date')} />
+                      </Grid>
+                    </Grid>
+                  </AccordionDetails>
+                </Accordion>
+              </Grid>
+              <Grid item xs={12}>
+                <Box sx={{ position: 'relative' }}>
+                  <Button type="submit" fullWidth variant="contained" disabled={loading}>
+                    {t('register-form.form.register')}
+                  </Button>
+                  {loading && (
+                    <CircularProgress
+                      size={24}
+                      sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        marginTop: '-12px',
+                        marginLeft: '-12px',
+                      }}
+                    />
+                  )}
+                </Box>
+                {error && (
+                  <Alert severity="error" sx={{ margin: '10px 0px' }}>
+                    {error}
+                  </Alert>
+                )}
+              </Grid>
+              <Grid
+                container
+                item
+                justifyContent="space-between"
+                alignItems="center"
+                spacing={2}
+                mt={1}
+              >
+                <LanguageSelector />
+                <Link component={RouterLink} to="/auth" variant="body2">
+                  {t('register-form.login')}
+                </Link>
+
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <FormControl fullWidth>
-                <InputLabel htmlFor="password_confirmation">
-                  {t('login-form.form.confirm-password')}
-                </InputLabel>
-                <OutlinedInput
-                  id="password_confirmation"
-                  autoComplete="new-password"
-                  type={showConfirmPassword ? 'text' : 'password'}
-                  name="password_confirmation"
-                  label={t('login-form.form.confirm-password')}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowConfirmPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showConfirmPassword ? (
-                          <VisibilityOff />
-                        ) : (
-                          <Visibility />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
-            </Grid>
-          </Grid>
-          <Grid item xs={12} sx={{ mt: 3, mb: 2 }}>
-            <Button type="submit" fullWidth variant="contained">
-              {t('register-form.register')}
-            </Button>
-          </Grid>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link component={RouterLink} to="/auth" variant="body2">
-                {t('register-form.login')}
-              </Link>
-            </Grid>
-          </Grid>
-        </Box>
-        <LanguageSelector />
-        <Copyright />
-      </Box>
-    </Container>
+          </Box>
+          <Copyright />
+        </Paper>
+      </Container>
+    </LocalizationProvider>
   );
 };
 

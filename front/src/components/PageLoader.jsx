@@ -5,10 +5,13 @@ const PageLoader = () => {
   return (
     <Box
       sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '100vh',
+        position: 'absolute',
+        top: '50%',
+        left: '50%'
+        // display: 'flex',
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        // minHeight: '100vh',
       }}
     >
       <CircularProgress />

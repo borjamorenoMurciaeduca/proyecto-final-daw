@@ -1,6 +1,7 @@
 import idealistaWatchLogo from '@/assets/logo/logo-idealistawatch.png';
 import Copyright from '@/components/Copyright';
 import LanguageSelector from '@/components/LanguageSelector.jsx';
+import useNotification from '@/hooks/useNotification';
 import useUser from '@/hooks/useUser';
 import useViviendas from '@/hooks/useViviendas.js';
 import propertyService from '@/services/propertyService';
@@ -12,6 +13,7 @@ import {
   Alert,
   Box,
   Button,
+  CircularProgress,
   Container,
   FormControl,
   Grid,
@@ -29,29 +31,25 @@ import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { setViviendas } = useViviendas();
-  const { setUpdateUser } = useUser();
+  const { setUser } = useUser();
+  const { notify } = useNotification();
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  // const handleView = (e) => {
-  //   e.preventDefault();
-  //   setView('register');
-  // };
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     const username = data.get('username');
     const password = data.get('password');
-    // const username = data.username;
-    // const password = e.target.password.value;
+    setLoading(true);
     try {
       if (!password) throw new Error('Password is required');
 
@@ -78,26 +76,28 @@ const Login = () => {
       );
       cookie.set(USER_COOKIE_TOKEN, token, expirationSeconds);
 
-      // window.localStorage.setItem(USER_LOCAL_TOKEN, token);
-      //Guardar el usuario y el token en el localStorage
-      // window.localStorage.setItem('user', JSON.stringify(res.data));
       //Obtener los datos del usuario y los inmuebles
-
       const property = await propertyService.getAllUserProperties();
-      setUpdateUser(user);
+      // Seteamos la página actual a 1
+      setUser({ ...user, currentPage: 1 });
       setViviendas(property.data);
 
       e.target.username.value = '';
       e.target.password.value = '';
+
       setError(false);
       navigate('/app', { replace: true });
+      notify(`👋 Bienvenido de nuevo ${user.username}`, 'info');
     } catch (error) {
       console.warn(error);
       setError('Error en las credenciales');
       setTimeout(() => {
         setError(null);
       }, 5000);
+    } finally {
+      setLoading(false);
     }
+
   };
 
   return (
@@ -119,8 +119,6 @@ const Login = () => {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          // borderRadius: '10px',
-          // boxShadow: '2px 2px 45px -15px rgba(0,0,0,0.75)',
           gap: 2,
         }}
       >
@@ -151,7 +149,7 @@ const Login = () => {
                 id="username"
                 name="username"
                 autoComplete="username"
-                label={t('login-form.form.name')}
+                label={t('login-form.form.username')}
                 fullWidth
                 autoFocus
               />
@@ -183,9 +181,23 @@ const Login = () => {
               </FormControl>
             </Grid>
             <Grid item xs={12}>
-              <Button type="submit" variant="contained" fullWidth>
-                {t('login-form.form.login')}
-              </Button>
+              <Box sx={{ position: 'relative' }}>
+                <Button type="submit" variant="contained" fullWidth disabled={loading}>
+                  {t('login-form.form.login')}
+                </Button>
+                {loading && (
+                  <CircularProgress
+                    size={24}
+                    sx={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      marginTop: '-12px',
+                      marginLeft: '-12px',
+                    }}
+                  />
+                )}
+              </Box>
             </Grid>
             <Grid
               container

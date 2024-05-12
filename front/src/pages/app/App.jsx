@@ -1,3 +1,4 @@
+import useUser from '@/hooks/useUser';
 import useViviendas from '@/hooks/useViviendas';
 import {
   Box,
@@ -9,13 +10,12 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import AddButtonModal from './components/AddButtonModal';
 import PropertyCard from './components/PropertyCard';
 
 const App = () => {
-  const [page, setPage] = useState(1);
+  const { user, setUser } = useUser();
 
   const theme = useTheme();
   const lessThanMedium = useMediaQuery(theme.breakpoints.down('md'));
@@ -25,10 +25,15 @@ const App = () => {
   const propertiesMax = 6;
   const propertiesMin = 0;
   const propertiesPage = properties.slice(
-    propertiesMin + (page - 1) * propertiesMax,
-    propertiesMax * page
+    propertiesMin + (user.currentPage - 1) * propertiesMax,
+    propertiesMax * user.currentPage
   );
   const count = Math.ceil(properties.length / propertiesMax);
+
+  const handlePage = (_, v) => {
+    if (v == user.currentPage) return;
+    setUser((prevState) => ({ ...prevState, currentPage: v }));
+  };
 
   return (
     <>
@@ -36,14 +41,15 @@ const App = () => {
       <Typography component="h1" variant="h2">
         {t('my-homes')}
       </Typography>
-      <Box sx={{ minHeight: '75vh', display: 'flex', alignItems: 'center' }}>
-        <Grid
-          container
-          item
-          spacing={2}
-          justifyContent="left"
-          alignItems="center"
-        >
+      <Box
+        sx={{
+          minHeight: '75vh',
+          display: 'flex',
+          mt: 4,
+          mb: { md: 4, lg: 'auto' }
+        }}
+      >
+        <Grid container item spacing={2} justifyContent="left">
           {propertiesPage.map((property) => (
             <Grid xs={12} sm={6} lg={4} item key={property.property_id}>
               <PropertyCard property={property} />
@@ -68,8 +74,8 @@ const App = () => {
                 <Pagination
                   size={lessThanMedium ? 'small' : 'medium'}
                   count={count}
-                  page={page}
-                  onChange={(e, v) => setPage(v)}
+                  page={user.currentPage || 1}
+                  onChange={handlePage}
                   variant="text"
                   shape="circular"
                 />

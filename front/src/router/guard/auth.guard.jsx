@@ -11,7 +11,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 const AuthGuard = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const { setUpdateUser } = useUser();
+  const { setUser } = useUser();
   const { setViviendas } = useViviendas();
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const AuthGuard = () => {
           let properties = await propertyService.getAllUserProperties();
           if (user?.data && properties?.data) {
             // guardar datos del usuario en contexto
-            setUpdateUser(user.data);
+            setUser({ ...user.data, currentPage: 1 });
             // guardar los datos de las viviendas en contexto
             setViviendas(properties.data);
             // setLoading(false);

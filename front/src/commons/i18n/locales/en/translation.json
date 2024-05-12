@@ -20,17 +20,46 @@
     "form": {
       "password": "Password",
       "confirm-password": "Confirm password",
-      "name": "Name",
+      "username": "User",
       "login": "Login"
     },
     "register": "Need an account? Sign up"
   },
   "register-form": {
     "title": "Sign up",
-    "confirm": "Confirm",
-    "register": "Register",
-    "login": "Already have an account? Sign in",
-    "success": "User registered successfully"
+    "form":{
+      "username": "User",
+      "username-placeholder": "Username must be unique",
+      "name": "Name", 
+      "surname": "Surname",
+      "email": "Email",
+      "email-helper": "You can login with this email",
+      "phone": "Phone",
+      "birth-date": "Birth date",
+      "password": "Password",
+      "confirm-password": "Confirm password",
+      "confirm": "Confirm",
+      "additional-info": "Aditional information",
+      "register": "Create account",
+      "success": "User registered successfully"
+    },
+    "login": "Already have an account? Sign in" 
+  },
+  "edit-profile-form": {
+    "title": "Edit profile",
+    "form": {
+      "username": "User",
+      "name": "Name",
+      "surname": "Surname",
+      "email": "Email",
+      "phone": "Phone",
+      "birth-date": "Birth date",
+      "password": "Password",
+      "confirm-password": "Confirm password",
+      "edit": "Edit",
+      "save": "Save changes",
+      "success": "Profile updated successfully"
+    }
   },
   "top-menu": {
     "settings": {

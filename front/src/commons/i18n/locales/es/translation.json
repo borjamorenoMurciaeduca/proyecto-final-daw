@@ -20,17 +20,46 @@
     "form": {
       "password": "Contraseña",
       "confirm-password": "Confirmar contraseña",
-      "name": "Nombre",
-      "login": "Enviar"
+      "username": "Usuario",
+      "login": "Iniciar sesión"
     },
     "register": "¿No tienes cuenta? Crea una"
   },
   "register-form": {
     "title": "Regístrate",
-    "confirm": "Confirmar",
-    "register": "Registrar",
-    "login": "¿Ya tienes cuenta? Inicia sesión",
-    "success": "¡Registro completado con éxito!"
+    "form": {
+      "username": "Usuario",
+      "username-placeholder": "El usuario debe ser único",
+      "name": "Nombre", 
+      "surname": "Apellido/s",
+      "email": "Correo electrónico",
+      "email-helper": "Podras utilizarlo para iniciar sesión",
+      "phone": "Teléfono",
+      "birth-date": "Fecha de nacimiento",
+      "password": "Contraseña",
+      "confirm-password": "Confirmar contraseña",
+      "confirm": "Confirmar",
+      "additional-info": "Información adicional",
+      "register": "Crear cuenta",
+      "success": "¡Registro completado con éxito!"
+    },
+    "login": "¿Ya tienes cuenta? Inicia sesión"
+  },
+  "edit-profile-form": {
+    "title": "Editar perfil",
+    "form": {
+      "username": "Usuario",
+      "name": "Nombre", 
+      "surname": "Apellido/s",
+      "email": "Correo electrónico",
+      "phone": "Teléfono",
+      "birth-date": "Fecha de nacimiento",
+      "password": "Contraseña",
+      "confirm-password": "Confirmar contraseña",
+      "edit": "Editar",
+      "save": "Guardar cambios",
+      "success": "¡Perfil actualizado con éxito!"
+    }
   },
   "top-menu": {
     "settings": {

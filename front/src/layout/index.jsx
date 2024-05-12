@@ -28,17 +28,10 @@ import { Logout, Settings } from '@mui/icons-material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Outlet, Link as RouterLink, useNavigate } from 'react-router-dom';
-// const pages = ['Mis viviendas', 'Pricing'];
-// const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function HideOnScroll(props) {
-  const { children, window } = props;
-  // Note that you normally won't need to set the window ref as useScrollTrigger
-  // will default to window.
-  // This is only being set here because the demo is in an iframe.
-  const trigger = useScrollTrigger({
-    target: window ? window() : undefined,
-  });
+  const { children } = props;
+  const trigger = useScrollTrigger();
 
   return (
     <Slide appear={false} direction="down" in={!trigger}>
@@ -191,7 +184,6 @@ const Layout = (props) => {
                     vertical: 'top',
                     horizontal: 'right',
                   }}
-                  // slotProps.paper
                   slotProps={{
                     paper: {
                       elevation: 0,
