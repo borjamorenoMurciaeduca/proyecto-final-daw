@@ -33,7 +33,7 @@
       "name": "Name", 
       "surname": "Surname",
       "email": "Email",
-      "email-helper": "You can login with this email",
+      "email-helper": "You can also use your email to login",
       "phone": "Phone",
       "birth-date": "Birth date",
       "password": "Password",
