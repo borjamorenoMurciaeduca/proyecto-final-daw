@@ -24,9 +24,14 @@ class UserFactory extends Factory {
         $username = preg_replace('/\s+/', '', $this->faker->name());
         return [
             'username' => $username,
-            // 'email' => fake()->unique()->safeEmail(),
+            'email' => fake()->unique()->safeEmail(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'name' => $this->faker->name(),
+            'surname' => $this->faker->lastName(),
+            'birth_date' => $this->faker->date(),
+            'avatar_url' => $this->faker->imageUrl(),
+            'phone' => $this->faker->phoneNumber(),
         ];
     }
 

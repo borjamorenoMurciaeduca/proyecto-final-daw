@@ -20,17 +20,30 @@ class DatabaseSeeder extends Seeder {
 
         // Crea 10 usuarios usando la fábrica User
         User::factory(10)->create();
-
+        $randomUserData = file_get_contents('https://randomuser.me/api/?results=10');
+        $decodedData = json_decode($randomUserData, true);
         // Crea un usuario adicional con nombre de usuario 'jorge' y contraseña '1234'
         $jorge = User::factory()->create([
             'username' => 'jorge',
             'password' => bcrypt('1234'),
+            "email" => "jorge@jorge.com",
+            'name' => "Jorge Manuel",
+            "surname" => 'Balibrea',
+            "birth_date" => "1999-12-12",
+            "avatar_url" => $decodedData['results'][0]['picture']['large'],
+            "phone" => "655555555"
         ]);
 
         // Crea otro usuario adicional con nombre de usuario 'borja' y contraseña '1234'
         $borja = User::factory()->create([
             'username' => 'borja',
             'password' => bcrypt('1234'),
+            "email" => "borja@borja.com",
+            'name' => "Borja",
+            "surname" => 'XXX',
+            "birth_date" => "1999-12-12",
+            "avatar_url" => $decodedData['results'][1]['picture']['large'],
+            "phone" => "622222222"
         ]);
 
         //  Crea 10 propiedades usando la fábrica Property

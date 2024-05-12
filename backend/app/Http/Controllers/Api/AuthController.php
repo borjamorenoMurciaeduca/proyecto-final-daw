@@ -50,22 +50,49 @@ class AuthController extends Controller {
         try {
             $validatedData = $request->validate([
                 'username' => ['required', 'unique:users', 'regex:/^[a-zA-Z0-9_]*$/'],
-                'password' => 'required|confirmed'
+                'password' => 'required|confirmed',
+                'name' => 'nullable | string',
+                'surname' => 'nullable | string',
+                'birth_date' => 'nullable | date',
+                'avatar_url' => 'nullable | string',
+                'phone' => 'nullable | string ',
+                'email' => 'nullable|email|unique:users,email,NULL,id',
             ]);
+
             $validatedData['password'] = bcrypt($request->password);
             $user = User::create($validatedData);
             $token = $user->createToken('authToken')->plainTextToken;
-            $cookie = cookie('user_token', $token, 60 * 8);
-            // $data = ['user'=> $user, 'token' => $token];
-            $data = (object) [
-                'id' => $user->id,
-                'username' => $user->username,
-                'created_at' => $user->created_at,
-                'updated_at' => $user->updated_at,
-                'token' => $token,
+            $cookie =  cookie('user_token', $token, 60 * 8);
+            $data = [
+                'user' => [
+                    'id' => $user->id,
+                    'username' => $user->username,
+                    'name' => $user->name,
+                    'surname' => $user->surname,
+                    'birth_date' => $user->birth_date,
+                    'avatar_url' => $user->avatar_url,
+                    'phone' => $user->phone,
+                    'email' => $user->email,
+                    'created_at' => $user->created_at,
+                    'updated_at' => $user->updated_at,
+                ],
+                'token' => $token
             ];
-            return ApiResponse::success('User created successfully!', $data, 201)->withCookie($cookie);
-            // return ApiResponse::success('Usuario creado con éxito', $data, 201);
+            // $data = (object) [
+            //     'id' => $user->id,
+            //     'username' => $user->username,
+            //     'name' => $user->name,
+            //     'surname' => $user->surname,
+            //     'birthday' => $user->birthday,
+            //     'avatar_url' => $user->avatar_url,
+            //     'phone' => $user->phone,
+            //     'email' => $user->email,
+            //     'created_at' => $user->created_at,
+            //     'updated_at' => $user->updated_at,
+            //     'token' => $token,
+            // ];
+            // return ApiResponse::success('User created successfully!', $data, 201)->withCookie($cookie);
+            return ApiResponse::success('User created successfully!', $data, 201);
         } catch (ValidationException $e) {
             return ApiResponse::error("Validation error!", 422, $e->validator->errors());
         } catch (\Exception $e) {
@@ -163,20 +190,29 @@ class AuthController extends Controller {
     public function editProfile(Request $request) {
         //editar password del usuario
         try {
-            $validatedData = $request->validate([
-                'password' => 'required|confirmed',
+            $request->validate([
+                'name' => 'nullable|string',
+                'surname' => 'nullable|string',
+                'birth_date' => 'nullable|date',
+                'avatar_url' => 'nullable|string',
+                'phone' => 'nullable|string',
+                'password' => 'nullable|string|confirmed',
             ]);
+
             $user = User::find(Auth::id());
-            // Verificar si la nueva contraseña es igual a la anterior
-            if (Hash::check($request->password, $user->password)) {
+
+            if ($request->password !== null && Hash::check($request->password, $user->password)) {
                 return ApiResponse::error('Password must be different from the current one', 400);
             }
 
-            $user->password = bcrypt($request->password);
-            $user->save();
-            return ApiResponse::success('Password updated successfully!', $user, 200);
+            if ($request->password !== null) {
+                $user->password = bcrypt($request->password);
+            }
+
+            $user->update($request->except('password'));
+            return ApiResponse::success('User updated successfully!', $user, 200);
         } catch (\Exception $e) {
-            return ApiResponse::error('Error updating the password: ' . $e->getMessage(), 404);
+            return ApiResponse::error('Error processing the request: ' . $e->getMessage(), 404);
         }
     }
 
@@ -187,7 +223,7 @@ class AuthController extends Controller {
      *      tags={"Autenticación"},
      *      @OA\Response(response="200", description="Successfully logged out"),
      *     @OA\Response(response="400", description="Error logging out")
-     * ) 
+     * )
      */
     public function logout(Request $request) {
         try {
