@@ -18,6 +18,8 @@ return new class extends Migration {
             $table->integer("rooms")->unsigned();
             $table->boolean("garage");
             $table->boolean("storage_room");
+            $table->boolean("is_shared")->default(false);
+            $table->string("share_url")->nullable();
             $table->longText("description");
             $table->timestamps();
             $table->foreign('property_id_fk')->references('property_id')->on('properties')->onDelete('cascade')->onUpdate('cascade');
