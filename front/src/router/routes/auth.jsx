@@ -1,8 +1,9 @@
+import LayoutNotLogged from '@/layout/LayoutNotLogged';
 import Login from '@/pages/auth/Login';
 
 const LayoutRoutes = [
   {
-    // Component: Layout,
+    element: <LayoutNotLogged />,
     children: [
       { index: true, element: <Login /> },
       { path: '*', element: <>Not Found</> },
