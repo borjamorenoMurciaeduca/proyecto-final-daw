@@ -93,6 +93,11 @@ const PropertyDetails = ({ propertyId }) => {
                 label={`${t('property-info.details.rooms')} ${property.rooms}`}
                 size="small"
               />
+              <Chip
+                color="default"
+                label={`${t('property-info.details.bath_rooms')} ${property.bath_rooms}`}
+                size="small"
+              />
             </Stack>
           </Box>
         </CardContent>

@@ -1,9 +1,9 @@
 export const viviendasReducer = (state, action) => {
-  // console.log({
-  //   state,
-  //   type: action.type,
-  //   payload: action.payload,
-  // });
+  console.log({
+    state,
+    type: action.type,
+    payload: action.payload,
+  });
   switch (action.type) {
     case 'SET_VIVIENDAS_USUARIO':
       return {

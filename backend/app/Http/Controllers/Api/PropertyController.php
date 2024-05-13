@@ -155,6 +155,7 @@ class PropertyController extends Controller {
                 'rooms' => 'integer|required',
                 'garage' => 'required',
                 'storage_room' => 'required',
+                'bath_rooms' => 'integer|required',
                 'description' => 'string|required'
             ]);
             // Convertir 'true' de string a boolean si es necesario
@@ -186,6 +187,7 @@ class PropertyController extends Controller {
                 'rooms' => $validateUserProperty['rooms'],
                 'garage' => $garage,
                 'storage_room' => $storage_room,
+                'bath_rooms' => $validateUserProperty['bath_rooms'],
                 'description' => $validateUserProperty['description'],
                 // 'garaje' => $validateUsuarioInmueble['garaje'],
                 // 'trastero' => $validateUsuarioInmueble['trastero'],
@@ -209,6 +211,7 @@ class PropertyController extends Controller {
                 'rooms' => $validateUserProperty['rooms'],
                 'garage' => $garage,
                 'storage_room' => $storage_room,
+                'bath_rooms' => $validateUserProperty['bath_rooms'],
                 'description' => $validateUserProperty['description'],
                 'price' => $history->price,
                 'url_image' => $validateProperty['url_image'] ?? null,
@@ -262,6 +265,7 @@ class PropertyController extends Controller {
             // Mapear los datos para combinarlos en un solo JSON
             $inmuebles = $userProperty->map(function ($userProperty) {
                 $property = $userProperty->property;
+                $notas = $userProperty->notes;
                 return [
                     'user_id' => $userProperty->user_id_fk,
                     "property_id" => $userProperty->property_id_fk,
@@ -271,10 +275,12 @@ class PropertyController extends Controller {
                     'rooms' => $userProperty->rooms,
                     'garage' => $userProperty->garage  == 1 ? true : false,
                     'storage_room' => $userProperty->storage_room  == 1 ? true : false,
+                    'bath_rooms' => $userProperty->bath_rooms,
                     'description' => $userProperty->description,
                     'price' => $property->last_price,
                     'url_image' => $property->url_image,
                     'cancellation_date' => $property->cancellation_date,
+                    'notes' => $notas,
                     'created_at' => $userProperty->created_at,
                     'updated_at' => $userProperty->updated_at,
                 ];
@@ -298,6 +304,7 @@ class PropertyController extends Controller {
                 'rooms' => $userProperty->rooms,
                 'garage' => $userProperty->garage,
                 'storage_room' => $userProperty->storage_room,
+                'bath_rooms' => $userProperty->bath_rooms,
                 'description' => $userProperty->description,
                 'price' => $property->last_price,
                 'url_image' => $property->url_image,
