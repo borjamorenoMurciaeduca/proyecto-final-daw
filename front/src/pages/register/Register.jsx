@@ -106,7 +106,6 @@ const Register = () => {
           alignItems: 'center',
           justifyContent: 'center',
           minHeight: '80vh',
-          overflow: 'hidden',
         }}
       >
         <Paper
@@ -287,10 +286,14 @@ const Register = () => {
                 spacing={2}
                 mt={1}
               >
-                <LanguageSelector />
-                <Link component={RouterLink} to="/auth" variant="body2">
-                  {t('register-form.login')}
-                </Link>
+                <Grid container item xs={12} sm={6} justifyContent='flex-start'>
+                  <LanguageSelector />
+                </Grid>
+                <Grid container item xs={12} sm={6} justifyContent={{ xs: "center", sm: "flex-end" }} >
+                  <Link component={RouterLink} to="/auth" variant="body2">
+                    {t('register-form.login')}
+                  </Link>
+                </Grid>
               </Grid>
             </Grid>
           </Box>

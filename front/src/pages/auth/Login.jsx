@@ -208,10 +208,14 @@ const Login = () => {
               spacing={2}
               mt={1}
             >
-              <LanguageSelector />
-              <Link component={RouterLink} to="/register" variant="body2">
-                {t('login-form.register')}
-              </Link>
+              <Grid container item xs={12} sm={6} justifyContent='flex-start'>
+                <LanguageSelector />
+              </Grid>
+              <Grid container item xs={12} sm={6} justifyContent={{ xs: "center", sm: "flex-end" }} >
+                <Link component={RouterLink} to="/register" variant="body2">
+                  {t('login-form.register')}
+                </Link>
+              </Grid>
             </Grid>
           </Grid>
         </Box>

@@ -16,11 +16,13 @@ const LanguageSelector = () => {
   };
 
   return (
-    <FormControl sx={{ m: 1, minWidth: 120 }}>
+    <FormControl sx={{ m: 1, minWidth: 120 }} fullWidth>
       <InputLabel id="select-language-autowidth-label">
         {t('languages.select-input')}
       </InputLabel>
       <Select
+        size="small"
+        fullWidth
         labelId="select-language-autowidth-label"
         id="select-language-autowidth"
         value={lng}
