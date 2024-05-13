@@ -1,62 +1,36 @@
-import house from '@/assets/house.jpg';
-import i18n from '@/commons/i18n/i18n';
 import PageLoader from '@/components/PageLoader';
-import useViviendas from '@/hooks/useViviendas';
-import propertyService from '@/services/propertyService';
-import parser from '@/utils/parser';
-import { Facebook, Instagram, Twitter } from '@mui/icons-material';
-import {
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Chip,
-  Divider,
-  Grid,
-  IconButton,
-  Stack,
-  Typography,
-} from '@mui/material';
+import PropertyDetailsGlobal from '@/components/PropertyDetailsGlobal';
+import useProperties from '@/hooks/useProperties';
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import DialogShare from './DialogShare';
 
 const PropertyDetails = ({ propertyId }) => {
   const [property, setProperty] = useState();
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [shareUrl, setShareUrl] = useState('');
-  const { properties } = useViviendas();
-  const { t } = useTranslation();
+  const { properties } = useProperties();
 
   useEffect(() => {
-    const propertieMatch = properties.find(
-      (el) => el.property_id == propertyId
-    );
-    setProperty(propertieMatch);
+    const propertyMatch = properties.find((el) => el.property_id == propertyId);
+    setProperty(propertyMatch);
   }, [propertyId, properties]);
 
-  const handleShare = async () => {
-    setLoading(true);
-    try {
-      const data = await propertyService.shareProperty(property.property_id);
-      console.log(data);
-      setShareUrl(data.share_url);
-      setOpen(true);
-    } catch (error) {
-      console.warn('Error sharing property', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   if (!property) return <PageLoader />;
-
   return (
     <>
-      <Grid
+      <PropertyDetailsGlobal
+        property={property}
+        setOpen={setOpen}
+        enableShare
+      />
+      <DialogShare open={open} setOpen={setOpen} propertyId={propertyId} />
+    </>
+  );
+};
+
+export default PropertyDetails;
+
+{
+  /* <Grid
         item
         xs={12}
         md={8}
@@ -134,7 +108,7 @@ const PropertyDetails = ({ propertyId }) => {
             </Box>
           </CardContent>
           <CardActions>
-            <Button size="small" color="primary" onClick={handleShare}>
+            <Button size="small" color="primary" onClick={() => setOpen(true)}>
               {t('property-info.details.share')}
             </Button>
             <IconButton
@@ -164,18 +138,5 @@ const PropertyDetails = ({ propertyId }) => {
             </IconButton>
           </CardActions>
         </Card>
-      </Grid>
-
-      <DialogShare
-        open={open}
-        setOpen={setOpen}
-        loading={loading}
-        handleShare={handleShare}
-        shareUrl={shareUrl}
-        setShareUrl={setShareUrl}
-      />
-    </>
-  );
-};
-
-export default PropertyDetails;
+      </Grid> */
+}

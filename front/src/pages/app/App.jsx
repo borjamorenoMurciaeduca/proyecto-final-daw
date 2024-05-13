@@ -1,5 +1,5 @@
+import useProperties from '@/hooks/useProperties';
 import useUser from '@/hooks/useUser';
-import useViviendas from '@/hooks/useViviendas';
 import {
   Box,
   Grid,
@@ -19,7 +19,7 @@ const App = () => {
 
   const theme = useTheme();
   const lessThanMedium = useMediaQuery(theme.breakpoints.down('md'));
-  const { properties } = useViviendas();
+  const { properties } = useProperties();
   const { t } = useTranslation();
 
   const propertiesMax = 6;
@@ -46,7 +46,7 @@ const App = () => {
           minHeight: '75vh',
           display: 'flex',
           mt: 4,
-          mb: { md: 4, lg: 'auto' }
+          mb: { md: 4, lg: 'auto' },
         }}
       >
         <Grid container item spacing={2} justifyContent="left">

@@ -1,11 +1,11 @@
-export const viviendasReducer = (state, action) => {
+export const propertiesReducer = (state, action) => {
   // console.log({
   //   state,
   //   type: action.type,
   //   payload: action.payload,
   // });
   switch (action.type) {
-    case 'SET_VIVIENDAS_USUARIO':
+    case 'SET_PROPERTIES':
       return {
         ...state,
         properties: action.payload,
@@ -15,10 +15,22 @@ export const viviendasReducer = (state, action) => {
         ...state,
         properties: [],
       };
-    case 'ADD_VIVIENDA':
+    case 'ADD_PROPERTY':
       return {
         ...state,
         properties: [...state.properties, action.payload],
+      };
+    case 'UPDATE_PROPERTY':
+      return {
+        ...state,
+        properties: state.properties.map((el) =>
+          el.property_id === action.payload.property_id
+            ? (el = {
+                ...el,
+                ...action.payload,
+              })
+            : el
+        ),
       };
     default:
       return state;

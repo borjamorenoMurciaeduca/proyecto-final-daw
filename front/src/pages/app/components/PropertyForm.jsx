@@ -1,5 +1,5 @@
 import { useNotification } from '@/hooks/useNotification';
-import useViviendas from '@/hooks/useViviendas.js';
+import useProperties from '@/hooks/useProperties.js';
 import propertyService from '@/services/propertyService.js';
 import {
   Alert,
@@ -23,7 +23,7 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [severity, setSeverity] = useState('success');
-  const { addProperty } = useViviendas();
+  const { addProperty } = useProperties();
 
   const [propertiesValues, setPropertiesValues] = useState({
     property_id: '',

@@ -2,8 +2,8 @@ import idealistaWatchLogo from '@/assets/logo/logo-idealistawatch.png';
 import Copyright from '@/components/Copyright';
 import LanguageSelector from '@/components/LanguageSelector.jsx';
 import useNotification from '@/hooks/useNotification';
+import useProperties from '@/hooks/useProperties.js';
 import useUser from '@/hooks/useUser';
-import useViviendas from '@/hooks/useViviendas.js';
 import propertyService from '@/services/propertyService';
 import userService from '@/services/userService.js';
 import { USER_COOKIE_TOKEN } from '@/strings/defaults';
@@ -36,7 +36,7 @@ const Login = () => {
   const [error, setError] = useState(null);
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { setViviendas } = useViviendas();
+  const { setProperties } = useProperties();
   const { setUser } = useUser();
   const { notify } = useNotification();
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -80,7 +80,7 @@ const Login = () => {
       const property = await propertyService.getAllUserProperties();
       // Seteamos la página actual a 1
       setUser({ ...user, currentPage: 1 });
-      setViviendas(property.data);
+      setProperties(property.data);
 
       e.target.username.value = '';
       e.target.password.value = '';
@@ -97,7 +97,6 @@ const Login = () => {
     } finally {
       setLoading(false);
     }
-
   };
 
   return (
@@ -182,7 +181,12 @@ const Login = () => {
             </Grid>
             <Grid item xs={12}>
               <Box sx={{ position: 'relative' }}>
-                <Button type="submit" variant="contained" fullWidth disabled={loading}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  fullWidth
+                  disabled={loading}
+                >
                   {t('login-form.form.login')}
                 </Button>
                 {loading && (
@@ -207,10 +211,16 @@ const Login = () => {
               spacing={2}
               mt={1}
             >
-              <Grid container item xs={12} sm={6} justifyContent='flex-start'>
+              <Grid container item xs={12} sm={6} justifyContent="flex-start">
                 <LanguageSelector />
               </Grid>
-              <Grid container item xs={12} sm={6} justifyContent={{ xs: "center", sm: "flex-end" }} >
+              <Grid
+                container
+                item
+                xs={12}
+                sm={6}
+                justifyContent={{ xs: 'center', sm: 'flex-end' }}
+              >
                 <Link component={RouterLink} to="/register" variant="body2">
                   {t('login-form.register')}
                 </Link>
