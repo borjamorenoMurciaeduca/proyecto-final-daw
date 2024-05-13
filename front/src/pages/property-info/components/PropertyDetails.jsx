@@ -14,8 +14,9 @@ import {
   Grid,
   IconButton,
   Typography,
+  Box,
+  Stack
 } from '@mui/material';
-import { Box, Stack } from '@mui/system';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -64,9 +65,9 @@ const PropertyDetails = ({ propertyId }) => {
               <Chip
                 color={property.storage_room ? 'success' : 'error'}
                 label={
-                  property.storage_room ? 
-                  `${t('property-info.details.storage-room')}✔️` : 
-                  `${t('property-info.details.storage-room')}❌`
+                  property.storage_room ?
+                    `${t('property-info.details.storage-room')}✔️` :
+                    `${t('property-info.details.storage-room')}❌`
                 }
                 size="small"
               />

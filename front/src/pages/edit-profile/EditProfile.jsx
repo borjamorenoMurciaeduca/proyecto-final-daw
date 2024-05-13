@@ -3,7 +3,9 @@ import useUser from '@/hooks/useUser';
 import userService from '@/services/userService';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
+  Box,
   Button,
+  CircularProgress,
   Container,
   FormControl,
   Grid,
@@ -223,9 +225,23 @@ const EditProfile = () => {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <Button type="submit" fullWidth variant="contained" disabled={loading}>
-                  {t('edit-profile-form.form.save')}
-                </Button>
+                <Box sx={{ position: 'relative' }}>
+                  <Button type="submit" fullWidth variant="contained" disabled={loading}>
+                    {t('edit-profile-form.form.save')}
+                  </Button>
+                  {loading && (
+                    <CircularProgress
+                      size={24}
+                      sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        marginTop: '-12px',
+                        marginLeft: '-12px',
+                      }}
+                    />
+                  )}
+                </Box>
               </Grid>
             </Grid>
           </Paper>
