@@ -4,13 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
-use App\Models\HistorialPrecio;
-use App\Models\Inmueble;
 use App\Models\PriceHistory;
 use App\Models\Property;
+use App\Models\User;
 use App\Models\UserProperty;
-use App\Models\UsersProperties;
-use App\Models\UsuarioInmueble;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -119,7 +117,7 @@ class PropertyController extends Controller {
      *      description="URL de la imagen",
      *      required=false,
      *      @OA\Schema(type="string")
-     *      ), 
+     *      ),
      *    @OA\Parameter(
      *        name="fechaBajaAnuncio",
      *        in="query",
@@ -254,7 +252,7 @@ class PropertyController extends Controller {
      * )
      */
     /**
-     * Muestra la lista de inmuebles de un usuario autenticado con sus precios pero sin el historial de precios 
+     * Muestra la lista de inmuebles de un usuario autenticado con sus precios pero sin el historial de precios
      * userId = usuario que está autenticado
      * with('property') = traer los datos del inmueble (property es el nombre de la relación en UserProperty)
      */
@@ -349,10 +347,10 @@ class PropertyController extends Controller {
                 // 'fechaRegistro' => 'date|required',
             ]);
 
-            // Si el inmueble no existe, no se puede añadir un precio, devolvemos un 400 
+            // Si el inmueble no existe, no se puede añadir un precio, devolvemos un 400
             //  if (!Property::where('property_id', $validateProperty['property_id'])->exists()) {
             //     return ApiResponse::error('El inmueble no existe', 400);
-            // }  
+            // }
             if (!Property::where('property_id', $propertyId)->exists()) {
                 return ApiResponse::error('El inmueble no existe', 400);
             }
@@ -414,4 +412,63 @@ class PropertyController extends Controller {
     // public function destroy(string $id) {
     //     //
     // }
+    public function shareProperty($propertyId) {
+        $property = Property::find($propertyId);
+        if ($property) {
+            //random url inexistente
+            $randomUrl = Str::random(8);
+            while(UserProperty::where('share_url', $randomUrl)->exists()) {
+                $randomUrl = Str::random(8);
+            }
+            $userProperty = UserProperty::where('property_id_fk', $propertyId)->first();
+            $userProperty->is_shared = true;
+            $userProperty->share_url = $randomUrl;
+            $userProperty->save();
+
+            return ApiResponse::success('Property shared successfully', ['share_url' => $randomUrl], 200);
+        } else {
+            return ApiResponse::error('Property not found', 404);
+        }
+    }
+
+    public function revokeShareProperty($propertyId) {
+        $property = Property::find($propertyId);
+        if ($property) {
+            $property->is_shared = false;
+            $property->share_url = null;
+            $property->save();
+
+            return ApiResponse::success('Property unshared successfully', null, 200);
+        } else {
+            return ApiResponse::error('Property not found', 404);
+        }
+    }
+
+    public function getSharedProperty($shareUrl){
+        $userProperty = UserProperty::where('share_url', $shareUrl)->first();
+        if ($userProperty) {
+            $property = Property::find($userProperty->property_id_fk);
+            $userInfo = User::find($userProperty->user_id_fk); 
+            $data = [
+                'username' => $userInfo->username,
+                'name' => $userInfo->name,
+                'property_id' => $userProperty->property_id_fk,
+                'title' => $userProperty->title,
+                'location' => $userProperty->location,
+                'size' => $userProperty->size,
+                'rooms' => $userProperty->rooms,
+                'garage' => $userProperty->garage,
+                'storage_room' => $userProperty->storage_room,
+                'description' => $userProperty->description,
+                'price' => $property->last_price,
+                'url_image' => $property->url_image,
+                'cancellation_date' => $property->cancellation_date,
+                'created_at' => $userProperty->created_at,
+                'updated_at' => $userProperty->updated_at,
+            ];
+            return ApiResponse::success('Property found', $data, 200);
+        } else {
+            return ApiResponse::error('Property not found', 404);
+        }
+    }
 }

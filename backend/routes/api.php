@@ -26,9 +26,13 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::get('/prepare-inmueble/{id}', [PropertyController::class, 'prepare']);
   Route::post('/property/{id}/update-price', [PropertyController::class, 'storeNewPrice']);
 
+  // Rutas protegidas correspondientes a compartir inmuebles
+  Route::post('/property/{id}/share', [PropertyController::class, 'shareProperty']);
   // Ruta protegida para el historial de precios
   Route::get('/property/{id}/prices', [PropertyController::class, 'getPrices']);
 });
+
+Route::get('/shared-property/{share_url}', [PropertyController::class, 'getSharedProperty']);
 
 // Route::get('/properties', [InmuebleController::class, 'getAllUserProperties'])->middleware('auth:sanctum');
 // Route::post('/properties', [InmuebleController::class, 'store'])->middleware('auth:sanctum');
