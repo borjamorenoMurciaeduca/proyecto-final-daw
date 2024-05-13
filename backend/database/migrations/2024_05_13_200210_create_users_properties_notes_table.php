@@ -9,19 +9,12 @@ return new class extends Migration {
      * Run the migrations.
      */
     public function up(): void {
-        Schema::create('users_properties', function (Blueprint $table) {
+        Schema::create('users_properties_notes', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('user_id_fk');
-            $table->bigInteger('property_id_fk')->unique();
-            $table->string("title");
-            $table->string("location");
-            $table->integer("size")->unsigned();
-            $table->integer("rooms")->unsigned();
-            $table->boolean("garage");
-            $table->boolean("storage_room");
-            $table->integer("bath_rooms")->unsigned();
-            $table->boolean("is_shared")->default(false);
-            $table->string("share_url")->nullable();
+            $table->bigInteger('property_id_fk');
             $table->longText("description");
+            $table->boolean("public");
             $table->timestamps();
             $table->foreign('property_id_fk')->references('property_id')->on('properties')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('user_id_fk')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
@@ -32,6 +25,6 @@ return new class extends Migration {
      * Reverse the migrations.
      */
     public function down(): void {
-        Schema::dropIfExists('users_properties');
+        Schema::dropIfExists('users_properties_notes');
     }
 };

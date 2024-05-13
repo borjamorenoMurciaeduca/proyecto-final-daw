@@ -60,6 +60,7 @@ class DatabaseSeeder extends Seeder {
                 'rooms' => $faker->randomNumber(1),
                 'garage' => $faker->boolean(),
                 'storage_room' => $faker->boolean(),
+                'bath_rooms' => $faker->randomNumber(1),
                 'description' => $faker->sentence(200)
             ]);
             //añadir 10 registros al historial de precios

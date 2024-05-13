@@ -104,6 +104,11 @@ export default PropertyDetails;
                   }`}
                   size="small"
                 />
+                <Chip
+                color="default"
+                label={`${t('property-info.details.bath_rooms')} ${property.bath_rooms}`}
+                size="small"
+              />
               </Stack>
             </Box>
           </CardContent>

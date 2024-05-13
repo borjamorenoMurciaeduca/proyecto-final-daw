@@ -34,6 +34,7 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
     rooms: '',
     garage: false,
     storage_room: false,
+    bath_rooms: '',
     description: '',
   });
 
@@ -51,6 +52,7 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
         rooms: inmuebleData?.habitaciones || '',
         garage: inmuebleData?.garaje || false,
         storage_room: inmuebleData?.trastero || false,
+        bath_rooms: inmuebleData?.banios || '',
         description: inmuebleData.descripcion || '',
       });
     }
@@ -187,7 +189,19 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
           onChange={handleInputChange}
         />
       </Grid>
-      <Grid item xs={12} md={8}>
+      <Grid item xs={6} md={4}>
+        <TextField
+          helperText=""
+          id="bath_rooms"
+          name="bath_rooms"
+          label={t('add-home-form.bath_rooms')}
+          fullWidth
+          type="number"
+          value={propertiesValues.bath_rooms}
+          onChange={handleInputChange}
+        />
+      </Grid>
+      <Grid item xs={6} md={4}>
         <Grid
           container
           direction="row"

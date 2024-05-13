@@ -18,6 +18,7 @@ class UserProperty extends Model {
         'rooms',
         'garage',
         'storage_room',
+        'bath_rooms',
         'description'
         // 'fechaBajaAnuncio'
     ];
@@ -27,5 +28,11 @@ class UserProperty extends Model {
     // property_id: Nombre de la columna en Inmueble que hace referencia a UserProperty
     public function property() {
         return $this->belongsTo(Property::class, 'property_id_fk', 'property_id');
+    }
+
+    public function notes()
+    {
+        return $this->hasMany(UserPropertyNote::class, 'user_id_fk', 'user_id_fk')
+                    ->where('property_id_fk', $this->property_id_fk);
     }
 }

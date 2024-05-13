@@ -18,6 +18,7 @@ import { useState } from 'react';
 import PriceHistory from './components/PriceHistory';
 import PropertyDetails from './components/PropertyDetails';
 import { useTranslation } from 'react-i18next';
+import PropertyNotes from './components/PropertyNotes';
 /**
  * https://mui.com/x/api/charts/line-chart/
  * En progreso
@@ -52,6 +53,7 @@ const PropertyInfo = () => {
       >
         {view == 0 && <PropertyDetails propertyId={property_id} />}
         {view == 1 && <PriceHistory propertyId={property_id} />}
+        {view == 2 && <PropertyNotes propertyId={property_id} />}
         {!lessThanMedium ? (
           <Box
             sx={{
@@ -83,6 +85,11 @@ const PropertyInfo = () => {
                 icon={<RestoreIcon />}
                 label={t('property-info.side-panel.price-history')}
                 {...a11yProps(1)}
+              />
+              <Tab
+                icon={<TextSnippetIcon />}
+                label={t('property-info.side-panel.notes')}
+                {...a11yProps(2)}
               />
             </Tabs>
             {/* <TabPanel value={view} index={0}>
