@@ -19,6 +19,7 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import house from '@/assets/house.jpg'
 
 const PropertyDetails = ({ propertyId }) => {
   const [property, setProperty] = useState();
@@ -41,7 +42,8 @@ const PropertyDetails = ({ propertyId }) => {
           component="img"
           height="340"
           // image={propertie.url_image}
-          image="https://img4.idealista.com/blur/WEB_DETAIL_TOP-L-L/0/id.pro.es.image.master/83/4a/70/1208340357.webp"
+          // image="https://img4.idealista.com/blur/WEB_DETAIL_TOP-L-L/0/id.pro.es.image.master/83/4a/70/1208340357.webp"
+          image={house}
           alt="Inmueble img"
         />
         <CardContent>
@@ -72,7 +74,7 @@ const PropertyDetails = ({ propertyId }) => {
                 size="small"
               />
               <Chip
-                color={property.garage ? 'default' : 'error'}
+                color={property.garage ? 'success' : 'error'}
                 label={property.garage ? `${t('property-info.details.garage')}✔️` : `${t('property-info.details.garage')}❌`}
                 size="small"
               />
@@ -105,7 +107,6 @@ const PropertyDetails = ({ propertyId }) => {
           >
             <Facebook />
           </IconButton>
-
           <IconButton
             color="primary"
             aria-label="Twitter"
@@ -115,7 +116,6 @@ const PropertyDetails = ({ propertyId }) => {
           >
             <Twitter />
           </IconButton>
-
           <IconButton
             color="primary"
             aria-label="Instagram"

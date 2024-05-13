@@ -108,8 +108,7 @@ const Login = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        minHeight: '80vh',
-        overflow: 'hidden',
+        minHeight: '95vh',
       }}
     >
       <Paper

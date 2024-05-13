@@ -105,7 +105,7 @@ const Register = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          minHeight: '80vh',
+          minHeight: '95vh',
         }}
       >
         <Paper
