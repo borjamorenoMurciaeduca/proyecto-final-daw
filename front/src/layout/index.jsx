@@ -43,13 +43,12 @@ function HideOnScroll(props) {
 const Layout = (props) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const { t } = useTranslation();
   const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
   const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
-  // navMenu menu izquierda mvl, userMenu el del usuario
   const handleCloseNavMenu = () => setAnchorElNav(null);
   const handleCloseUserMenu = () => setAnchorElUser(null);
 
@@ -60,6 +59,7 @@ const Layout = (props) => {
 
   const handleClickHomes = () => {
     handleCloseNavMenu();
+    resetPage();
     navigate('/app/');
   };
 
@@ -73,6 +73,9 @@ const Layout = (props) => {
     cookie.clear();
     navigate('/auth');
   };
+
+  const resetPage = () => setUser((prev) => ({ ...prev, currentPage: 1 }));
+
 
   return (
     <>
@@ -94,6 +97,7 @@ const Layout = (props) => {
               <Link
                 component={RouterLink}
                 to="/app"
+                onClick={resetPage}
                 sx={{ textDecoration: 'none' }}
                 color="inherit"
               >
@@ -154,7 +158,7 @@ const Layout = (props) => {
                 <Button
                   component={RouterLink}
                   to="/app"
-                  onClick={handleCloseNavMenu}
+                  onClick={resetPage}
                   sx={{ my: 2, color: 'white', display: 'block' }}
                 >
                   {t('my-homes')}
