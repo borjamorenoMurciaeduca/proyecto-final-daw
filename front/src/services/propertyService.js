@@ -35,9 +35,17 @@ const getPropertyPrices = async (property_id) => {
   return data;
 };
 
+const shareProperty = async (property_id) => {
+  let { data } = await axiosInterceptor.post(
+    `${baseURL}property/${property_id}/share`,
+  );
+  return data;
+};
+
 export default {
   addProperty,
   prepareInmuebleForm,
   getAllUserProperties,
   getPropertyPrices,
+  shareProperty,
 };
