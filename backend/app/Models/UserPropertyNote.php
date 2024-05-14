@@ -18,7 +18,6 @@ class UserPropertyNote extends Model
         'public'
     ];
 
-    // Establece la relación de pertenencia con UserProperty
     public function userProperty()
     {
         return $this->belongsTo(UserProperty::class, 'user_id_fk', 'user_id_fk');

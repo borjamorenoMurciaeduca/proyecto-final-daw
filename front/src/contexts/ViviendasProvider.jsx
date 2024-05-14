@@ -24,16 +24,29 @@ export const ViviendasProvider = ({ children }) => {
       type: 'LOGOUT',
     });
   };
+  const removeNote = (nota) => {
+    dispatch({
+      type: 'REMOVE_NOTA',
+      payload: nota,
+    });
+  };
+  const addNote = (nota) => {
+    dispatch({
+      type: 'ADD_NOTA',
+      payload: nota,
+    });
+  };
   const addProperty = (vivienda) => {
     dispatch({
       type: 'ADD_VIVIENDA',
       payload: vivienda,
     });
   };
+  
 
   return (
     <ViviendasContext.Provider
-      value={{ state, setViviendas, handleLogout, addProperty }}
+      value={{ state, setViviendas, handleLogout, removeNote, addNote, addProperty }}
     >
       {children}
     </ViviendasContext.Provider>

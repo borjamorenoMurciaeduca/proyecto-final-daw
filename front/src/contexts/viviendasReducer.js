@@ -15,6 +15,40 @@ export const viviendasReducer = (state, action) => {
         ...state,
         properties: [],
       };
+    case 'REMOVE_NOTA':
+      const noteIdToRemove = action.payload;
+      const updatedProperties = state.properties.map(property => {
+        if (property.notes && property.notes.length > 0) {
+          const updatedNotes = property.notes.filter(note => note.id !== noteIdToRemove);
+          return {
+            ...property,
+            notes: updatedNotes,
+          };
+        } else {
+          return property;
+        }
+      });
+      return {
+        ...state,
+        properties: updatedProperties,
+      };
+    case 'ADD_NOTA':
+      const newNote = action.payload;
+      const propertyIdToAddNote = newNote.property_id;
+      const updatedPropertiesWithNewNote = state.properties.map(property => {
+        if (property.property_id === propertyIdToAddNote) {
+          return {
+            ...property,
+            notes: [...property.notes, newNote],
+          };
+        } else {
+          return property;
+        }
+      });
+      return {
+        ...state,
+        properties: updatedPropertiesWithNewNote,
+      };
     case 'ADD_VIVIENDA':
       return {
         ...state,

@@ -1,8 +1,8 @@
 import { TextareaAutosize as BaseTextareaAutosize } from '@mui/material';
 import { styled } from '@mui/system';
 
-export default function UnstyledTextareaIntroduction({ desc, name,  defaultValue }) {
-  return <TextareaAutosize aria-label={desc} minRows={4} name= {name} placeholder={desc} defaultValue={ defaultValue}/>;
+export default function UnstyledTextareaIntroduction({ desc, name,  defaultValue, readOnly }) {
+  return <TextareaAutosize aria-label={desc} minRows={4} name= {name} placeholder={desc} defaultValue={ defaultValue} readOnly={readOnly}/>;
 }
 
 const blue = {

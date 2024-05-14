@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom';
-
 import RestoreIcon from '@mui/icons-material/Restore';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import {
@@ -117,11 +116,15 @@ const PropertyInfo = () => {
                 setView(newValue);
               }}
             >
+              <BottomNavigationAction label={t('property-info.side-panel.details')} icon={<TextSnippetIcon />} />
               <BottomNavigationAction
                 label={t('property-info.side-panel.price-history')}
                 icon={<RestoreIcon />}
               />
-              <BottomNavigationAction label={t('property-info.side-panel.details')} icon={<TextSnippetIcon />} />
+              <BottomNavigationAction
+                label={t('property-info.side-panel.notes')}
+                icon={<TextSnippetIcon />}
+              />
             </BottomNavigation>
           </Paper>
         )}

@@ -8,6 +8,7 @@ use App\Models\PriceHistory;
 use App\Models\Property;
 use App\Models\User;
 use App\Models\UserProperty;
+use App\Models\UserPropertyNote;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -239,6 +240,71 @@ class PropertyController extends Controller {
             DB::rollBack();
             return ApiResponse::error('Error:' . $e->getMessage(), 500);
         }
+    }
+
+    public function storeNewNote(Request $request) {
+        try {
+            DB::beginTransaction();
+            $validateNote = $request->validate([
+                'property_id' => 'numeric|required',
+                'description' => 'string|required',
+                'public' => 'boolean|required',
+            ]);
+
+            $isPublicNote = filter_var($request->input('public'), FILTER_VALIDATE_BOOLEAN);
+
+            $userPropertyNotes = UserPropertyNote::create([
+                'user_id_fk' => Auth::id(),
+                'property_id_fk' => $validateNote['property_id'],
+                'description' => $validateNote['description'],
+                'public' =>  $isPublicNote,
+            ]);
+
+            DB::commit();
+
+            $data = [
+                'id' => $userPropertyNotes['id'],
+                'user_id' => Auth::id(),
+                'property_id' => $validateNote['property_id'],
+                'description' => $validateNote['description'],
+                'public' =>  $validateNote['public'],
+                'created_at' => $userPropertyNotes->created_at,
+                'updated_at' => $userPropertyNotes->updated_at,
+            ];
+            return ApiResponse::success('Note created successfully', $data, 201);
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return ApiResponse::error('Error with validation', 400, $e->validator->errors());
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return ApiResponse::error('Error:' . $e->getMessage(), 500);
+        }
+    }
+
+    public function deleteNote(int $noteId) {
+        try {
+
+            DB::beginTransaction();
+
+            $note = UserPropertyNote::findOrFail($noteId);
+
+            if ($note->user_id_fk !== Auth::id()) {
+                return ApiResponse::error('You are not authorized to delete this note', 403);
+            }
+            
+            $note->delete();
+            
+            DB::commit();
+
+            return ApiResponse::success(['message' => 'Note removed successfully'], 200);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return ApiResponse::error('Error:' . $e->getMessage(), 500);
+        }
+
+        
+
     }
 
     /**

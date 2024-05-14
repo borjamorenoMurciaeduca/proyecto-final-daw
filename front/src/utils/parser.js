@@ -113,9 +113,24 @@ function FormatPrice(value, lang) {
   }
 }
 
+function formatDate(value, lang) {
+  const date = new Date(value);
+  const options = {
+    year: 'numeric',
+    month: '2-digit',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: false,
+  };
+  return new Intl.DateTimeFormat(lang, options).format(date);
+}
+
 export default {
   FixPrice,
   FormatPrice,
+  formatDate,
   CleanId,
   DateReceived,
   DateTimeReceived,
