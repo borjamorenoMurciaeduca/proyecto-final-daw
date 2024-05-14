@@ -37,7 +37,7 @@ const PropertyCard = ({ property }) => {
   }, 250);
 
   return (
-    <Card>
+    <Card sx={{ height: '100%' }}>
       <CardActionArea onClick={() => handleCLickCard(property_id)}>
         <CardMedia
           component="img"
@@ -65,7 +65,7 @@ const PropertyCard = ({ property }) => {
           </Box>
         </CardContent>
       </CardActionArea>
-      <CardActions disableSpacing sx={{ justifyContent: 'flex-end' }}>
+      <CardActions disableSpacing sx={{ justifyContent: 'flex-end', p: 0 }} >
         <IconButton aria-label="add to favorites" onClick={() => handleFavorite(property_id)}>
           <FavoriteIcon color={favorite ? "error" : "disabled"} />
         </IconButton>
