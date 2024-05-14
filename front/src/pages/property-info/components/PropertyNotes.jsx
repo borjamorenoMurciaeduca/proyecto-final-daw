@@ -35,7 +35,7 @@ const PropertyNotes = ({ propertyId }) => {
   const { t } = useTranslation();
   const [message, setMessage] = useState('');
   const [severity, setSeverity] = useState('success');
-  const { properties, addNote, removeNote } = useViviendas();
+  const { properties, addNote, removeNote } = useProperties();
 
   const { notify } = useNotification();
 

@@ -13,16 +13,30 @@ const initialState = {
 export const PropertiesProvider = ({ children }) => {
   const [state, dispatch] = useReducer(propertiesReducer, initialState);
 
-  const setProperties = (usuario) => {
+  const setProperties = (user) => {
     dispatch({
       type: 'SET_PROPERTIES',
-      payload: usuario,
+      payload: user,
     });
   };
 
   const handleLogout = () => {
     dispatch({
       type: 'LOGOUT',
+    });
+  };
+
+  const removeNote = (note) => {
+    dispatch({
+      type: 'REMOVE_NOTE',
+      payload: note,
+    });
+  };
+
+  const addNote = (note) => {
+    dispatch({
+      type: 'ADD_NOTE',
+      payload: note,
     });
   };
 
@@ -53,6 +67,8 @@ export const PropertiesProvider = ({ children }) => {
         state,
         setProperties,
         handleLogout,
+        removeNote, 
+        addNote,
         addProperty,
         updateProperty,
         changeFavoriteProperty

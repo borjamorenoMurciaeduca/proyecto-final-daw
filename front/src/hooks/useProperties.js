@@ -5,6 +5,8 @@ const useProperties = () => {
   const {
     state,
     setProperties,
+    removeNote,
+    addNote,
     addProperty,
     handleLogout,
     updateProperty,
@@ -14,6 +16,8 @@ const useProperties = () => {
     state,
     properties: state.properties,
     setProperties,
+    removeNote,
+    addNote,
     addProperty,
     handleLogout,
     updateProperty,
