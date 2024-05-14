@@ -37,10 +37,11 @@ const PropertyInfo = () => {
   let { property_id } = useParams();
   const theme = useTheme();
   const lessThanMedium = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
     <>
       <Typography component="h1" sx={{ typography: { xs: 'h4', sm: 'h2' } }}>
-      {t('property-info.header')} {property_id}
+        {t('property-info.header')} {property_id}
       </Typography>
       <Grid
         container
@@ -80,7 +81,7 @@ const PropertyInfo = () => {
                 label={t('property-info.side-panel.details')}
                 {...a11yProps(0)}
               />
-              <Tab  
+              <Tab
                 icon={<RestoreIcon />}
                 label={t('property-info.side-panel.price-history')}
                 {...a11yProps(1)}

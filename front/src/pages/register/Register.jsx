@@ -32,6 +32,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { DatePicker } from '@mui/x-date-pickers';
+import 'dayjs/locale/es';
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -97,7 +98,7 @@ const Register = () => {
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='es'>
       <Container
         maxWidth="sm"
         component="main"

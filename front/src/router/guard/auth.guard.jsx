@@ -1,6 +1,6 @@
 import PageLoader from '@/components/PageLoader.jsx';
+import useProperties from '@/hooks/useProperties.js';
 import useUser from '@/hooks/useUser.js';
-import useViviendas from '@/hooks/useViviendas.js';
 import propertyService from '@/services/propertyService';
 import userService from '@/services/userService.js';
 import { USER_COOKIE_TOKEN } from '@/strings/defaults.js';
@@ -12,7 +12,7 @@ const AuthGuard = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { setUser } = useUser();
-  const { setViviendas } = useViviendas();
+  const { setProperties } = useProperties();
 
   useEffect(() => {
     (async () => {
@@ -25,7 +25,7 @@ const AuthGuard = () => {
             // guardar datos del usuario en contexto
             setUser({ ...user.data, currentPage: 1 });
             // guardar los datos de las viviendas en contexto
-            setViviendas(properties.data);
+            setProperties(properties.data);
             // setLoading(false);
           } else {
             throw new Error('No se encontró el usuario');

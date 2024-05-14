@@ -23,6 +23,7 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import 'dayjs/locale/es';
 
 const EditProfile = () => {
   const [loading, setLoading] = useState(false);
@@ -81,7 +82,7 @@ const EditProfile = () => {
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='es'>
       <Typography variant="h2" component="h1">
         👋 {user.username}
       </Typography>

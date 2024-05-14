@@ -1,5 +1,5 @@
+import useProperties from '@/hooks/useProperties';
 import useUser from '@/hooks/useUser';
-import useViviendas from '@/hooks/useViviendas';
 import {
   Box,
   Grid,
@@ -16,10 +16,9 @@ import PropertyCard from './components/PropertyCard';
 
 const App = () => {
   const { user, setUser } = useUser();
-
   const theme = useTheme();
   const lessThanMedium = useMediaQuery(theme.breakpoints.down('md'));
-  const { properties } = useViviendas();
+  const { properties } = useProperties();
   const { t } = useTranslation();
 
   const propertiesMax = 6;
@@ -46,10 +45,10 @@ const App = () => {
           minHeight: '75vh',
           display: 'flex',
           mt: 4,
-          mb: { md: 4, lg: 'auto' }
+          mb: { md: 4, lg: 'auto' },
         }}
       >
-        <Grid container item spacing={2} justifyContent="left">
+        <Grid container item spacing={2} justifyContent="left" pb={{ xs: 7, md: 5 }}>
           {propertiesPage.map((property) => (
             <Grid xs={12} sm={6} lg={4} item key={property.property_id}>
               <PropertyCard property={property} />

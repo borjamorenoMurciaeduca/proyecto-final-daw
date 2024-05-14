@@ -42,10 +42,26 @@ const shareProperty = async (property_id) => {
   return data;
 };
 
+const getShareProperty = async (share_url) => {
+  let { data } = await axiosInterceptor.get(
+    `${baseURL}shared-property/${share_url}`,
+  );
+  return data;
+};
+
+const changeFavoriteProperty = async (property_id) => {
+  let { data } = await axiosInterceptor.post(
+    `${baseURL}property/${property_id}/favorite`,
+  );
+  return data;
+};
+
 export default {
   addProperty,
   prepareInmuebleForm,
   getAllUserProperties,
   getPropertyPrices,
   shareProperty,
+  getShareProperty,
+  changeFavoriteProperty,
 };

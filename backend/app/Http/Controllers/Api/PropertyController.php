@@ -188,8 +188,6 @@ class PropertyController extends Controller {
                 'storage_room' => $storage_room,
                 'bath_rooms' => $validateUserProperty['bath_rooms'],
                 'description' => $validateUserProperty['description'],
-                // 'garaje' => $validateUsuarioInmueble['garaje'],
-                // 'trastero' => $validateUsuarioInmueble['trastero'],
             ]);
 
             DB::commit();
@@ -213,6 +211,9 @@ class PropertyController extends Controller {
                 'bath_rooms' => $validateUserProperty['bath_rooms'],
                 'description' => $validateUserProperty['description'],
                 'price' => $history->price,
+                'is_shared' => $userProperty->is_shared,
+                'share_url' => $userProperty->share_url,
+                'favorite' => $userProperty->favorite,
                 'url_image' => $validateProperty['url_image'] ?? null,
                 'cancellation_date' => $validateProperty['cancellation_date'] ?? null,
                 'created_at' => $userProperty->created_at,
@@ -343,6 +344,9 @@ class PropertyController extends Controller {
                     'description' => $userProperty->description,
                     'price' => $property->last_price,
                     'url_image' => $property->url_image,
+                    'is_shared' => $userProperty->is_shared,
+                    'share_url' => $userProperty->share_url,
+                    'favorite' => $userProperty->favorite,
                     'cancellation_date' => $property->cancellation_date,
                     'notes' => $notas,
                     'created_at' => $userProperty->created_at,
@@ -372,6 +376,9 @@ class PropertyController extends Controller {
                 'description' => $userProperty->description,
                 'price' => $property->last_price,
                 'url_image' => $property->url_image,
+                'is_shared' => $userProperty->is_shared,
+                'share_url' => $userProperty->share_url,
+                'favorite' => $userProperty->favorite,
                 'cancellation_date' => $property->cancellation_date,
                 'created_at' => $userProperty->created_at,
                 'updated_at' => $userProperty->updated_at,
@@ -480,17 +487,15 @@ class PropertyController extends Controller {
     // }
     public function shareProperty($propertyId) {
         $property = Property::find($propertyId);
-        if ($property) {
-            //random url inexistente
+        $userProperty = UserProperty::where('property_id_fk', $propertyId)->first();
+        if ($property && $userProperty) {
+            // Generar el URL compartido
             $randomUrl = Str::random(8);
-            while(UserProperty::where('share_url', $randomUrl)->exists()) {
+            while (UserProperty::where('share_url', $randomUrl)->exists()) {
                 $randomUrl = Str::random(8);
             }
-            $userProperty = UserProperty::where('property_id_fk', $propertyId)->first();
-            $userProperty->is_shared = true;
-            $userProperty->share_url = $randomUrl;
-            $userProperty->save();
-
+            UserProperty::where('property_id_fk', $propertyId)
+                ->update(['is_shared' => true, 'share_url' => $randomUrl]);
             return ApiResponse::success('Property shared successfully', ['share_url' => $randomUrl], 200);
         } else {
             return ApiResponse::error('Property not found', 404);
@@ -510,11 +515,11 @@ class PropertyController extends Controller {
         }
     }
 
-    public function getSharedProperty($shareUrl){
+    public function getSharedProperty($shareUrl) {
         $userProperty = UserProperty::where('share_url', $shareUrl)->first();
         if ($userProperty) {
             $property = Property::find($userProperty->property_id_fk);
-            $userInfo = User::find($userProperty->user_id_fk); 
+            $userInfo = User::find($userProperty->user_id_fk);
             $data = [
                 'username' => $userInfo->username,
                 'name' => $userInfo->name,
@@ -525,6 +530,7 @@ class PropertyController extends Controller {
                 'rooms' => $userProperty->rooms,
                 'garage' => $userProperty->garage,
                 'storage_room' => $userProperty->storage_room,
+                'bath_rooms' => $userProperty->bath_rooms,
                 'description' => $userProperty->description,
                 'price' => $property->last_price,
                 'url_image' => $property->url_image,
@@ -533,6 +539,22 @@ class PropertyController extends Controller {
                 'updated_at' => $userProperty->updated_at,
             ];
             return ApiResponse::success('Property found', $data, 200);
+        } else {
+            return ApiResponse::error('Property not found', 404);
+        }
+    }
+
+    public function favoriteProperty($propertyId) {
+        $userProperty = UserProperty::where('property_id_fk', $propertyId)->first();
+        if ($userProperty) {
+            $fav = !$userProperty->favorite;
+            UserProperty::where('property_id_fk', $propertyId)
+            ->update(['favorite' => $fav]);
+            $data = [
+                'property_id' => $userProperty->property_id_fk,
+                'favorite' => $fav,
+            ];
+            return ApiResponse::success('Property updated successfully', $data, 200);
         } else {
             return ApiResponse::error('Property not found', 404);
         }

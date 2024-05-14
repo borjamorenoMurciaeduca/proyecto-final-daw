@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PageLoader from '@/components/PageLoader';
-import useViviendas from '@/hooks/useViviendas';
+import useProperties from '@/hooks/useProperties';
 import { useEffect, useState } from 'react';
 import noteService from '@/services/noteService.js';
 import { useNotification } from '@/hooks/useNotification';
@@ -30,7 +30,12 @@ import i18n from '@/commons/i18n/i18n';
 const PropertyNotes = ({ propertyId }) => {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState({});
+<<<<<<< HEAD
   const [editingIndex, setEditingIndex] = useState(-1); 
+=======
+  const [editingIndex, setEditingIndex] = useState(-1);
+  const { properties } = useProperties();
+>>>>>>> e1abcbd9788ff3790cdfccef9a5df61f47ac3f56
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const { t } = useTranslation();
   const [message, setMessage] = useState('');
