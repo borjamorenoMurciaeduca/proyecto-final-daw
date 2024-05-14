@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->boolean("garage");
             $table->boolean("storage_room");
             $table->integer("bath_rooms")->unsigned();
+            $table->boolean('favorite')->default(false);
             $table->boolean("is_shared")->default(false);
             $table->string("share_url")->nullable();
             $table->longText("description");

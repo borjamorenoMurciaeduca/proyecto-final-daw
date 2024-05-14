@@ -20,7 +20,7 @@ Content-Type: application/json
 ###
 POST http://127.0.0.1:8000/api/properties
 Content-Type: application/json
-Authorization: Bearer 1|PY2TBZWnCUthRsvghRfBP3mSbm7wTm8ZylgkWT8w5f1ff70d
+Authorization: Bearer 1|OWc3odlVCREXkPYgv46avC4LrZ1G7Lkurp4qFvqR3ad497db
 
 {
     "property_id": 2414231,
@@ -31,13 +31,14 @@ Authorization: Bearer 1|PY2TBZWnCUthRsvghRfBP3mSbm7wTm8ZylgkWT8w5f1ff70d
     "size": 100,
     "rooms": 3,
     "garage": 1,
-    "storage_room": 1
+    "storage_room": 1,
+    "bath_rooms": 2
 }
 
 ###
 POST http://127.0.0.1:8000/api/property/2414231/share
 Content-Type: application/json
-Authorization: Bearer 1|PY2TBZWnCUthRsvghRfBP3mSbm7wTm8ZylgkWT8w5f1ff70d
+Authorization: Bearer 4|CPhAxdjEW3pxubV14NfdctHmrLu2lcEZpTMVtj58f51e6ab9
 
 ###
 GET http://127.0.0.1:8000/api/shared-property/SJRJtskE
@@ -58,3 +59,11 @@ Authorization: Bearer 14|Ga6O3n5D6N78JsSyRSKS4W9N4KZeDYx2wNfEeq7o1a2e5462
     "password_confirmation": "12345"
 }
 
+###
+POST http://127.0.0.1:8000/api/property/2414231/favorite
+Content-Type: application/json
+Authorization: Bearer 1|OWc3odlVCREXkPYgv46avC4LrZ1G7Lkurp4qFvqR3ad497db
+
+{
+    "favorite": false 
+}
