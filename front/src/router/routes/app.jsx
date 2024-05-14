@@ -11,7 +11,7 @@ const LayoutRoutes = [
       { index: true, element: <App /> },
       { path: 'property/:property_id', element: <PropertyInfo /> },
       { path: 'edit-profile', element: <EditProfile /> },
-      { path: '', element: <Navigate to="/auth" /> },
+      { path: '*', element: <Navigate to="/auth" /> },
     ],
   },
 ];

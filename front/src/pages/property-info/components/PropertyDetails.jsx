@@ -15,6 +15,7 @@ const PropertyDetails = ({ propertyId }) => {
   }, [propertyId, properties]);
 
   if (!property) return <PageLoader />;
+
   return (
     <>
       <PropertyDetailsGlobal
@@ -22,7 +23,7 @@ const PropertyDetails = ({ propertyId }) => {
         setOpen={setOpen}
         enableShare
       />
-      <DialogShare open={open} setOpen={setOpen} propertyId={propertyId} />
+      <DialogShare open={open} setOpen={setOpen} propertyId={propertyId} isShared={property.is_shared} propertyURL={property.share_url} />
     </>
   );
 };

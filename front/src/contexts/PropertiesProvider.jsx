@@ -19,11 +19,13 @@ export const PropertiesProvider = ({ children }) => {
       payload: usuario,
     });
   };
+
   const handleLogout = () => {
     dispatch({
       type: 'LOGOUT',
     });
   };
+
   const addProperty = (property) => {
     dispatch({
       type: 'ADD_PROPERTY',
@@ -37,6 +39,7 @@ export const PropertiesProvider = ({ children }) => {
       payload: property,
     });
   };
+
   return (
     <PropertiesContext.Provider
       value={{

@@ -9,7 +9,8 @@
     "change-language": "Cambiar idioma",
     "close": "Cerrar",
     "search": "Buscar",
-    "clear": "Limpiar búsqueda"
+    "clear": "Limpiar búsqueda",
+    "twitter": "Compartir en Twitter"
   },
   "theme-mode": {
     "light": "Modo día",
@@ -120,6 +121,22 @@
       "rooms": "Habitaciones:",
       "bath_rooms": "Baños:",
       "share": "Compartir"
+    }
+  },
+  "property-share": {
+    "title": "Compartir vivienda",
+    "share": "Compartir",
+    "copy": "Copiar",
+    "copied": "¡Copiado!",
+    "close": "Cerrar",
+    "generator": {
+      "title": "Generador de enlaces",
+      "description": "Comparte esta vivienda con el siguiente enlace",
+      "regenerate": "Generar nuevo enlace",
+      "label": "Enlace para compartir",
+      "helper": "*Si generas un enlace nuevo, el anterior dejará de funcionar",
+      "close": "Cerrar",
+      "exit": "Salir"
     }
   }
 }

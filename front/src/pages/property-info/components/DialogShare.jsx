@@ -1,16 +1,19 @@
 import useNotification from '@/hooks/useNotification';
 import useProperties from '@/hooks/useProperties';
 import propertyService from '@/services/propertyService';
-import { Cached } from '@mui/icons-material';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
 import {
   DialogContentText,
   FormControl,
+  FormHelperText,
   IconButton,
   InputAdornment,
   InputLabel,
   LinearProgress,
   OutlinedInput,
+  Skeleton,
   Tooltip,
+  useMediaQuery,
 } from '@mui/material';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -19,23 +22,31 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { forwardRef, useEffect, useState } from 'react';
-
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { useTheme } from '@emotion/react';
+import parser from '@/utils/parser';
+import { useTranslation } from 'react-i18next';
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const DialogShare = ({ open, setOpen, propertyId }) => {
+const DialogShare = ({ open, setOpen, isShared, propertyURL, propertyId }) => {
   const [loading, setLoading] = useState(false);
   const [shareUrl, setShareUrl] = useState('');
   const { updateProperty } = useProperties();
   const { notify } = useNotification();
+  const theme = useTheme();
+  const lessThanSm = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
-    if (open) {
+    if (open && !isShared) {
       handleShare();
-      console.log('open');
+    } else if (isShared && propertyURL) {
+      setShareUrl(propertyURL)
     }
-  }, [open]);
+  }, [open, isShared, propertyURL]);
+
+  const { t } = useTranslation();
 
   const handleShare = async () => {
     setLoading(true);
@@ -48,8 +59,8 @@ const DialogShare = ({ open, setOpen, propertyId }) => {
           share_url: data.share_url,
           is_shared: true,
         });
-        handleCopyToClipboard(data.share_url);
-      }, 500);
+        handleCopyToClipboard(null, data.share_url);
+      }, 800);
     } catch (error) {
       console.warn('Error sharing property', error);
     } finally {
@@ -59,8 +70,9 @@ const DialogShare = ({ open, setOpen, propertyId }) => {
     }
   };
 
-  const handleCopyToClipboard = (url = shareUrl) => {
-    const urlToCopy = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/shared/${url}`;
+  const handleCopyToClipboard = (e, url = shareUrl) => {
+    if (e) e.preventDefault();
+    const urlToCopy = parser.getFullURL(url);
     navigator.clipboard
       .writeText(urlToCopy)
       .then(() => {
@@ -71,49 +83,66 @@ const DialogShare = ({ open, setOpen, propertyId }) => {
       });
   };
 
+  const handleClose = (event, reason) => {
+    if (reason === 'backdropClick' && loading) {
+      return;
+    }
+    setOpen(false);
+  };
+
   return (
     <Dialog
       open={open}
       TransitionComponent={Transition}
       keepMounted
-      onClose={() => setOpen(false)}
       aria-describedby="url-generator"
+      maxWidth="xs"
+      fullWidth
+      fullScreen={lessThanSm}
+      onClose={handleClose}
     >
-      <DialogTitle>{'Identificado único url'}</DialogTitle>
+      <DialogTitle>IdealistaWatch - {t('property-share.generator.title')}</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Genera una URL única y comparte este inmueble.
+          {t('property-share.generator.description')}
         </DialogContentText>
-        <FormControl sx={{ my: 1 }} variant="outlined" fullWidth>
-          <InputLabel htmlFor="outlined-adornment-password" size="small">
-            URL-generator
-          </InputLabel>
-          <OutlinedInput
-            id="url-generator"
-            label="URL-generator"
-            type={'text'}
-            size={'small'}
-            value={`${window.location.protocol}//${window.location.hostname}:${window.location.port}/shared/${shareUrl}`}
-            endAdornment={
-              <InputAdornment position="end" size="small">
-                <IconButton
-                  aria-label="generate-url"
-                  edge="end"
-                  onClick={handleShare}
-                >
-                  <Tooltip title="generar url" arrow placement="top">
-                    <Cached />
-                  </Tooltip>
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </FormControl>
-        {loading && <LinearProgress />}
+        {loading ? <><Skeleton height={50} />  <LinearProgress sx={{
+          height: 10,
+          borderRadius: 5
+        }} /></> : (
+          <FormControl margin='dense' variant="outlined" fullWidth>
+            <InputLabel htmlFor="outlined-adornment-password" size="small">
+              {t('property-share.generator.label')}
+            </InputLabel>
+            <OutlinedInput
+              id="url-generator"
+              label={t('property-share.generator.label')}
+              type={'text'}
+              size={'small'}
+              value={`${window.location.protocol}//${window.location.hostname}:${window.location.port}/shared/${shareUrl}`}
+              endAdornment={
+                <InputAdornment position="end" size="small">
+                  <IconButton
+                    aria-label="generate-url"
+                    edge="end"
+                    onClick={handleCopyToClipboard}
+                  >
+                    <Tooltip title={t('property-share.copy')} arrow placement="top">
+                      <ContentCopyIcon />
+                    </Tooltip>
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+            <FormHelperText id="url-helper">
+              {t('property-share.generator.helper')}
+            </FormHelperText>
+          </FormControl>
+        )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleCopyToClipboard}>Copiar al portapapeles</Button>
-        <Button onClick={() => setOpen(false)}>Salir</Button>
+        <Button onClick={handleShare} disabled={loading} startIcon={<AutorenewIcon />}>{t('property-share.generator.regenerate')}</Button>
+        <Button onClick={() => setOpen(false)} disabled={loading}>{t('property-share.generator.exit')}</Button>
       </DialogActions>
     </Dialog>
   );

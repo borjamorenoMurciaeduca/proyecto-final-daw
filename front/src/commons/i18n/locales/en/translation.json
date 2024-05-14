@@ -9,7 +9,8 @@
     "change-language": "Change language",
     "close": "Close",
     "search": "Search",
-    "clear": "Clear search"
+    "clear": "Clear search",
+    "twitter": "Share on Twitter"
   },
   "theme-mode": {
     "light": "Day mode",
@@ -120,6 +121,22 @@
       "rooms": "Rooms:",
       "bath_rooms": "Bath rooms:",
       "share": "Share"
+    }
+  },
+  "property-share": {
+    "title": "Share property",
+    "share": "Share",
+    "copy": "Copy",
+    "copied": "Copied",
+    "close": "Close",
+    "generator": {
+      "title": "Share property",
+      "description": "Share this property with the following URL",
+      "regenerate": "Generate new URL",
+      "label": "URL to share",
+      "helper": "If you generate a new URL, the previous one will be invalid",
+      "send": "Send",
+      "exit": "Exit"
     }
   }
 }

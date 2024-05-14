@@ -14,8 +14,11 @@ import {
   Grid,
   IconButton,
   Stack,
+  Toolbar,
+  Tooltip,
   Typography,
 } from '@mui/material';
+import { PickersToolbarText } from '@mui/x-date-pickers/internals/components/PickersToolbarText';
 import { useTranslation } from 'react-i18next';
 
 const PropertyDetailsGlobal = ({
@@ -24,6 +27,12 @@ const PropertyDetailsGlobal = ({
   enableShare = false,
 }) => {
   const { t } = useTranslation();
+  const handleTwitter = () => {
+    const fullURL = parser.getFullURL(property.share_url);
+    const data = `Descubre esta propiedad encontrada con IdealistaWatch, en ${property.location} por solo ${parser.FormatPrice(property.price, i18n.language)} -  ${fullURL}`;
+    window.open(`https://twitter.com/intent/tweet?url=${data}`);
+  }
+
   return (
     <Grid item xs={12} md={8} justifyContent="center" alignSelf="center" pb={5}>
       <Card>
@@ -97,29 +106,14 @@ const PropertyDetailsGlobal = ({
               {t('property-info.details.share')}
             </Button>
             <IconButton
-              color="primary"
-              aria-label="Facebook"
-              onClick={() => window.open('https://www.facebook.com/yourpage')}
-            >
-              <Facebook />
-            </IconButton>
-            <IconButton
+              disabled={!property.share_url}
               color="primary"
               aria-label="Twitter"
-              onClick={() =>
-                window.open(`https://twitter.com/intent/tweet?url=asdsadad`)
-              }
+              onClick={handleTwitter}
             >
-              <Twitter />
-            </IconButton>
-            <IconButton
-              color="primary"
-              aria-label="Instagram"
-              onClick={() =>
-                window.open('https://www.instagram.com/yourusername')
-              }
-            >
-              <Instagram />
+              <Tooltip title={t('tooltip.twitter')} placement='top'>
+                <Twitter />
+              </Tooltip >
             </IconButton>
           </CardActions>
         )}
