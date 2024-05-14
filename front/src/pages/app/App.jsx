@@ -40,17 +40,18 @@ const App = () => {
       <Typography component="h1" variant="h2">
         {t('my-homes')}
       </Typography>
-      <Box
+      <Grid container
         sx={{
           minHeight: '75vh',
-          display: 'flex',
           mt: 4,
           mb: { md: 4, lg: 'auto' },
         }}
+        alingItems="stretch"
       >
-        <Grid container item spacing={2} justifyContent="left" pb={{ xs: 7, md: 5 }}>
+        <Grid container item spacing={2} direction="row" justifyContent="left" pb={{ xs: 7, md: 5 }} alignItems="stretch"
+        >
           {propertiesPage.map((property) => (
-            <Grid xs={12} sm={6} lg={4} item key={property.property_id}>
+            <Grid item xs={12} sm={6} lg={4} key={property.property_id}>
               <PropertyCard property={property} />
             </Grid>
           ))}
@@ -82,7 +83,7 @@ const App = () => {
             </Paper>
           </Grid>
         </Grid>
-      </Box>
+      </Grid>
     </>
   );
 };
