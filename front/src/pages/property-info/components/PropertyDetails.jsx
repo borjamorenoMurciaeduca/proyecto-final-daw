@@ -3,15 +3,17 @@ import PropertyDetailsGlobal from '@/components/PropertyDetailsGlobal';
 import useProperties from '@/hooks/useProperties';
 import { useEffect, useState } from 'react';
 import DialogShare from './DialogShare';
+import { useNavigate } from 'react-router-dom';
 
 const PropertyDetails = ({ propertyId }) => {
   const [property, setProperty] = useState();
   const [open, setOpen] = useState(false);
   const { properties } = useProperties();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const propertyMatch = properties.find((el) => el.property_id == propertyId);
-    setProperty(propertyMatch);
+    !propertyMatch ? navigate('/404') : setProperty(propertyMatch);
   }, [propertyId, properties]);
 
   if (!property) return <PageLoader />;
