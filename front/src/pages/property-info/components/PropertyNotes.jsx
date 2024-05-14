@@ -1,4 +1,3 @@
-import * as React from 'react';
 import PageLoader from '@/components/PageLoader';
 import useProperties from '@/hooks/useProperties';
 import { useEffect, useState } from 'react';
@@ -33,7 +32,7 @@ const PropertyNotes = ({ propertyId }) => {
   const [editNote, setEditNote] = useState({});
   const [creatingIndex, setCreatingIndex] = useState(-1); 
   const [editingIndex, setEditingIndex] = useState(-1); 
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [selectedIndex, setSelectedIndex] = useState(1);
   const { t } = useTranslation();
   const [message, setMessage] = useState('');
   const [severity, setSeverity] = useState('success');
