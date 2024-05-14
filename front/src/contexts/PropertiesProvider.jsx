@@ -33,12 +33,19 @@ export const PropertiesProvider = ({ children }) => {
     });
   };
 
-  const updateProperty = (property) => {
+  const updateProperty = (property_id) => {
     dispatch({
       type: 'UPDATE_PROPERTY',
-      payload: property,
+      payload: property_id,
     });
   };
+
+  const changeFavoriteProperty = (property_id) => {
+    dispatch({
+      type: 'CHANGE_FAVORITE_PROPERTY',
+      payload: property_id,
+    });
+  }
 
   return (
     <PropertiesContext.Provider
@@ -48,6 +55,7 @@ export const PropertiesProvider = ({ children }) => {
         handleLogout,
         addProperty,
         updateProperty,
+        changeFavoriteProperty
       }}
     >
       {children}

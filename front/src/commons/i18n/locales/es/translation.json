@@ -138,5 +138,10 @@
       "close": "Cerrar",
       "exit": "Salir"
     }
+  },
+    "favorite":{
+    "add": "Añadir a favoritos",
+    "added": "Añadido a favoritos",
+    "removed": "Eliminado de favoritos"
   }
 }

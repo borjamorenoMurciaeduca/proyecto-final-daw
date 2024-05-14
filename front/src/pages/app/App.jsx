@@ -13,10 +13,10 @@ import {
 import { useTranslation } from 'react-i18next';
 import AddButtonModal from './components/AddButtonModal';
 import PropertyCard from './components/PropertyCard';
+import { useEffect } from 'react';
 
 const App = () => {
   const { user, setUser } = useUser();
-
   const theme = useTheme();
   const lessThanMedium = useMediaQuery(theme.breakpoints.down('md'));
   const { properties } = useProperties();
@@ -49,7 +49,7 @@ const App = () => {
           mb: { md: 4, lg: 'auto' },
         }}
       >
-        <Grid container item spacing={2} justifyContent="left">
+        <Grid container item spacing={2} justifyContent="left" pb={5}>
           {propertiesPage.map((property) => (
             <Grid xs={12} sm={6} lg={4} item key={property.property_id}>
               <PropertyCard property={property} />

@@ -32,6 +32,18 @@ export const propertiesReducer = (state, action) => {
             : el,
         ),
       };
+    case "CHANGE_FAVORITE_PROPERTY":
+      return {
+        ...state,
+        properties: state.properties.map((el) =>
+          el.property_id == action.payload.property_id
+            ? (el = {
+                ...el,
+                favorite: action.payload.favorite,
+              })
+            : el,
+        ),
+      };
     default:
       return state;
   }
