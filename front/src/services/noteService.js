@@ -16,8 +16,17 @@ const deleteNote = async (noteIdToDelete) => {
     return data;
 };
 
+const updateNote = async ({ noteToUpdate, noteId }) => {
+    let { data } = await axiosInterceptor.put(
+        `${baseURL}update-note/${noteId}`,
+        noteToUpdate,
+    );
+    return data;
+};
+
 
 export default {
+    updateNote,
     addNote,
     deleteNote
 };

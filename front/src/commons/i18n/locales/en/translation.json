@@ -124,10 +124,12 @@
     },
     "notes": {
       "notify": {
-        "sucess": "Note added successfully",
-        "deleted-ok": "Note removed successfully",
+        "add-sucess": "Note added successfully",
+        "update-sucess": "Note updated successfully",
+        "delete-sucess": "Note removed successfully",
         "error": {
-          "adding": "Can't add an empty note"
+          "adding-emty": "Can't add an empty note",
+          "note-generic": "Error adding note"
         }
       },
       "edit-aria-label": "Edit the note",
@@ -136,7 +138,8 @@
       "isPublic": "Public",
       "save": "Save",
       "cancel": "Cancel",
-      "edit": "Edit"
+      "edit": "Edit",
+      "updated_at": "updated at "
     }
   },
   "property-share": {
@@ -155,7 +158,7 @@
       "exit": "Exit"
     }
   },
-  "favorite":{
+  "favorite": {
     "add": "Add to favorites",
     "added": "Added to favorites",
     "removed": "Removed from favorites"

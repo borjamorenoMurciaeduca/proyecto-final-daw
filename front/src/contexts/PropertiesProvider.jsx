@@ -26,6 +26,13 @@ export const PropertiesProvider = ({ children }) => {
     });
   };
 
+  const updateNote = (note) => {
+    dispatch({
+      type: 'UPDATE_NOTE',
+      payload: note,
+    });
+  };
+
   const removeNote = (note) => {
     dispatch({
       type: 'REMOVE_NOTE',
@@ -67,6 +74,7 @@ export const PropertiesProvider = ({ children }) => {
         state,
         setProperties,
         handleLogout,
+        updateNote,
         removeNote, 
         addNote,
         addProperty,

@@ -124,10 +124,12 @@
     },
     "notes": {
       "notify": {
-        "sucess": "Nota añadida con éxito",
-        "deleted-ok": "Nota borrada",
+        "add-sucess": "Nota añadida con éxito",
+        "update-sucess": "Nota actualizada con éxito",
+        "delete-sucess": "Nota borrada",
         "error": {
-          "adding": "No se puede añadir una nota vacía"
+          "adding-emty": "No se puede añadir una nota vacía",
+          "note-generic": "Error al añadir nota"
         }
       },
       "edit-aria-label": "Edita la nota",
@@ -136,7 +138,8 @@
       "isPublic": "Público",
       "save": "Guardar",
       "cancel": "Cancelar",
-      "edit": "Editar"
+      "edit": "Editar",
+      "updated_at": "editado el "
     }
   },
   "property-share": {
@@ -155,7 +158,7 @@
       "exit": "Salir"
     }
   },
-    "favorite":{
+  "favorite": {
     "add": "Añadir a favoritos",
     "added": "Añadido a favoritos",
     "removed": "Eliminado de favoritos"

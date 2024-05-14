@@ -259,6 +259,7 @@ class PropertyController extends Controller {
                 'property_id_fk' => $validateNote['property_id'],
                 'description' => $validateNote['description'],
                 'public' =>  $isPublicNote,
+                'updated_at' => null
             ]);
 
             DB::commit();
@@ -303,10 +304,36 @@ class PropertyController extends Controller {
             DB::rollBack();
             return ApiResponse::error('Error:' . $e->getMessage(), 500);
         }
-
-        
-
     }
+
+    public function updateNote(Request $request, int $noteId) {
+    try {
+        $validatedData = $request->validate([
+            'property_id' => 'numeric|required',
+            'description' => 'string|required',
+            'public' => 'boolean|required',
+        ]);
+
+        $note = UserPropertyNote::findOrFail($noteId);
+
+        $note->update($validatedData);
+
+        $data = [
+            'id' => $note['id'],
+            'user_id' => Auth::id(),
+            'property_id' => $note['property_id_fk'],
+            'description' => $note['description'],
+            'public' =>  $note['public'],
+            'created_at' => $note->created_at,
+            'updated_at' => $note->updated_at,
+        ];
+        return ApiResponse::success('Note created successfully', $data, 201);
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return ApiResponse::error('Error:' . $e->getMessage(), 500);
+    }
+}
 
     /**
      * @OA\Get(

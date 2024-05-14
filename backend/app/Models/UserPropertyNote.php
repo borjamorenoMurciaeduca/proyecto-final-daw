@@ -18,6 +18,15 @@ class UserPropertyNote extends Model
         'public'
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($note) {
+            $note->updated_at = null;
+        });
+    }
+
     public function userProperty()
     {
         return $this->belongsTo(UserProperty::class, 'user_id_fk', 'user_id_fk');
