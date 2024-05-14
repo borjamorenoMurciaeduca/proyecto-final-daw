@@ -121,6 +121,22 @@
       "rooms": "Habitaciones:",
       "bath_rooms": "Baños:",
       "share": "Compartir"
+    },
+    "notes": {
+      "notify": {
+        "sucess": "Nota añadida con éxito",
+        "deleted-ok": "Nota borrada",
+        "error": {
+          "adding": "No se puede añadir una nota vacía"
+        }
+      },
+      "edit-aria-label": "Edita la nota",
+      "remove-aria-label": "Borra la nota",
+      "addNote": "Añadir comentario",
+      "isPublic": "Público",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "edit": "Editar"
     }
   },
   "property-share": {

@@ -22,6 +22,8 @@ Route::middleware('auth:sanctum')->group(function () {
   // Rutas protegidas correspondientes a los inmuebles
   Route::get('/properties', [PropertyController::class, 'getAllUserProperties']);
   Route::post('/properties', [PropertyController::class, 'store']);
+  Route::post('/notes', [PropertyController::class, 'storeNewNote']);
+  Route::delete('/remove-note/{id}', [PropertyController::class, 'deleteNote']);
   Route::get('/property/{id}', [PropertyController::class, 'show']);
   Route::get('/prepare-inmueble/{id}', [PropertyController::class, 'prepare']);
   Route::post('/property/{id}/update-price', [PropertyController::class, 'storeNewPrice']);

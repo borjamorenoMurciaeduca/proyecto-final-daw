@@ -33,6 +33,7 @@ class UserProperty extends Model {
     public function notes()
     {
         return $this->hasMany(UserPropertyNote::class, 'user_id_fk', 'user_id_fk')
-                    ->where('property_id_fk', $this->property_id_fk);
+                    ->where('property_id_fk', $this->property_id_fk)
+                    ->orderBy('created_at', 'desc');;
     }
 }

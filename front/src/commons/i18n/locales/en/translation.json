@@ -121,6 +121,22 @@
       "rooms": "Rooms:",
       "bath_rooms": "Bath rooms:",
       "share": "Share"
+    },
+    "notes": {
+      "notify": {
+        "sucess": "Note added successfully",
+        "deleted-ok": "Note removed successfully",
+        "error": {
+          "adding": "Can't add an empty note"
+        }
+      },
+      "edit-aria-label": "Edit the note",
+      "remove-aria-label": "Delete the note",
+      "addNote": "Add comment",
+      "isPublic": "Public",
+      "save": "Save",
+      "cancel": "Cancel",
+      "edit": "Edit"
     }
   },
   "property-share": {
