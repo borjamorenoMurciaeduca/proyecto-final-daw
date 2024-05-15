@@ -124,22 +124,32 @@
     },
     "notes": {
       "notify": {
-        "add-sucess": "Nota añadida con éxito",
-        "update-sucess": "Nota actualizada con éxito",
-        "delete-sucess": "Nota borrada",
+        "success": {
+          "add": "Nota añadida con éxito",
+          "update": "Nota actualizada con éxito",
+          "remove": "Nota borrada"
+        },
         "error": {
           "adding-emty": "No se puede añadir una nota vacía",
           "note-generic": "Error al añadir nota"
         }
       },
-      "edit-aria-label": "Edita la nota",
-      "remove-aria-label": "Borra la nota",
+      "aria-label": {
+        "edit": "Edita la nota",
+        "remove": "Borra la nota"
+      },
       "addNote": "Añadir comentario",
       "isPublic": "Público",
+      "publicNote": "Pública",
+      "privateNote": "Privada",
       "save": "Guardar",
       "cancel": "Cancelar",
       "edit": "Editar",
-      "updated_at": "editado el "
+      "updated_at": "editado el ",
+      "tooltip": {
+        "publicNote": "Si compartes esta propiedad, esta nota será visible",
+        "privateNote": "Sólo tú puedes ver esta información"
+      }
     }
   },
   "property-share": {

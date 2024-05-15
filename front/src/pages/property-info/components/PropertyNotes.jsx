@@ -19,7 +19,8 @@ import {
   CardContent,
   CardActions,
   IconButton,
-  Tooltip
+  Tooltip,
+  Chip
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -34,8 +35,6 @@ const PropertyNotes = ({ propertyId }) => {
   const [editingIndex, setEditingIndex] = useState(-1); 
   const [selectedIndex, setSelectedIndex] = useState(1);
   const { t } = useTranslation();
-  const [message, setMessage] = useState('');
-  const [severity, setSeverity] = useState('success');
   const { properties, addNote, removeNote, updateNote } = useProperties();
 
   const { notify } = useNotification();
@@ -91,16 +90,15 @@ const PropertyNotes = ({ propertyId }) => {
           setCreatingIndex(-1); 
           setSelectedIndex(-1);
           setNewNote({});
-          notify(t('property-info.notes.notify.add-sucess'), 'success');
+          notify(t('property-info.notes.notify.success.add'), 'success');
         }
       } else {
         setNewNote({});
         notify(t('property-info.notes.notify.error.adding-emty'), 'warning');
       }
     } catch (error) {
-      setSeverity('error');
       const msg = error?.response?.data?.message || t('property-info.notes.notify.error.note-generic');
-      setMessage(msg);
+      notify(msg, 'error');
       console.error('Error al obtener datos del usuario:', error);
     } 
   };
@@ -126,16 +124,15 @@ const PropertyNotes = ({ propertyId }) => {
           setNotes(updatedNotes);
           setEditingIndex(-1); 
           setEditNote({});
-          notify(t('property-info.notes.notify.update-sucess'), 'success');
+          notify(t('property-info.notes.notify.success.update'), 'success');
         }
       } else {
         setEditNote({});
         notify(t('property-info.notes.notify.error.adding-emty'), 'warning');
       }
     } catch (error) {
-      setSeverity('error');
       const msg = error?.response?.data?.message || t('property-info.notes.notify.error.note-generic');
-      setMessage(msg);
+      notify(msg, 'error');
       console.error('Error al obtener datos del usuario:', error);
     } 
   };
@@ -160,12 +157,11 @@ const PropertyNotes = ({ propertyId }) => {
         const updatedNotes = notes.filter((note) => note.id !== noteId);
         setNotes(updatedNotes);
         removeNote(noteId);
-        notify(t('property-info.notes.notify.delete-sucess'), 'success');
+        notify(t('property-info.notes.notify.success.remove'), 'success');
       }
     } catch (error) {
-      setSeverity('error');
       const msg = error?.response?.data?.message || t('property-info.notes.notify.error.note-generic');
-      setMessage(msg);
+      notify(msg, 'error');
       console.error('Error al obtener datos del usuario:', error);
     } 
   };
@@ -208,7 +204,7 @@ const PropertyNotes = ({ propertyId }) => {
           </Grid>
         </Grid>    
         <ListItem alignItems="flex-start">
-              {creatingIndex === 0 ? ( 
+              {creatingIndex === 0 && 
                 <Grid container spacing={2} alignItems="center" pb={2}>
                   <Grid item xs={10} md={8}>
                     <TextField
@@ -236,11 +232,11 @@ const PropertyNotes = ({ propertyId }) => {
                     </Button>
                   </Grid>
                 </Grid>
-              ) : ''}
+              }
             </ListItem>
-            {creatingIndex === 0 ? ( 
+            {creatingIndex === 0 && 
               <Divider variant="middle" component="li"/>
-            ) : ''}
+            }
         {notes?.map((noteItem, index) => (
           <Card key={index} id={noteItem.id} sx={{ mb: index < notes.length - 1 ? 2 : 0, mt: 3 }}>
           <CardContent>
@@ -281,18 +277,16 @@ const PropertyNotes = ({ propertyId }) => {
                   {parser.formatDate(noteItem?.created_at, i18n.language)} <br/><small>{noteItem.updated_at ? `(${t('property-info.notes.updated_at')} ${parser.formatDate(noteItem?.updated_at, i18n.language)})` : ''}</small>
                 </Typography>
                 <CardActions sx={{ justifyContent: 'flex-end' }}>
-                  <Typography variant="body1">{t('property-info.notes.isPublic')}</Typography>
-                  <Checkbox
-                    checked={noteItem.public === 1 ? true : false}
-                    disabled
-                  />
-                  <Tooltip title={t('property-info.notes.edit-aria-label')}>
-                    <IconButton aria-label={t('property-info.notes.edit-aria-label')} onClick={() => handleEditNote(index)}>
+                  <Tooltip title={noteItem.public === 1 ? t('property-info.notes.tooltip.publicNote') : t('property-info.notes.tooltip.privateNote')}>
+                    <Chip label={noteItem.public === 1 ? t('property-info.notes.publicNote') : t('property-info.notes.privateNote')} color={noteItem.public === 1 ? "success" : "primary"} />
+                  </Tooltip>
+                  <Tooltip title={t('property-info.notes.aria-label.edit')}>
+                    <IconButton aria-label={t('property-info.notes.aria-label.edit')} onClick={() => handleEditNote(index)}>
                       <EditIcon />
                     </IconButton>
                   </Tooltip>
-                  <Tooltip title={t('property-info.notes.remove-aria-label')}>
-                    <IconButton aria-label={t('property-info.notes.remove-aria-label')} onClick={() => handleRemoveNote(noteItem.id)}>
+                  <Tooltip title={t('property-info.notes.aria-label.remove')}>
+                    <IconButton aria-label={t('property-info.notes.aria-label.remove')} onClick={() => handleRemoveNote(noteItem.id)}>
                       <DeleteIcon />
                     </IconButton>
                   </Tooltip>
