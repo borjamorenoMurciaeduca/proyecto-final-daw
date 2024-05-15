@@ -14,7 +14,7 @@ import {
 import { useTranslation } from 'react-i18next';
 
 
-const MyHomes = () => {
+const MyProperties = () => {
   const { user, setUser } = useUser();
   const theme = useTheme();
   const lessThanMedium = useMediaQuery(theme.breakpoints.down('md'));
@@ -94,4 +94,4 @@ const MyHomes = () => {
     </>
   );
 };
-export default MyHomes;
+export default MyProperties;

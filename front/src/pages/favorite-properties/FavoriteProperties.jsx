@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-const FavoriteHomes = () => {
+const FavoriteProperties = () => {
   const { user, setUser } = useUser();
   const theme = useTheme();
   const lessThanMedium = useMediaQuery(theme.breakpoints.down('md'));
@@ -95,4 +95,4 @@ const FavoriteHomes = () => {
     </>
   );
 };
-export default FavoriteHomes;
+export default FavoriteProperties;
