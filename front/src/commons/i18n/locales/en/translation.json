@@ -179,10 +179,14 @@
       "helper-click": "Click here to add this property to 'Favorites'!"
     }
   },
+  "fakePropertyCard": {
+    "location": "Here",
+    "title": "This is an example!"
+  },
   "page": {
     "favorite-properties": {
       "title": "My favourites",
-      "empty": "No has añadido ninguna propiedad a favoritos aún"
+      "empty": "You have not added any properties as favorites yet!"
     },
     "home": {
       "title": "Home"

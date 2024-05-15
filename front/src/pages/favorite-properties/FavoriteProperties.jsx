@@ -63,10 +63,23 @@ const FavoriteProperties = () => {
           pb={{ xs: 7, md: 5 }}
           alignItems="stretch"
         >
+          {!lessThanMedium &&
+              <>
+                <Grid item xs={12} sm={6} lg={4} >
+                  <FakePropertyCard disabledCard={true} />
+                </Grid>
+              </>
+          }
             <Grid item xs={12} sm={6} lg={4} >
               <FakePropertyCard />
             </Grid>
-          
+            {!lessThanMedium &&
+              <>
+                <Grid item xs={12} sm={6} lg={4} >
+                  <FakePropertyCard disabledCard={true} />
+                </Grid>
+              </>
+            }
         </Grid>
       </Grid> 
 
