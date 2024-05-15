@@ -85,10 +85,6 @@
     "cancel": "Cancelar",
     "description": "Descripción..."
   },
-  "home": "Inicio",
-  "my-properties": "Mis viviendas",
-  "last-properties": "Últimas viviendas",
-  "favorite-properties": "Mis favoritas",
   "addButtonModal": {
     "title": "Buscar con IdealistaWatch",
     "url": "Introduce la URL",
@@ -177,6 +173,24 @@
     "removed": "Eliminado de favoritos",
     "aria-label": {
       "add": "Añadir a favoritos"
+    },
+    "tooltip": {
+      "helper-click": "¡Haz click aquí para añadir esta propiedad a 'Favoritos'!"
+    }
+  },
+  "page": {
+    "favorite-properties": {
+      "title": "Mis favoritas",
+      "empty": "¡No has añadido ninguna propiedad a favoritos aún!"
+    },
+    "home": {
+      "title": "Inicio"
+    },
+    "my-properties": {
+      "title": "Mis viviendas"
+    },
+    "last-properties": {
+      "title": "Últimas viviendas"
     }
   }
 }

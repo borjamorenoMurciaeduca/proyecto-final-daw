@@ -1,4 +1,5 @@
 import AddButtonModal from '@/components/AddButtonModal';
+import FakePropertyCard from '@/components/FakePropertyCard';
 import PropertyCard from '@/components/PropertyCard';
 import useProperties from '@/hooks/useProperties';
 import useUser from '@/hooks/useUser';
@@ -39,8 +40,38 @@ const FavoriteProperties = () => {
     <>
       <AddButtonModal />
       <Typography component="h1" variant="h2">
-        {t('favorite-properties')}
+        {t('page.favorite-properties.title')}
       </Typography>
+      {favoriteProperties.length == 0 && 
+        <>
+          {t('page.favorite-properties.empty')}
+
+        <Grid
+        container
+        sx={{
+          minHeight: '75vh',
+          mt: 4,
+          mb: { md: 4, lg: 'auto' },
+        }}
+      >
+        <Grid
+          container
+          item
+          spacing={2}
+          direction="row"
+          justifyContent="center"
+          pb={{ xs: 7, md: 5 }}
+          alignItems="stretch"
+        >
+            <Grid item xs={12} sm={6} lg={4} >
+              <FakePropertyCard />
+            </Grid>
+          
+        </Grid>
+      </Grid> 
+
+        </>}
+      {favoriteProperties.length > 0 && <>
       <Grid
         container
         sx={{
@@ -92,6 +123,9 @@ const FavoriteProperties = () => {
           </Grid>
         </Grid>
       </Grid>
+      </>
+      }
+      
     </>
   );
 };

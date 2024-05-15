@@ -120,7 +120,7 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
           helperText=""
           id="property_id"
           name="property_id"
-          label={t('add-home-form.reference')}
+          label={t('add-property-form.reference')}
           type="number"
           disabled
           fullWidth
@@ -133,7 +133,7 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
           helperText=""
           id="title"
           name="title"
-          label={t('add-home-form.title')}
+          label={t('add-property-form.title')}
           fullWidth
           autoFocus
           value={propertiesValues.title}
@@ -145,7 +145,7 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
           helperText=""
           id="location"
           name="location"
-          label={t('add-home-form.location')}
+          label={t('add-property-form.location')}
           fullWidth
           autoFocus
           value={propertiesValues.location}
@@ -157,7 +157,7 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
           helperText=""
           id="price"
           name="price"
-          label={t('add-home-form.price')}
+          label={t('add-property-form.price')}
           fullWidth
           type="number"
           value={propertiesValues.price}
@@ -169,7 +169,7 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
           helperText=""
           id="size"
           name="size"
-          label={t('add-home-form.size')}
+          label={t('add-property-form.size')}
           type="number"
           fullWidth
           value={propertiesValues.size}
@@ -181,7 +181,7 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
           helperText=""
           id="rooms"
           name="rooms"
-          label={t('add-home-form.rooms')}
+          label={t('add-property-form.rooms')}
           fullWidth
           type="number"
           value={propertiesValues.rooms}
@@ -193,7 +193,7 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
           helperText=""
           id="bath_rooms"
           name="bath_rooms"
-          label={t('add-home-form.bath_rooms')}
+          label={t('add-property-form.bath_rooms')}
           fullWidth
           type="number"
           value={propertiesValues.bath_rooms}
@@ -215,7 +215,7 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
                 onChange={handleInputChange}
               />
             }
-            label={t('add-home-form.garage')}
+            label={t('add-property-form.garage')}
           />
           <FormControlLabel
             control={
@@ -225,20 +225,20 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
                 onChange={handleInputChange}
               />
             }
-            label={t('add-home-form.storage')}
+            label={t('add-property-form.storage')}
           />
         </Grid>
       </Grid>
       <Grid item xs={12}>
         <UnstyledTextareaIntroduction
-          desc={t('add-home-form.description')}
+          desc={t('add-property-form.description')}
           name="description"
           defaultValue={propertiesValues.description}
         />
       </Grid>
       <Grid item xs={12} md={8}>
         <Button type="submit" variant="contained" fullWidth>
-          {t('add-home-form.add-home')}
+          {t('add-property-form.add-property')}
         </Button>
       </Grid>
       <Grid item xs={12} md={4}>
@@ -249,7 +249,7 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
           color="error"
           onClick={handleCloseDialog}
         >
-          {t('add-home-form.cancel')}
+          {t('add-property-form.cancel')}
         </Button>
       </Grid>
       <Snackbar

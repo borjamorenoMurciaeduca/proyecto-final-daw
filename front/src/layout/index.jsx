@@ -152,13 +152,13 @@ const Layout = (props) => {
                   }}
                 >
                   <MenuItem onClick={handleClickHome}>
-                    <Typography textAlign="center">{t('home')}</Typography>
+                    <Typography textAlign="center">{t('page.home.title')}</Typography>
                   </MenuItem>
                   <MenuItem onClick={handleClickHomes}>
-                    <Typography textAlign="center">{t('my-properties')}</Typography>
+                    <Typography textAlign="center">{t('page.my-properties.title')}</Typography>
                   </MenuItem>
                   <MenuItem onClick={handleClickFavoriteHomes}>
-                    <Typography textAlign="center">{t('favorite-properties')}</Typography>
+                    <Typography textAlign="center">{t('page.favorite-properties.title')}</Typography>
                   </MenuItem>
                 </Menu>
               </Box>
@@ -170,7 +170,7 @@ const Layout = (props) => {
                   onClick={resetPage}
                   sx={{ my: 2, color: 'white', display: 'block' }}
                 >
-                  {t('my-properties')}
+                  {t('page.my-properties.title')}
                 </Button>
                 <Button
                   component={RouterLink}
@@ -178,7 +178,7 @@ const Layout = (props) => {
                   onClick={resetPage}
                   sx={{ my: 2, color: 'white', display: 'block' }}
                 >
-                  {t('favorite-properties')}
+                  {t('page.favorite-properties.title')}
                 </Button>
               </Box>
               

@@ -38,7 +38,7 @@ const MyProperties = () => {
     <>
       <AddButtonModal />
       <Typography component="h1" variant="h2">
-        {t('my-properties')}
+        {t('page.my-properties.title')}
       </Typography>
       <Grid
         container

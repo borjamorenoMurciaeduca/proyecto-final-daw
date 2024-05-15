@@ -19,7 +19,7 @@ const App = () => {
     <>
       <AddButtonModal />
       <Typography component="h1" variant="h2">
-        {t('last-properties')}
+        {t('page.last-properties.title')}
       </Typography>
       <Grid
         container
