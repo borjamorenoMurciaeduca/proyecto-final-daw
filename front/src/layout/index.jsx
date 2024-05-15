@@ -60,7 +60,7 @@ const Layout = (props) => {
   const handleClickHomes = () => {
     handleCloseNavMenu();
     resetPage();
-    navigate('/app/');
+    navigate('/app/my-homes');
   };
 
   const handleClickPrices = () => {
@@ -75,7 +75,6 @@ const Layout = (props) => {
   };
 
   const resetPage = () => setUser((prev) => ({ ...prev, currentPage: 1 }));
-
 
   return (
     <>
@@ -157,7 +156,7 @@ const Layout = (props) => {
               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                 <Button
                   component={RouterLink}
-                  to="/app"
+                  to="/app/my-homes"
                   onClick={resetPage}
                   sx={{ my: 2, color: 'white', display: 'block' }}
                 >

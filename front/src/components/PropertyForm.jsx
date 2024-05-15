@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import UnstyledTextareaIntroduction from './TextAreaAutoSize.jsx';
+import UnstyledTextareaIntroduction from './TextAreaAutoSize';
 
 function SlideTransition(props) {
   return <Slide {...props} direction="up" />;
@@ -24,6 +24,8 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
   const [message, setMessage] = useState('');
   const [severity, setSeverity] = useState('success');
   const { addProperty } = useProperties();
+  const { t } = useTranslation();
+  const { notify } = useNotification();
 
   const [propertiesValues, setPropertiesValues] = useState({
     property_id: '',
@@ -37,9 +39,6 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
     bath_rooms: '',
     description: '',
   });
-
-  const { t } = useTranslation();
-  const { notify } = useNotification();
 
   useEffect(() => {
     if (inmuebleData) {
