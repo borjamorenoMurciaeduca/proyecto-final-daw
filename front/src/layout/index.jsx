@@ -57,15 +57,22 @@ const Layout = (props) => {
     navigate('/app/edit-profile');
   };
 
+  const handleClickHome = () => {
+    handleCloseNavMenu();
+    resetPage();
+    navigate('/app');
+  };
+
   const handleClickHomes = () => {
     handleCloseNavMenu();
     resetPage();
-    navigate('/app/my-homes');
+    navigate('/app/my-properties');
   };
 
-  const handleClickPrices = () => {
+  const handleClickFavoriteHomes = () => {
     handleCloseNavMenu();
-    navigate('/app/prices');
+    resetPage();
+    navigate('/app/favorite-properties');
   };
 
   const handleLogoutMenu = async () => {
@@ -144,11 +151,14 @@ const Layout = (props) => {
                     display: { xs: 'block', md: 'none' },
                   }}
                 >
-                  <MenuItem onClick={handleClickHomes}>
-                    <Typography textAlign="center">Mis viviendas</Typography>
+                  <MenuItem onClick={handleClickHome}>
+                    <Typography textAlign="center">{t('home')}</Typography>
                   </MenuItem>
-                  <MenuItem onClick={handleClickPrices}>
-                    <Typography textAlign="center">Pricing</Typography>
+                  <MenuItem onClick={handleClickHomes}>
+                    <Typography textAlign="center">{t('my-properties')}</Typography>
+                  </MenuItem>
+                  <MenuItem onClick={handleClickFavoriteHomes}>
+                    <Typography textAlign="center">{t('favorite-properties')}</Typography>
                   </MenuItem>
                 </Menu>
               </Box>
@@ -156,13 +166,22 @@ const Layout = (props) => {
               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                 <Button
                   component={RouterLink}
-                  to="/app/my-homes"
+                  to="/app/my-properties"
                   onClick={resetPage}
                   sx={{ my: 2, color: 'white', display: 'block' }}
                 >
-                  {t('my-homes')}
+                  {t('my-properties')}
+                </Button>
+                <Button
+                  component={RouterLink}
+                  to="/app/favorite-properties"
+                  onClick={resetPage}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  {t('favorite-properties')}
                 </Button>
               </Box>
+              
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip
                   title={`${t('tooltip.open-settings')} - ${user.username}`}

@@ -71,7 +71,7 @@
       "conf": "Settings"
     }
   },
-  "add-home-form": {
+  "add-property-form": {
     "reference": "Reference",
     "title": "Title",
     "location": "Location",
@@ -81,11 +81,14 @@
     "bath_rooms": "Bath rooms",
     "garage": "Garage",
     "storage": "Storage",
-    "add-home": "Add home",
+    "add-property": "Add property",
     "cancel": "Cancel",
     "description": "Description..."
   },
-  "my-homes": "My homes",
+  "home": "Home",
+  "my-properties": "My properties",
+  "last-properties": "Last properties",
+  "favorite-properties": "My favourites",
   "addButtonModal": {
     "title": "Search with IdealistaWatch",
     "url": "Enter the URL",
@@ -105,9 +108,9 @@
     }
   },
   "property-info": {
-    "header": "Details of housing",
+    "header": "Details of property",
     "side-panel": {
-      "aria-label": "Housing information",
+      "aria-label": "Property information",
       "price-history": "Prices",
       "details": "Details",
       "notes": "Notes"
@@ -124,22 +127,32 @@
     },
     "notes": {
       "notify": {
-        "add-sucess": "Note added successfully",
-        "update-sucess": "Note updated successfully",
-        "delete-sucess": "Note removed successfully",
+        "success": {
+          "add": "Note added successfully",
+          "update": "Note updated successfully",
+          "remove": "Note removed successfully"
+        },
         "error": {
           "adding-emty": "Can't add an empty note",
           "note-generic": "Error adding note"
         }
       },
-      "edit-aria-label": "Edit the note",
-      "remove-aria-label": "Delete the note",
+      "aria-label": {
+        "edit": "Edit the note",
+        "remove": "Delete the note"
+      },
       "addNote": "Add comment",
       "isPublic": "Public",
+      "publicNote": "Public",
+      "privateNote": "Private",
       "save": "Save",
       "cancel": "Cancel",
       "edit": "Edit",
-      "updated_at": "updated at "
+      "updated_at": "updated at ",
+      "tooltip": {
+        "publicNote": "If you share this property, this note will be visible",
+        "privateNote": "Only you can see this information"
+      }
     }
   },
   "property-share": {
@@ -161,6 +174,9 @@
   "favorite": {
     "add": "Add to favorites",
     "added": "Added to favorites",
-    "removed": "Removed from favorites"
+    "removed": "Removed from favorites",
+    "aria-label": {
+      "add": "Add to favorites"
+    }
   }
 }

@@ -1,4 +1,5 @@
 import AddButtonModal from '@/components/AddButtonModal';
+import PropertyCard from '@/components/PropertyCard';
 import useProperties from '@/hooks/useProperties';
 import useUser from '@/hooks/useUser';
 import {
@@ -11,22 +12,23 @@ import {
   useTheme,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import PropertyCard from './components/PropertyCard';
 
-const MyHomes = () => {
+const FavoriteHomes = () => {
   const { user, setUser } = useUser();
   const theme = useTheme();
   const lessThanMedium = useMediaQuery(theme.breakpoints.down('md'));
   const { properties } = useProperties();
   const { t } = useTranslation();
 
+  const favoriteProperties = properties.filter(property => property.favorite);
+
   const propertiesMax = 6;
   const propertiesMin = 0;
-  const propertiesPage = properties.slice(
+  const propertiesPage = favoriteProperties.slice(
     propertiesMin + (user.currentPage - 1) * propertiesMax,
     propertiesMax * user.currentPage
   );
-  const count = Math.ceil(properties.length / propertiesMax);
+  const count = Math.ceil(favoriteProperties.length / propertiesMax);
 
   const handlePage = (_, v) => {
     if (v == user.currentPage) return;
@@ -37,7 +39,7 @@ const MyHomes = () => {
     <>
       <AddButtonModal />
       <Typography component="h1" variant="h2">
-        {t('my-homes')}
+        {t('favorite-properties')}
       </Typography>
       <Grid
         container
@@ -93,4 +95,4 @@ const MyHomes = () => {
     </>
   );
 };
-export default MyHomes;
+export default FavoriteHomes;

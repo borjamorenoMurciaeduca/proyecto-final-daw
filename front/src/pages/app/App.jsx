@@ -1,4 +1,6 @@
+import LastProperties from "../last-properties/LastProperties";
+
 const App = () => {
-  return <>Últimas viviendas</>;
+  return <LastProperties/>;
 };
 export default App;

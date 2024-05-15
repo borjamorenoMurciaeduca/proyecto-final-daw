@@ -1,7 +1,7 @@
 import house from '@/assets/house.jpg';
 import i18n from '@/commons/i18n/i18n';
 import parser from '@/utils/parser';
-import { Facebook, Instagram, Twitter } from '@mui/icons-material';
+import { Twitter } from '@mui/icons-material';
 import {
   Box,
   Button,
@@ -14,11 +14,9 @@ import {
   Grid,
   IconButton,
   Stack,
-  Toolbar,
   Tooltip,
   Typography,
 } from '@mui/material';
-import { PickersToolbarText } from '@mui/x-date-pickers/internals/components/PickersToolbarText';
 import { useTranslation } from 'react-i18next';
 
 const PropertyDetailsGlobal = ({

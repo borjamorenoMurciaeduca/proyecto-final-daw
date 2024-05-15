@@ -6,6 +6,7 @@ import {
   CardContent,
   CardMedia,
   IconButton,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -60,15 +61,17 @@ const PropertyCard = ({ property }) => {
               Ref: {property_id} | {parser.FormatPrice(price, i18n.language)}
             </Typography>
             <Typography gutterBottom variant="span" component="span">
-              {parser.DateReceived(created_at)}
+              {parser.formatDate(created_at, i18n.language, false)}
             </Typography>
           </Box>
         </CardContent>
       </CardActionArea>
       <CardActions disableSpacing sx={{ justifyContent: 'flex-end', p: 0 }} >
-        <IconButton aria-label="add to favorites" onClick={() => handleFavorite(property_id)}>
-          <FavoriteIcon color={favorite ? "error" : "disabled"} />
-        </IconButton>
+        <Tooltip title={t('favorite.aria-label.add')}>
+          <IconButton aria-label={t('favorite.aria-label.add')} onClick={() => handleFavorite(property_id)}>
+            <FavoriteIcon color={favorite ? "error" : "disabled"} />
+          </IconButton>
+        </Tooltip>
       </CardActions>
     </Card>
   );
