@@ -50,18 +50,20 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-export default function SwitchDate({ toggleDateOrder, dateOrder }) {
+const SwitchIdeal = ({ toggleData, order, label }) => {
   return (
     <FormControlLabel
       component="fieldset"
-      onChange={toggleDateOrder}
-      label={`Fecha ${dateOrder == 'asc' ? 'asc' : 'desc'}`}
+      onChange={toggleData}
+      label={`${label} ${order == 'asc' ? 'ascendant' : 'descendant'}`}
       control={
         <MaterialUISwitch
           sx={{ m: 1 }}
-          checked={dateOrder == 'desc' ? true : false}
+          checked={order == 'desc' ? true : false}
         />
       }
     />
   );
-}
+};
+
+export default SwitchIdeal;

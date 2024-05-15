@@ -2,13 +2,16 @@ import AddButtonModal from '@/components/AddButtonModal';
 import PropertyCard from '@/components/PropertyCard';
 import useProperties from '@/hooks/useProperties';
 import useUser from '@/hooks/useUser';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import {
-  Button,
+  Fab,
   Grid,
   Pagination,
   Paper,
   Stack,
+  Tooltip,
   Typography,
+  Zoom,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
@@ -25,6 +28,8 @@ const MyProperties = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [price, setPrice] = useState(INITIAL_PRICE);
   const [dateOrder, setDateOrder] = useState('desc');
+  const [priceOrder, setPriceOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('date');
 
   const { user, setUser } = useUser();
   const theme = useTheme();
@@ -43,7 +48,7 @@ const MyProperties = () => {
     setIsDrawerOpen(newOpen);
   };
 
-  const handleChangePrices = (event, newValue, activeThumb) => {
+  const handleChangePrices = (_, newValue, activeThumb) => {
     setUser((prevState) => ({ ...prevState, currentPage: 1 }));
     if (!Array.isArray(newValue)) {
       return;
@@ -75,11 +80,15 @@ const MyProperties = () => {
     sortedProperties.sort((a, b) => {
       const dateA = new Date(a.created_at);
       const dateB = new Date(b.created_at);
-      if (dateOrder === 'asc') {
-        return dateA - dateB;
-      } else {
-        return dateB - dateA;
-      }
+      return dateOrder === 'asc' ? dateA - dateB : dateB - dateA;
+    });
+    return sortedProperties;
+  };
+
+  const orderPropertiesByPrice = (properties) => {
+    const sortedProperties = [...properties];
+    sortedProperties.sort((a, b) => {
+      return priceOrder === 'asc' ? a.price - b.price : b.price - a.price;
     });
     return sortedProperties;
   };
@@ -100,11 +109,16 @@ const MyProperties = () => {
    * En otro caso se le aplica el orden a todas las propiedades
    * @countPages: Número de páginas actualizadas que se mostrarán en la paginación
    */
-  const orderedProperties = orderPropertiesByDate(filteredProperties);
+  const orderedProperties =
+    orderBy == 'date'
+      ? orderPropertiesByDate(filteredProperties)
+      : orderPropertiesByPrice(filteredProperties);
+
   const propertiesPage = orderedProperties.slice(
     PROPERTIES_MIN + (user.currentPage - 1) * PROPERTIES_MAX,
     PROPERTIES_MAX * user.currentPage
   );
+
   const countPages = Math.ceil(orderedProperties.length / PROPERTIES_MAX);
 
   const handlePage = (_, v) => {
@@ -116,9 +130,19 @@ const MyProperties = () => {
     setDateOrder(dateOrder === 'asc' ? 'desc' : 'asc');
   };
 
+  const togglePriceOrder = () => {
+    setPriceOrder(priceOrder === 'asc' ? 'desc' : 'asc');
+  };
+
   const resetFilters = () => {
     setPrice(INITIAL_PRICE);
     setDateOrder('desc');
+    setOrderBy('date');
+  };
+
+  const transitionDuration = {
+    enter: theme.transitions.duration.enteringScreen,
+    exit: theme.transitions.duration.leavingScreen,
   };
 
   return (
@@ -127,7 +151,26 @@ const MyProperties = () => {
       <Typography component="h1" variant="h2">
         {t('my-properties')}
       </Typography>
-      <Button onClick={toggleDrawer(true)}>Abrir filtro</Button>
+      <Zoom
+        in={!isDrawerOpen}
+        timeout={transitionDuration}
+        style={{
+          transitionDelay: `${transitionDuration.exit}ms`,
+        }}
+        unmountOnExit
+      >
+        <Fab
+          variant="extended"
+          size="small"
+          color="primary"
+          onClick={toggleDrawer(true)}
+          sx={{ position: 'fixed', left: { xs: 5, lg: 45 }, top: '20%' }}
+        >
+          <Tooltip title="filtro">
+            <FilterAltIcon />
+          </Tooltip>
+        </Fab>
+      </Zoom>
       <PropertyDrawer
         isDrawerOpen={isDrawerOpen}
         toggleDrawer={toggleDrawer}
@@ -137,12 +180,16 @@ const MyProperties = () => {
         toggleDateOrder={toggleDateOrder}
         resetFilters={resetFilters}
         dateOrder={dateOrder}
+        setOrderBy={setOrderBy}
+        orderBy={orderBy}
+        priceOrder={priceOrder}
+        togglePriceOrder={togglePriceOrder}
       />
       <Grid
         container
         sx={{
           minHeight: '75vh',
-          mt: 4,
+          mt: 2,
           mb: { md: 4, lg: 'auto' },
         }}
       >
@@ -152,8 +199,8 @@ const MyProperties = () => {
           spacing={2}
           direction="row"
           justifyContent="left"
+          alignItems="flex-start"
           pb={{ xs: 7, md: 5 }}
-          alignItems="stretch"
         >
           {propertiesPage.map((property) => (
             <Grid item xs={12} sm={6} lg={4} key={property.property_id}>
@@ -192,6 +239,5 @@ const MyProperties = () => {
     </>
   );
 };
-
 
 export default MyProperties;
