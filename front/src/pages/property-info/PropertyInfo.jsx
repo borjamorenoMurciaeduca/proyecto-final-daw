@@ -1,4 +1,3 @@
-import { useParams } from 'react-router-dom';
 import RestoreIcon from '@mui/icons-material/Restore';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import {
@@ -14,9 +13,10 @@ import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 import PriceHistory from './components/PriceHistory';
 import PropertyDetails from './components/PropertyDetails';
-import { useTranslation } from 'react-i18next';
 import PropertyNotes from './components/PropertyNotes';
 
 function a11yProps(index) {
@@ -87,12 +87,6 @@ const PropertyInfo = () => {
                 {...a11yProps(2)}
               />
             </Tabs>
-            {/* <TabPanel value={view} index={0}>
-            Item One
-          </TabPanel>
-          <TabPanel value={view} index={1}>
-            Item Two
-          </TabPanel> */}
           </Box>
         ) : (
           <Paper
@@ -112,7 +106,10 @@ const PropertyInfo = () => {
                 setView(newValue);
               }}
             >
-              <BottomNavigationAction label={t('property-info.side-panel.details')} icon={<TextSnippetIcon />} />
+              <BottomNavigationAction
+                label={t('property-info.side-panel.details')}
+                icon={<TextSnippetIcon />}
+              />
               <BottomNavigationAction
                 label={t('property-info.side-panel.price-history')}
                 icon={<RestoreIcon />}

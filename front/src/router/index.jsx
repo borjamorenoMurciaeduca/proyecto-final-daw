@@ -1,4 +1,4 @@
-import SharedProperty from '@/pages/sharedProperty/SharedProperty';
+import SharedProperty from '@/pages/shared/SharedProperty';
 import {
   Navigate,
   RouterProvider,

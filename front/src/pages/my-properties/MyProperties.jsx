@@ -159,14 +159,17 @@ const MyProperties = () => {
         }}
         unmountOnExit
       >
-
         <Tooltip title="Filtro">
           <Fab
             variant="extended"
             size="small"
             color="primary"
             onClick={toggleDrawer(true)}
-            sx={{ position: 'fixed', left: { xs: 5, lg: 45 }, top: '20%' }}
+            sx={{
+              position: 'fixed',
+              left: { xs: 5, lg: 45 },
+              top: '20%',
+            }}
           >
             <FilterAltIcon />
           </Fab>

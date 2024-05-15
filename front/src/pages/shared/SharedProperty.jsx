@@ -25,20 +25,27 @@ const SharedProperty = () => {
   }, [shared_url]);
 
   if (loading && !property) return <PageLoader />;
-  if (!loading && !property) return <Typography variant="h4">No se encontró la propiedad compartida</Typography>;
+  if (!loading && !property)
+    return (
+      <Typography variant="h4">
+        No se encontró la propiedad compartida
+      </Typography>
+    );
 
   return (
     <Container maxWidth="md">
       <Box
         sx={{
           display: 'flex',
-          flexDirection: "column",
+          flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
           minHeight: '100vh',
         }}
       >
-        <Typography variant="h4" gutterBottom>Vivienda compartida por {property.username}</Typography>
+        <Typography variant="h4" gutterBottom>
+          Vivienda compartida por {property.username}
+        </Typography>
         <PropertyDetailsGlobal property={property} />
       </Box>
     </Container>
