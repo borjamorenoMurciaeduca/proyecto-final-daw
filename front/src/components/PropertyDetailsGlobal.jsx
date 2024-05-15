@@ -103,16 +103,18 @@ const PropertyDetailsGlobal = ({
             <Button size="small" color="primary" onClick={() => setOpen(true)}>
               {t('property-info.details.share')}
             </Button>
-            <IconButton
-              disabled={!property.share_url}
-              color="primary"
-              aria-label="Twitter"
-              onClick={handleTwitter}
-            >
-              <Tooltip title={t('tooltip.twitter')} placement='top'>
-                <Twitter />
-              </Tooltip >
-            </IconButton>
+            <Tooltip title={property.share_url ? t('tooltip.twitter') : t('tooltip.no-twitter')} placement='bottom'>
+              <span>
+                <IconButton
+                  disabled={!property.share_url}
+                  color="primary"
+                  aria-label="Twitter"
+                  onClick={handleTwitter}
+                >
+                  <Twitter />
+                </IconButton>
+              </span>
+            </Tooltip >
           </CardActions>
         )}
       </Card>

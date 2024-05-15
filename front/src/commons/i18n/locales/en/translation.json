@@ -10,7 +10,8 @@
     "close": "Close",
     "search": "Search",
     "clear": "Clear search",
-    "twitter": "Share on Twitter"
+    "twitter": "Share on Twitter",
+    "no-twitter": "First you need to share the property"
   },
   "theme-mode": {
     "light": "Day mode",

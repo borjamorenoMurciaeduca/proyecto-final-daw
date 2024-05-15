@@ -10,7 +10,8 @@
     "close": "Cerrar",
     "search": "Buscar",
     "clear": "Limpiar búsqueda",
-    "twitter": "Compartir en Twitter"
+    "twitter": "Compartir en Twitter",
+    "no-twitter": "Primero tienes que compartir la vivienda"
   },
   "theme-mode": {
     "light": "Modo día",
