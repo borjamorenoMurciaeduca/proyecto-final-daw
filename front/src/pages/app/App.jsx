@@ -1,6 +1,6 @@
-import LastHomes from "../last-homes/LastHomes";
+import LastProperties from "../last-properties/LastProperties";
 
 const App = () => {
-  return <LastHomes/>;
+  return <LastProperties/>;
 };
 export default App;

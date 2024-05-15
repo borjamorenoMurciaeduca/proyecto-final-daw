@@ -1,11 +1,11 @@
 import AddButtonModal from '@/components/AddButtonModal';
+import PropertyCard from '@/components/PropertyCard';
 import useProperties from '@/hooks/useProperties';
 import {
   Grid,
   Typography,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import PropertyCard from '../my-homes/components/PropertyCard';
 
 const LastHomes = () => {
   const { properties } = useProperties();
@@ -19,7 +19,7 @@ const LastHomes = () => {
     <>
       <AddButtonModal />
       <Typography component="h1" variant="h2">
-        {t('last-homes')}
+        {t('last-properties')}
       </Typography>
       <Grid
         container

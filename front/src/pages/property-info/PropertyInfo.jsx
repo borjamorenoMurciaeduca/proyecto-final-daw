@@ -18,11 +18,6 @@ import PriceHistory from './components/PriceHistory';
 import PropertyDetails from './components/PropertyDetails';
 import { useTranslation } from 'react-i18next';
 import PropertyNotes from './components/PropertyNotes';
-/**
- * https://mui.com/x/api/charts/line-chart/
- * En progreso
- *
- */
 
 function a11yProps(index) {
   return {
@@ -41,7 +36,7 @@ const PropertyInfo = () => {
   return (
     <>
       <Typography component="h1" sx={{ typography: { xs: 'h4', sm: 'h2' } }}>
-        {t('property-info.header')} {property_id}
+        {t('property-info.header')} <small>{property_id}</small>
       </Typography>
       <Grid
         container

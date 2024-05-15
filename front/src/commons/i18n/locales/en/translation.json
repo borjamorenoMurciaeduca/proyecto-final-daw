@@ -71,7 +71,7 @@
       "conf": "Settings"
     }
   },
-  "add-home-form": {
+  "add-property-form": {
     "reference": "Reference",
     "title": "Title",
     "location": "Location",
@@ -81,13 +81,14 @@
     "bath_rooms": "Bath rooms",
     "garage": "Garage",
     "storage": "Storage",
-    "add-home": "Add home",
+    "add-property": "Add property",
     "cancel": "Cancel",
     "description": "Description..."
   },
-  "my-homes": "My homes",
-  "last-homes": "Last homes",
-  "favorite-homes": "My favorite homes",
+  "home": "Home",
+  "my-properties": "My properties",
+  "last-properties": "Last properties",
+  "favorite-properties": "My favourites",
   "addButtonModal": {
     "title": "Search with IdealistaWatch",
     "url": "Enter the URL",
@@ -107,9 +108,9 @@
     }
   },
   "property-info": {
-    "header": "Details of housing",
+    "header": "Details of property",
     "side-panel": {
-      "aria-label": "Housing information",
+      "aria-label": "Property information",
       "price-history": "Prices",
       "details": "Details",
       "notes": "Notes"

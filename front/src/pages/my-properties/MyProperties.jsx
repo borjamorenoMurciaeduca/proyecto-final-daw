@@ -1,4 +1,5 @@
 import AddButtonModal from '@/components/AddButtonModal';
+import PropertyCard from '@/components/PropertyCard';
 import useProperties from '@/hooks/useProperties';
 import useUser from '@/hooks/useUser';
 import {
@@ -11,7 +12,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import PropertyCard from './components/PropertyCard';
+
 
 const MyHomes = () => {
   const { user, setUser } = useUser();
@@ -37,7 +38,7 @@ const MyHomes = () => {
     <>
       <AddButtonModal />
       <Typography component="h1" variant="h2">
-        {t('my-homes')}
+        {t('my-properties')}
       </Typography>
       <Grid
         container

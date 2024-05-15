@@ -71,7 +71,7 @@
       "conf": "Configuración"
     }
   },
-  "add-home-form": {
+  "add-property-form": {
     "reference": "Referencia",
     "title": "Título",
     "location": "Localización",
@@ -81,13 +81,14 @@
     "bath_rooms": "Baños",
     "garage": "Garaje",
     "storage": "Trastero",
-    "add-home": "Añadir vivienda",
+    "add-property": "Añadir vivienda",
     "cancel": "Cancelar",
     "description": "Descripción..."
   },
-  "my-homes": "Mis viviendas",
-  "last-homes": "Últimas viviendas",
-  "favorite-homes": "Mis viviendas favoritas",
+  "home": "Inicio",
+  "my-properties": "Mis viviendas",
+  "last-properties": "Últimas viviendas",
+  "favorite-properties": "Mis favoritas",
   "addButtonModal": {
     "title": "Buscar con IdealistaWatch",
     "url": "Introduce la URL",
