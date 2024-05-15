@@ -33,7 +33,7 @@ const FakePropertyCard = () => {
   `;
 
   return (
-    <Card sx={{ height: '100%' }}>
+    <Card sx={{ height: '100%', maxHeight: '350px' }}>
       <CardActionArea>
         <CardMedia
           component="img"
