@@ -45,10 +45,8 @@ const App = () => {
           mt: 4,
           mb: { md: 4, lg: 'auto' },
         }}
-        alingItems="stretch"
       >
-        <Grid container item spacing={2} direction="row" justifyContent="left" pb={{ xs: 7, md: 5 }} alignItems="stretch"
-        >
+        <Grid container item spacing={2} direction="row" justifyContent="left" pb={{ xs: 7, md: 5 }} alignItems="stretch">
           {propertiesPage.map((property) => (
             <Grid item xs={12} sm={6} lg={4} key={property.property_id}>
               <PropertyCard property={property} />
