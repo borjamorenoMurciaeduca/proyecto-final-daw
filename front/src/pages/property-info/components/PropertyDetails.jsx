@@ -14,7 +14,7 @@ const PropertyDetails = ({ propertyId }) => {
   useEffect(() => {
     const propertyMatch = properties.find((el) => el.property_id == propertyId);
     !propertyMatch ? navigate('/404') : setProperty(propertyMatch);
-  }, [propertyId, properties]);
+  }, [propertyId, properties, navigate]);
 
   if (!property) return <PageLoader />;
 
