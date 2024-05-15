@@ -1,7 +1,6 @@
 import useProperties from '@/hooks/useProperties';
 import useUser from '@/hooks/useUser';
 import {
-  Box,
   Grid,
   Pagination,
   Paper,
