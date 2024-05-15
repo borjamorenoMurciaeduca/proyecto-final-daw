@@ -19,7 +19,7 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import PropertyForm from './PropertyForm.jsx';
+import PropertyForm from './PropertyForm';
 
 const AddButtonModal = () => {
   const [open, setOpen] = useState(false);
