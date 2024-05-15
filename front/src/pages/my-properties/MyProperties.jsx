@@ -26,10 +26,6 @@ const MyProperties = () => {
   const [price, setPrice] = useState(INITIAL_PRICE);
   const [dateOrder, setDateOrder] = useState('desc');
 
-<<<<<<< HEAD
-=======
-const MyProperties = () => {
->>>>>>> 1dfb02dc6d3c8eef3e41de2746b88122fefbf74b
   const { user, setUser } = useUser();
   const theme = useTheme();
   const lessThanMedium = useMediaQuery(theme.breakpoints.down('md'));
@@ -196,4 +192,6 @@ const MyProperties = () => {
     </>
   );
 };
+
+
 export default MyProperties;
