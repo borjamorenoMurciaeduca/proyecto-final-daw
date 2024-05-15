@@ -159,17 +159,18 @@ const MyProperties = () => {
         }}
         unmountOnExit
       >
-        <Fab
-          variant="extended"
-          size="small"
-          color="primary"
-          onClick={toggleDrawer(true)}
-          sx={{ position: 'fixed', left: { xs: 5, lg: 45 }, top: '20%' }}
-        >
-          <Tooltip title="filtro">
+
+        <Tooltip title="Filtro">
+          <Fab
+            variant="extended"
+            size="small"
+            color="primary"
+            onClick={toggleDrawer(true)}
+            sx={{ position: 'fixed', left: { xs: 5, lg: 45 }, top: '20%' }}
+          >
             <FilterAltIcon />
-          </Tooltip>
-        </Fab>
+          </Fab>
+        </Tooltip>
       </Zoom>
       <PropertyDrawer
         isDrawerOpen={isDrawerOpen}
