@@ -162,7 +162,16 @@ const Layout = (props) => {
                 >
                   {t('my-homes')}
                 </Button>
+                <Button
+                  component={RouterLink}
+                  to="/app/favorite-homes"
+                  onClick={resetPage}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  {t('favorite-homes')}
+                </Button>
               </Box>
+              
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip
                   title={`${t('tooltip.open-settings')} - ${user.username}`}

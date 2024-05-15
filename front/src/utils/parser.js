@@ -57,15 +57,12 @@ function DateToInsert(date) {
 
 function DateToUrl(date) {
   if (date !== "") {
-    // Crear un objeto Date a partir de la cadena
     const fecha = new Date(date);
 
-    // Obtener los componentes de la fecha
     const año = fecha.getFullYear().toString();
     const mes = (fecha.getMonth() + 1).toString().padStart(2, "0");
     const día = fecha.getDate().toString().padStart(2, "0");
 
-    // Formatear la cadena en el formato deseado para la URL
     const formatoUrl = `${año}${mes}${día}`;
 
     return formatoUrl;
@@ -112,9 +109,9 @@ function FormatPrice(value, lang) {
   }
 }
 
-function formatDate(value, lang) {
+function formatDate(value, lang, showHours = true) {
   const date = new Date(value);
-  const options = {
+  const withHoursOptions = {
     year: 'numeric',
     month: '2-digit',
     day: 'numeric',
@@ -123,7 +120,17 @@ function formatDate(value, lang) {
     second: 'numeric',
     hour12: false,
   };
-  return new Intl.DateTimeFormat(lang, options).format(date);
+
+  const optionsWithoutHours = {
+    year: 'numeric',
+    month: '2-digit',
+    day: 'numeric',
+    hour12: false,
+  }
+
+  const optionSelected = showHours ? withHoursOptions : optionsWithoutHours;
+
+  return new Intl.DateTimeFormat(lang, optionSelected).format(date);
 }
 
 function getFullURL(value) {

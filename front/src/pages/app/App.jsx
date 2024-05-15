@@ -1,4 +1,6 @@
+import LastHomes from "../last-homes/LastHomes";
+
 const App = () => {
-  return <>Últimas viviendas</>;
+  return <LastHomes/>;
 };
 export default App;

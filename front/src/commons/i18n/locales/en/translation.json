@@ -86,6 +86,8 @@
     "description": "Description..."
   },
   "my-homes": "My homes",
+  "last-homes": "Last homes",
+  "favorite-homes": "My favorite homes",
   "addButtonModal": {
     "title": "Search with IdealistaWatch",
     "url": "Enter the URL",
@@ -171,6 +173,9 @@
   "favorite": {
     "add": "Add to favorites",
     "added": "Added to favorites",
-    "removed": "Removed from favorites"
+    "removed": "Removed from favorites",
+    "aria-label": {
+      "add": "Add to favorites"
+    }
   }
 }
