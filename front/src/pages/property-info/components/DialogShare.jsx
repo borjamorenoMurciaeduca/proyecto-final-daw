@@ -32,7 +32,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const DialogShare = ({ open, setOpen, isShared, propertyURL, propertyId }) => {
   const [loading, setLoading] = useState(false);
-  const [shareUrl, setShareUrl] = useState('');
+  const [shareUrlId, setShareUrlId] = useState('');
   const { updateProperty } = useProperties();
   const { enqueueSnackbar } = useSnackbar();
   const theme = useTheme();
@@ -42,7 +42,7 @@ const DialogShare = ({ open, setOpen, isShared, propertyURL, propertyId }) => {
     if (open && !isShared) {
       handleShare();
     } else if (isShared && propertyURL) {
-      setShareUrl(propertyURL);
+      setShareUrlId(propertyURL);
     }
   }, [open, isShared, propertyURL]);
 
@@ -53,7 +53,7 @@ const DialogShare = ({ open, setOpen, isShared, propertyURL, propertyId }) => {
     try {
       const { data } = await propertyService.shareProperty(propertyId);
       setTimeout(() => {
-        setShareUrl(data.share_url);
+        setShareUrlId(data.share_url);
         updateProperty({
           property_id: propertyId,
           share_url: data.share_url,
@@ -73,7 +73,7 @@ const DialogShare = ({ open, setOpen, isShared, propertyURL, propertyId }) => {
     }
   };
 
-  const handleCopyToClipboard = (e, url = shareUrl) => {
+  const handleCopyToClipboard = (e, url = shareUrlId) => {
     if (e) e.preventDefault();
 
     const urlToCopy = parser.getFullURL(url);
@@ -136,7 +136,7 @@ const DialogShare = ({ open, setOpen, isShared, propertyURL, propertyId }) => {
               label={t('property-share.generator.label')}
               type={'text'}
               size={'small'}
-              value={`${window.location.protocol}//${window.location.hostname}:${window.location.port}/shared/${shareUrl}`}
+              value={parser.getFullURL(shareUrlId)}
               endAdornment={
                 <InputAdornment position="end" size="small">
                   <IconButton

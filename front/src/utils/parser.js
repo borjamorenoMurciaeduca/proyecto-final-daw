@@ -134,7 +134,10 @@ function formatDate(value, lang, showHours = true) {
 }
 
 function getFullURL(value) {
-  return `${window.location.protocol}//${window.location.hostname}:${window.location.port}/shared/${value}`;
+  if (window.location.port == '')
+    return `${window.location.protocol}//${window.location.hostname}/shared/${value}`;
+  else
+    return `${window.location.protocol}//${window.location.hostname}:${window.location.port}/shared/${value}`;
 }
 
 export default {
