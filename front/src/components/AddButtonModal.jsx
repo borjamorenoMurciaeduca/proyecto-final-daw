@@ -113,19 +113,21 @@ const AddButtonModal = () => {
           transitionDelay: `${transitionDuration.exit}ms`,
         }}
       >
-        <Fab
-          sx={{
-            bgcolor: 'navOr.main',
-            position: 'fixed',
-            top: { xs: 'auto', md: 90 },
-            bottom: { xs: 40, md: 'auto' },
-            right: { xs: 20, md: 20, lg: 50 },
-          }}
-          aria-label="add"
-          onClick={handleOpen}
-        >
-          <AddIcon />
-        </Fab>
+        <Tooltip title={t('add-property-form.add-property')}>
+          <Fab
+            sx={{
+              bgcolor: 'navOr.main',
+              position: 'fixed',
+              top: { xs: 'auto', md: 90 },
+              bottom: { xs: 40, md: 'auto' },
+              right: { xs: 20, md: 20, lg: 50 },
+            }}
+            aria-label="add"
+            onClick={handleOpen}
+          >
+            <AddIcon />
+          </Fab>
+        </Tooltip>
       </Zoom>
       <Dialog
         open={open}
