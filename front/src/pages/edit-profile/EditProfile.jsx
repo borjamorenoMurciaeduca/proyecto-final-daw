@@ -1,5 +1,6 @@
 import useUser from '@/hooks/useUser';
 import userService from '@/services/userService';
+import parser from '@/utils/parser';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
   Box,
@@ -39,7 +40,7 @@ const EditProfile = () => {
     setShowConfirmPassword((show) => !show);
   const handleMouseDownPassword = (event) => event.preventDefault();
 
-  const handleSubmitProfile = async (e) => {
+  const handleEditProfile = async (e) => {
     e.preventDefault();
     const dataForm = new FormData(e.currentTarget);
     const credentials = {
@@ -48,9 +49,10 @@ const EditProfile = () => {
       name: dataForm.get('name'),
       surname: dataForm.get('surname'),
       phone: dataForm.get('phone'),
-      birth_date: dataForm.get('birth_date'),
+      birth_date: parser.DateToInsert(dataForm.get('birth_date')),
     };
     setLoading(true);
+
     try {
       if (credentials.password !== credentials.password_confirmation)
         throw new Error('Las contraseñas no coinciden');
@@ -73,11 +75,10 @@ const EditProfile = () => {
         });
       }, 1000);
     } catch (error) {
-      if (error.response?.data?.message) {
-        enqueueSnackbar(error.response?.data?.message, { variant: 'error' });
-      } else {
-        enqueueSnackbar(error.message, { variant: 'error' });
-      }
+      error.response?.data?.message
+        ? enqueueSnackbar(error.response?.data?.message, { variant: 'error' })
+        : enqueueSnackbar(error.message, { variant: 'error' });
+
       console.warn(error);
     } finally {
       setTimeout(() => setLoading(false), 1000);
@@ -87,7 +88,7 @@ const EditProfile = () => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
       <Typography variant="h2" component="h1">
-        👋 {user.username}
+        👋 {user.username || 'Usuario'}
       </Typography>
       <Container
         maxWidth="md"
@@ -109,7 +110,7 @@ const EditProfile = () => {
               alignItems="center"
               component="form"
               noValidate
-              onSubmit={handleSubmitProfile}
+              onSubmit={handleEditProfile}
             >
               <Grid item xs={12}>
                 <Typography variant="h6">

@@ -33,6 +33,7 @@ import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import parser from '@/utils/parser';
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -52,6 +53,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     const dataForm = new FormData(e.currentTarget);
     const credentials = {
       username: dataForm.get('username'),
@@ -61,8 +63,9 @@ const Register = () => {
       surname: dataForm.get('surname'),
       email: dataForm.get('email'),
       phone: dataForm.get('phone'),
-      birth_date: dataForm.get('birth_date'),
+      birth_date: parser.DateToInsert(dataForm.get('birth_date')),
     };
+
     try {
       if (credentials.password !== credentials.password_confirmation)
         throw new Error('Las contraseñas no coinciden');
@@ -80,6 +83,7 @@ const Register = () => {
           navigate('/auth');
         }, 1000);
       }
+
       e.target.username.value = '';
       e.target.password.value = '';
       e.target.password_confirmation.value = '';

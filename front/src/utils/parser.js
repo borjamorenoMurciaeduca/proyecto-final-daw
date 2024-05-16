@@ -48,7 +48,7 @@ function DateTimeReceived(date) {
 
 function DateToInsert(date) {
   if (date !== '') {
-    const dateArr = date.split('-');
+    const dateArr = date.split('/');
     return `${dateArr[2]}/${dateArr[1]}/${dateArr[0]}`;
   } else {
     return '';
