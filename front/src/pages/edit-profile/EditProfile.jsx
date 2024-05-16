@@ -48,6 +48,7 @@ const EditProfile = () => {
 
   const handleEditProfile = async (e) => {
     e.preventDefault();
+
     const dataForm = new FormData(e.currentTarget);
     const credentials = {
       password: dataForm.get('password'),
@@ -62,9 +63,7 @@ const EditProfile = () => {
     try {
       if (credentials.password !== credentials.password_confirmation)
         throw new Error('Las contraseñas no coinciden');
-
       const res = await userService.editProfile(credentials);
-
       if (res.status == 400)
         throw new Error('No se ha podido actualizar el usuario');
       if (res.error) throw new Error(res.error);
@@ -142,7 +141,7 @@ const EditProfile = () => {
                   required
                   fullWidth
                   disabled
-                  value={user.email || 'Sin correo asociado'}
+                  value={user.email}
                   id="email"
                   label={t('edit-profile-form.form.email')}
                 />
@@ -154,7 +153,7 @@ const EditProfile = () => {
                   autoComplete="given-name"
                   name="name"
                   fullWidth
-                  defaultValue={user.name || ''}
+                  defaultValue={user.name}
                   id="name"
                   label={t('edit-profile-form.form.name')}
                 />
@@ -164,7 +163,7 @@ const EditProfile = () => {
                   autoComplete="family-name"
                   name="surname"
                   fullWidth
-                  defaultValue={user.surname || ''}
+                  defaultValue={user.surname}
                   id="surname"
                   label={t('edit-profile-form.form.surname')}
                 />
@@ -174,14 +173,14 @@ const EditProfile = () => {
                   autoComplete="tel"
                   name="phone"
                   fullWidth
-                  defaultValue={user.phone || ''}
+                  defaultValue={user.phone}
                   id="phone"
                   label={t('edit-profile-form.form.phone')}
                 />
               </Grid>
               <Grid item xs={12} md={6}>
                 <DatePicker
-                  name="bday"
+                  name="birth_date"
                   id="birth_date"
                   label={t('register-form.form.birth-date')}
                   sx={{ width: '100%' }}
