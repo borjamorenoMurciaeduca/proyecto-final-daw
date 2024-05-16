@@ -151,10 +151,9 @@ const Login = () => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
-                helperText=""
+                autoComplete="username"
                 id="username"
                 name="username"
-                autoComplete="username"
                 label={t('login-form.form.username')}
                 fullWidth
                 autoFocus

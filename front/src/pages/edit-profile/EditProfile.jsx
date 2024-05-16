@@ -137,7 +137,7 @@ const EditProfile = () => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
-                  autoComplete="given-email"
+                  autoComplete="email"
                   name="email"
                   required
                   fullWidth
@@ -171,7 +171,7 @@ const EditProfile = () => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
-                  autoComplete="given-phone"
+                  autoComplete="tel"
                   name="phone"
                   fullWidth
                   defaultValue={user.phone || ''}
@@ -181,7 +181,7 @@ const EditProfile = () => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <DatePicker
-                  name="birth_date"
+                  name="bday"
                   id="birth_date"
                   label={t('register-form.form.birth-date')}
                   sx={{ width: '100%' }}
@@ -221,7 +221,7 @@ const EditProfile = () => {
                   </InputLabel>
                   <OutlinedInput
                     id="password_confirmation"
-                    autoComplete="new-password"
+                    autoComplete="current-password"
                     type={showConfirmPassword ? 'text' : 'password'}
                     name="password_confirmation"
                     label={t('edit-profile-form.form.confirm-password')}

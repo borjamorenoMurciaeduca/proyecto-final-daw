@@ -135,7 +135,7 @@ const Register = () => {
             <Grid container spacing={2}>
               <Grid container item xs={12}>
                 <TextField
-                  autoComplete="nickname"
+                  autoComplete="username"
                   fullWidth
                   name="username"
                   required
@@ -178,7 +178,7 @@ const Register = () => {
                   </InputLabel>
                   <OutlinedInput
                     id="password_confirmation"
-                    autoComplete="new-password"
+                    autoComplete="current-password"
                     required
                     type={showConfirmPassword ? 'text' : 'password'}
                     name="password_confirmation"
@@ -236,7 +236,7 @@ const Register = () => {
                       </Grid>
                       <Grid item xs={12}>
                         <TextField
-                          autoComplete="given-mail"
+                          autoComplete="email"
                           name="email"
                           placeholder="example@gmail.com"
                           fullWidth
@@ -247,7 +247,7 @@ const Register = () => {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
-                          autoComplete="given-phone"
+                          autoComplete="tel"
                           name="phone"
                           placeholder="642 xxx xxx"
                           fullWidth
