@@ -28,6 +28,7 @@ import { Logout, Settings } from '@mui/icons-material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Outlet, Link as RouterLink, useNavigate } from 'react-router-dom';
+import MaterialDayNight from './components/MaterialDayNight';
 
 function HideOnScroll(props) {
   const { children } = props;
@@ -152,13 +153,19 @@ const Layout = (props) => {
                   }}
                 >
                   <MenuItem onClick={handleClickHome}>
-                    <Typography textAlign="center">{t('page.home.title')}</Typography>
+                    <Typography textAlign="center">
+                      {t('page.home.title')}
+                    </Typography>
                   </MenuItem>
                   <MenuItem onClick={handleClickHomes}>
-                    <Typography textAlign="center">{t('page.my-properties.title')}</Typography>
+                    <Typography textAlign="center">
+                      {t('page.my-properties.title')}
+                    </Typography>
                   </MenuItem>
                   <MenuItem onClick={handleClickFavoriteHomes}>
-                    <Typography textAlign="center">{t('page.favorite-properties.title')}</Typography>
+                    <Typography textAlign="center">
+                      {t('page.favorite-properties.title')}
+                    </Typography>
                   </MenuItem>
                 </Menu>
               </Box>
@@ -181,7 +188,6 @@ const Layout = (props) => {
                   {t('page.favorite-properties.title')}
                 </Button>
               </Box>
-              
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip
                   title={`${t('tooltip.open-settings')} - ${user.username}`}
@@ -240,6 +246,15 @@ const Layout = (props) => {
                   <MenuItem style={{ pointerEvents: 'none' }}>
                     <Avatar /> {user.username || ''}
                   </MenuItem>
+                  <Box
+                    sx={{
+                      display: { xs: 'block', md: 'none' },
+                      px: 2,
+                      py: 1,
+                    }}
+                  >
+                    <MaterialDayNight />
+                  </Box>
                   <Divider />
                   <MenuItem onClick={handleClickProfile}>
                     <ListItemIcon>
@@ -258,7 +273,13 @@ const Layout = (props) => {
               <Box sx={{ flexGrow: 0, ml: 1 }}>
                 <LanguageFlagSelector />
               </Box>
-              <Box sx={{ flexGrow: 0, ml: 1 }}>
+              <Box
+                sx={{
+                  flexGrow: 0,
+                  ml: 1,
+                  display: { xs: 'none', md: 'block' },
+                }}
+              >
                 <DayNightSwitch />
               </Box>
             </Toolbar>
