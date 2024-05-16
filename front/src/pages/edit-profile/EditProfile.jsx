@@ -1,6 +1,6 @@
-import useNotification from '@/hooks/useNotification';
 import useUser from '@/hooks/useUser';
 import userService from '@/services/userService';
+import parser from '@/utils/parser';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
   Box,
@@ -20,17 +20,18 @@ import {
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
+import 'dayjs/locale/es';
+import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import 'dayjs/locale/es';
 
 const EditProfile = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { user, setUser } = useUser();
-  const { notify } = useNotification();
+  const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -39,7 +40,7 @@ const EditProfile = () => {
     setShowConfirmPassword((show) => !show);
   const handleMouseDownPassword = (event) => event.preventDefault();
 
-  const handleSubmitProfile = async (e) => {
+  const handleEditProfile = async (e) => {
     e.preventDefault();
     const dataForm = new FormData(e.currentTarget);
     const credentials = {
@@ -48,33 +49,36 @@ const EditProfile = () => {
       name: dataForm.get('name'),
       surname: dataForm.get('surname'),
       phone: dataForm.get('phone'),
-      birth_date: dataForm.get('birth_date'),
+      birth_date: parser.DateToInsert(dataForm.get('birth_date')),
     };
     setLoading(true);
+
     try {
       if (credentials.password !== credentials.password_confirmation)
         throw new Error('Las contraseñas no coinciden');
 
       const res = await userService.editProfile(credentials);
 
-      if (res.status == 400) throw new Error('No se ha podido actualizar el usuario');
+      if (res.status == 400)
+        throw new Error('No se ha podido actualizar el usuario');
       if (res.error) throw new Error(res.error);
 
       e.target.password.value = '';
       e.target.password_confirmation.value = '';
 
-      setUser((prev) => ({ ...prev, ...res.data }))
+      setUser((prev) => ({ ...prev, ...res.data }));
       setTimeout(() => {
-        setLoading(false)
+        setLoading(false);
         navigate('/app');
-        notify('Usuario actualizado correctamente', 'success');
+        enqueueSnackbar('Usuario actualizado correctamente', {
+          variant: 'success',
+        });
       }, 1000);
     } catch (error) {
-      if (error.response?.data?.message) {
-        notify(error.response?.data?.message, 'error');
-      } else {
-        notify(error.message, 'error');
-      }
+      error.response?.data?.message
+        ? enqueueSnackbar(error.response?.data?.message, { variant: 'error' })
+        : enqueueSnackbar(error.message, { variant: 'error' });
+
       console.warn(error);
     } finally {
       setTimeout(() => setLoading(false), 1000);
@@ -82,9 +86,9 @@ const EditProfile = () => {
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='es'>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
       <Typography variant="h2" component="h1">
-        👋 {user.username}
+        👋 {user.username || 'Usuario'}
       </Typography>
       <Container
         maxWidth="md"
@@ -106,10 +110,12 @@ const EditProfile = () => {
               alignItems="center"
               component="form"
               noValidate
-              onSubmit={handleSubmitProfile}
+              onSubmit={handleEditProfile}
             >
               <Grid item xs={12}>
-                <Typography variant="h6">{t('edit-profile-form.title')}</Typography>
+                <Typography variant="h6">
+                  {t('edit-profile-form.title')}
+                </Typography>
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
@@ -167,7 +173,13 @@ const EditProfile = () => {
                 />
               </Grid>
               <Grid item xs={12} md={6}>
-                <DatePicker name='birth_date' id="birth_date" label={t('register-form.form.birth-date')} sx={{ width: '100%' }} defaultValue={dayjs(user.birth_date)} />
+                <DatePicker
+                  name="birth_date"
+                  id="birth_date"
+                  label={t('register-form.form.birth-date')}
+                  sx={{ width: '100%' }}
+                  defaultValue={dayjs(user.birth_date)}
+                />
               </Grid>
               <Grid item xs={12} md={6}>
                 <FormControl fullWidth>
@@ -227,7 +239,12 @@ const EditProfile = () => {
               </Grid>
               <Grid item xs={12}>
                 <Box sx={{ position: 'relative' }}>
-                  <Button type="submit" fullWidth variant="contained" disabled={loading}>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    disabled={loading}
+                  >
                     {t('edit-profile-form.form.save')}
                   </Button>
                   {loading && (

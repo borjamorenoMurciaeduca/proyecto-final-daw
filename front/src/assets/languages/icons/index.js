@@ -3,9 +3,9 @@ import es from './es.png';
 import defaultFlag from './default-flag.png';
 
 const flags = {
-    en,
-    es,
-    defaultFlag
+  en,
+  es,
+  defaultFlag,
 };
 
 export default flags;

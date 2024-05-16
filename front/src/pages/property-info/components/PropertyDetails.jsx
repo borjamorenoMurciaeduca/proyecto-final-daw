@@ -25,7 +25,13 @@ const PropertyDetails = ({ propertyId }) => {
         setOpen={setOpen}
         enableShare
       />
-      <DialogShare open={open} setOpen={setOpen} propertyId={propertyId} isShared={property.is_shared} propertyURL={property.share_url} />
+      <DialogShare
+        open={open}
+        setOpen={setOpen}
+        propertyId={propertyId}
+        isShared={property.is_shared}
+        propertyURL={property.share_url}
+      />
     </>
   );
 };

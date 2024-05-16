@@ -1,4 +1,3 @@
-import useNotification from '@/hooks/useNotification';
 import useProperties from '@/hooks/useProperties';
 import propertyService from '@/services/propertyService';
 import parser from '@/utils/parser';
@@ -24,6 +23,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
+import { useSnackbar } from 'notistack';
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 const Transition = forwardRef(function Transition(props, ref) {
@@ -34,7 +34,7 @@ const DialogShare = ({ open, setOpen, isShared, propertyURL, propertyId }) => {
   const [loading, setLoading] = useState(false);
   const [shareUrl, setShareUrl] = useState('');
   const { updateProperty } = useProperties();
-  const { notify } = useNotification();
+  const { enqueueSnackbar } = useSnackbar();
   const theme = useTheme();
   const lessThanSm = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -60,6 +60,9 @@ const DialogShare = ({ open, setOpen, isShared, propertyURL, propertyId }) => {
           is_shared: true,
         });
         handleCopyToClipboard(null, data.share_url);
+        enqueueSnackbar('URL generada satisfactoriamente', {
+          variant: 'success',
+        });
       }, 800);
     } catch (error) {
       console.warn('Error sharing property', error);
@@ -78,9 +81,12 @@ const DialogShare = ({ open, setOpen, isShared, propertyURL, propertyId }) => {
     navigator.clipboard
       .writeText(urlToCopy)
       .then(() => {
-        notify('URL copiada al portapapeles', 'success');
+        enqueueSnackbar('URL copiada al portapapeles', { variant: 'info' });
       })
       .catch((error) => {
+        enqueueSnackbar('No es posible copiar la url en el portapapeles', {
+          variant: 'error',
+        });
         console.warn(error);
       });
   };

@@ -1,11 +1,8 @@
 import Copyright from '@/components/Copyright';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import LanguageSelector from '@/components/LanguageSelector';
-import useNotification from '@/hooks/useNotification';
 import userService from '@/services/userService';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {
   Accordion,
@@ -28,11 +25,15 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import { DatePicker } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import 'dayjs/locale/es';
+import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { DatePicker } from '@mui/x-date-pickers';
-import 'dayjs/locale/es';
+import parser from '@/utils/parser';
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -40,7 +41,7 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { t } = useTranslation();
-  const { notify } = useNotification();
+  const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -52,6 +53,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     const dataForm = new FormData(e.currentTarget);
     const credentials = {
       username: dataForm.get('username'),
@@ -61,8 +63,9 @@ const Register = () => {
       surname: dataForm.get('surname'),
       email: dataForm.get('email'),
       phone: dataForm.get('phone'),
-      birth_date: dataForm.get('birth_date'),
+      birth_date: parser.DateToInsert(dataForm.get('birth_date')),
     };
+
     try {
       if (credentials.password !== credentials.password_confirmation)
         throw new Error('Las contraseñas no coinciden');
@@ -73,19 +76,21 @@ const Register = () => {
       }
 
       if (res.status === 201) {
-
         setTimeout(() => {
-          notify('Usuario registrado correctamente', 'success');
+          enqueueSnackbar('Usuario registrado correctamente', {
+            variant: 'success',
+          });
           navigate('/auth');
         }, 1000);
       }
+
       e.target.username.value = '';
       e.target.password.value = '';
       e.target.password_confirmation.value = '';
     } catch (error) {
       console.warn(error);
       let msg = error.response?.data?.message || error.message;
-      notify(msg, 'error');
+      enqueueSnackbar(msg, { variant: 'error' });
       setError(msg);
       setTimeout(() => {
         setError(null);
@@ -98,7 +103,7 @@ const Register = () => {
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='es'>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
       <Container
         maxWidth="sm"
         component="main"
@@ -128,7 +133,7 @@ const Register = () => {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit}>
             <Grid container spacing={2}>
-              <Grid container item xs={12} >
+              <Grid container item xs={12}>
                 <TextField
                   autoComplete="given-name"
                   fullWidth
@@ -204,7 +209,9 @@ const Register = () => {
                     aria-controls="panel-additional-info"
                     id="panel-additional-info"
                   >
-                    <Typography>{t('register-form.form.additional-info')}</Typography>
+                    <Typography>
+                      {t('register-form.form.additional-info')}
+                    </Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <Grid container spacing={2}>
@@ -227,7 +234,7 @@ const Register = () => {
                           label={t('register-form.form.surname')}
                         />
                       </Grid>
-                      <Grid item xs={12} >
+                      <Grid item xs={12}>
                         <TextField
                           autoComplete="given-mail"
                           name="email"
@@ -249,7 +256,12 @@ const Register = () => {
                         />
                       </Grid>
                       <Grid item xs={12} md={6}>
-                        <DatePicker name='birth_date' id="birth_date" label={t('register-form.form.birth-date')} sx={{ width: "100%" }} />
+                        <DatePicker
+                          name="birth_date"
+                          id="birth_date"
+                          label={t('register-form.form.birth-date')}
+                          sx={{ width: '100%' }}
+                        />
                       </Grid>
                     </Grid>
                   </AccordionDetails>
@@ -257,7 +269,12 @@ const Register = () => {
               </Grid>
               <Grid item xs={12}>
                 <Box sx={{ position: 'relative' }}>
-                  <Button type="submit" fullWidth variant="contained" disabled={loading}>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    disabled={loading}
+                  >
                     {t('register-form.form.register')}
                   </Button>
                   {loading && (
@@ -287,10 +304,16 @@ const Register = () => {
                 spacing={2}
                 mt={1}
               >
-                <Grid container item xs={12} sm={6} justifyContent='flex-start'>
+                <Grid container item xs={12} sm={6} justifyContent="flex-start">
                   <LanguageSelector />
                 </Grid>
-                <Grid container item xs={12} sm={6} justifyContent={{ xs: "center", sm: "flex-end" }} >
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  sm={6}
+                  justifyContent={{ xs: 'center', sm: 'flex-end' }}
+                >
                   <Link component={RouterLink} to="/auth" variant="body2">
                     {t('register-form.login')}
                   </Link>

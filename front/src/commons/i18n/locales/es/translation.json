@@ -102,7 +102,8 @@
     },
     "prepare-inmueble-form": {
       "error": "Se ha producido un error al obtener los datos"
-    }
+    },
+    "logout": "¡Sesión cerrada con éxito!"
   },
   "property-info": {
     "header": "Detalles de la vivienda",

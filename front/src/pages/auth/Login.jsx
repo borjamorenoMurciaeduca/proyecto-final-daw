@@ -1,7 +1,6 @@
 import idealistaWatchLogo from '@/assets/logo/logo-idealistawatch.png';
 import Copyright from '@/components/Copyright';
 import LanguageSelector from '@/components/LanguageSelector.jsx';
-import useNotification from '@/hooks/useNotification';
 import useProperties from '@/hooks/useProperties.js';
 import useUser from '@/hooks/useUser';
 import propertyService from '@/services/propertyService';
@@ -26,6 +25,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
@@ -38,7 +38,7 @@ const Login = () => {
   const navigate = useNavigate();
   const { setProperties } = useProperties();
   const { setUser } = useUser();
-  const { notify } = useNotification();
+  const { enqueueSnackbar } = useSnackbar();
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
@@ -87,7 +87,14 @@ const Login = () => {
 
       setError(false);
       navigate('/app', { replace: true });
-      notify(`👋 Bienvenido de nuevo ${user.username}`, 'info');
+      enqueueSnackbar(`👋 Bienvenido de nuevo ${user.username}`, {
+        variant: 'info',
+        anchorOrigin: {
+          vertical: 'top',
+          horizontal: 'center',
+        },
+        autoHideDuration: 2000,
+      });
     } catch (error) {
       console.warn(error);
       setError('Error en las credenciales');

@@ -10,7 +10,7 @@ import {
 
 import { APP_NAME } from '@/commons/config/config.js';
 import DayNightSwitch from '@/components/DayNightSwitch.jsx';
-import { Outlet, } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 function HideOnScroll(props) {
   const { children } = props;
@@ -28,8 +28,14 @@ const LayoutNotLogged = (props) => {
       <HideOnScroll {...props}>
         <AppBar color="default">
           <Toolbar>
-            <Container maxWidth="lg" >
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Container maxWidth="lg">
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
                 <Typography
                   variant="h6"
                   noWrap
@@ -47,7 +53,7 @@ const LayoutNotLogged = (props) => {
                   </Box>
                 </Box>
               </Box>
-            </Container >
+            </Container>
           </Toolbar>
         </AppBar>
       </HideOnScroll>
