@@ -153,6 +153,7 @@ const AddButtonModal = () => {
           alignItems="center"
           sx={{
             overflowY: 'scroll',
+            scrollbarWidth: 'none',
             '&::-webkit-scrollbar': {
               display: 'none',
             },
