@@ -14,6 +14,7 @@ import {
   TextField,
   Tooltip,
   Typography,
+  Zoom,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
@@ -91,6 +92,11 @@ const AddButtonModal = () => {
     setTextValue('');
   };
 
+  const transitionDuration = {
+    enter: theme.transitions.duration.enteringScreen,
+    exit: theme.transitions.duration.leavingScreen,
+  };
+
   return (
     <Box
       sx={{
@@ -100,21 +106,27 @@ const AddButtonModal = () => {
         p: 0,
       }}
     >
-      <Fab
-        sx={{
-          bgcolor: 'navOr.main',
-          position: 'fixed',
-          // top: 90,
-          top: { xs: 'auto', md: 90 },
-          bottom: { xs: 40, md: 'auto' },
-          // right: 50,
-          right: { xs: 20, md: 20, lg: 50 },
+      <Zoom
+        in={!open}
+        timeout={transitionDuration}
+        style={{
+          transitionDelay: `${transitionDuration.exit}ms`,
         }}
-        aria-label="add"
-        onClick={handleOpen}
       >
-        <AddIcon />
-      </Fab>
+        <Fab
+          sx={{
+            bgcolor: 'navOr.main',
+            position: 'fixed',
+            top: { xs: 'auto', md: 90 },
+            bottom: { xs: 40, md: 'auto' },
+            right: { xs: 20, md: 20, lg: 50 },
+          }}
+          aria-label="add"
+          onClick={handleOpen}
+        >
+          <AddIcon />
+        </Fab>
+      </Zoom>
       <Dialog
         open={open}
         onClose={handleClose}
