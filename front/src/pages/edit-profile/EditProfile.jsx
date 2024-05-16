@@ -22,6 +22,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
 import { useSnackbar } from 'notistack';
+import { useRef } from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -34,7 +36,11 @@ const EditProfile = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const inputRef = useRef(null);
 
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleClickShowConfirmPassword = () =>
     setShowConfirmPassword((show) => !show);
@@ -144,6 +150,7 @@ const EditProfile = () => {
               <Grid item xs={12} md={6}>
                 <TextField
                   autoFocus
+                  inputRef={inputRef}
                   autoComplete="given-name"
                   name="name"
                   fullWidth
@@ -154,7 +161,7 @@ const EditProfile = () => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
-                  autoComplete="given-surname"
+                  autoComplete="family-name"
                   name="surname"
                   fullWidth
                   defaultValue={user.surname || ''}

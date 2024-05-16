@@ -10,6 +10,7 @@ import {
   Fab,
   Grid,
   IconButton,
+  Skeleton,
   TextField,
   Tooltip,
   Typography,
@@ -144,6 +145,7 @@ const AddButtonModal = () => {
         aria-describedby="modal-modal-description"
         fullScreen={lessThanMedium}
         maxWidth="md"
+        fullWidth
       >
         <Grid
           container
@@ -206,11 +208,26 @@ const AddButtonModal = () => {
               {t('addButtonModal.validation.error')}
             </Typography>
           )}
-          {!showForm && (
+          {showForm ? (
             <PropertyForm
               inmuebleData={inmuebleData}
               handleCloseDialog={handleClose}
             />
+          ) : (
+            <Grid
+              container
+              item
+              xs={12}
+              justifyContent="center"
+              alignItems="flex-start"
+              minHeight="200px"
+            >
+              <Skeleton
+                width={'100%'}
+                height={300}
+                sx={{ transform: 'scale(1)' }}
+              />
+            </Grid>
           )}
         </Grid>
       </Dialog>

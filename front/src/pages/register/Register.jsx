@@ -135,7 +135,7 @@ const Register = () => {
             <Grid container spacing={2}>
               <Grid container item xs={12}>
                 <TextField
-                  autoComplete="given-name"
+                  autoComplete="nickname"
                   fullWidth
                   name="username"
                   required
@@ -227,7 +227,7 @@ const Register = () => {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
-                          autoComplete="given-surname"
+                          autoComplete="family-name"
                           name="surname"
                           fullWidth
                           id="surname"
