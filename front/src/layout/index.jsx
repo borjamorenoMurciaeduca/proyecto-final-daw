@@ -29,6 +29,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Outlet, Link as RouterLink, useNavigate } from 'react-router-dom';
 import MaterialDayNight from './components/MaterialDayNight';
+import { useSnackbar } from 'notistack';
 
 function HideOnScroll(props) {
   const { children } = props;
@@ -46,6 +47,7 @@ const Layout = (props) => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const { user, setUser } = useUser();
   const { t } = useTranslation();
+  const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
@@ -80,6 +82,14 @@ const Layout = (props) => {
     handleCloseUserMenu();
     cookie.clear();
     navigate('/auth');
+    enqueueSnackbar(t('snackbar.logout'), {
+      variant: 'info',
+      anchorOrigin: {
+        vertical: 'top',
+        horizontal: 'center',
+      },
+      autoHideDuration: 2000,
+    });
   };
 
   const resetPage = () => setUser((prev) => ({ ...prev, currentPage: 1 }));

@@ -5,41 +5,45 @@ export const propertiesReducer = (state, action) => {
   //   payload: action.payload,
   // });
   switch (action.type) {
-    case "SET_PROPERTIES":
+    case 'SET_PROPERTIES':
       return {
         ...state,
         properties: action.payload,
       };
-    case "LOGOUT":
+    case 'LOGOUT':
       return {
         ...state,
         properties: [],
       };
-    case "UPDATE_NOTE":
+    case 'UPDATE_NOTE':
       const updatedNote = action.payload;
       const propertyIdToUpdateNote = updatedNote.property_id;
-      const updatedPropertiesWithUpdatedNote = state.properties.map(property => {
-        if (property.property_id === propertyIdToUpdateNote) {
-          const updatedNotes = property.notes.map(note => {
-            return note.id === updatedNote.id ? updatedNote : note;
-          });
-          return {
-            ...property,
-            notes: updatedNotes,
-          };
-        } else {
-          return property;
+      const updatedPropertiesWithUpdatedNote = state.properties.map(
+        (property) => {
+          if (property.property_id === propertyIdToUpdateNote) {
+            const updatedNotes = property.notes.map((note) => {
+              return note.id === updatedNote.id ? updatedNote : note;
+            });
+            return {
+              ...property,
+              notes: updatedNotes,
+            };
+          } else {
+            return property;
+          }
         }
-      });
+      );
       return {
         ...state,
         properties: updatedPropertiesWithUpdatedNote,
       };
     case 'REMOVE_NOTE':
       const noteIdToRemove = action.payload;
-      const updatedProperties = state.properties.map(property => {
+      const updatedProperties = state.properties.map((property) => {
         if (property.notes && property.notes.length > 0) {
-          const updatedNotes = property.notes.filter(note => note.id !== noteIdToRemove);
+          const updatedNotes = property.notes.filter(
+            (note) => note.id !== noteIdToRemove
+          );
           return {
             ...property,
             notes: updatedNotes,
@@ -55,7 +59,7 @@ export const propertiesReducer = (state, action) => {
     case 'ADD_NOTE':
       const newNote = action.payload;
       const propertyIdToAddNote = newNote.property_id;
-      const updatedPropertiesWithNewNote = state.properties.map(property => {
+      const updatedPropertiesWithNewNote = state.properties.map((property) => {
         if (property.property_id === propertyIdToAddNote) {
           return {
             ...property,
@@ -69,33 +73,33 @@ export const propertiesReducer = (state, action) => {
         ...state,
         properties: updatedPropertiesWithNewNote,
       };
-    case "ADD_PROPERTY":
+    case 'ADD_PROPERTY':
       return {
         ...state,
         properties: [...state.properties, action.payload],
       };
-    case "UPDATE_PROPERTY":
+    case 'UPDATE_PROPERTY':
       return {
         ...state,
         properties: state.properties.map((el) =>
           el.property_id == action.payload.property_id
             ? (el = {
-              ...el,
-              ...action.payload,
-            })
-            : el,
+                ...el,
+                ...action.payload,
+              })
+            : el
         ),
       };
-    case "CHANGE_FAVORITE_PROPERTY":
+    case 'CHANGE_FAVORITE_PROPERTY':
       return {
         ...state,
         properties: state.properties.map((el) =>
           el.property_id == action.payload.property_id
             ? (el = {
-              ...el,
-              favorite: action.payload.favorite,
-            })
-            : el,
+                ...el,
+                favorite: action.payload.favorite,
+              })
+            : el
         ),
       };
     default:

@@ -1,6 +1,5 @@
 import house from '@/assets/house.jpg';
 import i18n from '@/commons/i18n/i18n';
-import useNotification from '@/hooks/useNotification';
 import useProperties from '@/hooks/useProperties';
 import propertyService from '@/services/propertyService';
 import parser from '@/utils/parser';
@@ -17,6 +16,7 @@ import {
   Typography,
 } from '@mui/material';
 import { debounce } from 'lodash';
+import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 
 const PropertyCard = ({ property }) => {
@@ -32,19 +32,20 @@ const PropertyCard = ({ property }) => {
 
   const navigate = useNavigate();
   const { changeFavoriteProperty } = useProperties();
-  const { notify } = useNotification();
+  const { enqueueSnackbar } = useSnackbar();
   const { t } = i18n;
 
   const handleCLickCard = (id) => {
     navigate(`/app/property/${id}`);
   };
-
   const handleFavorite = debounce(async (id) => {
     const { data } = await propertyService.changeFavoriteProperty(id);
     changeFavoriteProperty(data);
-    notify(
-      data.favorite ? t('favorite.added') : t('favorite.removed'),
-      data.favorite ? 'success' : 'warning'
+    enqueueSnackbar(
+      data.favorite
+        ? `${t('favorite.added')} ${id}`
+        : `${t('favorite.removed')} ${id}`,
+      { variant: data.favorite ? 'success' : 'warning' }
     );
   }, 250);
 

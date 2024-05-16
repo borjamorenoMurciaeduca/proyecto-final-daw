@@ -66,7 +66,7 @@ export const PropertiesProvider = ({ children }) => {
       type: 'CHANGE_FAVORITE_PROPERTY',
       payload: property_id,
     });
-  }
+  };
 
   return (
     <PropertiesContext.Provider
@@ -75,11 +75,11 @@ export const PropertiesProvider = ({ children }) => {
         setProperties,
         handleLogout,
         updateNote,
-        removeNote, 
+        removeNote,
         addNote,
         addProperty,
         updateProperty,
-        changeFavoriteProperty
+        changeFavoriteProperty,
       }}
     >
       {children}

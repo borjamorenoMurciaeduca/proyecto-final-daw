@@ -23,9 +23,8 @@ const PriceHistory = ({ propertyId }) => {
   useEffect(() => {
     (async () => {
       try {
-        let { data: propertyPrices } = await propertyService.getPropertyPrices(
-          propertyId
-        );
+        let { data: propertyPrices } =
+          await propertyService.getPropertyPrices(propertyId);
         setSeries([]);
         setXAxis([]);
         propertyPrices.prices

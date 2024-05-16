@@ -102,7 +102,8 @@
     },
     "prepare-inmueble-form": {
       "error": "An error occurred while obtaining data"
-    }
+    },
+    "logout": "Logout successful"
   },
   "property-info": {
     "header": "Details of property",

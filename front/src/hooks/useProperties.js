@@ -1,5 +1,5 @@
-import { PropertiesContext } from "@/contexts/PropertiesProvider";
-import { useContext } from "react";
+import { PropertiesContext } from '@/contexts/PropertiesProvider';
+import { useContext } from 'react';
 
 const useProperties = () => {
   const {

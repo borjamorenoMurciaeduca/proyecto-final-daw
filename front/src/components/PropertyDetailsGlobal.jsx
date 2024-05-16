@@ -29,7 +29,7 @@ const PropertyDetailsGlobal = ({
     const fullURL = parser.getFullURL(property.share_url);
     const data = `Descubre esta propiedad encontrada con IdealistaWatch, en ${property.location} por solo ${parser.FormatPrice(property.price, i18n.language)} -  ${fullURL}`;
     window.open(`https://twitter.com/intent/tweet?url=${data}`);
-  }
+  };
 
   return (
     <Grid item xs={12} md={8} justifyContent="center" alignSelf="center" pb={5}>
@@ -103,7 +103,14 @@ const PropertyDetailsGlobal = ({
             <Button size="small" color="primary" onClick={() => setOpen(true)}>
               {t('property-info.details.share')}
             </Button>
-            <Tooltip title={property.share_url ? t('tooltip.twitter') : t('tooltip.no-twitter')} placement='bottom'>
+            <Tooltip
+              title={
+                property.share_url
+                  ? t('tooltip.twitter')
+                  : t('tooltip.no-twitter')
+              }
+              placement="bottom"
+            >
               <span>
                 <IconButton
                   disabled={!property.share_url}
@@ -114,7 +121,7 @@ const PropertyDetailsGlobal = ({
                   <Twitter />
                 </IconButton>
               </span>
-            </Tooltip >
+            </Tooltip>
           </CardActions>
         )}
       </Card>

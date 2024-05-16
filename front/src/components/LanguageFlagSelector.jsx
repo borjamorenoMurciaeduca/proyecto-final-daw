@@ -16,7 +16,6 @@ const LanguageFlagSelector = () => {
   };
 
   const getLanguageFlag = (lng, size = 24, isMain = false) => {
-
     let flagIcon;
     if (lng) {
       flagIcon = flags[lng];

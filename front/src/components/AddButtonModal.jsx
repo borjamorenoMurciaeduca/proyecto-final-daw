@@ -1,4 +1,3 @@
-import { useNotification } from '@/hooks/useNotification.js';
 import propertyService from '@/services/propertyService.js';
 import inputValidatorInmueble from '@/utils/inputValidatorInmueble.js';
 import AddIcon from '@mui/icons-material/Add';
@@ -18,6 +17,7 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
+import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropertyForm from './PropertyForm';
@@ -28,7 +28,7 @@ const AddButtonModal = () => {
   const [error, setError] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [inmuebleData, setInmuebleData] = useState(null);
-  const { notify } = useNotification();
+  const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
   const theme = useTheme();
   const lessThanMedium = useMediaQuery(theme.breakpoints.down('md'));
@@ -55,7 +55,7 @@ const AddButtonModal = () => {
   const handleSearch = async () => {
     const idInmueble = inputValidatorInmueble.validateIdealistaURL(textValue);
     if (idInmueble.length > 0) {
-      notify(t('snackbar.url-validation.ok'), 'success');
+      enqueueSnackbar(t('snackbar.url-validation.ok'), { variant: 'success' });
       try {
         const data = await propertyService.prepareInmuebleForm(idInmueble);
         if (data?.dataStatus == 'ok') {
@@ -64,19 +64,27 @@ const AddButtonModal = () => {
         } else {
           setShowForm(false);
           if (data?.dataStatus == 'baja') {
-            notify(t('snackbar.url-validation.baja'), 'info');
+            enqueueSnackbar(t('snackbar.url-validation.baja'), {
+              variant: 'info',
+            });
           } else {
-            notify(t('snackbar.url-validation.ko'), 'error');
+            enqueueSnackbar(t('snackbar.url-validation.ko'), {
+              variant: 'info',
+            });
           }
         }
       } catch (error) {
-        notify(t('snackbar.prepare-inmueble-form.error'), 'error');
+        enqueueSnackbar(t('snackbar.prepare-inmueble-form.error'), {
+          variant: 'error',
+        });
         console.error('Error al obtener datos:', error);
       }
     } else {
       setError(true);
       setShowForm(false);
-      notify(t('snackbar.url-validation.ko-format'), 'error');
+      enqueueSnackbar(t('snackbar.url-validation.ko-format'), {
+        variant: 'error',
+      });
     }
   };
 

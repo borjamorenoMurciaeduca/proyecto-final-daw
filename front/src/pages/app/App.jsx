@@ -1,10 +1,7 @@
 import AddButtonModal from '@/components/AddButtonModal';
 import PropertyCard from '@/components/PropertyCard';
 import useProperties from '@/hooks/useProperties';
-import {
-  Grid,
-  Typography,
-} from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 const App = () => {
@@ -12,7 +9,9 @@ const App = () => {
   const { t } = useTranslation();
 
   const propertiesMax = 6;
-  const sortedProperties = properties.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  const sortedProperties = properties.sort(
+    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+  );
   const propertiesPage = sortedProperties.slice(0, propertiesMax);
 
   return (

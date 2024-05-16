@@ -1,4 +1,3 @@
-import { useNotification } from '@/hooks/useNotification';
 import useProperties from '@/hooks/useProperties.js';
 import propertyService from '@/services/propertyService.js';
 import {
@@ -11,6 +10,7 @@ import {
   Snackbar,
   TextField,
 } from '@mui/material';
+import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import UnstyledTextareaIntroduction from './TextAreaAutoSize';
@@ -25,7 +25,7 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
   const [severity, setSeverity] = useState('success');
   const { addProperty } = useProperties();
   const { t } = useTranslation();
-  const { notify } = useNotification();
+  const { enqueueSnackbar } = useSnackbar();
 
   const [propertiesValues, setPropertiesValues] = useState({
     property_id: '',
@@ -86,7 +86,7 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
        */
       if (res.status === 201) {
         addProperty(res.data);
-        notify('Vivienda añadida con éxito', 'success');
+        enqueueSnackbar('Vivienda añadida con éxito', { variant: 'success' });
         handleCloseDialog();
       }
     } catch (error) {
