@@ -17,12 +17,17 @@ $ sudo apt install apache2 mysql-server php libapache2-mod-php php-mysql
 $ sudo apt install phpmyadmin
 $ sudo apt install python3
 $ sudo apt install python3-pip
-$ pip install httpx parsel
+-- Dependecias de python
+$ pip3 install httpx parsel
+or
+$ sudo apt install python3-httpx python3-parsel
 ```
+
+_Si usamos pip3 y tenemos un error a la hora de instalar podemos eliminar el archivo `$ sudo rm /usr/lib/python3.11/EXTERNALLY-MANAGED` y en nuestro archivo de nuestra shell, .bashrc .zshrc etc. añadimos `export PATH="$PATH:/home/{usuario}/.local/bin"`_
 
 _Comprobamos que el archivo ./backend/storage/python-scrapping.py tiene privilegios de lectura y ejecución, de no ser así ejecturar `$ chmod +rx python-scrapping.py`_
 
-_Debemos tener un usuario en mysql con todos los privilegios habilitados_
+_Debemos tener un usuario en MySQL con todos los privilegios habilitados_
 
 ### Laravel y composer
 
