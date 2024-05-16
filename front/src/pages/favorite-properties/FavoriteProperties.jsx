@@ -66,7 +66,7 @@ const FavoriteProperties = () => {
           {!lessThanMedium &&
               <>
                 <Grid item xs={12} sm={6} lg={4} >
-                  <FakePropertyCard disabledCard={true} />
+                  <FakePropertyCard disabledCard />
                 </Grid>
               </>
           }
@@ -76,7 +76,7 @@ const FavoriteProperties = () => {
             {!lessThanMedium &&
               <>
                 <Grid item xs={12} sm={6} lg={4} >
-                  <FakePropertyCard disabledCard={true} />
+                  <FakePropertyCard disabledCard />
                 </Grid>
               </>
             }

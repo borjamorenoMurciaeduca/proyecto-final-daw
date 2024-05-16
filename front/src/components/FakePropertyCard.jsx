@@ -13,13 +13,10 @@ import house from '@/assets/house.jpg'
 import parser from '@/utils/parser';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import i18n from '@/commons/i18n/i18n';
-import { useState } from 'react';
 import { keyframes } from '@emotion/react';
 import { useTranslation } from 'react-i18next';
 
 const FakePropertyCard = ({disabledCard = false}) => {
-  const [openTooltip] = useState(!disabledCard);
-  const [showCardDisabled] = useState(disabledCard);
   const { t } = useTranslation();
   const fakeProperty = { 
     property_id: '99999', 
@@ -27,7 +24,7 @@ const FakePropertyCard = ({disabledCard = false}) => {
     price: '9999', 
     title:  t('fakePropertyCard.title'), 
     created_at: new Date(), 
-    favorite: !showCardDisabled,
+    favorite: !disabledCard,
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate sapien nec. Ornare quam viverra orci sagittis. Et netus et malesuada fames ac. Neque gravida in fermentum et sollicitudin ac orci phasellus egestas. Phasellus egestas tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Mauris in aliquam sem fringilla ut morbi tincidunt. Vitae ultricies leo integer malesuada nunc vel. Euismod quis viverra nibh cras pulvinar mattis nunc sed blandit. Nunc consequat interdum varius sit amet mattis vulputate enim nulla. Pellentesque adipiscing commodo elit at imperdiet dui. Placerat orci nulla pellentesque dignissim enim sit amet venenatis urna. Odio tempor orci dapibus ultrices in. Diam vulputate ut pharetra sit amet aliquam. At elementum eu facilisis sed odio morbi quis commodo odio. Ultricies leo integer malesuada nunc vel risus commodo viverra maecenas. Vitae aliquet nec ullamcorper sit amet risus nullam. Sed adipiscing diam donec adipiscing tristique. Nec feugiat nisl pretium fusce id velit.' };
   const { 
     property_id, 
@@ -52,11 +49,11 @@ const FakePropertyCard = ({disabledCard = false}) => {
     <Card sx={{
       height: '100%', 
       maxHeight: '350px',
-      opacity: showCardDisabled ? 0.5 : 1,
-      boxShadow: showCardDisabled ? '0px 2px 4px rgba(0, 0, 0, 0.1)' : '0px 2px 10px rgba(0, 0, 0, 0.2)',
-      pointerEvents: showCardDisabled ? 'none' : 'auto',
+      opacity: disabledCard ? 0.5 : 1,
+      boxShadow: disabledCard ? '0px 2px 4px rgba(0, 0, 0, 0.1)' : '0px 2px 10px rgba(0, 0, 0, 0.2)',
+      pointerEvents: disabledCard ? 'none' : 'auto',
       '&:hover': {
-        boxShadow: showCardDisabled ? '0px 2px 4px rgba(0, 0, 0, 0.1)' : '0px 4px 20px rgba(0, 0, 0, 0.3)',
+        boxShadow: disabledCard ? '0px 2px 4px rgba(0, 0, 0, 0.1)' : '0px 4px 20px rgba(0, 0, 0, 0.3)',
       },
     }}>
       <CardActionArea>
@@ -103,8 +100,8 @@ const FakePropertyCard = ({disabledCard = false}) => {
         <Tooltip 
           title={t('favorite.tooltip.helper-click')} 
           arrow placement="bottom" 
-          open={openTooltip} 
-          sx={{ animation: !showCardDisabled ? `${growShrink} 1s infinite` : '' }}
+          open={!disabledCard} 
+          sx={{ animation: !disabledCard ? `${growShrink} 1s infinite` : '' }}
           >
           <IconButton aria-label={t('favorite.tooltip.helper-click')}>
             <FavoriteIcon color={favorite ? "error" : "disabled"} />
