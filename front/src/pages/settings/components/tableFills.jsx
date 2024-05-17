@@ -1,4 +1,5 @@
 import parser from '@/utils/parser';
+import { Button } from '@mui/material';
 
 export const columns = [
   {
@@ -45,6 +46,21 @@ export const columns = [
     name: 'created_at',
     label: 'Fecha de creación',
   },
+  {
+    name: 'actions',
+    label: 'Acciones',
+    options: {
+      filter: false,
+      sort: false,
+      customBodyRender: () => {
+        return (
+          <Button variant="contained" color="primary">
+            Accion
+          </Button>
+        );
+      },
+    },
+  },
 ];
 
 export const createRows = (data) => {
@@ -56,6 +72,7 @@ export const createRows = (data) => {
         location,
         share_url: !share_url ? '❌' : share_url,
         created_at: parser.DateReceived(created_at),
+        actions: !share_url ? '❌' : share_url,
       };
     }
   );
