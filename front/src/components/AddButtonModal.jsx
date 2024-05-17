@@ -26,6 +26,7 @@ import PropertyForm from './PropertyForm';
 const AddButtonModal = () => {
   const [open, setOpen] = useState(false);
   const [textValue, setTextValue] = useState('');
+  const [inputDisabled, setInputDisabled] = useState(false);
   const [error, setError] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [inmuebleData, setInmuebleData] = useState(null);
@@ -50,12 +51,12 @@ const AddButtonModal = () => {
     const value = event.target.value;
     setTextValue(value);
     setError(false);
-    setShowForm(false);
   };
 
   const handleSearch = async () => {
     const idInmueble = inputValidatorInmueble.validateIdealistaURL(textValue);
     if (idInmueble.length > 0) {
+      setInputDisabled(true);
       enqueueSnackbar(t('snackbar.url-validation.ok'), { variant: 'success' });
       try {
         const data = await propertyService.prepareInmuebleForm(idInmueble);
@@ -83,6 +84,7 @@ const AddButtonModal = () => {
     } else {
       setError(true);
       setShowForm(false);
+      setInputDisabled(false);
       enqueueSnackbar(t('snackbar.url-validation.ko-format'), {
         variant: 'error',
       });
@@ -99,6 +101,7 @@ const AddButtonModal = () => {
     setShowForm(false);
     setError(false);
     setTextValue('');
+    setInputDisabled(false);
   };
 
   const transitionDuration = {
@@ -181,6 +184,7 @@ const AddButtonModal = () => {
               onChange={handleTextChange}
               onKeyDown={handleKeyPress}
               inputProps={{ 'aria-label': t('addButtonModal.url') }}
+              disabled={inputDisabled}
             />
           </Grid>
           <Grid container item xs={2} direction={'row'} wrap="nowrap" p={0}>
