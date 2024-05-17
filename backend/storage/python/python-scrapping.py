@@ -63,21 +63,13 @@ def parse_property(response: httpx.Response, property_id: str) -> Dict:
             for feat in features
         ]
 
-    # Images
-    image_data = re.findall(
-        "fullScreenGalleryPics\s*:\s*(\[.+?\]),", 
-        response.text
-    )[0]
-    images = json.loads(re.sub(r'(\w+?):([^/])', r'"\1":\2', image_data))
-    data['images'] = defaultdict(list)
-    data['plans'] = []
-    for image in images:
-        url = urljoin(str(response.url), image['imageUrl'])
-        if image['isPlan']:
-            data['plans'].append(url)
-        else:
-            data['images'][image['tag']].append(url)
+    # Image
+    data['img_url'] = selector.css(
+        '.main-image .main-image_first picture img::attr(src)'
+    ).get("")
+
     data["status"] = "ok"
+
     return data
 
 def parse_property_error(response: httpx.Response) -> Dict:

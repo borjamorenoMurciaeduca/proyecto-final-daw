@@ -38,6 +38,7 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
     storage_room: false,
     bath_rooms: '',
     description: '',
+    url_image: '',
   });
 
   useEffect(() => {
@@ -53,6 +54,7 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
         storage_room: inmuebleData?.trastero || false,
         bath_rooms: inmuebleData?.banios || '',
         description: inmuebleData.descripcion || '',
+        url_image: inmuebleData.url_image || '',
       });
     }
   }, [inmuebleData]);

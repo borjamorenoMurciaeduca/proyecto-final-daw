@@ -25,6 +25,7 @@ const createInmueble = (data, idioma = 'es') => {
     inmueble.precio = data?.data?.price;
     inmueble.currency = data?.data?.currency;
     inmueble.descripcion = data?.data?.description;
+    inmueble.url_image = data?.data?.img_url;
 
     let caracteristicasBasicas =
       data?.data?.features['Características básicas'];

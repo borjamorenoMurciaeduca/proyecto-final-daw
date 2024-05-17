@@ -27,7 +27,12 @@ const PropertyDetailsGlobal = ({
   const { t } = useTranslation();
   const handleTwitter = () => {
     const fullURL = parser.getFullURL(property.share_url);
-    const data = `Descubre esta propiedad encontrada con IdealistaWatch, en ${property.location} por solo ${parser.FormatPrice(property.price, i18n.language)} -  ${fullURL}`;
+    const data = `Descubre esta propiedad encontrada con IdealistaWatch, en ${
+      property.location
+    } por solo ${parser.FormatPrice(
+      property.price,
+      i18n.language
+    )} -  ${fullURL}`;
     window.open(`https://twitter.com/intent/tweet?url=${data}`);
   };
 
@@ -37,9 +42,7 @@ const PropertyDetailsGlobal = ({
         <CardMedia
           component="img"
           height="340"
-          // image={propertie.url_image}
-          // image="https://img4.idealista.com/blur/WEB_DETAIL_TOP-L-L/0/id.pro.es.image.master/83/4a/70/1208340357.webp"
-          image={house}
+          image={property.url_image ? property.url_image : house}
           alt="Inmueble img"
         />
         <CardContent>
