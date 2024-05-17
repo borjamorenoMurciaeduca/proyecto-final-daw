@@ -102,6 +102,18 @@ export const propertiesReducer = (state, action) => {
             : el
         ),
       };
+    case 'DELETE_PROPERTIES':
+      return {
+        ...state,
+        properties: state.properties.filter(
+          (el) => !action.payload.includes(el.property_id)
+        ),
+      };
+    case 'DELETE_PROPERTY':
+      return {
+        ...state,
+        properties: state.properties.filter((el) => el.property_id !== action),
+      };
     default:
       return state;
   }

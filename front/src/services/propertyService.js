@@ -56,6 +56,16 @@ const changeFavoriteProperty = async (property_id) => {
   return data;
 };
 
+const deleteMultipleProperties = async (propertiesIds) => {
+  let { data } = await axiosInterceptor.delete(
+    `${baseURL}properties/delete-multiple`,
+    {
+      data: { ids: propertiesIds },
+    }
+  );
+  return data;
+};
+
 export default {
   addProperty,
   prepareInmuebleForm,
@@ -64,4 +74,5 @@ export default {
   shareProperty,
   getShareProperty,
   changeFavoriteProperty,
+  deleteMultipleProperties,
 };

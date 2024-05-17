@@ -12,6 +12,7 @@ const useProperties = () => {
     handleLogout,
     updateProperty,
     changeFavoriteProperty,
+    deleteProperties,
   } = useContext(PropertiesContext);
   return {
     state,
@@ -24,6 +25,7 @@ const useProperties = () => {
     handleLogout,
     updateProperty,
     changeFavoriteProperty,
+    deleteProperties,
   };
 };
 export default useProperties;

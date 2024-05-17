@@ -57,7 +57,7 @@ const Layout = (props) => {
 
   const handleClickProfile = () => {
     handleCloseUserMenu();
-    navigate('/app/edit-profile');
+    navigate('/app/settings');
   };
 
   const handleClickHome = () => {

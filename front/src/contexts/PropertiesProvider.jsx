@@ -68,6 +68,13 @@ export const PropertiesProvider = ({ children }) => {
     });
   };
 
+  const deleteProperties = (properties) => {
+    dispatch({
+      type: 'DELETE_PROPERTIES',
+      payload: properties,
+    });
+  };
+
   return (
     <PropertiesContext.Provider
       value={{
@@ -80,6 +87,7 @@ export const PropertiesProvider = ({ children }) => {
         addProperty,
         updateProperty,
         changeFavoriteProperty,
+        deleteProperties,
       }}
     >
       {children}

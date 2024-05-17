@@ -1,9 +1,9 @@
 import Layout from '@/layout';
 import App from '@/pages/app/App';
-import EditProfile from '@/pages/edit-profile/EditProfile';
 import FavoriteProperties from '@/pages/favorite-properties/FavoriteProperties';
 import MyProperties from '@/pages/my-properties/MyProperties';
 import PropertyInfo from '@/pages/property-info/PropertyInfo';
+import Settings from '@/pages/settings/Settings';
 import { Navigate } from 'react-router-dom';
 
 const LayoutRoutes = [
@@ -14,7 +14,7 @@ const LayoutRoutes = [
       { path: 'my-properties', element: <MyProperties /> },
       { path: 'favorite-properties', element: <FavoriteProperties /> },
       { path: 'property/:property_id', element: <PropertyInfo /> },
-      { path: 'edit-profile', element: <EditProfile /> },
+      { path: 'settings', element: <Settings /> },
       { path: '*', element: <Navigate to="/auth" /> },
     ],
   },
