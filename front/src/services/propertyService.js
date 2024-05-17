@@ -22,6 +22,8 @@ const prepareInmuebleForm = async (idInmueble) => {
 
   let data = inputValidatorInmueble.createInmueble(res);
 
+  console.log("prepareInmuebleForm data: ", data);
+
   if (data) {
     return data;
   }

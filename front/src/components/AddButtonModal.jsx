@@ -40,6 +40,7 @@ const AddButtonModal = () => {
     setTextValue('');
     setError(false);
     setShowForm(false);
+    setInputDisabled(false);
   };
 
   const handleClose = () => {
@@ -61,6 +62,7 @@ const AddButtonModal = () => {
       try {
         const data = await propertyService.prepareInmuebleForm(idInmueble);
         if (data?.dataStatus == 'ok') {
+          console.log('data: ', data);
           setInmuebleData(data);
           setShowForm(true);
         } else {
@@ -202,6 +204,7 @@ const AddButtonModal = () => {
                 type="button"
                 aria-label="clear"
                 onClick={handleClear}
+                disabled={!inputDisabled}
               >
                 <DeleteIcon />
               </IconButton>

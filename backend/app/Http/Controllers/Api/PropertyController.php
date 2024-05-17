@@ -188,6 +188,7 @@ class PropertyController extends Controller {
                 'storage_room' => $storage_room,
                 'bath_rooms' => $validateUserProperty['bath_rooms'],
                 'description' => $validateUserProperty['description'],
+                'url_image' => $validateProperty['url_image']
             ]);
 
             DB::commit();

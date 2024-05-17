@@ -14,6 +14,7 @@ class Inmueble {
     this.fechaBaja = null;
     this.dataStatus = null;
     this.descripcion = null;
+    this.url_image = null;
   }
 }
 

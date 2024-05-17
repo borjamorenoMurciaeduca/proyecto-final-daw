@@ -28,6 +28,7 @@ const PropertyCard = ({ property }) => {
     created_at,
     favorite,
     description,
+    url_image,
   } = property;
 
   const navigate = useNavigate();
@@ -52,9 +53,26 @@ const PropertyCard = ({ property }) => {
   return (
     <Card sx={{ height: '100%', maxHeight: '350px' }}>
       <CardActionArea onClick={() => handleCLickCard(property_id)}>
-        <CardMedia component="img" height="120" image={house} alt="Vivienda" />
+        <CardMedia
+          component="img"
+          height="120"
+          image={url_image ? url_image : house}
+          alt="Vivienda"
+        />
         <CardContent sx={{ pb: 0 }}>
-          <Typography variant="h5" color="text.secondary">
+          <Typography
+            variant="h5"
+            color="text.secondary"
+            sx={{
+              lineHeight: '1.5',
+              maxHeight: '90px',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              display: '-webkit-box',
+              WebkitLineClamp: 1,
+              WebkitBoxOrient: 'vertical',
+            }}
+          >
             {title}
           </Typography>
           <Box>
