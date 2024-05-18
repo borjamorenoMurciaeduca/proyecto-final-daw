@@ -52,22 +52,20 @@ const Settings = () => {
             sx={{
               flexGrow: 1,
               bgcolor: 'background.paper',
-              display: 'flex',
               position: 'fixed',
               left: { xs: '0', lg: '5%', xl: '15%' },
               top: '30%',
-              height: 224,
             }}
           >
             <Tabs
               orientation="vertical"
-              variant="scrollable"
+              variant="standard"
               value={view}
               onChange={(event, newValue) => {
                 setView(newValue);
               }}
               aria-label={t('property-info.side-panel.aria-label')}
-              sx={{ borderRight: 1, borderColor: 'divider' }}
+              sx={{ borderRight: 1, borderColor: 'divider', maxWidth: 100 }}
             >
               <Tab
                 icon={<TextSnippetIcon />}
@@ -77,6 +75,7 @@ const Settings = () => {
               <Tab
                 icon={<RestoreIcon />}
                 label="Gestionar viviendas"
+                wrapped
                 {...a11yProps(1)}
               />
             </Tabs>

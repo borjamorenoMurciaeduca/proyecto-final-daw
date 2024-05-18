@@ -7,13 +7,11 @@ const CustomToolbar = ({
   setSelectedRows,
   properties,
   deleteProperties,
+  handleOpenDialog,
 }) => {
   const { enqueueSnackbar } = useSnackbar();
 
-  const handleRowsDelete = async () => {
-    const idsToDelete = selectedRows.data.map(
-      (d) => properties[d.dataIndex].property_id
-    );
+  const handleRowsDelete = async (idsToDelete) => {
     try {
       const res = await propertyService.deleteMultipleProperties(idsToDelete);
       if (res.status === 200) {
@@ -32,9 +30,27 @@ const CustomToolbar = ({
     }
   };
 
+  /**
+   * Buscamos los ids de las propiedades seleccionadas y mostramos un dialogo de confirmación
+   * Para elimnarlas debemos aceptar el dialogo, tiene un callback a handleRowsDelete
+   */
+  const confirmDelete = () => {
+    const idsToDelete = selectedRows.data.map(
+      (d) => properties[d.dataIndex].property_id
+    );
+    const len = idsToDelete.length;
+    handleOpenDialog(
+      {
+        title: 'Eliminar propiedades',
+        message: `Vas a eliminar un total de ${len} ${len <= 1 ? 'propiedad' : 'propiedades'}. ¿Estás seguro?`,
+      },
+      () => handleRowsDelete(idsToDelete)
+    );
+  };
+
   return (
     <div>
-      <Button onClick={handleRowsDelete} variant="contained" color="secondary">
+      <Button onClick={confirmDelete} variant="contained" color="secondary">
         Delete Selected Rows
       </Button>
     </div>

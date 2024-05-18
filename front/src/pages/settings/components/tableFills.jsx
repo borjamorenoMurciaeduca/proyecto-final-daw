@@ -1,7 +1,7 @@
 import parser from '@/utils/parser';
 import { Button } from '@mui/material';
 
-export const columns = [
+export const columns = (handleOpenDialog) => [
   {
     name: 'property_id',
     label: 'Property ID',
@@ -19,7 +19,6 @@ export const columns = [
     options: {
       filter: true,
       filterOptions: {
-        // names: ['a', 'b', 'c', 'Business Analyst'],
         fullWidth: true,
       },
       // filterType: 'textField',
@@ -43,38 +42,66 @@ export const columns = [
     },
   },
   {
-    name: 'created_at',
-    label: 'Fecha de creación',
-  },
-  {
-    name: 'actions',
-    label: 'Acciones',
+    name: 'is_shared',
+    label: 'Visibilidad',
     options: {
       filter: false,
       sort: false,
-      customBodyRender: () => {
-        return (
-          <Button variant="contained" color="primary">
-            Accion
-          </Button>
-        );
+      customBodyRender: (value, tableMeta) => {
+        const propertyId = tableMeta.rowData[0];
+        if (value) {
+          return (
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              onClick={() =>
+                handleOpenDialog({
+                  title: 'Hacer privada',
+                  message: `Are you sure you want to make private this property ${propertyId}?`,
+                })
+              }
+            >
+              Make private
+            </Button>
+          );
+        }
       },
     },
+  },
+  {
+    name: 'created_at',
+    label: 'Fecha de creación',
   },
 ];
 
 export const createRows = (data) => {
-  const rows = data.map(
-    ({ property_id, title, location, share_url, created_at }) => {
-      return {
-        property_id,
-        title,
-        location,
-        share_url: !share_url ? '❌' : share_url,
-        created_at: parser.DateReceived(created_at),
-        actions: !share_url ? '❌' : share_url,
-      };
-    }
+  return data.map(
+    ({ property_id, title, location, share_url, created_at, is_shared }) => ({
+      property_id,
+      title,
+      location,
+      share_url: !share_url ? '❌' : share_url,
+      created_at: parser.DateReceived(created_at),
+      is_shared,
+    })
   );
-  return rows;
+
+  // Agregar columna de botones solo si action_share tiene un valor
+  // otra forma de añadir, tenemos que
+  //   if (is_shared) {
+  //     row.is_shared = (
+  //       <Button
+  //         variant="contained"
+  //         color="primary"
+  //         onClick={() => console.log('Make private')}
+  //       >
+  //         Make private2
+  //       </Button>
+  //     );
+  //   }
+  //
+  //   return row;
+  // }
+  // return rows;
 };

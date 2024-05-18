@@ -1,18 +1,17 @@
-import { Container, Grid, Skeleton, Typography } from '@mui/material';
-import MUIDataTable from 'mui-datatables';
-import { columns, createRows } from './tableFills';
+import useConfirmationDialog from '@/hooks/useConfirmationDialog';
 import useProperties from '@/hooks/useProperties';
-import { useState } from 'react';
+import { Grid, Typography } from '@mui/material';
+import MUIDataTable from 'mui-datatables';
 import CustomToolbar from './CustomToolbar';
+import { columns, createRows } from './tableFills';
 
 const PropertiesTable = () => {
-  const [loading, setLoading] = useState(false);
   const { properties, deleteProperties } = useProperties();
+  const { handleOpenDialog, IdealConfirmDialog } = useConfirmationDialog();
 
   const rows = createRows(properties);
 
   const options = {
-    // filterType: 'checkbox',
     search: true,
     download: true,
     print: true,
@@ -22,55 +21,42 @@ const PropertiesTable = () => {
     rowsPerPageOptions: [5, 10, 20, 50, 100],
     rowsPerPage: 5,
     filterType: 'dropdown',
-
-    // onRowsDelete: (action, state) => {
-    //   // Llama a handleRowsDelete y espera a que se complete
-    //   const result = handleRowsDelete(action);
-    //   console.log('RESULT', result);
-    //   // Devuelve el resultado para indicar si las filas deben eliminarse o no
-    //   // console.log('RESULT', result);
-    //
-    //   return false;
-    // },
     customToolbarSelect: (selectedRows, _, setSelectedRows) => (
       <CustomToolbar
         selectedRows={selectedRows}
         setSelectedRows={setSelectedRows}
         deleteProperties={deleteProperties}
         properties={properties}
+        handleOpenDialog={handleOpenDialog}
       />
     ),
   };
 
   return (
-    <Container
-      maxWidth="md"
+    <Grid
       component="main"
+      container
+      item
+      justifyContent="center"
+      alignItems={'center'}
+      xs={7}
       sx={{
         minHeight: '40vh',
+        minWidth: '100%',
       }}
     >
-      <Grid
-        container
-        item
-        xs={12}
-        direction="row"
-        justifyContent="flex-end"
-        mb={2}
-      ></Grid>
-      {loading ? (
-        <Skeleton variant="rounded" width="100%" height={450} />
-      ) : rows.length === 0 || !rows ? (
+      {rows.length === 0 || !rows ? (
         <Typography>No hay datos</Typography>
       ) : (
         <MUIDataTable
           title={'Mis viviendas'}
           data={rows}
-          columns={columns}
+          columns={columns(handleOpenDialog)}
           options={options}
         />
       )}
-    </Container>
+      <IdealConfirmDialog />
+    </Grid>
   );
 };
 
