@@ -32,6 +32,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
   // Rutas protegidas correspondientes a compartir inmuebles
   Route::post('/property/{id}/share', [PropertyController::class, 'shareProperty']);
+  Route::put('/property/{id}/revoke-share', [PropertyController::class, 'revokeShareProperty']);
   // Ruta protegida para el historial de precios
   Route::get('/property/{id}/prices', [PropertyController::class, 'getPrices']);
 

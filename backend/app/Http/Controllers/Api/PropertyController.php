@@ -529,16 +529,32 @@ class PropertyController extends Controller {
         }
     }
 
-    public function revokeShareProperty($propertyId) {
-        $property = Property::find($propertyId);
-        if ($property) {
-            $property->is_shared = false;
-            $property->share_url = null;
-            $property->save();
+public function revokeShareProperty($propertyId) {
+        try {
+            DB::beginTransaction();
+            $userProperty = UserProperty::where('property_id_fk', $propertyId)->first();
+            if ($userProperty) {
+                $isShared = !$userProperty->is_shared;
 
-            return ApiResponse::success('Property unshared successfully', null, 200);
-        } else {
-            return ApiResponse::error('Property not found', 404);
+                UserProperty::where('property_id_fk', $propertyId)->update([
+                    'is_shared' =>false,
+                    'share_url' => null
+                ]);
+    
+                $data = [
+                    'property_id' => $userProperty->property_id_fk,
+                    'is_shared' => false,
+                    'share_url' =>null,
+                ];
+    
+                DB::commit();
+                return ApiResponse::success('Property private updated successfully', $data, 200);
+            } else {
+                return ApiResponse::error('Property not found', 404);
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return ApiResponse::error('An error occurred: ' . $e->getMessage(), 500);
         }
     }
 
@@ -603,4 +619,5 @@ class PropertyController extends Controller {
             return ApiResponse::error('Error:' . $e->getMessage(), 500);
         }
     }
-}
+
+    }

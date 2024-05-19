@@ -20,7 +20,9 @@ class UserProperty extends Model {
         'storage_room',
         'bath_rooms',
         'description',
-        'favorite'
+        'favorite',
+        'is_shared',
+        'share_url'
     ];
     // Establece la relación entre UserProperty y Property
     // belongsTo: Establece que pertenece a un registro de la tabla Properties
