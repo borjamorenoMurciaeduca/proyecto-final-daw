@@ -22,7 +22,7 @@ const prepareInmuebleForm = async (idInmueble) => {
 
   let data = inputValidatorInmueble.createInmueble(res);
 
-  console.log("prepareInmuebleForm data: ", data);
+  console.log('prepareInmuebleForm data: ', data);
 
   if (data) {
     return data;
@@ -30,30 +30,30 @@ const prepareInmuebleForm = async (idInmueble) => {
   return null;
 };
 
-const getPropertyPrices = async (property_id) => {
+const getPropertyPrices = async (propertyId) => {
   let { data } = await axiosInterceptor.get(
-    `${baseURL}property/${property_id}/prices`
+    `${baseURL}property/${propertyId}/prices`
   );
   return data;
 };
 
-const shareProperty = async (property_id) => {
+const shareProperty = async (propertyId) => {
   let { data } = await axiosInterceptor.post(
-    `${baseURL}property/${property_id}/share`
+    `${baseURL}property/${propertyId}/share`
   );
   return data;
 };
 
-const getShareProperty = async (share_url) => {
+const getShareProperty = async (shareUrl) => {
   let { data } = await axiosInterceptor.get(
-    `${baseURL}shared-property/${share_url}`
+    `${baseURL}shared-property/${shareUrl}`
   );
   return data;
 };
 
-const changeFavoriteProperty = async (property_id) => {
+const changeFavoriteProperty = async (propertyId) => {
   let { data } = await axiosInterceptor.post(
-    `${baseURL}property/${property_id}/favorite`
+    `${baseURL}property/${propertyId}/favorite`
   );
   return data;
 };
@@ -68,6 +68,13 @@ const deleteMultipleProperties = async (propertiesIds) => {
   return data;
 };
 
+const revokeShareProperty = async (propertyId) => {
+  const { data } = await axiosInterceptor.put(
+    `${baseURL}property/${propertyId}/revoke-share`
+  );
+  return data;
+};
+
 export default {
   addProperty,
   prepareInmuebleForm,
@@ -77,4 +84,5 @@ export default {
   getShareProperty,
   changeFavoriteProperty,
   deleteMultipleProperties,
+  revokeShareProperty,
 };

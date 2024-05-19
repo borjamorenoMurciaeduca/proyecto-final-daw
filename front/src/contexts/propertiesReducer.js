@@ -114,6 +114,15 @@ export const propertiesReducer = (state, action) => {
         ...state,
         properties: state.properties.filter((el) => el.property_id !== action),
       };
+    case 'REVOKE_SHARE_PROPERTY':
+      return {
+        ...state,
+        properties: state.properties.map((el) =>
+          el.property_id == action.payload.property_id
+            ? { ...el, ...action.payload }
+            : el
+        ),
+      };
     default:
       return state;
   }

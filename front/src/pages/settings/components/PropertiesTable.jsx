@@ -3,7 +3,7 @@ import useProperties from '@/hooks/useProperties';
 import { Grid, Typography } from '@mui/material';
 import MUIDataTable from 'mui-datatables';
 import CustomToolbar from './CustomToolbar';
-import { columns, createRows } from './tableFills';
+import { Columns, createRows } from './TableFills';
 
 const PropertiesTable = () => {
   const { properties, deleteProperties } = useProperties();
@@ -17,10 +17,15 @@ const PropertiesTable = () => {
     print: true,
     viewColumns: true,
     filter: true,
+    responsive: 'standard',
     selectableRows: 'multiple',
     rowsPerPageOptions: [5, 10, 20, 50, 100],
     rowsPerPage: 5,
     filterType: 'dropdown',
+    sortOrder: {
+      name: 'created_at',
+      direction: 'desc',
+    },
     customToolbarSelect: (selectedRows, _, setSelectedRows) => (
       <CustomToolbar
         selectedRows={selectedRows}
@@ -36,26 +41,22 @@ const PropertiesTable = () => {
     <Grid
       component="main"
       container
-      item
       justifyContent="center"
       alignItems={'center'}
-      xs={7}
       sx={{
         minHeight: '40vh',
         minWidth: '100%',
       }}
     >
-      {rows.length === 0 || !rows ? (
-        <Typography>No hay datos</Typography>
-      ) : (
+      <Grid item xs={9}>
         <MUIDataTable
           title={'Mis viviendas'}
           data={rows}
-          columns={columns(handleOpenDialog)}
+          columns={Columns(handleOpenDialog)}
           options={options}
         />
-      )}
-      <IdealConfirmDialog />
+        <IdealConfirmDialog />
+      </Grid>
     </Grid>
   );
 };
