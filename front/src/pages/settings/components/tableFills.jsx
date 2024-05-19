@@ -1,5 +1,7 @@
 import parser from '@/utils/parser';
-import { Button } from '@mui/material';
+import PublicOffIcon from '@mui/icons-material/PublicOff';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 
 export const columns = (handleOpenDialog) => [
   {
@@ -34,7 +36,7 @@ export const columns = (handleOpenDialog) => [
     label: 'ID URL compartida',
     options: {
       filter: true,
-      customFilterListOptions: { render: (v) => `Cargado: ${v}` },
+      customFilterListOptions: { render: (v) => `Url: ${v}` },
       filterOptions: {
         renderValue: (v) =>
           v ? v.replace(/^(\w).* (.*)$/, '$1. $2') : 'vacío',
@@ -49,12 +51,13 @@ export const columns = (handleOpenDialog) => [
       sort: false,
       customBodyRender: (value, tableMeta) => {
         const propertyId = tableMeta.rowData[0];
-        if (value) {
-          return (
-            <Button
-              variant="contained"
-              color="primary"
+        return (
+          <Tooltip title="Hacer privada">
+            <IconButton
+              aria-label="make-private"
+              disabled={!value}
               size="small"
+              color="error"
               onClick={() =>
                 handleOpenDialog({
                   title: 'Hacer privada',
@@ -62,10 +65,10 @@ export const columns = (handleOpenDialog) => [
                 })
               }
             >
-              Make private
-            </Button>
-          );
-        }
+              <PublicOffIcon />
+            </IconButton>
+          </Tooltip>
+        );
       },
     },
   },

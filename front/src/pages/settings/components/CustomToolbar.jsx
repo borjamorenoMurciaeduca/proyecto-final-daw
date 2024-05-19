@@ -1,5 +1,7 @@
 import propertyService from '@/services/propertyService';
-import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 import { useSnackbar } from 'notistack';
 
 const CustomToolbar = ({
@@ -49,11 +51,11 @@ const CustomToolbar = ({
   };
 
   return (
-    <div>
-      <Button onClick={confirmDelete} variant="contained" color="secondary">
-        Delete Selected Rows
-      </Button>
-    </div>
+    <Tooltip title="Eliminar propiedades">
+      <IconButton onClick={confirmDelete} aria-label="delete" size="large">
+        <DeleteIcon />
+      </IconButton>
+    </Tooltip>
   );
 };
 
