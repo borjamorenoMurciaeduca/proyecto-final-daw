@@ -47,7 +47,7 @@ const Login = () => {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
-    const username = data.get('username');
+    const identifier = data.get('identifier');
     const password = data.get('password');
     setLoading(true);
     try {
@@ -63,7 +63,7 @@ const Login = () => {
        *  guardamos en el estado global de ViviendasProvider los inmuebles del usuario
        */
       const resUser = await userService.login({
-        username,
+        identifier,
         password,
       });
       let { token, user } = resUser.data;
@@ -82,12 +82,12 @@ const Login = () => {
       setUser({ ...user, currentPage: 1 });
       setProperties(property.data);
 
-      e.target.username.value = '';
+      e.target.identifier.value = '';
       e.target.password.value = '';
 
       setError(false);
       navigate('/app', { replace: true });
-      enqueueSnackbar(`👋 Bienvenido de nuevo ${user.username}`, {
+      enqueueSnackbar(`${t('snackbar.login')} ${user.username}`, {
         variant: 'info',
         anchorOrigin: {
           vertical: 'top',
@@ -152,9 +152,9 @@ const Login = () => {
             <Grid item xs={12}>
               <TextField
                 autoComplete="username"
-                id="username"
-                name="username"
-                label={t('login-form.form.username')}
+                id="identifier"
+                name="identifier"
+                label={t('login-form.form.identifier')}
                 fullWidth
                 autoFocus
               />

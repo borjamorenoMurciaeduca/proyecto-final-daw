@@ -1,5 +1,5 @@
-import { APP_NAME } from '@/commons/config/config.js';
-import SwitchIdeal from '@/components/SwitchIdeal';
+import Copyright from '@/components/Copyright.jsx';
+import SwitchIdeal from '@/components/SwitchIdeal.jsx';
 import { useTheme } from '@emotion/react';
 import {
   FormControl,
@@ -9,7 +9,6 @@ import {
   Select,
   Slider,
   Toolbar,
-  Typography,
 } from '@mui/material';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
@@ -17,6 +16,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import PropertyDrawerStyle from './PropertyDrawer.styles.js';
 import PropertyDrawerFormat from './propertyDrawerFormats.js';
+import { useSnackbar } from 'notistack';
 
 const PropertyDrawer = ({
   isDrawerOpen,
@@ -33,7 +33,12 @@ const PropertyDrawer = ({
 }) => {
   const { marks, valueLabelFormat, valuetext } = PropertyDrawerFormat;
   const theme = useTheme();
+  const { enqueueSnackbar } = useSnackbar();
 
+  const handleChangeOrder = (e) => {
+    setOrderBy(e.target.value);
+    enqueueSnackbar('Order by: ' + e.target.value, { variant: 'info' });
+  };
   return (
     <>
       <PropertyDrawerStyle
@@ -67,7 +72,7 @@ const PropertyDrawer = ({
                   value={orderBy}
                   label="Ordenar por"
                   variant="standard"
-                  onChange={(e) => setOrderBy(e.target.value)}
+                  onChange={handleChangeOrder}
                 >
                   <MenuItem value={'date'}>Fecha</MenuItem>
                   <MenuItem value={'price'}>Precio</MenuItem>
@@ -114,9 +119,7 @@ const PropertyDrawer = ({
             </ListItem>
             <Divider />
             <Toolbar />
-            <Typography
-              variant="body2"
-              align="center"
+            <Copyright
               noWrap
               sx={{
                 position: 'absolute',
@@ -124,9 +127,7 @@ const PropertyDrawer = ({
                 left: '50%',
                 transform: 'translateX(-50%)',
               }}
-            >
-              Copyright © {APP_NAME} 2024
-            </Typography>
+            />
           </List>
         </Paper>
       </PropertyDrawerStyle>

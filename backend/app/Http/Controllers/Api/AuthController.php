@@ -130,29 +130,33 @@ class AuthController extends Controller {
      * )
      */
     public function login(Request $request) {
-        $credentials = $request->only('username', 'password');
+        $request->validate([
+            'identifier' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        $credentials = ['password' => $request->password];
         $remember = $request->filled('remember');
-        //rememberToken no cambia
+        $identifier = $request->input('identifier');
+
+        // Verificar si el identificador es un email
+        if (filter_var($identifier, FILTER_VALIDATE_EMAIL)) {
+            $credentials['email'] = $identifier;
+        } else {
+            $credentials['username'] = $identifier;
+        }
+
         if (Auth::attempt($credentials, $remember)) {
             /** @var \App\Models\User $user **/
             $user = Auth::user();
             $token = $user->createToken('authToken')->plainTextToken;
-            $cookie = cookie('user_token', $token, 60 * 8);
-
             $data = ["user" => $user, "token" => $token];
-            // $data = (object) [
-            //     'id' => $user->id,
-            //     'username' => $user->username,
-            //     'created_at' => $user->created_at,
-            //     'updated_at' => $user->updated_at,
-            //     'token' => $token,
-            // ];
-            // return ApiResponse::success('Acceso exitoso!',  $data, 200)->withCookie($cookie);
-            return ApiResponse::success('Successfully logged in!',  $data, 200);
+            return ApiResponse::success('Successfully logged in!', $data, 200);
         } else {
             return ApiResponse::error('Unauthenticated', 401);
         }
     }
+
 
     /**
      * @OA\Get(

@@ -23,6 +23,7 @@
       "password": "Contraseña",
       "confirm-password": "Confirmar contraseña",
       "username": "Usuario",
+      "identifier": "Usuario o correo electrónico",
       "login": "Iniciar sesión"
     },
     "register": "¿No tienes cuenta? Crea una"
@@ -103,7 +104,8 @@
     "prepare-inmueble-form": {
       "error": "Se ha producido un error al obtener los datos"
     },
-    "logout": "¡Sesión cerrada con éxito!"
+    "logout": "¡Sesión cerrada con éxito!",
+    "login": "👋 Bienvenido de nuevo"
   },
   "property-info": {
     "header": "Detalles de la vivienda",

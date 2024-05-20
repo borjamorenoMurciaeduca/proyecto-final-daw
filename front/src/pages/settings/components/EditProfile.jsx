@@ -63,7 +63,9 @@ const EditProfile = () => {
     try {
       if (credentials.password !== credentials.password_confirmation)
         throw new Error('Las contraseñas no coinciden');
+
       const res = await userService.editProfile(credentials);
+
       if (res.status == 400)
         throw new Error('No se ha podido actualizar el usuario');
       if (res.error) throw new Error(res.error);
@@ -92,9 +94,6 @@ const EditProfile = () => {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
-      <Typography variant="h2" component="h1">
-        👋 {user.username || 'Usuario'}
-      </Typography>
       <Container
         maxWidth="md"
         component="main"

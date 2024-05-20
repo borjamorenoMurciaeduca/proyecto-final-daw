@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 /**
@@ -294,13 +295,12 @@ class PropertyController extends Controller {
             if ($note->user_id_fk !== Auth::id()) {
                 return ApiResponse::error('You are not authorized to delete this note', 403);
             }
-            
+
             $note->delete();
-            
+
             DB::commit();
 
             return ApiResponse::success(['message' => 'Note removed successfully'], 200);
-
         } catch (\Exception $e) {
             DB::rollBack();
             return ApiResponse::error('Error:' . $e->getMessage(), 500);
@@ -308,33 +308,32 @@ class PropertyController extends Controller {
     }
 
     public function updateNote(Request $request, int $noteId) {
-    try {
-        $validatedData = $request->validate([
-            'property_id' => 'numeric|required',
-            'description' => 'string|required',
-            'public' => 'boolean|required',
-        ]);
+        try {
+            $validatedData = $request->validate([
+                'property_id' => 'numeric|required',
+                'description' => 'string|required',
+                'public' => 'boolean|required',
+            ]);
 
-        $note = UserPropertyNote::findOrFail($noteId);
+            $note = UserPropertyNote::findOrFail($noteId);
 
-        $note->update($validatedData);
+            $note->update($validatedData);
 
-        $data = [
-            'id' => $note['id'],
-            'user_id' => Auth::id(),
-            'property_id' => $note['property_id_fk'],
-            'description' => $note['description'],
-            'public' =>  $note['public'],
-            'created_at' => $note->created_at,
-            'updated_at' => $note->updated_at,
-        ];
-        return ApiResponse::success('Note created successfully', $data, 201);
-
-    } catch (\Exception $e) {
-        DB::rollBack();
-        return ApiResponse::error('Error:' . $e->getMessage(), 500);
+            $data = [
+                'id' => $note['id'],
+                'user_id' => Auth::id(),
+                'property_id' => $note['property_id_fk'],
+                'description' => $note['description'],
+                'public' =>  $note['public'],
+                'created_at' => $note->created_at,
+                'updated_at' => $note->updated_at,
+            ];
+            return ApiResponse::success('Note created successfully', $data, 201);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return ApiResponse::error('Error:' . $e->getMessage(), 500);
+        }
     }
-}
 
     /**
      * @OA\Get(
@@ -530,16 +529,32 @@ class PropertyController extends Controller {
         }
     }
 
-    public function revokeShareProperty($propertyId) {
-        $property = Property::find($propertyId);
-        if ($property) {
-            $property->is_shared = false;
-            $property->share_url = null;
-            $property->save();
+public function revokeShareProperty($propertyId) {
+        try {
+            DB::beginTransaction();
+            $userProperty = UserProperty::where('property_id_fk', $propertyId)->first();
+            if ($userProperty) {
+                $isShared = !$userProperty->is_shared;
 
-            return ApiResponse::success('Property unshared successfully', null, 200);
-        } else {
-            return ApiResponse::error('Property not found', 404);
+                UserProperty::where('property_id_fk', $propertyId)->update([
+                    'is_shared' =>false,
+                    'share_url' => null
+                ]);
+    
+                $data = [
+                    'property_id' => $userProperty->property_id_fk,
+                    'is_shared' => false,
+                    'share_url' =>null,
+                ];
+    
+                DB::commit();
+                return ApiResponse::success('Property private updated successfully', $data, 200);
+            } else {
+                return ApiResponse::error('Property not found', 404);
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return ApiResponse::error('An error occurred: ' . $e->getMessage(), 500);
         }
     }
 
@@ -577,7 +592,7 @@ class PropertyController extends Controller {
         if ($userProperty) {
             $fav = !$userProperty->favorite;
             UserProperty::where('property_id_fk', $propertyId)
-            ->update(['favorite' => $fav]);
+                ->update(['favorite' => $fav]);
             $data = [
                 'property_id' => $userProperty->property_id_fk,
                 'favorite' => $fav,
@@ -587,4 +602,22 @@ class PropertyController extends Controller {
             return ApiResponse::error('Property not found', 404);
         }
     }
-}
+
+    public function deleteMultiple(Request $request) {
+        $ids = $request->input('ids');
+
+        if (!is_array($ids)) {
+            return ApiResponse::error('Invalid data', 400);
+        }
+        try {
+            $deleteRows = UserProperty::whereIn('property_id_fk', $ids)->delete();
+            if ($deleteRows === 0) {
+                return ApiResponse::error('Properties not found', 404);
+            }
+            return ApiResponse::success('Properties deleted successfully', null, 200);
+        } catch (\Exception $e) {
+            return ApiResponse::error('Error:' . $e->getMessage(), 500);
+        }
+    }
+
+    }

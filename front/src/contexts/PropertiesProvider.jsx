@@ -68,6 +68,20 @@ export const PropertiesProvider = ({ children }) => {
     });
   };
 
+  const deleteProperties = (properties) => {
+    dispatch({
+      type: 'DELETE_PROPERTIES',
+      payload: properties,
+    });
+  };
+
+  const revokeShareProperty = (property_id) => {
+    dispatch({
+      type: 'REVOKE_SHARE_PROPERTY',
+      payload: property_id,
+    });
+  };
+
   return (
     <PropertiesContext.Provider
       value={{
@@ -80,6 +94,8 @@ export const PropertiesProvider = ({ children }) => {
         addProperty,
         updateProperty,
         changeFavoriteProperty,
+        deleteProperties,
+        revokeShareProperty,
       }}
     >
       {children}

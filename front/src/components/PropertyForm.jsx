@@ -1,13 +1,11 @@
 import useProperties from '@/hooks/useProperties.js';
 import propertyService from '@/services/propertyService.js';
 import {
-  Alert,
   Button,
   Checkbox,
   FormControlLabel,
   Grid,
-  Slide,
-  Snackbar,
+  InputAdornment,
   TextField,
 } from '@mui/material';
 import { useSnackbar } from 'notistack';
@@ -15,18 +13,17 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import UnstyledTextareaIntroduction from './TextAreaAutoSize';
 
-function SlideTransition(props) {
-  return <Slide {...props} direction="up" />;
-}
-
-const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
-  const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState('');
-  const [severity, setSeverity] = useState('success');
+const PropertyForm = ({
+  inmuebleData = {},
+  handleCloseDialog,
+  property,
+  edit,
+}) => {
   const { addProperty } = useProperties();
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
 
+  console.log('render');
   const [propertiesValues, setPropertiesValues] = useState({
     property_id: '',
     title: '',
@@ -42,7 +39,7 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
   });
 
   useEffect(() => {
-    if (inmuebleData) {
+    if (inmuebleData.length > 0) {
       setPropertiesValues({
         property_id: inmuebleData.property_id || '',
         title: inmuebleData?.title || '',
@@ -58,6 +55,25 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
       });
     }
   }, [inmuebleData]);
+
+  useEffect(() => {
+    if (property) {
+      console.log(property);
+      setPropertiesValues({
+        property_id: property?.property_id,
+        title: property?.title,
+        location: property?.location,
+        price: property?.price,
+        size: property?.size,
+        rooms: property?.rooms,
+        garage: property?.garage,
+        storage_room: property?.storage_room,
+        bath_rooms: property?.bath_rooms,
+        description: property?.description,
+        url_image: property?.url_image,
+      });
+    }
+  }, [property]);
 
   const handleInputChange = (event) => {
     const { name, value, type, checked } = event.target;
@@ -77,33 +93,17 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
         property_id: Number(propertiesValues.property_id),
         // fechaRegistro: formattedDate,
       };
-      // el inmueble se guarda
       const res = await propertyService.addProperty({ inmuebleToAdd });
-      /**
-       * * NO DEBEMOS LLAMAR A LA API PARA OBTENER LOS DATOS DEL USUARIO
-       * ! DEBEMOS AÑADIR LA VIVIENDA AL ESTADO GLOBAL
-       * estamos recibiendo otra vez los datos del usuario y las viviendas
-       * cuando los datos del usuario lo tenemos y las viviendas también
-       * solo necesitamos añadir la vivienda con la estructura correcta al estado global
-       */
       if (res.status === 201) {
         addProperty(res.data);
         enqueueSnackbar('Vivienda añadida con éxito', { variant: 'success' });
         handleCloseDialog();
       }
     } catch (error) {
-      setSeverity('error');
       const msg = error?.response?.data?.message || 'Error al añadir vivienda';
-      setMessage(msg);
+      enqueueSnackbar(msg, { variant: 'error' });
       console.error('Error al obtener datos del usuario:', error);
-    } finally {
-      setOpen(true);
     }
-  };
-
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') return;
-    setOpen(false);
   };
 
   return (
@@ -162,6 +162,9 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
           label={t('add-property-form.price')}
           fullWidth
           type="number"
+          InputProps={{
+            endAdornment: <InputAdornment position="end">€</InputAdornment>,
+          }}
           value={propertiesValues.price}
           onChange={handleInputChange}
         />
@@ -175,6 +178,9 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
           type="number"
           fullWidth
           value={propertiesValues.size}
+          InputProps={{
+            endAdornment: <InputAdornment position="end">m²</InputAdornment>,
+          }}
           onChange={handleInputChange}
         />
       </Grid>
@@ -254,21 +260,6 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
           {t('add-property-form.cancel')}
         </Button>
       </Grid>
-      <Snackbar
-        open={open}
-        autoHideDuration={2000}
-        onClose={handleClose}
-        TransitionComponent={SlideTransition}
-      >
-        <Alert
-          onClose={handleClose}
-          severity={severity}
-          variant="filled"
-          sx={{ width: '100%' }}
-        >
-          {message}
-        </Alert>
-      </Snackbar>
     </Grid>
   );
 };
