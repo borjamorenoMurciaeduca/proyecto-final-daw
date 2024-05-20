@@ -1,4 +1,6 @@
 import { Link, Typography } from '@mui/material';
+import { APP_NAME } from '@/commons/config/config.js';
+
 const Copyright = (props) => {
   return (
     <Typography
@@ -9,10 +11,9 @@ const Copyright = (props) => {
     >
       {'Copyright © '}
       <Link color="inherit" href="#">
-        IdealistaWatch
-      </Link>{' '}
+        {APP_NAME}{' '}
+      </Link>
       {new Date().getFullYear()}
-      {'.'}
     </Typography>
   );
 };

@@ -17,6 +17,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import PropertyDrawerStyle from './PropertyDrawer.styles.js';
 import PropertyDrawerFormat from './propertyDrawerFormats.js';
+import Copyright from '@/components/Copyright.jsx';
 
 const PropertyDrawer = ({
   isDrawerOpen,
@@ -114,9 +115,7 @@ const PropertyDrawer = ({
             </ListItem>
             <Divider />
             <Toolbar />
-            <Typography
-              variant="body2"
-              align="center"
+            <Copyright
               noWrap
               sx={{
                 position: 'absolute',
@@ -124,9 +123,7 @@ const PropertyDrawer = ({
                 left: '50%',
                 transform: 'translateX(-50%)',
               }}
-            >
-              Copyright © {APP_NAME} 2024
-            </Typography>
+            />
           </List>
         </Paper>
       </PropertyDrawerStyle>
