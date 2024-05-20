@@ -5,6 +5,7 @@ import {
   Checkbox,
   FormControlLabel,
   Grid,
+  InputAdornment,
   TextField,
 } from '@mui/material';
 import { useSnackbar } from 'notistack';
@@ -12,11 +13,17 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import UnstyledTextareaIntroduction from './TextAreaAutoSize';
 
-const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
+const PropertyForm = ({
+  inmuebleData = {},
+  handleCloseDialog,
+  property,
+  edit,
+}) => {
   const { addProperty } = useProperties();
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
 
+  console.log('render');
   const [propertiesValues, setPropertiesValues] = useState({
     property_id: '',
     title: '',
@@ -32,7 +39,7 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
   });
 
   useEffect(() => {
-    if (inmuebleData) {
+    if (inmuebleData.length > 0) {
       setPropertiesValues({
         property_id: inmuebleData.referenciaInmueble || '',
         title: inmuebleData?.titulo || '',
@@ -48,6 +55,25 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
       });
     }
   }, [inmuebleData]);
+
+  useEffect(() => {
+    if (property) {
+      console.log(property);
+      setPropertiesValues({
+        property_id: property?.property_id,
+        title: property?.title,
+        location: property?.location,
+        price: property?.price,
+        size: property?.size,
+        rooms: property?.rooms,
+        garage: property?.garage,
+        storage_room: property?.storage_room,
+        bath_rooms: property?.bath_rooms,
+        description: property?.description,
+        url_image: property?.url_image,
+      });
+    }
+  }, [property]);
 
   const handleInputChange = (event) => {
     const { name, value, type, checked } = event.target;
@@ -136,6 +162,9 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
           label={t('add-property-form.price')}
           fullWidth
           type="number"
+          InputProps={{
+            endAdornment: <InputAdornment position="end">€</InputAdornment>,
+          }}
           value={propertiesValues.price}
           onChange={handleInputChange}
         />
@@ -149,6 +178,9 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
           type="number"
           fullWidth
           value={propertiesValues.size}
+          InputProps={{
+            endAdornment: <InputAdornment position="end">m²</InputAdornment>,
+          }}
           onChange={handleInputChange}
         />
       </Grid>

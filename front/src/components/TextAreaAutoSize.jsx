@@ -11,6 +11,7 @@ export default function UnstyledTextareaIntroduction({
     <TextareaAutosize
       aria-label={desc}
       minRows={4}
+      maxRows={8}
       name={name}
       placeholder={desc}
       defaultValue={defaultValue}
