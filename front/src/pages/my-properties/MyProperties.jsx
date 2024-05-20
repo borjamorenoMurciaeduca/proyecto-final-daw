@@ -18,6 +18,8 @@ import {
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropertyDrawer from './components/PropertyDrawer';
+import { useSnackbar } from 'notistack';
+import { debounce } from 'lodash';
 
 const PROPERTIES_MAX = 6;
 const PROPERTIES_MIN = 0;
@@ -36,6 +38,7 @@ const MyProperties = () => {
   const lessThanMedium = useMediaQuery(theme.breakpoints.down('md'));
   const { properties } = useProperties();
   const { t } = useTranslation();
+  const { enqueueSnackbar } = useSnackbar();
 
   const toggleDrawer = (newOpen) => (event) => {
     if (
@@ -64,6 +67,10 @@ const MyProperties = () => {
     } else {
       setPrice(newValue);
     }
+    enqueueSnackbar('Price range changed', {
+      variant: 'info',
+      preventDuplicate: true,
+    });
   };
 
   const filterPropertiesByPrice = () => {
@@ -128,16 +135,34 @@ const MyProperties = () => {
 
   const toggleDateOrder = () => {
     setDateOrder(dateOrder === 'asc' ? 'desc' : 'asc');
+    enqueueSnackbar(
+      `Date order changed to ${dateOrder === 'asc' ? 'desc' : 'asc'}`,
+      {
+        variant: 'info',
+        preventDuplicate: true,
+      }
+    );
   };
 
   const togglePriceOrder = () => {
     setPriceOrder(priceOrder === 'asc' ? 'desc' : 'asc');
+    enqueueSnackbar(
+      `Price order changed to ${priceOrder === 'asc' ? 'desc' : 'asc'}`,
+      {
+        variant: 'info',
+        preventDuplicate: true,
+      }
+    );
   };
 
   const resetFilters = () => {
     setPrice(INITIAL_PRICE);
     setDateOrder('desc');
     setOrderBy('date');
+    enqueueSnackbar('Filters reset', {
+      variant: 'info',
+      preventDuplicate: true,
+    });
   };
 
   const transitionDuration = {
