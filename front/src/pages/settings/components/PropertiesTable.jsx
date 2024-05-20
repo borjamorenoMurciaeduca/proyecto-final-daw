@@ -17,7 +17,7 @@ const PropertiesTable = () => {
     print: true,
     viewColumns: true,
     filter: true,
-    responsive: 'standard',
+    responsive: 'vertical',
     selectableRows: 'multiple',
     rowsPerPageOptions: [5, 10, 20, 50, 100],
     rowsPerPage: 5,
