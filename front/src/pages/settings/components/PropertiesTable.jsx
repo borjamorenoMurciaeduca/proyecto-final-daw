@@ -1,6 +1,6 @@
 import useConfirmationDialog from '@/hooks/useConfirmationDialog';
 import useProperties from '@/hooks/useProperties';
-import { Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import MUIDataTable from 'mui-datatables';
 import CustomToolbar from './CustomToolbar';
 import { Columns, createRows } from './TableFills';

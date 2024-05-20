@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Transition } from '@/components/Transition';
 import {
   Button,
   Dialog,
@@ -7,7 +7,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from '@mui/material';
-import { Transition } from './Transition';
+import { useState } from 'react';
 
 const useConfirmationDialog = () => {
   const [dialogOpen, setDialogOpen] = useState(false);

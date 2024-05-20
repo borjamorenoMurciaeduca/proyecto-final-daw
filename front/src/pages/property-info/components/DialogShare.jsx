@@ -1,3 +1,4 @@
+import { Transition } from '@/components/Transition';
 import useProperties from '@/hooks/useProperties';
 import propertyService from '@/services/propertyService';
 import parser from '@/utils/parser';
@@ -22,13 +23,9 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
 import { useSnackbar } from 'notistack';
-import { forwardRef, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-const Transition = forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
 
 const DialogShare = ({ open, setOpen, isShared, propertyURL, propertyId }) => {
   const [loading, setLoading] = useState(false);
@@ -37,6 +34,7 @@ const DialogShare = ({ open, setOpen, isShared, propertyURL, propertyId }) => {
   const { enqueueSnackbar } = useSnackbar();
   const theme = useTheme();
   const lessThanSm = useMediaQuery(theme.breakpoints.down('sm'));
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (open && !isShared) {
@@ -45,8 +43,6 @@ const DialogShare = ({ open, setOpen, isShared, propertyURL, propertyId }) => {
       setShareUrlId(propertyURL);
     }
   }, [open, isShared, propertyURL]);
-
-  const { t } = useTranslation();
 
   const handleShare = async () => {
     setLoading(true);
