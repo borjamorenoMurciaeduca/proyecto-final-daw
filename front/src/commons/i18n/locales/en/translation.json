@@ -23,6 +23,7 @@
       "password": "Password",
       "confirm-password": "Confirm password",
       "username": "User",
+      "identifier": "User or email",
       "login": "Login"
     },
     "register": "Need an account? Sign up"
@@ -103,7 +104,8 @@
     "prepare-inmueble-form": {
       "error": "An error occurred while obtaining data"
     },
-    "logout": "Logout successful"
+    "logout": "Logout successful",
+    "login": "👋 Welcome back"
   },
   "property-info": {
     "header": "Details of property",
