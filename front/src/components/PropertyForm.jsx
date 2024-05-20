@@ -44,16 +44,16 @@ const PropertyForm = ({ inmuebleData = {}, handleCloseDialog }) => {
   useEffect(() => {
     if (inmuebleData) {
       setPropertiesValues({
-        property_id: inmuebleData.referenciaInmueble || '',
-        title: inmuebleData?.titulo || '',
-        location: inmuebleData?.ubicacion || '',
-        price: inmuebleData?.precio || '',
-        size: inmuebleData?.tamanio || '',
-        rooms: inmuebleData?.habitaciones || '',
-        garage: inmuebleData?.garaje || false,
-        storage_room: inmuebleData?.trastero || false,
-        bath_rooms: inmuebleData?.banios || '',
-        description: inmuebleData.descripcion || '',
+        property_id: inmuebleData.property_id || '',
+        title: inmuebleData?.title || '',
+        location: inmuebleData?.location || '',
+        price: inmuebleData?.price || '',
+        size: inmuebleData?.size || '',
+        rooms: inmuebleData?.rooms || '',
+        garage: inmuebleData?.garage || false,
+        storage_room: inmuebleData?.storage_room || false,
+        bath_rooms: inmuebleData?.bath_rooms || '',
+        description: inmuebleData.description || '',
         url_image: inmuebleData.url_image || '',
       });
     }

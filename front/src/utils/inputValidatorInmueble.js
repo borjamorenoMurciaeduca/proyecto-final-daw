@@ -1,5 +1,5 @@
 import { PALABRAS_CLAVE } from '@/commons/config/config';
-import Inmueble from '@/models/inmueble';
+import Property from '@/models/property';
 
 const validateIdealistaURL = (url) => {
   const regex = /^https?:\/\/(www\.)?idealista\.com\/inmueble\/(\d+)\/?$/;
@@ -14,63 +14,69 @@ const validateIdealistaURL = (url) => {
 };
 
 const createInmueble = (data, idioma = 'es') => {
-  const inmueble = new Inmueble();
+  
+  const property = new Property();
 
-  inmueble.referenciaInmueble = data?.data?.id;
-  inmueble.dataStatus = data?.data?.status;
+  if (data) {
+    const inmuebleData = data.data;
 
-  if (data.data.status == 'ok') {
-    inmueble.titulo = data?.data?.title;
-    inmueble.ubicacion = data?.data?.location;
-    inmueble.precio = data?.data?.price;
-    inmueble.currency = data?.data?.currency;
-    inmueble.descripcion = data?.data?.description;
-    inmueble.url_image = data?.data?.img_url;
+    property.property_id = inmuebleData?.id;
+    property.status = inmuebleData?.status;
 
-    let caracteristicasBasicas =
-      data?.data?.features['Características básicas'];
-
-    if (caracteristicasBasicas) {
-      caracteristicasBasicas.forEach((caracteristica) => {
-        if (caracteristica.toLowerCase().includes('m²')) {
-          const numeroMetrosCuadrados = caracteristica.match(/\d+/);
-          if (numeroMetrosCuadrados) {
-            inmueble.tamanio = parseInt(numeroMetrosCuadrados[0]);
+    if (inmuebleData?.status == 'ok') {
+      property.title = inmuebleData?.title;
+      property.location = inmuebleData?.location;
+      property.price = inmuebleData?.price;
+      property.currency = inmuebleData?.currency;
+      property.description = inmuebleData?.description;
+      property.img_url = inmuebleData?.img_url;
+  
+      let caracteristicasBasicas =
+        inmuebleData?.features['Características básicas'];
+  
+      if (caracteristicasBasicas) {
+        caracteristicasBasicas.forEach((caracteristica) => {
+          if (caracteristica.toLowerCase().includes('m²')) {
+            const numeroMetrosCuadrados = caracteristica.match(/\d+/);
+            if (numeroMetrosCuadrados) {
+              property.size = parseInt(numeroMetrosCuadrados[0]);
+            }
           }
-        }
-        if (caracteristica.toLowerCase().includes('baño')) {
-          const numeroBanos = caracteristica.toLowerCase().match(/\d+/);
-          if (numeroBanos) {
-            inmueble.banios = parseInt(numeroBanos[0]);
+          if (caracteristica.toLowerCase().includes('baño')) {
+            const numeroBanos = caracteristica.toLowerCase().match(/\d+/);
+            if (numeroBanos) {
+              property.bath_rooms = parseInt(numeroBanos[0]);
+            }
           }
-        }
-        if (caracteristica.toLowerCase().includes('garaje')) {
-          inmueble.garaje = true;
-        }
-        if (caracteristica.toLowerCase().includes('trastero')) {
-          inmueble.trastero = true;
-        }
-        if (caracteristica.toLowerCase().includes('habitaci')) {
-          const numeroHabitaciones = caracteristica.match(/\d+/);
-          if (numeroHabitaciones) {
-            inmueble.habitaciones = parseInt(numeroHabitaciones[0]);
+          if (caracteristica.toLowerCase().includes('garaje')) {
+            property.garage = true;
           }
-        }
-      });
+          if (caracteristica.toLowerCase().includes('trastero')) {
+            property.storage_room = true;
+          }
+          if (caracteristica.toLowerCase().includes('habitaci')) {
+            const numeroHabitaciones = caracteristica.match(/\d+/);
+            if (numeroHabitaciones) {
+              property.rooms = parseInt(numeroHabitaciones[0]);
+            }
+          }
+        });
+      }
+  
+      property.type = determinarTipoPropiedad(data, idioma);
     }
 
-    inmueble.tipoPropiedad = determinarTipoPropiedad(data, idioma);
+    if (inmuebleData?.status == 'baja') {
+      property.cancellationDate = inmuebleData?.cancellationDate;
+    }
+  
+    if (inmuebleData?.status == 'error') {
+      return null;
+    }
+
   }
 
-  if (data.data.status == 'baja') {
-    inmueble.fechaBaja = data?.data?.fechaBaja;
-  }
-
-  if (data.data.status == 'error') {
-    return null;
-  }
-
-  return inmueble;
+  return property;
 };
 
 const determinarTipoPropiedad = (json, idioma) => {
