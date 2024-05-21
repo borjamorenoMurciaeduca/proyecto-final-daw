@@ -26,6 +26,7 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::delete('/remove-note/{id}', [PropertyController::class, 'deleteNote']);
   Route::put('/update-note/{id}', [PropertyController::class, 'updateNote']);
   Route::get('/property/{id}', [PropertyController::class, 'show']);
+  Route::put('/property/{id}', [PropertyController::class, 'updateProperty']);
   Route::get('/prepare-inmueble/{id}', [PropertyController::class, 'prepare']);
   Route::post('/property/{id}/update-price', [PropertyController::class, 'storeNewPrice']);
   Route::delete('/properties/delete-multiple', [PropertyController::class, 'deleteMultiple']);

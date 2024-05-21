@@ -245,6 +245,88 @@ class PropertyController extends Controller {
         }
     }
 
+    public function updateProperty(Request $request) {
+        try {
+            DB::beginTransaction();
+            $validateProperty = $request->validate([
+                'property_id' => 'numeric|required',
+                'cancellation_date' => 'date|nullable',
+                'url_image' => 'string|nullable',
+            ]);
+
+            $validateUserProperty = $request->validate([
+                'title' => 'string|required',
+                'location' => 'string|required',
+                'size' => 'numeric|required',
+                'rooms' => 'integer|required',
+                'garage' => 'required',
+                'storage_room' => 'required',
+                'bath_rooms' => 'integer|required',
+                'description' => 'string|required'
+            ]);
+
+            $garage = filter_var($request->input('garage'), FILTER_VALIDATE_BOOLEAN);
+            $storage_room = filter_var($request->input('storage_room'), FILTER_VALIDATE_BOOLEAN);
+
+            $validateHistory = $request->validate([
+                'price' => 'numeric|required',
+            ]);
+
+            if (!Property::where('property_id', $validateProperty['property_id'])->exists()) {
+                return ApiResponse::error('The property does not exist', 400);
+            }
+
+            $history = PriceHistory::create([
+                'property_id_fk' => $validateProperty['property_id'],
+                'price' => $validateHistory['price'],
+            ]);
+
+            $userProperty = UserProperty::where('property_id_fk', $validateProperty['property_id'])->first();
+
+            $userProperty->update([
+                'title' => $validateUserProperty['title'],
+                'location' => $validateUserProperty['location'],
+                'size' => $validateUserProperty['size'],
+                'rooms' => $validateUserProperty['rooms'],
+                'garage' => $garage,
+                'storage_room' => $storage_room,
+                'bath_rooms' => $validateUserProperty['bath_rooms'],
+                'description' => $validateUserProperty['description'],
+                'url_image' => $validateProperty['url_image']
+            ]);
+
+            DB::commit();
+
+            $data = [
+                'user_id' => Auth::id(),
+                'property_id' => $validateProperty['property_id'],
+                'title' => $validateUserProperty['title'],
+                'location' => $validateUserProperty['location'],
+                'size' => $validateUserProperty['size'],
+                'rooms' => $validateUserProperty['rooms'],
+                'garage' => $garage,
+                'storage_room' => $storage_room,
+                'bath_rooms' => $validateUserProperty['bath_rooms'],
+                'description' => $validateUserProperty['description'],
+                'price' => $history->price,
+                'is_shared' => $userProperty->is_shared,
+                'share_url' => $userProperty->share_url,
+                'favorite' => $userProperty->favorite,
+                'url_image' => $validateProperty['url_image'] ?? null,
+                'cancellation_date' => $validateProperty['cancellation_date'] ?? null,
+                'created_at' => $userProperty->created_at,
+                'updated_at' => $userProperty->updated_at,
+            ];
+            return ApiResponse::success('Property updated successfully', $data, 200);
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return ApiResponse::error('Error with validation', 400, $e->validator->errors());
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return ApiResponse::error('Error:' . $e->getMessage(), 500);
+        }
+    }
+
     public function storeNewNote(Request $request) {
         try {
             DB::beginTransaction();
@@ -529,7 +611,7 @@ class PropertyController extends Controller {
         }
     }
 
-public function revokeShareProperty($propertyId) {
+    public function revokeShareProperty($propertyId) {
         try {
             DB::beginTransaction();
             $userProperty = UserProperty::where('property_id_fk', $propertyId)->first();
@@ -537,16 +619,16 @@ public function revokeShareProperty($propertyId) {
                 $isShared = !$userProperty->is_shared;
 
                 UserProperty::where('property_id_fk', $propertyId)->update([
-                    'is_shared' =>false,
+                    'is_shared' => false,
                     'share_url' => null
                 ]);
-    
+
                 $data = [
                     'property_id' => $userProperty->property_id_fk,
                     'is_shared' => false,
-                    'share_url' =>null,
+                    'share_url' => null,
                 ];
-    
+
                 DB::commit();
                 return ApiResponse::success('Property private updated successfully', $data, 200);
             } else {
@@ -619,5 +701,4 @@ public function revokeShareProperty($propertyId) {
             return ApiResponse::error('Error:' . $e->getMessage(), 500);
         }
     }
-
-    }
+}

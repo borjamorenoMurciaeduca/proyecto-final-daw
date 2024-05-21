@@ -63,7 +63,3 @@ Authorization: Bearer 14|Ga6O3n5D6N78JsSyRSKS4W9N4KZeDYx2wNfEeq7o1a2e5462
 POST http://127.0.0.1:8000/api/property/2414231/favorite
 Content-Type: application/json
 Authorization: Bearer 1|OWc3odlVCREXkPYgv46avC4LrZ1G7Lkurp4qFvqR3ad497db
-
-{
-    "favorite": false 
-}
