@@ -113,10 +113,8 @@ const AddButtonModal = () => {
   };
 
   const handleSubmit = async (property) => {
-    console.log('property:', property);
     try {
       const res = await propertyService.addProperty(property);
-      console.log(res);
       if (res.status === 201) {
         addProperty(res.data);
         enqueueSnackbar('Vivienda añadida con éxito', { variant: 'success' });
