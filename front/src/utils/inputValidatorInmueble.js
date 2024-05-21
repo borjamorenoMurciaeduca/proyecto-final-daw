@@ -14,7 +14,6 @@ const validateIdealistaURL = (url) => {
 };
 
 const createInmueble = (data, idioma = 'es') => {
-  
   const property = new Property();
 
   if (data) {
@@ -29,11 +28,11 @@ const createInmueble = (data, idioma = 'es') => {
       property.price = inmuebleData?.price;
       property.currency = inmuebleData?.currency;
       property.description = inmuebleData?.description;
-      property.img_url = inmuebleData?.img_url;
-  
+      property.url_image = inmuebleData?.img_url;
+
       let caracteristicasBasicas =
         inmuebleData?.features['Características básicas'];
-  
+
       if (caracteristicasBasicas) {
         caracteristicasBasicas.forEach((caracteristica) => {
           if (caracteristica.toLowerCase().includes('m²')) {
@@ -62,18 +61,17 @@ const createInmueble = (data, idioma = 'es') => {
           }
         });
       }
-  
+
       property.type = determinarTipoPropiedad(data, idioma);
     }
 
     if (inmuebleData?.status == 'baja') {
       property.cancellationDate = inmuebleData?.cancellationDate;
     }
-  
+
     if (inmuebleData?.status == 'error') {
       return null;
     }
-
   }
 
   return property;

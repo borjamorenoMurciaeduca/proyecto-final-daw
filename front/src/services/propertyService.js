@@ -2,7 +2,7 @@ import axiosInterceptor from '@/utils/httpInterceptor';
 import inputValidatorInmueble from '@/utils/inputValidatorInmueble';
 const baseURL = import.meta.env.VITE_API_URL;
 
-const addProperty = async ({ inmuebleToAdd }) => {
+const addProperty = async (inmuebleToAdd) => {
   let { data } = await axiosInterceptor.post(
     baseURL + 'properties',
     inmuebleToAdd
@@ -31,6 +31,14 @@ const prepareInmuebleForm = async (idInmueble) => {
 const getPropertyPrices = async (propertyId) => {
   let { data } = await axiosInterceptor.get(
     `${baseURL}property/${propertyId}/prices`
+  );
+  return data;
+};
+
+const updateProperty = async (property) => {
+  let { data } = await axiosInterceptor.put(
+    `${baseURL}property/${property.property_id}`,
+    property
   );
   return data;
 };
@@ -83,4 +91,5 @@ export default {
   changeFavoriteProperty,
   deleteMultipleProperties,
   revokeShareProperty,
+  updateProperty,
 };

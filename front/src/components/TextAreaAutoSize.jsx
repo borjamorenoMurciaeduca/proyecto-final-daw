@@ -6,6 +6,7 @@ export default function UnstyledTextareaIntroduction({
   name,
   defaultValue,
   readOnly,
+  onChange,
 }) {
   return (
     <TextareaAutosize
@@ -16,6 +17,7 @@ export default function UnstyledTextareaIntroduction({
       placeholder={desc}
       defaultValue={defaultValue}
       readOnly={readOnly}
+      onChange={onChange}
     />
   );
 }

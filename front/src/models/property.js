@@ -14,7 +14,7 @@ class Property {
     this.cancellationDate = null;
     this.status = null;
     this.description = null;
-    this.img_url = null;
+    this.url_image = null;
   }
 }
 

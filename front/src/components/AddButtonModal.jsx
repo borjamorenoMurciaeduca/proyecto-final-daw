@@ -22,6 +22,7 @@ import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropertyForm from './PropertyForm';
+import useProperties from '@/hooks/useProperties';
 
 const AddButtonModal = () => {
   const [open, setOpen] = useState(false);
@@ -31,6 +32,7 @@ const AddButtonModal = () => {
   const [showForm, setShowForm] = useState(false);
   const [propertyData, setPropertyData] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
+  const { addProperty } = useProperties();
   const { t } = useTranslation();
   const theme = useTheme();
   const lessThanMedium = useMediaQuery(theme.breakpoints.down('md'));
@@ -108,6 +110,22 @@ const AddButtonModal = () => {
   const transitionDuration = {
     enter: theme.transitions.duration.enteringScreen,
     exit: theme.transitions.duration.leavingScreen,
+  };
+
+  const handleSubmit = async (property) => {
+    console.log('property:', property);
+    try {
+      const res = await propertyService.addProperty(property);
+      console.log(res);
+      if (res.status === 201) {
+        addProperty(res.data);
+        enqueueSnackbar('Vivienda añadida con éxito', { variant: 'success' });
+      }
+    } catch (error) {
+      const msg = error?.response?.data?.message || 'Error al añadir vivienda';
+      enqueueSnackbar(msg, { variant: 'error' });
+      console.error('Error al añadir vivienda:', error);
+    }
   };
 
   return (
@@ -214,10 +232,11 @@ const AddButtonModal = () => {
               {t('addButtonModal.validation.error')}
             </Typography>
           )}
-          {showForm ? (
+          {!showForm ? (
             <PropertyForm
               property={propertyData}
               handleCloseDialog={handleClose}
+              handleSubmit={handleSubmit}
             />
           ) : (
             <Grid

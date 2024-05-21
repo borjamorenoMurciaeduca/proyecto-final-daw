@@ -1,5 +1,3 @@
-import useProperties from '@/hooks/useProperties.js';
-import propertyService from '@/services/propertyService.js';
 import {
   Button,
   Checkbox,
@@ -13,7 +11,12 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import UnstyledTextareaIntroduction from './TextAreaAutoSize';
 
-const PropertyForm = ({ property = {}, handleCloseDialog, edit }) => {
+const PropertyForm = ({
+  property = {},
+  handleCloseDialog,
+  edit,
+  handleSubmit,
+}) => {
   const [propertiesValues, setPropertiesValues] = useState({
     property_id: '',
     title: '',
@@ -27,23 +30,22 @@ const PropertyForm = ({ property = {}, handleCloseDialog, edit }) => {
     description: '',
     url_image: '',
   });
-  const { addProperty } = useProperties();
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     setPropertiesValues({
-      property_id: property?.property_id,
-      title: property?.title,
-      location: property?.location,
-      price: property?.price,
-      size: property?.size,
-      rooms: property?.rooms,
-      garage: property?.garage,
-      storage_room: property?.storage_room,
-      bath_rooms: property?.bath_rooms,
-      description: property?.description,
-      url_image: property?.url_image,
+      property_id: property?.property_id || '',
+      title: property?.title || '',
+      location: property?.location || '',
+      price: property?.price || '',
+      size: property?.size || '',
+      rooms: property?.rooms || '',
+      garage: property?.garage || false,
+      storage_room: property?.storage_room || false,
+      bath_rooms: property?.bath_rooms || '',
+      description: property?.description || '',
+      url_image: property?.url_image || '',
     });
   }, [property]);
 
@@ -53,23 +55,21 @@ const PropertyForm = ({ property = {}, handleCloseDialog, edit }) => {
     setPropertiesValues({ ...propertiesValues, [name]: newValue });
   };
 
-  const handleSubmit = async (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     try {
       const inmuebleToAdd = {
         ...propertiesValues,
         property_id: Number(propertiesValues.property_id),
+        price: Number(propertiesValues.price),
       };
-      const res = await propertyService.addProperty({ inmuebleToAdd });
-      if (res.status === 201) {
-        addProperty(res.data);
-        enqueueSnackbar('Vivienda añadida con éxito', { variant: 'success' });
-        handleCloseDialog();
-      }
+      await handleSubmit(inmuebleToAdd);
+      handleCloseDialog();
     } catch (error) {
-      const msg = error?.response?.data?.message || 'Error al añadir vivienda';
+      const msg =
+        error?.response?.data?.message || 'Error al procesar la propiedad';
       enqueueSnackbar(msg, { variant: 'error' });
-      console.error('Error al obtener datos del usuario:', error);
+      console.error('Error al procesar la propiedad:', error);
     }
   };
 
@@ -82,7 +82,7 @@ const PropertyForm = ({ property = {}, handleCloseDialog, edit }) => {
       alignItems="center"
       component="form"
       noValidate
-      onSubmit={handleSubmit}
+      onSubmit={onSubmit}
     >
       <Grid item xs={12} md={4}>
         <TextField
@@ -91,7 +91,7 @@ const PropertyForm = ({ property = {}, handleCloseDialog, edit }) => {
           name="property_id"
           label={t('add-property-form.reference')}
           type="number"
-          disabled
+          // disabled
           fullWidth
           value={propertiesValues.property_id}
           onChange={handleInputChange}
@@ -209,6 +209,7 @@ const PropertyForm = ({ property = {}, handleCloseDialog, edit }) => {
           desc={t('add-property-form.description')}
           name="description"
           defaultValue={propertiesValues.description}
+          onChange={handleInputChange}
         />
       </Grid>
       <Grid item xs={12} md={8}>

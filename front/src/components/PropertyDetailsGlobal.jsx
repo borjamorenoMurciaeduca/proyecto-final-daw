@@ -23,6 +23,9 @@ import { useTranslation } from 'react-i18next';
 import PropertyForm from './PropertyForm';
 import { useState } from 'react';
 import { useTheme } from '@emotion/react';
+import propertyService from '@/services/propertyService';
+import { useSnackbar } from 'notistack';
+import useProperties from '@/hooks/useProperties';
 
 const PropertyDetailsGlobal = ({
   property,
@@ -33,6 +36,8 @@ const PropertyDetailsGlobal = ({
   const { t } = useTranslation();
   const theme = useTheme();
   const lessThanSm = useMediaQuery(theme.breakpoints.down('sm'));
+  const { enqueueSnackbar } = useSnackbar();
+  const { updateProperty } = useProperties();
 
   const handleTwitter = () => {
     const fullURL = parser.getFullURL(property.share_url);
@@ -48,6 +53,21 @@ const PropertyDetailsGlobal = ({
   const handleOpenProperty = () => setOpenEditProperty(true);
 
   const handleCloseEditProperty = () => setOpenEditProperty(false);
+
+  const handleEditSubmit = async (property) => {
+    try {
+      const res = await propertyService.updateProperty(property);
+      if (res.status === 200) {
+        updateProperty(property);
+        enqueueSnackbar('Vivienda editata con éxito', { variant: 'success' });
+      }
+    } catch (error) {
+      const msg =
+        error?.response?.data?.message || 'Error al editar la vivienda';
+      enqueueSnackbar(msg, { variant: 'error' });
+      console.error('Error al editar la vivienda:', error);
+    }
+  };
 
   return (
     <Grid item xs={12} md={8} justifyContent="center" alignSelf="center" pb={5}>
@@ -173,6 +193,7 @@ const PropertyDetailsGlobal = ({
               property={property}
               handleCloseDialog={handleCloseEditProperty}
               edit
+              handleSubmit={handleEditSubmit}
             />
           </Grid>
         </Grid>

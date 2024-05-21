@@ -9,17 +9,6 @@ const PriceHistory = ({ propertyId }) => {
   const [xAxis, setXAxis] = useState([]);
   const [series, setSeries] = useState([]);
 
-  // const formatDate = (dateString) => {
-  //   const dateObject = new Date(dateString);
-  //   const day = dateObject.getDate().toString().padStart(2, '0');
-  //   const month = (dateObject.getMonth() + 1).toString().padStart(2, '0'); // El mes es indexado desde 0, por eso se le suma 1
-  //   const year = dateObject.getFullYear().toString().slice(-2);
-  //   const hours = dateObject.getHours().toString().padStart(2, '0');
-  //   const minutes = dateObject.getMinutes().toString().padStart(2, '0');
-
-  //   return `${day}/${month}/${year} ${hours}:${minutes}`;
-  // };
-
   useEffect(() => {
     (async () => {
       try {
@@ -60,10 +49,7 @@ const PriceHistory = ({ propertyId }) => {
             scaleType: 'point',
             label: 'Fechas',
             axisLabel: 'Fechas',
-            // scaleType: 'date',
             valueFormatter: (value) => formatDateWithoutTime(value),
-
-            // data: [1, 2, 3, 5, 8, 10, 12, 15, 16],
           },
         ]}
         yAxis={[{ label: '€', scaleType: 'linear' }]}
@@ -75,17 +61,6 @@ const PriceHistory = ({ propertyId }) => {
             // valueFormatter: (value) =>
             //   value == null ? 'NaN' : value.toString(),
           },
-          // {
-          //   data: [
-          //     907418, 800000, 900000, 1000000, 1100000, 1200000, 1300000,
-          //   ],
-          // },
-          // {
-          //   data: [7, 8, 5, 3, 2, 5.5, 1],
-          //   connectNulls: true,
-          //   valueFormatter: (value) =>
-          //     value == null ? '?' : value.toString(),
-          // },
         ]}
         height={200}
         margin={{ top: 10, bottom: 50, left: 70 }}

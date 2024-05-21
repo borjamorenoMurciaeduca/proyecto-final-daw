@@ -54,10 +54,10 @@ export const PropertiesProvider = ({ children }) => {
     });
   };
 
-  const updateProperty = (property_id) => {
+  const updateProperty = (property) => {
     dispatch({
       type: 'UPDATE_PROPERTY',
-      payload: property_id,
+      payload: property,
     });
   };
 
