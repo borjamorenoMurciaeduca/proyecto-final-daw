@@ -280,8 +280,6 @@ class PropertyController extends Controller {
                 'price' => $validateHistory['price'],
             ]);
 
-            $userProperty = UserProperty::where('property_id_fk', $validateProperty['property_id'])->first();
-
             UserProperty::where('property_id_fk', $validateProperty['property_id'])->update([
                 'title' => $validateUserProperty['title'],
                 'location' => $validateUserProperty['location'],
@@ -292,6 +290,8 @@ class PropertyController extends Controller {
                 'bath_rooms' => $validateUserProperty['bath_rooms'],
                 'description' => $validateUserProperty['description'],
             ]);
+
+            $userProperty = UserProperty::where('property_id_fk', $validateProperty['property_id'])->first();
 
             DB::commit();
 
