@@ -7,6 +7,7 @@ import propertyService from '@/services/propertyService';
 import userService from '@/services/userService.js';
 import { USER_COOKIE_TOKEN } from '@/strings/defaults';
 import cookie from '@/utils/cookie';
+import loginValidationSchema from '@/validation/loginValidation';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
   Alert,
@@ -15,6 +16,7 @@ import {
   CircularProgress,
   Container,
   FormControl,
+  FormHelperText,
   Grid,
   IconButton,
   InputAdornment,
@@ -25,6 +27,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { useFormik } from 'formik';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -62,11 +65,11 @@ const Login = () => {
        * Obtenemos los inmuebles del usuario
        *  guardamos en el estado global de ViviendasProvider los inmuebles del usuario
        */
-      const resUser = await userService.login({
+      const res = await userService.login({
         identifier,
         password,
       });
-      let { token, user } = resUser.data;
+      let { token, user } = res.data;
 
       // Guardamos el token en una cookie con una duración de 8 horas
 
@@ -106,6 +109,61 @@ const Login = () => {
     }
   };
 
+  const formik = useFormik({
+    initialValues: { identifier: '', password: '' },
+    validationSchema: loginValidationSchema, // Our Yup schema
+    onSubmit: async (values) => {
+      setLoading(true);
+      try {
+        // Validación adicional si es necesario
+        if (!values.password) throw new Error('Password is required');
+
+        // Llamada al servicio de login
+        const { data: userData } = await userService.login({
+          identifier: values.identifier,
+          password: values.password,
+        });
+
+        let { token, user } = userData;
+
+        // Guardamos el token en una cookie con una duración de 8 horas
+        const expirationDateCookie = Date.now() + 8 * 60 * 60 * 1000;
+        const expirationSeconds = parseInt(
+          ((expirationDateCookie - Date.now()) / 1000).toFixed()
+        );
+        cookie.set(USER_COOKIE_TOKEN, token, expirationSeconds);
+
+        // Obtener los datos del usuario y los inmuebles
+        const { data: propertiesData } =
+          await propertyService.getAllUserProperties();
+        setUser({ ...user, currentPage: 1 });
+        setProperties(propertiesData);
+
+        formik.resetForm(); // Limpiar el formulario
+
+        enqueueSnackbar(`${t('snackbar.login')} ${user.username}`, {
+          variant: 'info',
+          anchorOrigin: {
+            vertical: 'top',
+            horizontal: 'center',
+          },
+          autoHideDuration: 2000,
+        });
+
+        navigate('/app', { replace: true });
+      } catch (error) {
+        console.warn(error);
+        setError('Error en las credenciales');
+        setTimeout(() => {
+          setError(null);
+        }, 5000);
+      } finally {
+        setLoading(false);
+      }
+    },
+    enableReinitialize: true,
+  });
+
   return (
     <Container
       maxWidth="sm"
@@ -142,7 +200,7 @@ const Login = () => {
         <Typography component="h1" variant="h5">
           {t('login-form.title')}
         </Typography>
-        <Box component="form" noValidate onSubmit={handleLoginSubmit}>
+        <Box component="form" noValidate onSubmit={formik.handleSubmit}>
           {error && (
             <Alert severity="error" sx={{ margin: '10px 0px' }}>
               {error}
@@ -155,13 +213,27 @@ const Login = () => {
                 id="identifier"
                 name="identifier"
                 label={t('login-form.form.identifier')}
+                onBlur={formik.handleBlur}
+                value={formik.values.identifier}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.identifier && Boolean(formik.errors.identifier)
+                }
+                helperText={
+                  formik.touched.identifier && formik.errors.identifier
+                }
                 fullWidth
                 autoFocus
               />
             </Grid>
             <Grid item xs={12}>
               <FormControl fullWidth>
-                <InputLabel htmlFor="password">
+                <InputLabel
+                  htmlFor="password"
+                  error={
+                    Boolean(formik.errors.password) && formik.touched.password
+                  }
+                >
                   {t('login-form.form.password')}
                 </InputLabel>
                 <OutlinedInput
@@ -170,6 +242,13 @@ const Login = () => {
                   autoComplete="current-password"
                   type={showPassword ? 'text' : 'password'}
                   label={t('login-form.form.password')}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.password && Boolean(formik.errors.password)
+                  }
+                  // helperText={formik.touched.password && formik.errors.password}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
@@ -183,6 +262,14 @@ const Login = () => {
                     </InputAdornment>
                   }
                 />
+                <FormHelperText
+                  id="outlined-weight-helper-text"
+                  error={
+                    formik.touched.password && Boolean(formik.errors.password)
+                  }
+                >
+                  {formik.touched.password && formik.errors.password}
+                </FormHelperText>
               </FormControl>
             </Grid>
             <Grid item xs={12}>

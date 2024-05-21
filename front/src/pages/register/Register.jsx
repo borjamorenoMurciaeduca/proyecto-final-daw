@@ -10,6 +10,7 @@ import {
   AccordionSummary,
   CircularProgress,
   FormControl,
+  FormHelperText,
   IconButton,
   InputAdornment,
   InputLabel,
@@ -34,6 +35,9 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import parser from '@/utils/parser';
+import { useFormik } from 'formik';
+import registerValidationSchema from '@/validation/registerValidation';
+import dayjs from 'dayjs';
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -102,6 +106,56 @@ const Register = () => {
     }
   };
 
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+      password_confirmation: '',
+      name: '',
+      surname: '',
+      email: '',
+      phone: '',
+      birth_date: '',
+    },
+    validationSchema: registerValidationSchema, // Our Yup schema
+    onSubmit: async (values) => {
+      setLoading(true);
+
+      try {
+        if (values.password !== values.password_confirmation)
+          throw new Error('Las contraseñas no coinciden');
+        const res = await userService.register(values);
+
+        if (res.error) {
+          throw new Error(res.error);
+        }
+
+        if (res.status === 201) {
+          setTimeout(() => {
+            enqueueSnackbar('Usuario registrado correctamente', {
+              variant: 'success',
+            });
+            navigate('/auth');
+            formik.resetForm(); // Reset form values
+          }, 1000);
+        }
+      } catch (error) {
+        console.warn(error);
+        let msg = error.response?.data?.message || error.message;
+        enqueueSnackbar(msg, { variant: 'error' });
+        setError(msg);
+        setTimeout(() => {
+          setError(null);
+        }, 3000);
+      } finally {
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
+      }
+    },
+    enableReinitialize: true,
+  });
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
       <Container
@@ -131,7 +185,7 @@ const Register = () => {
           <Typography component="h1" variant="h5">
             {t('register-form.title')}
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit}>
+          <Box component="form" noValidate onSubmit={formik.handleSubmit}>
             <Grid container spacing={2}>
               <Grid container item xs={12}>
                 <TextField
@@ -142,11 +196,24 @@ const Register = () => {
                   id="username"
                   placeholder={t('register-form.form.username-placeholder')}
                   label={t('register-form.form.username')}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.username}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.username && Boolean(formik.errors.username)
+                  }
+                  helperText={formik.touched.username && formik.errors.username}
                 />
               </Grid>
               <Grid item xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel required htmlFor="password">
+                  <InputLabel
+                    required
+                    htmlFor="password"
+                    error={
+                      formik.touched.password && Boolean(formik.errors.password)
+                    }
+                  >
                     {t('login-form.form.password')}
                   </InputLabel>
                   <OutlinedInput
@@ -156,6 +223,12 @@ const Register = () => {
                     autoComplete="new-password"
                     type={showPassword ? 'text' : 'password'}
                     label={t('login-form.form.password')}
+                    value={formik.values.password}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    error={
+                      formik.touched.password && Boolean(formik.errors.password)
+                    }
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
@@ -169,11 +242,27 @@ const Register = () => {
                       </InputAdornment>
                     }
                   />
+
+                  <FormHelperText
+                    id="outlined-password-helper"
+                    error={
+                      formik.touched.password && Boolean(formik.errors.password)
+                    }
+                  >
+                    {formik.touched.password && formik.errors.password}
+                  </FormHelperText>
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel required htmlFor="password_confirmation">
+                  <InputLabel
+                    required
+                    htmlFor="password_confirmation"
+                    error={Boolean(
+                      formik.touched.password_confirmation &&
+                        formik.errors.password_confirmation
+                    )}
+                  >
                     {t('login-form.form.confirm-password')}
                   </InputLabel>
                   <OutlinedInput
@@ -183,6 +272,10 @@ const Register = () => {
                     type={showConfirmPassword ? 'text' : 'password'}
                     name="password_confirmation"
                     label={t('login-form.form.confirm-password')}
+                    value={formik.values.password_confirmation}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    error={formik.touched.password_confirmation}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
@@ -200,6 +293,15 @@ const Register = () => {
                       </InputAdornment>
                     }
                   />
+                  <FormHelperText
+                    error={
+                      formik.touched.password_confirmation &&
+                      Boolean(formik.errors.password_confirmation)
+                    }
+                  >
+                    {formik.touched.password_confirmation &&
+                      formik.errors.password_confirmation}
+                  </FormHelperText>
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
@@ -222,7 +324,13 @@ const Register = () => {
                           fullWidth
                           id="name"
                           label={t('register-form.form.name')}
-                          autoFocus
+                          value={formik.values.name}
+                          onBlur={formik.handleBlur}
+                          onChange={formik.handleChange}
+                          error={
+                            formik.touched.name && Boolean(formik.errors.name)
+                          }
+                          helperText={formik.touched.name && formik.errors.name}
                         />
                       </Grid>
                       <Grid item xs={12} md={6}>
@@ -232,6 +340,16 @@ const Register = () => {
                           fullWidth
                           id="surname"
                           label={t('register-form.form.surname')}
+                          value={formik.values.surname}
+                          onBlur={formik.handleBlur}
+                          onChange={formik.handleChange}
+                          error={
+                            formik.touched.surname &&
+                            Boolean(formik.errors.surname)
+                          }
+                          helperText={
+                            formik.touched.surname && formik.errors.surname
+                          }
                         />
                       </Grid>
                       <Grid item xs={12}>
@@ -242,7 +360,18 @@ const Register = () => {
                           fullWidth
                           id="email"
                           label={t('register-form.form.email')}
-                          helperText={t('register-form.form.email-helper')}
+                          // helperText={t('register-form.form.email-helper')}
+                          value={formik.values.email}
+                          onBlur={formik.handleBlur}
+                          onChange={formik.handleChange}
+                          error={
+                            formik.touched.email && Boolean(formik.errors.email)
+                          }
+                          helperText={
+                            formik.touched.email && formik.errors.email // If touched and has errors
+                              ? formik.errors.email
+                              : t('register-form.form.email-helper')
+                          }
                         />
                       </Grid>
                       <Grid item xs={12} md={6}>
@@ -253,6 +382,13 @@ const Register = () => {
                           fullWidth
                           id="phone"
                           label={t('register-form.form.phone')}
+                          value={formik.values.tel}
+                          onBlur={formik.handleBlur}
+                          onChange={formik.handleChange}
+                          error={
+                            formik.touched.tel && Boolean(formik.errors.tel)
+                          }
+                          helperText={formik.touched.tel && formik.errors.tel}
                         />
                       </Grid>
                       <Grid item xs={12} md={6}>
@@ -261,6 +397,23 @@ const Register = () => {
                           id="birth_date"
                           label={t('register-form.form.birth-date')}
                           sx={{ width: '100%' }}
+                          onChange={(date) => {
+                            formik.setFieldValue('birth_date', date);
+                          }}
+                          onBlur={formik.handleBlur}
+                          value={
+                            formik.values.birth_date
+                              ? dayjs(formik.values.birth_date, 'yyyy-MM-dd')
+                              : null
+                          }
+                          error={
+                            formik.touched.birth_date &&
+                            Boolean(formik.errors.birth_date)
+                          }
+                          helperText={
+                            formik.touched.birth_date &&
+                            formik.errors.birth_date
+                          }
                         />
                       </Grid>
                     </Grid>
