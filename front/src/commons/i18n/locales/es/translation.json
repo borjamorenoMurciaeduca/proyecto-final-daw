@@ -142,12 +142,15 @@
         "remove": "Borra la nota"
       },
       "addNote": "Añadir comentario",
+      "note": "Nota",
       "isPublic": "Público",
       "publicNote": "Pública",
       "privateNote": "Privada",
       "save": "Guardar",
       "cancel": "Cancelar",
       "edit": "Editar",
+      "dialog-title-edit": "Editando la nota:",
+      "dialog-title-add": "Añadiendo la nota:",
       "updated_at": "editado el ",
       "tooltip": {
         "publicNote": "Si compartes esta propiedad, esta nota será visible",
