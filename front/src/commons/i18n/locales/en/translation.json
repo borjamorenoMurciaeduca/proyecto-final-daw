@@ -142,12 +142,15 @@
         "remove": "Delete the note"
       },
       "addNote": "Add comment",
+      "note": "Note",
       "isPublic": "Public",
       "publicNote": "Public",
       "privateNote": "Private",
       "save": "Save",
       "cancel": "Cancel",
       "edit": "Edit",
+      "dialog-title-edit": "Editing the note:",
+      "dialog-title-add": "Adding note:",
       "updated_at": "updated at ",
       "tooltip": {
         "publicNote": "If you share this property, this note will be visible",
