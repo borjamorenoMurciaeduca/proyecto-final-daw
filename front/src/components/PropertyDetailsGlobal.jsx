@@ -17,10 +17,12 @@ import {
   Stack,
   Tooltip,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import PropertyForm from './PropertyForm';
 import { useState } from 'react';
+import { useTheme } from '@emotion/react';
 
 const PropertyDetailsGlobal = ({
   property,
@@ -29,6 +31,8 @@ const PropertyDetailsGlobal = ({
 }) => {
   const [openEditProperty, setOpenEditProperty] = useState(false);
   const { t } = useTranslation();
+  const theme = useTheme();
+  const lessThanSm = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleTwitter = () => {
     const fullURL = parser.getFullURL(property.share_url);
@@ -156,6 +160,7 @@ const PropertyDetailsGlobal = ({
         onClose={() => setOpenEditProperty(false)}
         maxWidth="md"
         fullWidth
+        fullScreen={lessThanSm}
       >
         <Grid container spacing={2} p={3}>
           <Grid item xs={12}>

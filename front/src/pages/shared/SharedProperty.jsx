@@ -15,7 +15,6 @@ const SharedProperty = () => {
       try {
         const property = await propertyService.getShareProperty(shared_url);
         setProperty(property.data);
-        console.log(property);
       } catch (error) {
         console.log(error);
       } finally {

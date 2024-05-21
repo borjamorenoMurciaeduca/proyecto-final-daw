@@ -13,17 +13,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import UnstyledTextareaIntroduction from './TextAreaAutoSize';
 
-const PropertyForm = ({
-  inmuebleData = {},
-  handleCloseDialog,
-  property,
-  edit,
-}) => {
-  const { addProperty } = useProperties();
-  const { t } = useTranslation();
-  const { enqueueSnackbar } = useSnackbar();
-
-  console.log('render');
+const PropertyForm = ({ property = {}, handleCloseDialog, edit }) => {
   const [propertiesValues, setPropertiesValues] = useState({
     property_id: '',
     title: '',
@@ -37,42 +27,24 @@ const PropertyForm = ({
     description: '',
     url_image: '',
   });
+  const { addProperty } = useProperties();
+  const { t } = useTranslation();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
-    if (inmuebleData.length > 0) {
-      setPropertiesValues({
-        property_id: inmuebleData.property_id || '',
-        title: inmuebleData?.title || '',
-        location: inmuebleData?.location || '',
-        price: inmuebleData?.price || '',
-        size: inmuebleData?.size || '',
-        rooms: inmuebleData?.rooms || '',
-        garage: inmuebleData?.garage || false,
-        storage_room: inmuebleData?.storage_room || false,
-        bath_rooms: inmuebleData?.bath_rooms || '',
-        description: inmuebleData.description || '',
-        url_image: inmuebleData.url_image || '',
-      });
-    }
-  }, [inmuebleData]);
-
-  useEffect(() => {
-    if (property) {
-      console.log(property);
-      setPropertiesValues({
-        property_id: property?.property_id,
-        title: property?.title,
-        location: property?.location,
-        price: property?.price,
-        size: property?.size,
-        rooms: property?.rooms,
-        garage: property?.garage,
-        storage_room: property?.storage_room,
-        bath_rooms: property?.bath_rooms,
-        description: property?.description,
-        url_image: property?.url_image,
-      });
-    }
+    setPropertiesValues({
+      property_id: property?.property_id,
+      title: property?.title,
+      location: property?.location,
+      price: property?.price,
+      size: property?.size,
+      rooms: property?.rooms,
+      garage: property?.garage,
+      storage_room: property?.storage_room,
+      bath_rooms: property?.bath_rooms,
+      description: property?.description,
+      url_image: property?.url_image,
+    });
   }, [property]);
 
   const handleInputChange = (event) => {
@@ -81,17 +53,12 @@ const PropertyForm = ({
     setPropertiesValues({ ...propertiesValues, [name]: newValue });
   };
 
-  // const baniosValue = inmuebleData?.banios || '';
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // const date = new Date();
-      // const formattedDate = date.toISOString().split('T')[0];
       const inmuebleToAdd = {
         ...propertiesValues,
         property_id: Number(propertiesValues.property_id),
-        // fechaRegistro: formattedDate,
       };
       const res = await propertyService.addProperty({ inmuebleToAdd });
       if (res.status === 201) {
@@ -246,7 +213,7 @@ const PropertyForm = ({
       </Grid>
       <Grid item xs={12} md={8}>
         <Button type="submit" variant="contained" fullWidth>
-          {t('add-property-form.add-property')}
+          {edit ? 'editar' : t('add-property-form.add-property')}
         </Button>
       </Grid>
       <Grid item xs={12} md={4}>

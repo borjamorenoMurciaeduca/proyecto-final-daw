@@ -29,7 +29,7 @@ const AddButtonModal = () => {
   const [inputDisabled, setInputDisabled] = useState(false);
   const [error, setError] = useState(false);
   const [showForm, setShowForm] = useState(false);
-  const [inmuebleData, setInmuebleData] = useState(null);
+  const [propertyData, setPropertyData] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
   const theme = useTheme();
@@ -61,9 +61,8 @@ const AddButtonModal = () => {
       enqueueSnackbar(t('snackbar.url-validation.ok'), { variant: 'success' });
       try {
         const data = await propertyService.prepareInmuebleForm(idInmueble);
-        if (data?.dataStatus == 'ok') {
-          console.log('data: ', data);
-          setInmuebleData(data);
+        if (data?.status == 'ok') {
+          setPropertyData(data);
           setShowForm(true);
         } else {
           setShowForm(false);
@@ -199,16 +198,16 @@ const AddButtonModal = () => {
                 <SearchIcon />
               </IconButton>
             </Tooltip>
-            <Tooltip title={t('tooltip.clear')}>
-              <IconButton
-                type="button"
-                aria-label="clear"
-                onClick={handleClear}
-                disabled={!inputDisabled}
-              >
+            <IconButton
+              type="button"
+              aria-label="clear"
+              onClick={handleClear}
+              disabled={!inputDisabled}
+            >
+              <Tooltip title={t('tooltip.clear')}>
                 <DeleteIcon />
-              </IconButton>
-            </Tooltip>
+              </Tooltip>
+            </IconButton>
           </Grid>
           {error && (
             <Typography sx={{ color: 'red', fontSize: '0.8rem' }}>
@@ -217,7 +216,7 @@ const AddButtonModal = () => {
           )}
           {showForm ? (
             <PropertyForm
-              inmuebleData={inmuebleData}
+              property={propertyData}
               handleCloseDialog={handleClose}
             />
           ) : (

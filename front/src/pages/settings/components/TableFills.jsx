@@ -11,9 +11,7 @@ export const Columns = (handleOpenDialog) => {
   const { revokeShareProperty } = useProperties();
   const handlePrivateProperty = async (propertyId) => {
     try {
-      console.log(propertyId);
       const res = await propertyService.revokeShareProperty(propertyId);
-      console.log(res);
       if (res.status === 200) {
         enqueueSnackbar('Property revoke url shared successfully', {
           variant: 'success',
