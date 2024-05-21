@@ -251,7 +251,6 @@ class PropertyController extends Controller {
             $validateProperty = $request->validate([
                 'property_id' => 'numeric|required',
                 'cancellation_date' => 'date|nullable',
-                'url_image' => 'string|nullable',
             ]);
 
             $validateUserProperty = $request->validate([
@@ -283,7 +282,7 @@ class PropertyController extends Controller {
 
             $userProperty = UserProperty::where('property_id_fk', $validateProperty['property_id'])->first();
 
-            $userProperty->update([
+            UserProperty::where('property_id_fk', $validateProperty['property_id'])->update([
                 'title' => $validateUserProperty['title'],
                 'location' => $validateUserProperty['location'],
                 'size' => $validateUserProperty['size'],
@@ -292,7 +291,6 @@ class PropertyController extends Controller {
                 'storage_room' => $storage_room,
                 'bath_rooms' => $validateUserProperty['bath_rooms'],
                 'description' => $validateUserProperty['description'],
-                'url_image' => $validateProperty['url_image']
             ]);
 
             DB::commit();
