@@ -87,11 +87,12 @@ const PropertyCard = ({ property }) => {
                 WebkitLineClamp: 3,
                 WebkitBoxOrient: 'vertical',
               }}
+              gutterBottom
             >
               {description}
             </Typography>
           </Box>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" color="text.secondary" gutterBottom>
             {location}
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
