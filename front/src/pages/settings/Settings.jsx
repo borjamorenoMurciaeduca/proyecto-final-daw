@@ -24,7 +24,6 @@ const Settings = () => {
   const theme = useTheme();
   const lessThanMedium = useMediaQuery(theme.breakpoints.down('md'));
   const { user } = useUser();
-  console.log(user);
 
   function a11yProps(index) {
     return {
