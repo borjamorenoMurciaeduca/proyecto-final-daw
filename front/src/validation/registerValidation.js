@@ -1,6 +1,7 @@
 import * as yup from 'yup';
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+const espRegExp = /^([+]?\d{1,2}[-\s]?|)[9|6|7][0-9]{8}$/;
 const registerValidationSchema = yup.object().shape({
   username: yup
     .string()
@@ -17,7 +18,7 @@ const registerValidationSchema = yup.object().shape({
   name: yup.string().min(3, 'name must be at least 3 characters'),
   surname: yup.string().min(3, 'surname must be at least 3 characters'),
   email: yup.string().email('email must be a valid email'),
-  tel: yup.string().matches(phoneRegExp, 'Phone number is not valid'),
+  phone: yup.string().matches(espRegExp, 'Phone number is not valid'),
   birth_date: yup.date(),
 });
 

@@ -1,16 +1,17 @@
+import { APP_NAME } from '@/commons/config/config.js';
+import DayNightSwitch from '@/components/DayNightSwitch.jsx';
 import {
   AppBar,
   Box,
   Container,
+  Link,
   Slide,
   Toolbar,
   Typography,
   useScrollTrigger,
 } from '@mui/material';
-
-import { APP_NAME } from '@/commons/config/config.js';
-import DayNightSwitch from '@/components/DayNightSwitch.jsx';
 import { Outlet } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 function HideOnScroll(props) {
   const { children } = props;
@@ -36,17 +37,24 @@ const LayoutNotLogged = (props) => {
                   alignItems: 'center',
                 }}
               >
-                <Typography
-                  variant="h6"
-                  noWrap
-                  sx={{
-                    mr: 2,
-                    fontWeight: 700,
-                    textDecoration: 'none',
-                  }}
+                <Link
+                  component={RouterLink}
+                  to="/auth"
+                  sx={{ textDecoration: 'none' }}
+                  color="inherit"
                 >
-                  {APP_NAME}
-                </Typography>
+                  <Typography
+                    variant="h6"
+                    noWrap
+                    sx={{
+                      mr: 2,
+                      fontWeight: 700,
+                      textDecoration: 'none',
+                    }}
+                  >
+                    {APP_NAME}
+                  </Typography>
+                </Link>
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                   <Box sx={{ flexGrow: 0, ml: 1 }}>
                     <DayNightSwitch />

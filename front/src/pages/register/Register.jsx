@@ -142,11 +142,12 @@ const Register = () => {
       } catch (error) {
         console.warn(error);
         let msg = error.response?.data?.message || error.message;
+        msg = error.response?.data?.data?.username[0] || msg;
         enqueueSnackbar(msg, { variant: 'error' });
         setError(msg);
-        setTimeout(() => {
-          setError(null);
-        }, 3000);
+        // setTimeout(() => {
+        //   setError(null);
+        // }, 3000);
       } finally {
         setTimeout(() => {
           setLoading(false);
@@ -190,6 +191,7 @@ const Register = () => {
               <Grid container item xs={12}>
                 <TextField
                   autoComplete="username"
+                  autoFocus
                   fullWidth
                   name="username"
                   required
@@ -258,10 +260,10 @@ const Register = () => {
                   <InputLabel
                     required
                     htmlFor="password_confirmation"
-                    error={Boolean(
+                    error={
                       formik.touched.password_confirmation &&
-                        formik.errors.password_confirmation
-                    )}
+                      Boolean(formik.errors.password_confirmation)
+                    }
                   >
                     {t('login-form.form.confirm-password')}
                   </InputLabel>
@@ -275,7 +277,10 @@ const Register = () => {
                     value={formik.values.password_confirmation}
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
-                    error={formik.touched.password_confirmation}
+                    error={
+                      formik.touched.password_confirmation &&
+                      Boolean(formik.errors.password_confirmation)
+                    }
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
@@ -376,19 +381,21 @@ const Register = () => {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
-                          autoComplete="tel"
+                          autoComplete="phone"
                           name="phone"
                           placeholder="642 xxx xxx"
                           fullWidth
                           id="phone"
                           label={t('register-form.form.phone')}
-                          value={formik.values.tel}
+                          value={formik.values.phone}
                           onBlur={formik.handleBlur}
                           onChange={formik.handleChange}
                           error={
-                            formik.touched.tel && Boolean(formik.errors.tel)
+                            formik.touched.phone && Boolean(formik.errors.phone)
                           }
-                          helperText={formik.touched.tel && formik.errors.tel}
+                          helperText={
+                            formik.touched.phone && formik.errors.phone
+                          }
                         />
                       </Grid>
                       <Grid item xs={12} md={6}>
