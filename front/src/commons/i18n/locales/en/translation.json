@@ -73,6 +73,10 @@
       "conf": "Settings"
     }
   },
+  "revoke": {
+    "success": "Property removed successfully",
+    "error": "Error removing property"
+  },
   "add-property-form": {
     "reference": "Reference",
     "title": "Title",
@@ -92,7 +96,8 @@
     "url": "Enter the URL",
     "validation": {
       "error": "The URL must be in the correct format"
-    }
+    },
+    "added": "Property added successfully"
   },
   "snackbar": {
     "url-validation": {
@@ -109,6 +114,10 @@
   },
   "property-info": {
     "header": "Details of property",
+    "edit": {
+      "success": "Property updated successfully",
+      "error": "Error updating property"
+    },
     "side-panel": {
       "aria-label": "Property information",
       "price-history": "Prices",
@@ -171,7 +180,10 @@
       "label": "URL to share",
       "helper": "If you generate a new URL, the previous one will be invalid",
       "send": "Send",
-      "exit": "Exit"
+      "exit": "Exit",
+      "success-url": "URL generated successfully",
+      "success-copy": "URL copied to clipboard",
+      "fail-copy": "Error copying URL"
     }
   },
   "favorite": {

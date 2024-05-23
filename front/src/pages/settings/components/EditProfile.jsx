@@ -77,7 +77,7 @@ const EditProfile = () => {
       setTimeout(() => {
         setLoading(false);
         navigate('/app');
-        enqueueSnackbar('Usuario actualizado correctamente', {
+        enqueueSnackbar(t('edit-profile-form.form.success'), {
           variant: 'success',
         });
       }, 1000);
@@ -128,7 +128,7 @@ const EditProfile = () => {
                   required
                   fullWidth
                   disabled
-                  value={user.username}
+                  value={user.username || undefined}
                   id="username"
                   label={t('edit-profile-form.form.username')}
                 />
@@ -140,7 +140,7 @@ const EditProfile = () => {
                   required
                   fullWidth
                   disabled
-                  value={user.email}
+                  value={user.email || undefined}
                   id="email"
                   label={t('edit-profile-form.form.email')}
                 />
@@ -152,7 +152,7 @@ const EditProfile = () => {
                   autoComplete="given-name"
                   name="name"
                   fullWidth
-                  defaultValue={user.name}
+                  defaultValue={user.name || undefined}
                   id="name"
                   label={t('edit-profile-form.form.name')}
                 />
@@ -162,7 +162,7 @@ const EditProfile = () => {
                   autoComplete="family-name"
                   name="surname"
                   fullWidth
-                  defaultValue={user.surname}
+                  defaultValue={user.surname || undefined}
                   id="surname"
                   label={t('edit-profile-form.form.surname')}
                 />
@@ -172,7 +172,7 @@ const EditProfile = () => {
                   autoComplete="tel"
                   name="phone"
                   fullWidth
-                  defaultValue={user.phone}
+                  defaultValue={user.phone || undefined}
                   id="phone"
                   label={t('edit-profile-form.form.phone')}
                 />
@@ -183,7 +183,9 @@ const EditProfile = () => {
                   id="birth_date"
                   label={t('register-form.form.birth-date')}
                   sx={{ width: '100%' }}
-                  defaultValue={dayjs(user.birth_date)}
+                  defaultValue={
+                    user.birth_date ? dayjs(user.birth_date) : undefined
+                  }
                 />
               </Grid>
               <Grid item xs={12} md={6}>

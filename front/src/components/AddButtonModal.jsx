@@ -117,7 +117,7 @@ const AddButtonModal = () => {
       const res = await propertyService.addProperty(property);
       if (res.status === 201) {
         addProperty(res.data);
-        enqueueSnackbar('Vivienda añadida con éxito', { variant: 'success' });
+        enqueueSnackbar(t('addButtonModal.added'), { variant: 'success' });
       }
     } catch (error) {
       const msg = error?.response?.data?.message || 'Error al añadir vivienda';

@@ -59,13 +59,15 @@ const PropertyDetailsGlobal = ({
       const res = await propertyService.updateProperty(property);
       if (res.status === 200) {
         updateProperty(property);
-        enqueueSnackbar('Vivienda editata con éxito', { variant: 'success' });
+        enqueueSnackbar(t('property-info.edit.success'), {
+          variant: 'success',
+        });
       }
     } catch (error) {
       const msg =
-        error?.response?.data?.message || 'Error al editar la vivienda';
+        error?.response?.data?.message || t('property-info.edit.success');
       enqueueSnackbar(msg, { variant: 'error' });
-      console.error('Error al editar la vivienda:', error);
+      console.error(t('property-info.edit.error'), error);
     }
   };
 

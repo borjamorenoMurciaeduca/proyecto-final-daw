@@ -54,6 +54,7 @@ const Register = () => {
 
   const handleMouseDownPassword = (event) => event.preventDefault();
 
+  // en desuso con el uso de formik
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -81,7 +82,7 @@ const Register = () => {
 
       if (res.status === 201) {
         setTimeout(() => {
-          enqueueSnackbar('Usuario registrado correctamente', {
+          enqueueSnackbar(t('register-form.form.'), {
             variant: 'success',
           });
           navigate('/auth');
@@ -132,7 +133,7 @@ const Register = () => {
 
         if (res.status === 201) {
           setTimeout(() => {
-            enqueueSnackbar('Usuario registrado correctamente', {
+            enqueueSnackbar(t('register-form.form.success'), {
               variant: 'success',
             });
             navigate('/auth');

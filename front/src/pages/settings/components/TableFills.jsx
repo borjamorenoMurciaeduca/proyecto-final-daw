@@ -5,15 +5,18 @@ import PublicOffIcon from '@mui/icons-material/PublicOff';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { useSnackbar } from 'notistack';
+import { useTranslation } from 'react-i18next';
 
 export const Columns = (handleOpenDialog) => {
   const { enqueueSnackbar } = useSnackbar();
   const { revokeShareProperty } = useProperties();
+  const { t } = useTranslation();
+
   const handlePrivateProperty = async (propertyId) => {
     try {
       const res = await propertyService.revokeShareProperty(propertyId);
       if (res.status === 200) {
-        enqueueSnackbar('Property revoke url shared successfully', {
+        enqueueSnackbar(t('revoke.success'), {
           variant: 'success',
         });
         revokeShareProperty(res.data);
@@ -21,7 +24,7 @@ export const Columns = (handleOpenDialog) => {
         throw new Error('Failed to revoke share property');
       }
     } catch (error) {
-      enqueueSnackbar('Failed to revoke share property', { variant: 'error' });
+      enqueueSnackbar(t('revoke.error'), { variant: 'error' });
       console.error('Error revoking share property:', error);
     }
   };

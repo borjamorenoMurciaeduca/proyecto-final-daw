@@ -73,6 +73,10 @@
       "conf": "Configuración"
     }
   },
+  "revoke": {
+    "success": "Propiedad eliminada con éxito",
+    "error": "Error al eliminar la propiedad"
+  },
   "add-property-form": {
     "reference": "Referencia",
     "title": "Título",
@@ -92,7 +96,8 @@
     "url": "Introduce la URL",
     "validation": {
       "error": "La URL debe tener el formato correcto"
-    }
+    },
+    "added": "¡Vivienda añadida!"
   },
   "snackbar": {
     "url-validation": {
@@ -109,6 +114,10 @@
   },
   "property-info": {
     "header": "Detalles de la vivienda",
+    "edit": {
+      "success": "Propiedad actualizada con éxito",
+      "error": "Error al actualizar la propiedad"
+    },
     "side-panel": {
       "aria-label": "Información de la vivienda",
       "price-history": "Precios",
@@ -171,7 +180,10 @@
       "label": "Enlace para compartir",
       "helper": "*Si generas un enlace nuevo, el anterior dejará de funcionar",
       "close": "Cerrar",
-      "exit": "Salir"
+      "exit": "Salir",
+      "success-url": "¡Enlace generado!",
+      "success-copy": "¡Enlace copiado en el portapapeles!",
+      "fail-copy": "¡Error al copiar el enlace!"
     }
   },
   "favorite": {

@@ -56,7 +56,7 @@ const DialogShare = ({ open, setOpen, isShared, propertyURL, propertyId }) => {
           is_shared: true,
         });
         handleCopyToClipboard(null, data.share_url);
-        enqueueSnackbar('URL generada satisfactoriamente', {
+        enqueueSnackbar(t('property-share.generator.success-url'), {
           variant: 'success',
         });
       }, 800);
@@ -77,10 +77,12 @@ const DialogShare = ({ open, setOpen, isShared, propertyURL, propertyId }) => {
     navigator.clipboard
       .writeText(urlToCopy)
       .then(() => {
-        enqueueSnackbar('URL copiada al portapapeles', { variant: 'info' });
+        enqueueSnackbar(t('property-share.generator.success-copy'), {
+          variant: 'info',
+        });
       })
       .catch((error) => {
-        enqueueSnackbar('No es posible copiar la url en el portapapeles', {
+        enqueueSnackbar(t('property-share.genertador.fail-copy'), {
           variant: 'error',
         });
         console.warn(error);
