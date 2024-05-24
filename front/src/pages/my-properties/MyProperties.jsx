@@ -4,6 +4,7 @@ import useProperties from '@/hooks/useProperties';
 import useUser from '@/hooks/useUser';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import {
+  Chip,
   Fab,
   Grid,
   Pagination,
@@ -19,7 +20,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropertyDrawer from './components/PropertyDrawer';
 import { useSnackbar } from 'notistack';
-import { debounce } from 'lodash';
+import parser from '@/utils/parser';
 
 const PROPERTIES_MAX = 6;
 const PROPERTIES_MIN = 0;
@@ -176,6 +177,15 @@ const MyProperties = () => {
       <Typography component="h1" variant="h2">
         {t('page.my-properties.title')}
       </Typography>
+      <Stack direction="row" spacing={2}>
+        {orderBy === 'date' && <Chip label={`${orderBy} ${dateOrder}`} />}
+        {orderBy === 'price' && <Chip label={`${orderBy} ${priceOrder}`} />}
+        {price == INITIAL_PRICE || (price[0] == 0 && price[1] == 100) ? null : (
+          <Chip
+            label={`Price: ${parser.FormatPrice(price[0] * 10000)} - ${parser.FormatPrice(price[1] * 10000)}`}
+          />
+        )}
+      </Stack>
       <Zoom
         in={!isDrawerOpen}
         timeout={transitionDuration}

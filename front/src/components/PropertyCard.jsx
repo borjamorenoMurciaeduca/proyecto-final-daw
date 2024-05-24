@@ -56,7 +56,7 @@ const PropertyCard = ({ property }) => {
         <CardMedia
           component="img"
           height="120"
-          image={url_image ? url_image : house}
+          image={url_image || house}
           alt="Vivienda"
         />
         <CardContent sx={{ pb: 0 }}>

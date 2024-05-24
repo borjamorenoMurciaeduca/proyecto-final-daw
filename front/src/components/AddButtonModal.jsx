@@ -230,7 +230,7 @@ const AddButtonModal = () => {
               {t('addButtonModal.validation.error')}
             </Typography>
           )}
-          {!showForm ? (
+          {showForm ? (
             <PropertyForm
               property={propertyData}
               handleCloseDialog={handleClose}
