@@ -1,6 +1,7 @@
+import useUser from '@/hooks/useUser';
 import { useTheme } from '@emotion/react';
-import RestoreIcon from '@mui/icons-material/Restore';
-import TextSnippetIcon from '@mui/icons-material/TextSnippet';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import TableViewIcon from '@mui/icons-material/TableView';
 import {
   BottomNavigation,
   BottomNavigationAction,
@@ -15,7 +16,6 @@ import {
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import EditProfile from './components/EditProfile';
-import useUser from '@/hooks/useUser';
 import PropertiesTable from './components/PropertiesTable';
 
 const Settings = () => {
@@ -61,19 +61,23 @@ const Settings = () => {
               orientation="vertical"
               variant="standard"
               value={view}
-              onChange={(event, newValue) => {
+              onChange={(_, newValue) => {
                 setView(newValue);
               }}
               aria-label={t('property-info.side-panel.aria-label')}
-              sx={{ borderRight: 1, borderColor: 'divider', maxWidth: 100 }}
+              sx={{
+                borderRight: 1,
+                borderColor: 'divider',
+                maxWidth: 100,
+              }}
             >
               <Tab
-                icon={<TextSnippetIcon />}
+                icon={<ManageAccountsIcon />}
                 label="Perfil"
                 {...a11yProps(0)}
               />
               <Tab
-                icon={<RestoreIcon />}
+                icon={<TableViewIcon />}
                 label="Gestionar viviendas"
                 wrapped
                 {...a11yProps(1)}
@@ -89,22 +93,23 @@ const Settings = () => {
               bottom: 0,
               left: 0,
               right: 0,
+              zIndex: 2,
             }}
           >
             <BottomNavigation
               showLabels
               value={view}
-              onChange={(event, newValue) => {
+              onChange={(_, newValue) => {
                 setView(newValue);
               }}
             >
               <BottomNavigationAction
                 label="Perfil"
-                icon={<TextSnippetIcon />}
+                icon={<ManageAccountsIcon />}
               />
               <BottomNavigationAction
                 label="Gestionar viviendas"
-                icon={<RestoreIcon />}
+                icon={<TableViewIcon />}
               />
             </BottomNavigation>
           </Paper>

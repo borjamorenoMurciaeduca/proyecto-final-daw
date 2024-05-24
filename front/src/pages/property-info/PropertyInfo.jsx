@@ -1,5 +1,5 @@
-import RestoreIcon from '@mui/icons-material/Restore';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
+import TimelineIcon from '@mui/icons-material/Timeline';
 import {
   BottomNavigation,
   BottomNavigationAction,
@@ -65,7 +65,7 @@ const PropertyInfo = () => {
               orientation="vertical"
               variant="scrollable"
               value={view}
-              onChange={(event, newValue) => {
+              onChange={(_, newValue) => {
                 setView(newValue);
               }}
               aria-label={t('property-info.side-panel.aria-label')}
@@ -77,7 +77,7 @@ const PropertyInfo = () => {
                 {...a11yProps(0)}
               />
               <Tab
-                icon={<RestoreIcon />}
+                icon={<TimelineIcon />}
                 label={t('property-info.side-panel.price-history')}
                 {...a11yProps(1)}
               />
@@ -102,7 +102,7 @@ const PropertyInfo = () => {
             <BottomNavigation
               showLabels
               value={view}
-              onChange={(event, newValue) => {
+              onChange={(_, newValue) => {
                 setView(newValue);
               }}
             >
@@ -112,7 +112,7 @@ const PropertyInfo = () => {
               />
               <BottomNavigationAction
                 label={t('property-info.side-panel.price-history')}
-                icon={<RestoreIcon />}
+                icon={<TimelineIcon />}
               />
               <BottomNavigationAction
                 label={t('property-info.side-panel.notes')}
