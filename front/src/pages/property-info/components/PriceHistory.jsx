@@ -1,19 +1,23 @@
+import i18n from '@/commons/i18n/i18n';
 import PageLoader from '@/components/PageLoader';
 import propertyService from '@/services/propertyService';
 import parser from '@/utils/parser';
 import { Grid, Typography } from '@mui/material';
 import { LineChart } from '@mui/x-charts';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const PriceHistory = ({ propertyId }) => {
   const [xAxis, setXAxis] = useState([]);
   const [series, setSeries] = useState([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     (async () => {
       try {
-        let { data: propertyPrices } =
-          await propertyService.getPropertyPrices(propertyId);
+        let { data: propertyPrices } = await propertyService.getPropertyPrices(
+          propertyId
+        );
         setSeries([]);
         setXAxis([]);
         propertyPrices.prices
@@ -29,37 +33,34 @@ const PriceHistory = ({ propertyId }) => {
     })();
   }, [propertyId]);
 
-  const formatDateWithoutTime = (dateString) => {
-    const dateObject = new Date(dateString);
-    const day = dateObject.getDate().toString().padStart(2, '0');
-    const month = (dateObject.getMonth() + 1).toString().padStart(2, '0'); // El mes es indexado desde 0, por eso se le suma 1
-    const year = dateObject.getFullYear().toString();
-    return `${day}/${month}/${year}`;
-  };
-
   if (!xAxis.length) return <PageLoader />;
 
   return (
     <Grid item xs={12} md={8}>
       <LineChart
-        // colors={['#f00', '#0f0', '#00f']}
         xAxis={[
           {
             data: xAxis,
             scaleType: 'point',
-            label: 'Fechas',
-            axisLabel: 'Fechas',
-            valueFormatter: (value) => formatDateWithoutTime(value),
+            label: t('price-history.xAxis.dates'),
+            axisLabel: t('price-history.xAxis.dates'),
+            valueFormatter: (value) =>
+              parser.formatDate(value, i18n.language, false),
           },
         ]}
-        yAxis={[{ label: '€', scaleType: 'linear' }]}
+        yAxis={[
+          {
+            label: parser.getCurrency(i18n.language),
+            scaleType: 'linear',
+            valueFormatter: (value) =>
+              parser.FormatPriceWithoutCurrency(value, i18n.language),
+          },
+        ]}
         series={[
           {
             data: series,
             connectNulls: true,
-            // area: true,
-            // valueFormatter: (value) =>
-            //   value == null ? 'NaN' : value.toString(),
+            valueFormatter: (value) => parser.FormatPrice(value, i18n.language),
           },
         ]}
         height={200}
@@ -68,17 +69,19 @@ const PriceHistory = ({ propertyId }) => {
       />
       <Grid item xs={12}>
         <Typography>
-          La media de este inmueble es:{' '}
-          {parser.FixPrice(
-            series.reduce((acc, curr) => acc + curr, 0) / series.length
+          {t('price-history.property-average')}{' '}
+          {parser.FormatPrice(
+            series.reduce((acc, curr) => acc + curr, 0) / series.length,
+            i18n.language
           )}
-          €
         </Typography>
         <Typography>
-          Con un precio máximo de: {parser.FixPrice(Math.max(...series))} €
+          {t('price-history.property-max-price')}{' '}
+          {parser.FormatPrice(Math.max(...series), i18n.language)}
         </Typography>
         <Typography>
-          Con un precio mínimo de: {parser.FixPrice(Math.min(...series))} €
+          {t('price-history.property-min-price')}{' '}
+          {parser.FormatPrice(Math.min(...series), i18n.language)}
         </Typography>
       </Grid>
     </Grid>

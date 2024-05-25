@@ -215,5 +215,13 @@
     "last-properties": {
       "title": "Últimas viviendas"
     }
+  },
+  "price-history": {
+    "xAxis": {
+      "dates": "Fechas"
+    },
+    "property-average": "La media de este inmueble es:",
+    "property-max-price": "Con un precio máximo de:",
+    "property-min-price": "Con un precio mínimo de:"
   }
 }

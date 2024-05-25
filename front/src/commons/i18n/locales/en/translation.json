@@ -215,5 +215,13 @@
     "last-properties": {
       "title": "Last properties"
     }
+  },
+  "price-history": {
+    "xAxis": {
+      "dates": "Dates"
+    },
+    "property-average": "The average of this property is:",
+    "property-max-price": "With a maximum price of:",
+    "property-min-price": "With a minimum price of:"
   }
 }

@@ -109,6 +109,22 @@ function FormatPrice(value, lang) {
   }
 }
 
+function FormatPriceWithoutCurrency(value, lang) {
+  const precioNumero = Number(value);
+
+  if (lang === 'es') {
+    return precioNumero.toLocaleString(lang, {
+      minimumFractionDigits: 2,
+    });
+  } else {
+    const precioLibra = precioNumero * CONVERT_EURO_LIBRA;
+    return precioLibra.toLocaleString(lang, {
+
+      minimumFractionDigits: 2,
+    });
+  }
+}
+
 function formatDate(value, lang, showHours = true) {
   const date = new Date(value);
   const withHoursOptions = {
@@ -140,9 +156,15 @@ function getFullURL(value) {
     return `${window.location.protocol}//${window.location.hostname}:${window.location.port}/shared/${value}`;
 }
 
+function getCurrency(lang) {
+
+  return lang === 'en' ? '£' : '€';
+}
+
 export default {
   FixPrice,
   FormatPrice,
+  FormatPriceWithoutCurrency,
   formatDate,
   CleanId,
   DateReceived,
@@ -152,4 +174,5 @@ export default {
   DateToUrl,
   AddSpaces,
   getFullURL,
+  getCurrency
 };

@@ -44,11 +44,7 @@ class PropertyController extends Controller {
 
             $pythonScriptPath = base_path('storage/python/python-scrapping.py');
 
-            //info('Entrando a prepare con id: ' . $id . ' en la ruta ' . $pythonScriptPath);
-
             $output = shell_exec('python3 ' . escapeshellarg($pythonScriptPath) . ' ' . escapeshellarg($id));
-
-            //info('output: ' . $output);
 
             $properties = json_decode($output, true);
 
@@ -145,7 +141,6 @@ class PropertyController extends Controller {
             // Si el usuario ya tiene el inmueble registrado, no se puede registrar de nuevo
             if (UserProperty::where('property_id_fk', $validateProperty['property_id'])->where('user_id_fk', Auth::user()->id)->exists()) {
                 return ApiResponse::error('The user already has the property registered', 400);
-                // return response()->json(['error' => 'El usuario ya tiene el inmueble registrado'], 400);
             }
 
             $validateUserProperty = $request->validate([
@@ -164,7 +159,6 @@ class PropertyController extends Controller {
 
             $validateHistory = $request->validate([
                 'price' => 'numeric|required',
-                // 'fechaRegistro' => 'date|required',
             ]);
 
             // Si el inmueble no existe, lo creamos
@@ -175,7 +169,6 @@ class PropertyController extends Controller {
             $history = PriceHistory::create([
                 'property_id_fk' => $validateProperty['property_id'],
                 'price' => $validateHistory['price'],
-                // 'fechaRegistro' => $validateHistorial['fechaRegistro'],
             ]);
 
             $userProperty = UserProperty::create([
@@ -193,13 +186,7 @@ class PropertyController extends Controller {
             ]);
 
             DB::commit();
-            // $data = [
-            //     "usuarioInmueble" => $userInmueble,
-            //     'inmueble' => [
-            //         $validateProperty,
-            //         'historial_precio' => [$historial]
-            //     ],
-            // ];
+ 
             // devolver respuesta con los datos del inmueble y userInmueble
             $data = [
                 'user_id' => Auth::id(),
@@ -222,19 +209,6 @@ class PropertyController extends Controller {
                 'updated_at' => $userProperty->updated_at,
             ];
 
-            // $data = [
-            //     'referencia' => $validateProperty['referencia'],
-            //     'ubicacion' => $validateUsuarioInmueble['ubicacion'],
-            //     'tamano' => $validateUsuarioInmueble['tamano'],
-            //     'habitaciones' => $validateUsuarioInmueble['habitaciones'],
-            //     'garaje' => $validateUsuarioInmueble['garaje'],
-            //     'trastero' => $validateUsuarioInmueble['trastero'],
-            //     'ultimo_precio' => $historial->precio,
-            //     'fechaBajaAnuncio' => $validateProperty['fechaBajaAnuncio'] ?? null,
-            //     'urlImagen' => $validateProperty['urlImagen'] ?? null,
-            //     'fechaRegistro' => $userInmueble->created_at,
-            //     "fechaActualizacion" => $userInmueble->updated_at,
-            // ];
             return ApiResponse::success('Property created successfully', $data, 201);
         } catch (ValidationException $e) {
             DB::rollBack();
@@ -517,20 +491,12 @@ class PropertyController extends Controller {
         try {
             DB::beginTransaction();
 
-            // $validateProperty = $request->validate([
-            //     'property_id' => 'numeric|required',
-            // ]);
             $propertyId = $request->route('id');
 
             $validateHistory = $request->validate([
                 'price' => 'numeric|required',
-                // 'fechaRegistro' => 'date|required',
             ]);
 
-            // Si el inmueble no existe, no se puede añadir un precio, devolvemos un 400
-            //  if (!Property::where('property_id', $validateProperty['property_id'])->exists()) {
-            //     return ApiResponse::error('El inmueble no existe', 400);
-            // }
             if (!Property::where('property_id', $propertyId)->exists()) {
                 return ApiResponse::error('El inmueble no existe', 400);
             }
