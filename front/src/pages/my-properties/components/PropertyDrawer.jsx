@@ -9,6 +9,8 @@ import {
   Select,
   Slider,
   Toolbar,
+  Box,
+  InputLabel,
 } from '@mui/material';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
@@ -17,6 +19,7 @@ import ListItem from '@mui/material/ListItem';
 import PropertyDrawerStyle from './PropertyDrawer.styles.js';
 import PropertyDrawerFormat from './propertyDrawerFormats.js';
 import { useSnackbar } from 'notistack';
+import { useTranslation } from 'react-i18next';
 
 const PropertyDrawer = ({
   isDrawerOpen,
@@ -30,14 +33,25 @@ const PropertyDrawer = ({
   setOrderBy,
   togglePriceOrder,
   priceOrder,
+  location,
+  setLocation,
+  locations,
 }) => {
   const { marks, valueLabelFormat, valuetext } = PropertyDrawerFormat;
   const theme = useTheme();
   const { enqueueSnackbar } = useSnackbar();
+  const { t } = useTranslation();
 
   const handleChangeOrder = (e) => {
     setOrderBy(e.target.value);
-    enqueueSnackbar('Order by: ' + e.target.value, { variant: 'info' });
+    enqueueSnackbar(
+      `${t('filter.snackbar.ordered-by')} ${t(
+        `filter.order-item-options.${e.target.value}`
+      )}`,
+      {
+        variant: 'info',
+      }
+    );
   };
   return (
     <>
@@ -63,19 +77,23 @@ const PropertyDrawer = ({
         >
           <List>
             <Toolbar disableGutters />
-            <Divider>Order Filters</Divider>
+            <Divider>{t('filter.title')}</Divider>
             <ListItem>
               <FormControl fullWidth>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={orderBy}
-                  label="Ordenar por"
+                  label={t('filter.label.order-by')}
                   variant="standard"
                   onChange={handleChangeOrder}
                 >
-                  <MenuItem value={'date'}>Fecha</MenuItem>
-                  <MenuItem value={'price'}>Precio</MenuItem>
+                  <MenuItem value={'date'}>
+                    {t('filter.order-item-options.date')}
+                  </MenuItem>
+                  <MenuItem value={'price'}>
+                    {t('filter.order-item-options.price')}
+                  </MenuItem>
                 </Select>
               </FormControl>
             </ListItem>
@@ -84,21 +102,44 @@ const PropertyDrawer = ({
                 <SwitchIdeal
                   toggleData={toggleDateOrder}
                   order={dateOrder}
-                  label="Date"
+                  label={t('filter.order-item-options.date')}
                 />
               ) : (
                 <SwitchIdeal
                   toggleData={togglePriceOrder}
                   order={priceOrder}
-                  label="Price"
+                  label={t('filter.order-item-options.price')}
                 />
               )}
             </ListItem>
+            <ListItem>
+              <FormControl fullWidth>
+                <InputLabel id="location-select-label">
+                  {t('filter.label.location')}
+                </InputLabel>
+                <Select
+                  label={t('filter.label.location')}
+                  labelId="location-select-label"
+                  id="location-select"
+                  value={location}
+                  onChange={setLocation}
+                >
+                  <MenuItem value={''}>
+                    {t('filter.label.location-empty')}
+                  </MenuItem>
+                  {locations.map((location, index) => (
+                    <MenuItem key={index} value={location}>
+                      {location}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </ListItem>
             <ListItem></ListItem>
-            <Divider>Price Range</Divider>
+            <Divider>{t('filter.order-item-options.price-range')}</Divider>
             <ListItem sx={{ px: 4 }}>
               <Slider
-                getAriaLabel={() => 'Minimum distance shift'}
+                getAriaLabel={() => t('filter.label.minimum-distance.shift')}
                 value={price}
                 onChange={handleChangePrices}
                 valueLabelDisplay="auto"
@@ -112,9 +153,11 @@ const PropertyDrawer = ({
             <Divider />
             <ListItem disablePadding>
               <ListItemButton>
-                <Button onClick={resetFilters} color="error">
-                  Reset
-                </Button>
+                <Box display="flex" justifyContent="center" width="100%">
+                  <Button onClick={resetFilters} color="error">
+                    {t('filter.buttons.reset')}
+                  </Button>
+                </Box>
               </ListItemButton>
             </ListItem>
             <Divider />

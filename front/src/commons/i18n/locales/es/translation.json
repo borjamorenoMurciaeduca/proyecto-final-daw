@@ -223,5 +223,44 @@
     "property-average": "La media de este inmueble es:",
     "property-max-price": "Con un precio máximo de:",
     "property-min-price": "Con un precio mínimo de:"
+  },
+  "filter": {
+    "title": "Ordenar filtros",
+    "snackbar": {
+      "ordered-by":  "Ordenado por: ",
+      "price-range-changed": "El rango de precios cambió",
+      "date-order-changed-to": "El orden de la fecha cambió a",
+      "price-order-changed-to": "Orden de precio cambiado a",
+      "filters-reseted": "Filtros restablecidos",
+      "location-changed-to": "Ubicación cambiada a",
+      "location-empty": "Filtro de ubicación restablecido"
+    },
+    "label": {
+      "order-by": "Ordenar por",
+      "minimum-distance.shift": "Cambio de distancia mínima",
+      "location": "Ubicación",
+      "location-empty": "Mostrar todas las ubicaciones"
+    },
+    "tooltip": {
+      "filter": "Filtro"
+    },
+    "order-item-options": {
+      "date": "Fecha",
+      "price": "Precio",
+      "price-range": "Rango de precios"
+    },
+    "buttons": {
+      "reset": "Resetear"
+    },
+    "switch": {
+      "asc": "ascendente",
+      "desc": "descendente"
+    },
+    "stack-filters": {
+      "date": "Fecha",
+      "price": "Precio",
+      "price-range": "Rango de precios:",
+      "location": "Ubicación:"
+    }
   }
 }

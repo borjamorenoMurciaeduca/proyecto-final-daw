@@ -1,6 +1,7 @@
 import { FormControlLabel } from '@mui/material';
 import Switch from '@mui/material/Switch';
 import { styled } from '@mui/material/styles';
+import { useTranslation } from 'react-i18next';
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -51,11 +52,14 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 }));
 
 const SwitchIdeal = ({ toggleData, order, label }) => {
+  const { t } = useTranslation();
   return (
     <FormControlLabel
       component="fieldset"
       onChange={toggleData}
-      label={`${label} ${order == 'asc' ? 'ascendant' : 'descendant'}`}
+      label={`${label} ${
+        order == 'asc' ? t('filter.switch.asc') : t('filter.switch.desc')
+      }`}
       control={
         <MaterialUISwitch
           sx={{ m: 1 }}

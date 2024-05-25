@@ -223,5 +223,44 @@
     "property-average": "The average of this property is:",
     "property-max-price": "With a maximum price of:",
     "property-min-price": "With a minimum price of:"
+  },
+  "filter": {
+    "title": "Sort filters",
+    "snackbar": {
+      "ordered-by": "Ordered by: ",
+      "price-range-changed": "The price range changed",
+      "date-order-changed-to": "Date order changed to",
+      "price-order-changed-to": "Price order changed to",
+      "filters-reseted": "Filters reset",
+      "location-changed-to": "Location changed to",
+      "location-empty": "Location filter reset"
+    },
+    "label": {
+      "order-by": "Order by",
+      "minimum-distance.shift": "Minimum distance shift",
+      "location": "Location",
+      "location-empty": "Show all locations"
+    },
+    "tooltip": {
+      "filter": "Filter"
+    },
+    "order-item-options": {
+      "date": "Date",
+      "price": "Price",
+      "price-range": "Price range"
+    },
+    "buttons": {
+      "reset": "Reset"
+    },
+    "switch": {
+      "asc": "ascending",
+      "desc": "descending"
+    },
+    "stack-filters": {
+      "date": "Date",
+      "price": "Price",
+      "price-range": "Price range:",
+      "location": "Location:"
+    }
   }
 }

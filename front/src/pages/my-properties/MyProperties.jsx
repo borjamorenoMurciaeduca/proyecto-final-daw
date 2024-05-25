@@ -21,10 +21,11 @@ import { useTranslation } from 'react-i18next';
 import PropertyDrawer from './components/PropertyDrawer';
 import { useSnackbar } from 'notistack';
 import parser from '@/utils/parser';
+import i18n from '@/commons/i18n/i18n';
 
 const PROPERTIES_MAX = 6;
 const PROPERTIES_MIN = 0;
-const MIN_DISTANCE = 5; //10 def
+const MIN_DISTANCE = 5;
 const INITIAL_PRICE = [0, Infinity];
 
 const MyProperties = () => {
@@ -33,6 +34,7 @@ const MyProperties = () => {
   const [dateOrder, setDateOrder] = useState('desc');
   const [priceOrder, setPriceOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('date');
+  const [location, setLocation] = useState('');
 
   const { user, setUser } = useUser();
   const theme = useTheme();
@@ -52,6 +54,17 @@ const MyProperties = () => {
     setIsDrawerOpen(newOpen);
   };
 
+  const getUniqueLocations = () => {
+    const locationsSet = new Set();
+    properties.forEach((property) => {
+      if (property.location) {
+        locationsSet.add(property.location);
+      }
+    });
+
+    return Array.from(locationsSet);
+  };
+
   const handleChangePrices = (_, newValue, activeThumb) => {
     setUser((prevState) => ({ ...prevState, currentPage: 1 }));
     if (!Array.isArray(newValue)) {
@@ -68,10 +81,28 @@ const MyProperties = () => {
     } else {
       setPrice(newValue);
     }
-    enqueueSnackbar('Price range changed', {
+    enqueueSnackbar(t('filter.snackbar.price-range-changed'), {
       variant: 'info',
       preventDuplicate: true,
     });
+  };
+
+  const handleLocationChange = (event) => {
+    setLocation(event.target.value);
+    if (event.target.value === '') {
+      enqueueSnackbar(t('filter.snackbar.location-empty'), {
+        variant: 'info',
+        preventDuplicate: true,
+      });
+    } else {
+      enqueueSnackbar(
+        `${t('filter.snackbar.location-changed-to')} ${event.target.value}`,
+        {
+          variant: 'info',
+          preventDuplicate: true,
+        }
+      );
+    }
   };
 
   const filterPropertiesByPrice = () => {
@@ -101,6 +132,13 @@ const MyProperties = () => {
     return sortedProperties;
   };
 
+  const filterPropertiesByLocation = (properties) => {
+    if (!location) return properties;
+    return properties.filter((property) =>
+      property.location.includes(location)
+    );
+  };
+
   /**
    * Se crea una array vacío y se le añade las propiedades que cumplen con el filtro de precio
    */
@@ -110,6 +148,10 @@ const MyProperties = () => {
   } else {
     filteredProperties = [...properties];
   }
+
+  filteredProperties = filterPropertiesByLocation(filteredProperties);
+
+  let locations = getUniqueLocations();
 
   /**
    * Se ordenan las propiedades por fecha
@@ -137,7 +179,9 @@ const MyProperties = () => {
   const toggleDateOrder = () => {
     setDateOrder(dateOrder === 'asc' ? 'desc' : 'asc');
     enqueueSnackbar(
-      `Date order changed to ${dateOrder === 'asc' ? 'desc' : 'asc'}`,
+      `${t('filter.snackbar.date-order-changed-to')} ${
+        dateOrder === 'asc' ? t('filter.switch.desc') : t('filter.switch.asc')
+      }`,
       {
         variant: 'info',
         preventDuplicate: true,
@@ -148,7 +192,9 @@ const MyProperties = () => {
   const togglePriceOrder = () => {
     setPriceOrder(priceOrder === 'asc' ? 'desc' : 'asc');
     enqueueSnackbar(
-      `Price order changed to ${priceOrder === 'asc' ? 'desc' : 'asc'}`,
+      `${t('filter.snackbar.price-order-changed-to')} ${
+        priceOrder === 'asc' ? t('filter.switch.desc') : t('filter.switch.asc')
+      }`,
       {
         variant: 'info',
         preventDuplicate: true,
@@ -160,7 +206,8 @@ const MyProperties = () => {
     setPrice(INITIAL_PRICE);
     setDateOrder('desc');
     setOrderBy('date');
-    enqueueSnackbar('Filters reset', {
+    setLocation('');
+    enqueueSnackbar(t('filter.snackbar.filters-reseted'), {
       variant: 'info',
       preventDuplicate: true,
     });
@@ -178,12 +225,32 @@ const MyProperties = () => {
         {t('page.my-properties.title')}
       </Typography>
       <Stack direction="row" spacing={2}>
-        {orderBy === 'date' && <Chip label={`${orderBy} ${dateOrder}`} />}
-        {orderBy === 'price' && <Chip label={`${orderBy} ${priceOrder}`} />}
+        {orderBy === 'date' && (
+          <Chip
+            label={`${t(`filter.stack-filters.${orderBy}`)} ${t(
+              `filter.switch.${dateOrder}`
+            )}`}
+          />
+        )}
+        {orderBy === 'price' && (
+          <Chip
+            label={`${t(`filter.stack-filters.${orderBy}`)} ${t(
+              `filter.switch.${priceOrder}`
+            )}`}
+          />
+        )}
         {price == INITIAL_PRICE || (price[0] == 0 && price[1] == 100) ? null : (
           <Chip
-            label={`Price: ${parser.FormatPrice(price[0] * 10000)} - ${parser.FormatPrice(price[1] * 10000)}`}
+            label={`${t(
+              'filter.stack-filters.price-range'
+            )} ${parser.FormatPriceWithoutCurrency(
+              price[0] * 10000,
+              i18n.language
+            )} - ${parser.FormatPrice(price[1] * 10000, i18n.language)}`}
           />
+        )}
+        {location && (
+          <Chip label={`${t('filter.stack-filters.location')} ${location}`} />
         )}
       </Stack>
       <Zoom
@@ -194,7 +261,7 @@ const MyProperties = () => {
         }}
         unmountOnExit
       >
-        <Tooltip title="Filtro">
+        <Tooltip title={t('filter.tooltip.filter')}>
           <Fab
             variant="extended"
             size="small"
@@ -223,6 +290,9 @@ const MyProperties = () => {
         orderBy={orderBy}
         priceOrder={priceOrder}
         togglePriceOrder={togglePriceOrder}
+        location={location}
+        setLocation={handleLocationChange}
+        locations={locations}
       />
       <Grid
         container
