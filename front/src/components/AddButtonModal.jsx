@@ -191,7 +191,7 @@ const AddButtonModal = () => {
               <CloseIcon />
             </IconButton>
           </Tooltip>
-          <Grid item xs={10}>
+          <Grid item xs={12} md={10}>
             <TextField
               fullWidth
               variant="standard"
@@ -204,7 +204,15 @@ const AddButtonModal = () => {
               disabled={inputDisabled}
             />
           </Grid>
-          <Grid container item xs={2} direction={'row'} wrap="nowrap" p={0}>
+          <Grid
+            container
+            item
+            xs={12}
+            md={2}
+            direction={'row'}
+            wrap="nowrap"
+            p={0}
+          >
             <Tooltip title={t('tooltip.search')}>
               <IconButton
                 type="button"
