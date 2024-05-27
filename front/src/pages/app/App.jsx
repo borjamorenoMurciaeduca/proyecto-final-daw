@@ -3,6 +3,7 @@ import PropertyCard from '@/components/PropertyCard';
 import useProperties from '@/hooks/useProperties';
 import { Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import StepperEmpty from './components/StepperEmpty';
 
 const App = () => {
   const { properties } = useProperties();
@@ -17,33 +18,39 @@ const App = () => {
   return (
     <>
       <AddButtonModal />
-      <Typography component="h1" variant="h2">
-        {t('page.last-properties.title')}
-      </Typography>
-      <Grid
-        container
-        sx={{
-          minHeight: '75vh',
-          mt: 4,
-          mb: { md: 4, lg: 'auto' },
-        }}
-      >
-        <Grid
-          container
-          item
-          spacing={2}
-          direction="row"
-          justifyContent="left"
-          pb={{ xs: 7, md: 5 }}
-          alignItems="stretch"
-        >
-          {propertiesPage.map((property) => (
-            <Grid item xs={12} sm={6} lg={4} key={property.property_id}>
-              <PropertyCard property={property} />
+      {!properties.length ? (
+        <StepperEmpty />
+      ) : (
+        <>
+          <Typography component="h1" variant="h2">
+            {t('page.last-properties.title')}
+          </Typography>
+          <Grid
+            container
+            sx={{
+              minHeight: '75vh',
+              mt: 4,
+              mb: { md: 4, lg: 'auto' },
+            }}
+          >
+            <Grid
+              container
+              item
+              spacing={2}
+              direction="row"
+              justifyContent="left"
+              pb={{ xs: 7, md: 5 }}
+              alignItems="stretch"
+            >
+              {propertiesPage.map((property) => (
+                <Grid item xs={12} sm={6} lg={4} key={property.property_id}>
+                  <PropertyCard property={property} />
+                </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>
-      </Grid>
+          </Grid>
+        </>
+      )}
     </>
   );
 };
