@@ -55,6 +55,7 @@ const DialogShare = ({ open, setOpen, isShared, propertyURL, propertyId }) => {
           share_url: data.share_url,
           is_shared: true,
         });
+        // FIX: En IOS no se puede copiar al portapapeles sin interacción del usuario
         handleCopyToClipboard(null, data.share_url);
         enqueueSnackbar(t('property-share.generator.success-url'), {
           variant: 'success',
