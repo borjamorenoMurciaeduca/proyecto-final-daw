@@ -82,14 +82,14 @@ const DialogShare = ({ open, setOpen, isShared, propertyURL, propertyId }) => {
         });
       })
       .catch((error) => {
-        enqueueSnackbar(t('property-share.genertador.fail-copy'), {
+        enqueueSnackbar(t('property-share.generator.fail-copy'), {
           variant: 'error',
         });
         console.warn(error);
       });
   };
 
-  const handleClose = (event, reason) => {
+  const handleClose = (_, reason) => {
     if (reason === 'backdropClick' && loading) {
       return;
     }
