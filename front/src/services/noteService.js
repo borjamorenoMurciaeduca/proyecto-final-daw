@@ -2,8 +2,7 @@ import axiosInterceptor from '@/utils/httpInterceptor';
 const baseURL = import.meta.env.VITE_API_URL;
 
 const addNote = async ({ noteToAdd }) => {
-  let { data } = await axiosInterceptor.post(
-    `${baseURL}notes/`, noteToAdd);
+  let { data } = await axiosInterceptor.post(`${baseURL}notes`, noteToAdd);
   return data;
 };
 
