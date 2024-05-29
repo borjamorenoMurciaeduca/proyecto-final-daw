@@ -39,6 +39,7 @@ const PropertyCard = ({ property }) => {
   const handleCLickCard = (id) => {
     navigate(`/app/property/${id}`);
   };
+
   const handleFavorite = debounce(async (id) => {
     const { data } = await propertyService.changeFavoriteProperty(id);
     changeFavoriteProperty(data);
