@@ -47,6 +47,7 @@ const PropertiesTable = () => {
         minHeight: '40vh',
         minWidth: '100%',
       }}
+      mb={4}
     >
       <Grid item xs={9}>
         <MUIDataTable

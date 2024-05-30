@@ -43,7 +43,7 @@ const Settings = () => {
         justifyContent="center"
         minHeight={'40vh'}
         gap={2}
-        mt={4}
+        my={4}
       >
         {view == 0 && <EditProfile />}
         {view == 1 && <PropertiesTable />}
