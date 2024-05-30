@@ -53,17 +53,16 @@ const AboutUs = () => {
             <strong>📑Historia</strong>
           </Divider>
           <Typography variant="body1" mb={1}>
-            <strong>
-              Nuestra app nace de la idea de proporcionar una manera fácil y
-              atractiva para que los usuarios puedan recopilar datos de
-              Idealista y ofrecer una visión clara de los precios de las
-              viviendas.
-            </strong>{' '}
-            IdealistaWatch permite filtrar tus viviendas por precio, fecha,
-            lugar e incluso guardarlas en favoritos, accediendo de una manera
-            más fácil y rápida a tus propiedades guardadas. Además, permite
-            guardar las propiedades de manera sencilla, haciendo uso de
-            web-scrapping autorellenando los datos.
+            Nuestra app nace de la idea de proporcionar una manera fácil y
+            atractiva para que los usuarios puedan recopilar datos de Idealista
+            y ofrecer una visión clara de los precios de las viviendas.{' '}
+            <strong>IdealistaWatch</strong> permite filtrar tus viviendas por{' '}
+            <strong>precio</strong>, <strong>fecha</strong>,{' '}
+            <strong>lugar</strong> e incluso guardarlas en{' '}
+            <strong>favoritos</strong>, accediendo de una manera más fácil y
+            rápida a tus propiedades guardadas. Además, permite guardar las
+            propiedades de manera sencilla, haciendo uso de{' '}
+            <strong>web-scrapping</strong> autorellenando los datos.
           </Typography>
           <Typography variant="body1" mb={1}>
             Por otro lado, <strong>IdealistaWatch</strong> ofrece una capa

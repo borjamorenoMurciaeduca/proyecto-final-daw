@@ -1,9 +1,11 @@
 .quote {
-  position: relative;
-  display: inline-block;
-  padding: 1rem 3rem;
+	position: relative;
+	display: inline-block;
+	padding: 1rem 3rem;
 }
-.quote::before,.quote::after {
+
+.quote::before,
+.quote::after {
 	position: absolute;
 	z-index: -1;
 	display: block;
@@ -11,8 +13,8 @@
 	height: 4rem;
 	content: "";
 	z-index: 0;
-    opacity: 0.7;
-    color: inherit;
+	opacity: 0.7;
+	color: inherit;
 	font-size: 8rem;
 	font-family: Georgia, Times, Garamond, serif;
 }
@@ -28,4 +30,3 @@
 	right: 1rem;
 	content: close-quote;
 }
-
