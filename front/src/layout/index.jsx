@@ -55,11 +55,6 @@ const Layout = (props) => {
   const handleCloseNavMenu = () => setAnchorElNav(null);
   const handleCloseUserMenu = () => setAnchorElUser(null);
 
-  const handleClickProfile = () => {
-    handleCloseUserMenu();
-    navigate('/app/settings');
-  };
-
   const handleClickHome = () => {
     handleCloseNavMenu();
     resetPage();
@@ -76,6 +71,17 @@ const Layout = (props) => {
     handleCloseNavMenu();
     resetPage();
     navigate('/app/favorite-properties');
+  };
+
+  const handleClickAboutUs = () => {
+    handleCloseNavMenu();
+    resetPage();
+    navigate('/app/about-us');
+  };
+
+  const handleClickProfile = () => {
+    handleCloseUserMenu();
+    navigate('/app/settings');
   };
 
   const handleLogoutMenu = async () => {
@@ -177,6 +183,9 @@ const Layout = (props) => {
                       {t('page.favorite-properties.title')}
                     </Typography>
                   </MenuItem>
+                  <MenuItem onClick={handleClickAboutUs}>
+                    <Typography textAlign="center">About Us</Typography>
+                  </MenuItem>
                 </Menu>
               </Box>
               {/* MENÚ DESKTOP */}
@@ -196,6 +205,14 @@ const Layout = (props) => {
                   sx={{ my: 2, color: 'white', display: 'block' }}
                 >
                   {t('page.favorite-properties.title')}
+                </Button>
+                <Button
+                  component={RouterLink}
+                  to="/app/about-us"
+                  onClick={resetPage}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  About Us
                 </Button>
               </Box>
               <Box sx={{ flexGrow: 0 }}>
