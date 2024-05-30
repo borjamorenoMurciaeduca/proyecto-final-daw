@@ -87,14 +87,6 @@ export const Columns = (handleOpenDialog) => {
       label: 'URL',
       options: {
         filter: true,
-        setCellHeaderProps: () => ({
-          style: {
-            textAlign: 'center',
-            display: 'flex',
-            justifyContent: 'center',
-          },
-        }),
-
         customFilterListOptions: { render: (v) => `Url: ${v}` },
         filterOptions: {
           renderValue: (v) =>
