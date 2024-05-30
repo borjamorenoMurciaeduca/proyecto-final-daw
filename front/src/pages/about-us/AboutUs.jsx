@@ -18,10 +18,22 @@ import ApacheSvg from './svgs/ApacheSvg';
 import LinuxSvg from './svgs/LinuxSvg';
 import GitSvg from './svgs/GitSvg';
 import GitHubSvg from './svgs/GitHubSvg';
-import { useTheme } from '@emotion/react';
+// import { useTheme } from '@emotion/react';
+import { useTheme } from '@mui/material/styles';
 
 const AboutUs = () => {
   const theme = useTheme();
+  const colorAbout = {
+    bg:
+      theme.palette.mode === 'dark'
+        ? theme.palette.background.paper
+        : theme.palette.grey['A200'],
+    text:
+      theme.palette.mode === 'dark'
+        ? theme.palette.text.primary
+        : theme.palette.background.paper,
+  };
+
   return (
     <Grid
       container
@@ -72,12 +84,16 @@ const AboutUs = () => {
             enlace público para compartir fácilmente con amigos, familiares o
             posibles interesados.
           </Typography>
-          <Typography variant="body2" mb={1}>
-            El reto de hacer la app en conjunto y trabajar con Git y GitHub nos
-            llamó la atención. Esto nos permitió colaborar de manera eficiente y
-            gestionar el desarrollo de la aplicación de manera organizada y
-            estructurada.{' '}
-          </Typography>
+          <Paper variant="outlined" elevation={1} square={false}>
+            <Box p={2} bgcolor={colorAbout.bg}>
+              <Typography variant="body2" mb={1}>
+                “ El reto de hacer la app en conjunto y trabajar con Git y
+                GitHub nos llamó la atención. Esto nos permitió colaborar de
+                manera eficiente y gestionar el desarrollo de la aplicación de
+                manera organizada y estructurada. ”
+              </Typography>
+            </Box>
+          </Paper>
           <Divider>
             ⚙️ 💻<strong>Tecnologías usadas</strong>
           </Divider>
