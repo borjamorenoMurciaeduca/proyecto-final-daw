@@ -1,26 +1,21 @@
+import house from '@/assets/house.jpg';
+import i18n from '@/commons/i18n/i18n';
 import AddButtonModal from '@/components/AddButtonModal';
-import PropertyCard from '@/components/PropertyCard';
 import useProperties from '@/hooks/useProperties';
+import parser from '@/utils/parser';
 import {
-  Box,
   Button,
   Card,
   CardContent,
   CardMedia,
   Grid,
-  IconButton,
-  Paper,
   Typography,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import StepperEmpty from './components/StepperEmpty';
 import Carousel from 'react-material-ui-carousel';
-import { property } from 'lodash';
-import house from '@/assets/house.jpg';
-import './style.css';
 import { useNavigate } from 'react-router-dom';
-import i18n from '@/commons/i18n/i18n';
-import parser from '@/utils/parser';
+import StepperEmpty from './components/StepperEmpty';
+import './style.css';
 
 const App = () => {
   const { properties } = useProperties();
@@ -56,7 +51,7 @@ const App = () => {
         <StepperEmpty />
       ) : (
         <>
-          <Typography component="h1" variant="h2">
+          <Typography component="h1" variant="h2" mb={3}>
             {t('page.last-properties.title')}
           </Typography>
           <Carousel {...settings}>
@@ -71,7 +66,7 @@ const App = () => {
               }) => (
                 <Card raised className="Banner" key={property_id}>
                   <Grid container spacing={0} className="BannerGrid">
-                    <Grid item xs={8}>
+                    <Grid item xs={0} md={8}>
                       <CardMedia
                         className="Media"
                         image={url_image || house}
@@ -82,8 +77,16 @@ const App = () => {
                         </Typography>
                       </CardMedia>
                     </Grid>
-                    <Grid item xs={4} key="content">
-                      <CardContent className="Content">
+                    <Grid item xs={12} md={4}>
+                      <CardContent
+                        className="Content"
+                        sx={{
+                          background: {
+                            xs: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${url_image}) center/cover`,
+                            md: 'none',
+                          },
+                        }}
+                      >
                         <Typography className="Title">{title}</Typography>
                         <Typography>{location}</Typography>
                         <Typography className="Caption">
@@ -97,7 +100,7 @@ const App = () => {
                           className="ViewButton"
                           onClick={() => handleCLickProperty(property_id)}
                         >
-                          View Now
+                          View
                         </Button>
                       </CardContent>
                     </Grid>
@@ -106,7 +109,7 @@ const App = () => {
               )
             )}
           </Carousel>
-          <Grid container item xs={8} py={5}>
+          <Grid container item xs={12} md={8} py={5}>
             <Typography component="p" variant="subtitle1">
               Nos alegra que estés aquí. IdealistaWatch es tu nuevo aliado para
               encontrar y guardar las viviendas de tus sueños. Entendemos lo
@@ -116,33 +119,35 @@ const App = () => {
               seguir de cerca todas tus opciones inmobiliarias.
             </Typography>
           </Grid>
-          {/* <Grid */}
-          {/*   container */}
-          {/*   sx={{ */}
-          {/*     minHeight: '75vh', */}
-          {/*     mt: 4, */}
-          {/*     mb: { md: 4, lg: 'auto' }, */}
-          {/*   }} */}
-          {/* > */}
-          {/*   <Grid */}
-          {/*     container */}
-          {/*     item */}
-          {/*     spacing={2} */}
-          {/*     direction="row" */}
-          {/*     justifyContent="left" */}
-          {/*     pb={{ xs: 7, md: 5 }} */}
-          {/*     alignItems="stretch" */}
-          {/*   > */}
-          {/*     {propertiesPage.map((property) => ( */}
-          {/*       <Grid item xs={12} sm={6} lg={4} key={property.property_id}> */}
-          {/*         <PropertyCard property={property} /> */}
-          {/*       </Grid> */}
-          {/*     ))} */}
-          {/*   </Grid> */}
-          {/* </Grid> */}
         </>
       )}
     </>
   );
 };
 export default App;
+
+//          <Grid
+//            container
+//            sx={{
+//              minHeight: '75vh',
+//              mt: 4,
+//              mb: { md: 4, lg: 'auto' },
+//            }}
+//          >
+//            <Grid
+//              container
+//              item
+//              spacing={2}
+//              direction="row"
+//              justifyContent="left"
+//              pb={{ xs: 7, md: 5 }}
+//              alignItems="stretch"
+//            >
+//              {propertiesPage.map((property) => (
+//                <Grid item xs={12} sm={6} lg={4} key={property.property_id}>
+//                  <PropertyCard property={property} />
+//                </Grid>
+//              ))}
+//            </Grid>
+//          </Grid>
+//

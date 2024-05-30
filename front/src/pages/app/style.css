@@ -25,6 +25,7 @@
  	font-size: 30px;
  	font-weight: 200;
  	transition: 300ms;
+	overflow: hidden;
  	cursor: pointer;
  }
 
@@ -43,7 +44,7 @@
 
  .Banner .Content {
  	color: white;
- 	background-color: red;
+ 	background-color: #FFAD28;
  	height: 100%;
  	position: relative;
  	/* cursor: pointer; */
@@ -53,13 +54,13 @@
 
  .Banner .Content:hover,
  .Banner .Content:active {
- 	background-color: red;
+ 	background-color: #FFAD28;
  }
 
  .Banner .Content:hover .ViewButton,
  .Banner .Content:active .ViewButton {
  	background-color: white;
- 	color: red;
+ 	color: #FFAD28;
  }
 
  .Banner .Content .Title {
