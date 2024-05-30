@@ -1,3 +1,4 @@
+import GitHubIcon from '@mui/icons-material/GitHub';
 import {
   Box,
   Button,
@@ -9,37 +10,25 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import ReactSvg from './svgs/ReactSvg';
-import LaravelSvg from './svgs/LaravelSvg';
-import PythonSvg from './svgs/PythonSvg';
-import MySqlSvg from './svgs/MySqlSvg';
-import ApacheSvg from './svgs/ApacheSvg';
-import LinuxSvg from './svgs/LinuxSvg';
-import GitSvg from './svgs/GitSvg';
-import GitHubSvg from './svgs/GitHubSvg';
-// import { useTheme } from '@emotion/react';
 import { useTheme } from '@mui/material/styles';
+import './styles.css';
+import ApacheSvg from './svgs/ApacheSvg';
+import GitHubSvg from './svgs/GitHubSvg';
+import GitSvg from './svgs/GitSvg';
+import LaravelSvg from './svgs/LaravelSvg';
+import LinuxSvg from './svgs/LinuxSvg';
+import MySqlSvg from './svgs/MySqlSvg';
+import PythonSvg from './svgs/PythonSvg';
+import ReactSvg from './svgs/ReactSvg';
 
 const AboutUs = () => {
   const theme = useTheme();
-  const colorAbout = {
-    bg:
-      theme.palette.mode === 'dark'
-        ? theme.palette.background.paper
-        : theme.palette.grey['A200'],
-    text:
-      theme.palette.mode === 'dark'
-        ? theme.palette.text.primary
-        : theme.palette.background.paper,
-  };
 
   return (
     <Grid
       container
-      spacing={3}
       sx={{
-        minHeight: '90vh',
+        minHeight: '80vh',
         justifyContent: 'center',
         alignItems: 'center',
       }}
@@ -84,15 +73,18 @@ const AboutUs = () => {
             enlace público para compartir fácilmente con amigos, familiares o
             posibles interesados.
           </Typography>
-          <Paper variant="outlined" elevation={1} square={false}>
-            <Box p={2} bgcolor={colorAbout.bg}>
-              <Typography variant="body2" mb={1}>
-                “ El reto de hacer la app en conjunto y trabajar con Git y
-                GitHub nos llamó la atención. Esto nos permitió colaborar de
-                manera eficiente y gestionar el desarrollo de la aplicación de
-                manera organizada y estructurada. ”
-              </Typography>
-            </Box>
+          <Paper
+            variant="elevation"
+            elevation={1}
+            square={false}
+            sx={{ mb: 2 }}
+          >
+            <Typography variant="body2" className="quote">
+              El reto de hacer la app en conjunto y trabajar con Git y GitHub
+              nos llamó la atención. Esto nos permitió colaborar de manera
+              eficiente y gestionar el desarrollo de la aplicación de manera
+              organizada y estructurada.
+            </Typography>
           </Paper>
           <Divider>
             ⚙️ 💻<strong>Tecnologías usadas</strong>
@@ -110,8 +102,8 @@ const AboutUs = () => {
             <MySqlSvg />
             <ApacheSvg />
             <LinuxSvg />
-            <GitSvg />
             <GitHubSvg />
+            <GitSvg />
           </Stack>
           <Typography component="p" variant="subtitle2" mb={1}>
             <strong>
