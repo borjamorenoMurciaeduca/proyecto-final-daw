@@ -6,6 +6,7 @@ import parser from '@/utils/parser';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import {
   Box,
+  Button,
   Card,
   CardActionArea,
   CardActions,
@@ -106,7 +107,20 @@ const PropertyCard = ({ property }) => {
           </Box>
         </CardContent>
       </CardActionArea>
-      <CardActions disableSpacing sx={{ justifyContent: 'flex-end', p: 0 }}>
+      <CardActions
+        disableSpacing
+        sx={{ justifyContent: 'space-between', p: 0 }}
+      >
+        <Tooltip title={'actualizar precio'}>
+          <Button
+            size="small"
+            variant="outlined"
+            onClick={() => console.log('precio actualizado')}
+            sx={{ ml: 1 }}
+          >
+            Update
+          </Button>
+        </Tooltip>
         <Tooltip title={t('favorite.aria-label.add')}>
           <IconButton
             aria-label={t('favorite.aria-label.add')}
