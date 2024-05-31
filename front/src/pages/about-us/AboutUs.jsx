@@ -28,14 +28,24 @@ const AboutUs = () => {
     <Grid
       container
       sx={{
-        minHeight: '80vh',
+        minHeight: `calc(100vh - 101px)`,
         justifyContent: 'center',
         alignItems: 'center',
       }}
     >
       <Grid item xs={12} md={8}>
-        <Paper sx={{ padding: 2 }} elevation={24}>
-          <Typography variant="h3">🚀 About Us</Typography>
+        <Paper sx={{ padding: 1.5 }} elevation={24}>
+          <Typography
+            variant="h2"
+            sx={{
+              fontSize: {
+                xs: '2.5rem',
+                sm: '3.75rem',
+              },
+            }}
+          >
+            🚀 About Us
+          </Typography>
           <Box py={2}>
             <Typography variant="body1">
               Somos dos estudiantes del CIFP La Conservera (ext. IES Los
