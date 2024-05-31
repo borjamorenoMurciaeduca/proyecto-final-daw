@@ -1,7 +1,6 @@
-import { Button, IconButton } from '@mui/material';
-import { SnackbarProvider } from 'notistack';
-import { closeSnackbar } from 'notistack';
 import CloseIcon from '@mui/icons-material/Close';
+import { IconButton } from '@mui/material';
+import { SnackbarProvider, closeSnackbar } from 'notistack';
 
 export const Notistack = ({ children }) => {
   return (

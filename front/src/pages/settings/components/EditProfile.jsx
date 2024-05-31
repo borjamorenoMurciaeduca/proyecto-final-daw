@@ -104,7 +104,15 @@ const EditProfile = () => {
           minHeight: '40vh',
         }}
       >
-        <Grid container justifyContent="center" alignItems="center">
+        <Grid
+          container
+          item
+          justifyContent="center"
+          alignItems="center"
+          xs={12}
+          md={10}
+          lg={12}
+        >
           <Paper sx={{ p: 5 }}>
             <Grid
               item

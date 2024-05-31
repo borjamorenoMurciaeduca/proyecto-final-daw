@@ -55,6 +55,7 @@ const DialogShare = ({ open, setOpen, isShared, propertyURL, propertyId }) => {
           share_url: data.share_url,
           is_shared: true,
         });
+        // FIX: En IOS no se puede copiar al portapapeles sin interacción del usuario
         handleCopyToClipboard(null, data.share_url);
         enqueueSnackbar(t('property-share.generator.success-url'), {
           variant: 'success',
@@ -82,14 +83,14 @@ const DialogShare = ({ open, setOpen, isShared, propertyURL, propertyId }) => {
         });
       })
       .catch((error) => {
-        enqueueSnackbar(t('property-share.genertador.fail-copy'), {
+        enqueueSnackbar(t('property-share.generator.fail-copy'), {
           variant: 'error',
         });
         console.warn(error);
       });
   };
 
-  const handleClose = (event, reason) => {
+  const handleClose = (_, reason) => {
     if (reason === 'backdropClick' && loading) {
       return;
     }

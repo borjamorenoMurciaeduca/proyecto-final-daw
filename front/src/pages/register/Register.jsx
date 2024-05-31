@@ -1,6 +1,7 @@
 import Copyright from '@/components/Copyright';
 import LanguageSelector from '@/components/LanguageSelector';
 import userService from '@/services/userService';
+import registerValidationSchema from '@/validation/registerValidation';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -29,15 +30,13 @@ import Typography from '@mui/material/Typography';
 import { DatePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import dayjs from 'dayjs';
 import 'dayjs/locale/es';
+import { useFormik } from 'formik';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import parser from '@/utils/parser';
-import { useFormik } from 'formik';
-import registerValidationSchema from '@/validation/registerValidation';
-import dayjs from 'dayjs';
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -54,59 +53,6 @@ const Register = () => {
 
   const handleMouseDownPassword = (event) => event.preventDefault();
 
-  // en desuso con el uso de formik
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    const dataForm = new FormData(e.currentTarget);
-    const credentials = {
-      username: dataForm.get('username'),
-      password: dataForm.get('password'),
-      password_confirmation: dataForm.get('password_confirmation'),
-      name: dataForm.get('name'),
-      surname: dataForm.get('surname'),
-      email: dataForm.get('email'),
-      phone: dataForm.get('phone'),
-      birth_date: parser.DateToInsert(dataForm.get('birth_date')),
-    };
-
-    try {
-      if (credentials.password !== credentials.password_confirmation)
-        throw new Error('Las contraseñas no coinciden');
-      const res = await userService.register(credentials);
-
-      if (res.error) {
-        throw new Error(res.error);
-      }
-
-      if (res.status === 201) {
-        setTimeout(() => {
-          enqueueSnackbar(t('register-form.form.'), {
-            variant: 'success',
-          });
-          navigate('/auth');
-        }, 1000);
-      }
-
-      e.target.username.value = '';
-      e.target.password.value = '';
-      e.target.password_confirmation.value = '';
-    } catch (error) {
-      console.warn(error);
-      let msg = error.response?.data?.message || error.message;
-      enqueueSnackbar(msg, { variant: 'error' });
-      setError(msg);
-      setTimeout(() => {
-        setError(null);
-      }, 3000);
-    } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
-    }
-  };
-
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -118,7 +64,7 @@ const Register = () => {
       phone: '',
       birth_date: '',
     },
-    validationSchema: registerValidationSchema, // Our Yup schema
+    validationSchema: registerValidationSchema,
     onSubmit: async (values) => {
       setLoading(true);
 
@@ -137,18 +83,21 @@ const Register = () => {
               variant: 'success',
             });
             navigate('/auth');
-            formik.resetForm(); // Reset form values
+            formik.resetForm();
           }, 1000);
         }
       } catch (error) {
         console.warn(error);
         let msg = error.response?.data?.message || error.message;
-        msg = error.response?.data?.data?.username[0] || msg;
+        msg =
+          error.response?.data?.data?.username?.[0] ||
+          error.response?.data?.data?.email?.[0] ||
+          msg;
         enqueueSnackbar(msg, { variant: 'error' });
         setError(msg);
-        // setTimeout(() => {
-        //   setError(null);
-        // }, 3000);
+        setTimeout(() => {
+          setError(null);
+        }, 5000);
       } finally {
         setTimeout(() => {
           setLoading(false);
@@ -490,3 +439,59 @@ const Register = () => {
 };
 
 export default Register;
+
+/*
+ *  // en desuso con el uso de formik
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const dataForm = new FormData(e.currentTarget);
+    const credentials = {
+      username: dataForm.get('username'),
+      password: dataForm.get('password'),
+      password_confirmation: dataForm.get('password_confirmation'),
+      name: dataForm.get('name'),
+      surname: dataForm.get('surname'),
+      email: dataForm.get('email'),
+      phone: dataForm.get('phone'),
+      birth_date: parser.DateToInsert(dataForm.get('birth_date')),
+    };
+
+    try {
+      if (credentials.password !== credentials.password_confirmation)
+        throw new Error('Las contraseñas no coinciden');
+      const res = await userService.register(credentials);
+
+      if (res.error) {
+        throw new Error(res.error);
+      }
+
+      if (res.status === 201) {
+        setTimeout(() => {
+          enqueueSnackbar(t('register-form.form.'), {
+            variant: 'success',
+          });
+          navigate('/auth');
+        }, 1000);
+      }
+
+      e.target.username.value = '';
+      e.target.password.value = '';
+      e.target.password_confirmation.value = '';
+    } catch (error) {
+      console.warn(error);
+      let msg = error.response?.data?.message || error.message;
+      enqueueSnackbar(msg, { variant: 'error' });
+      setError(msg);
+      setTimeout(() => {
+        setError(null);
+      }, 3000);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+  };
+
+*/

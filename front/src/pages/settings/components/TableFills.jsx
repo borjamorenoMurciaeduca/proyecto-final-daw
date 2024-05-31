@@ -1,7 +1,9 @@
 import useProperties from '@/hooks/useProperties';
 import propertyService from '@/services/propertyService';
 import parser from '@/utils/parser';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import PublicOffIcon from '@mui/icons-material/PublicOff';
+import { Button } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { useSnackbar } from 'notistack';
@@ -27,6 +29,26 @@ export const Columns = (handleOpenDialog) => {
       enqueueSnackbar(t('revoke.error'), { variant: 'error' });
       console.error('Error revoking share property:', error);
     }
+  };
+
+  const handleCopyToClipboard = (e, url) => {
+    if (e) e.preventDefault();
+
+    const urlToCopy = parser.getFullURL(url);
+
+    navigator.clipboard
+      .writeText(urlToCopy)
+      .then(() => {
+        enqueueSnackbar(t('property-share.generator.success-copy'), {
+          variant: 'info',
+        });
+      })
+      .catch((error) => {
+        enqueueSnackbar(t('property-share.generator.fail-copy'), {
+          variant: 'error',
+        });
+        console.warn(error);
+      });
   };
 
   return [
@@ -56,6 +78,9 @@ export const Columns = (handleOpenDialog) => {
     {
       name: 'title',
       label: 'Título',
+      options: {
+        filter: false,
+      },
     },
     {
       name: 'share_url',
@@ -66,6 +91,22 @@ export const Columns = (handleOpenDialog) => {
         filterOptions: {
           renderValue: (v) =>
             v ? v.replace(/^(\w).* (.*)$/, '$1. $2') : 'vacío',
+        },
+        customBodyRender: (value) => {
+          return value == '❌' ? (
+            value
+          ) : (
+            <Tooltip title="Copiar URL">
+              <Button
+                onClick={(e) => handleCopyToClipboard(e, value)}
+                size="small"
+                variant="text"
+                endIcon={<ContentCopyIcon />}
+              >
+                {value == '❌' ? value : `/${value}`}
+              </Button>
+            </Tooltip>
+          );
         },
       },
     },
@@ -116,7 +157,7 @@ export const createRows = (data) => {
       property_id,
       title,
       location,
-      share_url: !share_url ? '❌' : `/${share_url}`,
+      share_url: !share_url ? '❌' : `${share_url}`,
       created_at: parser.DateReceived(created_at),
       is_shared,
     })

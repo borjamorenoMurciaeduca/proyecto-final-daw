@@ -224,9 +224,10 @@ const MyProperties = () => {
       <Typography component="h1" variant="h2">
         {t('page.my-properties.title')}
       </Typography>
-      <Stack direction="row" spacing={2}>
+      <Stack direction="row" spacing={2} useFlexGap flexWrap="wrap">
         {orderBy === 'date' && (
           <Chip
+            size="small"
             label={`${t(`filter.stack-filters.${orderBy}`)} ${t(
               `filter.switch.${dateOrder}`
             )}`}
@@ -234,6 +235,7 @@ const MyProperties = () => {
         )}
         {orderBy === 'price' && (
           <Chip
+            size="small"
             label={`${t(`filter.stack-filters.${orderBy}`)} ${t(
               `filter.switch.${priceOrder}`
             )}`}
@@ -241,6 +243,7 @@ const MyProperties = () => {
         )}
         {price == INITIAL_PRICE || (price[0] == 0 && price[1] == 100) ? null : (
           <Chip
+            size="small"
             label={`${t(
               'filter.stack-filters.price-range'
             )} ${parser.FormatPriceWithoutCurrency(
@@ -250,7 +253,10 @@ const MyProperties = () => {
           />
         )}
         {location && (
-          <Chip label={`${t('filter.stack-filters.location')} ${location}`} />
+          <Chip
+            size="small"
+            label={`${t('filter.stack-filters.location')} ${location}`}
+          />
         )}
       </Stack>
       <Zoom
@@ -298,7 +304,7 @@ const MyProperties = () => {
         container
         sx={{
           minHeight: '75vh',
-          mt: 2,
+          mt: 1,
           mb: { md: 4, lg: 'auto' },
         }}
       >
@@ -309,7 +315,7 @@ const MyProperties = () => {
           direction="row"
           justifyContent="left"
           alignItems="flex-start"
-          pb={{ xs: 7, md: 5 }}
+          pb={{ xs: 7, md: 0 }}
         >
           {propertiesPage.map((property) => (
             <Grid item xs={12} sm={6} lg={4} key={property.property_id}>

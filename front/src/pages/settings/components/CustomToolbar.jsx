@@ -58,11 +58,6 @@ const CustomToolbar = ({
           <DeleteIcon />
         </IconButton>
       </Tooltip>
-      <Tooltip title="Eliminar propiedades">
-        <IconButton onClick={confirmDelete} aria-label="delete" size="large">
-          <DeleteIcon />
-        </IconButton>
-      </Tooltip>
     </Box>
   );
 };

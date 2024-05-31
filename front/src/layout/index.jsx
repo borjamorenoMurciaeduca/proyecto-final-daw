@@ -16,6 +16,7 @@ import {
   Tooltip,
   Typography,
   useScrollTrigger,
+  useTheme,
 } from '@mui/material';
 
 import logoIdealista from '@/assets/logo/logo-idealistawatch.png';
@@ -27,7 +28,7 @@ import cookie from '@/utils/cookie.js';
 import { Logout, Settings } from '@mui/icons-material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Outlet, Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Outlet, NavLink as RouterLink, useNavigate } from 'react-router-dom';
 import MaterialDayNight from './components/MaterialDayNight';
 import { useSnackbar } from 'notistack';
 
@@ -49,16 +50,12 @@ const Layout = (props) => {
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
+  const theme = useTheme();
 
   const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
   const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
   const handleCloseNavMenu = () => setAnchorElNav(null);
   const handleCloseUserMenu = () => setAnchorElUser(null);
-
-  const handleClickProfile = () => {
-    handleCloseUserMenu();
-    navigate('/app/settings');
-  };
 
   const handleClickHome = () => {
     handleCloseNavMenu();
@@ -76,6 +73,17 @@ const Layout = (props) => {
     handleCloseNavMenu();
     resetPage();
     navigate('/app/favorite-properties');
+  };
+
+  const handleClickAboutUs = () => {
+    handleCloseNavMenu();
+    resetPage();
+    navigate('/app/about-us');
+  };
+
+  const handleClickProfile = () => {
+    handleCloseUserMenu();
+    navigate('/app/settings');
   };
 
   const handleLogoutMenu = async () => {
@@ -177,6 +185,9 @@ const Layout = (props) => {
                       {t('page.favorite-properties.title')}
                     </Typography>
                   </MenuItem>
+                  <MenuItem onClick={handleClickAboutUs}>
+                    <Typography textAlign="center">About Us</Typography>
+                  </MenuItem>
                 </Menu>
               </Box>
               {/* MENÚ DESKTOP */}
@@ -185,7 +196,14 @@ const Layout = (props) => {
                   component={RouterLink}
                   to="/app/my-properties"
                   onClick={resetPage}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
+                  sx={{
+                    my: 2,
+                    color: 'white',
+                    display: 'block',
+                    '&.active': {
+                      backgroundColor: 'navOr.main',
+                    },
+                  }}
                 >
                   {t('page.my-properties.title')}
                 </Button>
@@ -193,9 +211,31 @@ const Layout = (props) => {
                   component={RouterLink}
                   to="/app/favorite-properties"
                   onClick={resetPage}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
+                  sx={{
+                    my: 2,
+                    color: 'white',
+                    display: 'block',
+                    '&.active': {
+                      backgroundColor: 'navOr.main',
+                    },
+                  }}
                 >
                   {t('page.favorite-properties.title')}
+                </Button>
+                <Button
+                  component={RouterLink}
+                  to="/app/about-us"
+                  onClick={resetPage}
+                  sx={{
+                    my: 2,
+                    color: 'white',
+                    display: 'block',
+                    '&.active': {
+                      backgroundColor: 'navOr.main',
+                    },
+                  }}
+                >
+                  About Us
                 </Button>
               </Box>
               <Box sx={{ flexGrow: 0 }}>

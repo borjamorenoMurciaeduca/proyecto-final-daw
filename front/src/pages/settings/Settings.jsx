@@ -1,4 +1,3 @@
-import useUser from '@/hooks/useUser';
 import { useTheme } from '@emotion/react';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import TableViewIcon from '@mui/icons-material/TableView';
@@ -23,7 +22,6 @@ const Settings = () => {
   const { t } = useTranslation();
   const theme = useTheme();
   const lessThanMedium = useMediaQuery(theme.breakpoints.down('md'));
-  const { user } = useUser();
 
   function a11yProps(index) {
     return {
@@ -34,8 +32,17 @@ const Settings = () => {
 
   return (
     <>
-      <Typography variant="h2" component="h1">
-        👋 {user.username || 'Usuario'}
+      <Typography
+        variant="h2"
+        component="h1"
+        sx={{
+          fontSize: {
+            xs: '2rem',
+            sm: '3.75rem',
+          },
+        }}
+      >
+        ⚙️ Configuración y gestiones
       </Typography>
       <Grid
         container
@@ -43,7 +50,7 @@ const Settings = () => {
         justifyContent="center"
         minHeight={'40vh'}
         gap={2}
-        mt={4}
+        my={4}
       >
         {view == 0 && <EditProfile />}
         {view == 1 && <PropertiesTable />}

@@ -145,7 +145,7 @@ const PropertyForm = ({
           onChange={handleInputChange}
         />
       </Grid>
-      <Grid item xs={12} md={4}>
+      <Grid item xs={6} md={4}>
         <TextField
           helperText=""
           id="price"
@@ -207,7 +207,7 @@ const PropertyForm = ({
           container
           direction="row"
           alignContent="center"
-          justifyContent={{ xs: 'center', md: 'flex-start' }}
+          justifyContent={{ xs: 'space-evenly', md: 'flex-start' }}
         >
           <FormControlLabel
             control={

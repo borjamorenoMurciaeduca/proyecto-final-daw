@@ -299,8 +299,6 @@ class PropertyController extends Controller {
 
     public function updateProperty(Request $request) {
         try {
-            $userId = Auth::id();
-            $userProperty = UserProperty::where('user_id_fk', $userId)->with('property')->get();
             DB::beginTransaction();
             $validateProperty = $request->validate([
                 'property_id' => 'numeric|required',
@@ -336,7 +334,6 @@ class PropertyController extends Controller {
             ]);
 
             //$typeProperty = TypeProperties::where('description', $validateUserProperty['type_property'])->first();
-            $notas = $userProperty->notes;
 
             UserProperty::where('property_id_fk', $validateProperty['property_id'])->update([
                 'title' => $validateUserProperty['title'],
@@ -352,10 +349,12 @@ class PropertyController extends Controller {
 
             $userProperty = UserProperty::where('property_id_fk', $validateProperty['property_id'])->first();
 
+            $notas = $userProperty->notes;
+
             DB::commit();
 
             $data = [
-                'user_id' => $userId,
+                'user_id' => Auth::id(),
                 'property_id' => $validateProperty['property_id'],
                 'title' => $validateUserProperty['title'],
                 'location' => $validateUserProperty['location'],
@@ -372,7 +371,7 @@ class PropertyController extends Controller {
                 'url_image' => $validateProperty['url_image'] ?? null,
                 //'type_property' => $validateUserProperty['type_property'],
                 'cancellation_date' => $validateProperty['cancellation_date'] ?? null,
-                'notes' => $notas,
+                'notes' => $notas ?? '',
                 'created_at' => $userProperty->created_at,
                 'updated_at' => $userProperty->updated_at,
             ];
