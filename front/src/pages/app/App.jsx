@@ -2,6 +2,7 @@ import house from '@/assets/house.jpg';
 import i18n from '@/commons/i18n/i18n';
 import AddButtonModal from '@/components/AddButtonModal';
 import useProperties from '@/hooks/useProperties';
+import useUser from '@/hooks/useUser';
 import parser from '@/utils/parser';
 import {
   Button,
@@ -21,6 +22,7 @@ const App = () => {
   const { properties } = useProperties();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { user } = useUser();
 
   const propertiesMax = 6;
   const sortedProperties = properties.sort(
@@ -51,9 +53,6 @@ const App = () => {
         <StepperEmpty />
       ) : (
         <>
-          <Typography component="h1" variant="h2" mb={3}>
-            {t('page.last-properties.title')}
-          </Typography>
           <Carousel {...settings}>
             {propertiesPage.map(
               ({
@@ -109,15 +108,27 @@ const App = () => {
               )
             )}
           </Carousel>
-          <Grid container item xs={12} md={8} py={5}>
-            <Typography component="p" variant="subtitle1">
-              Nos alegra que estés aquí. IdealistaWatch es tu nuevo aliado para
-              encontrar y guardar las viviendas de tus sueños. Entendemos lo
-              importante que es encontrar el lugar perfecto, ya sea tu primera
-              casa, un nuevo hogar o una inversión. Por eso, hemos creado una
-              plataforma intuitiva y fácil de usar que te permitirá gestionar y
-              seguir de cerca todas tus opciones inmobiliarias.
-            </Typography>
+          <Grid container item xs={12} md={8} py={2}>
+            <Grid item xs={12}>
+              <Typography component="h1" variant="h2">
+                👋 Bienvenido {user.username || 'Usuario'}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="overline">
+                {t('page.last-properties.title')}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography component="p" variant="subtitle1">
+                Nos alegra que estés aquí. IdealistaWatch es tu nuevo aliado
+                para encontrar y guardar las viviendas de tus sueños. Entendemos
+                lo importante que es encontrar el lugar perfecto, ya sea tu
+                primera casa, un nuevo hogar o una inversión. Por eso, hemos
+                creado una plataforma intuitiva y fácil de usar que te permitirá
+                gestionar y seguir de cerca todas tus opciones inmobiliarias.
+              </Typography>
+            </Grid>
           </Grid>
         </>
       )}
