@@ -106,6 +106,7 @@ const EditProfile = () => {
       >
         <Grid
           container
+          item
           justifyContent="center"
           alignItems="center"
           xs={12}
