@@ -91,7 +91,7 @@ const PropertyForm = ({
           name="property_id"
           label={t('add-property-form.reference')}
           type="number"
-          // disabled
+          disabled
           fullWidth
           value={propertiesValues.property_id}
           onChange={handleInputChange}
