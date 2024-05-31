@@ -41,9 +41,9 @@ const PropertyDetailsGlobal = ({
 
   const handleTwitter = () => {
     const fullURL = parser.getFullURL(property.share_url);
-    const data = `Descubre esta propiedad encontrada con IdealistaWatch, en ${
+    const data = `${t('property-share.twitter.discover')} ${
       property.location
-    } por solo ${parser.FormatPrice(
+    } ${t('property-share.twitter.for-only')} ${parser.FormatPrice(
       property.price,
       i18n.language
     )} -  ${fullURL}`;
@@ -172,7 +172,7 @@ const PropertyDetailsGlobal = ({
               color="warning"
               onClick={() => handleOpenProperty(property.property_id)}
             >
-              Edit
+              {t('property-info.edit.button-edit')}
             </Button>
           </CardActions>
         )}
@@ -187,7 +187,7 @@ const PropertyDetailsGlobal = ({
         <Grid container spacing={2} p={3}>
           <Grid item xs={12}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              EDIT PROPERTY
+              {t('property-info.edit.edit-property')}
             </Typography>
           </Grid>
           <Grid item xs={12}>

@@ -12,9 +12,10 @@ import {
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
+import useProperties from '@/hooks/useProperties';
 import PriceHistory from './components/PriceHistory';
 import PropertyDetails from './components/PropertyDetails';
 import PropertyNotes from './components/PropertyNotes';
@@ -27,16 +28,28 @@ function a11yProps(index) {
 }
 
 const PropertyInfo = () => {
+  const [title, setTitle] = useState();
   const [view, setView] = useState(0);
   const { t } = useTranslation();
+  const { properties } = useProperties();
   let { property_id } = useParams();
   const theme = useTheme();
   const lessThanMedium = useMediaQuery(theme.breakpoints.down('md'));
+
+  useEffect(() => {
+    const propertyMatch = properties.find(
+      (el) => el.property_id == property_id
+    );
+    !propertyMatch ? navigate('/404') : setTitle(propertyMatch.title);
+  }, [properties]);
 
   return (
     <>
       <Typography component="h1" sx={{ typography: { xs: 'h4', sm: 'h2' } }}>
         {t('property-info.header')} <small>{property_id}</small>
+      </Typography>
+      <Typography component="h2" sx={{ typography: { xs: 'h6', sm: 'h4' } }}>
+        {title}
       </Typography>
       <Grid
         container

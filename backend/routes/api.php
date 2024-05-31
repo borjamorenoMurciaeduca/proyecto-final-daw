@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PropertyController;
+use App\Http\Controllers\Api\TypePropertiesController;
 use Illuminate\Support\Facades\Route;
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -30,6 +31,8 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::get('/prepare-inmueble/{id}', [PropertyController::class, 'prepare']);
   Route::post('/property/{id}/update-price', [PropertyController::class, 'storeNewPrice']);
   Route::delete('/properties/delete-multiple', [PropertyController::class, 'deleteMultiple']);
+
+  Route::get('/type-properties', [TypePropertiesController::class, 'getAllTypeProperties']);
 
   // Rutas protegidas correspondientes a compartir inmuebles
   Route::post('/property/{id}/share', [PropertyController::class, 'shareProperty']);

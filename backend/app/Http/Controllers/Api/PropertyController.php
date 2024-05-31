@@ -9,6 +9,7 @@ use App\Models\Property;
 use App\Models\User;
 use App\Models\UserProperty;
 use App\Models\UserPropertyNote;
+use App\Models\TypeProperties;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,18 +42,89 @@ class PropertyController extends Controller {
      */
     public function prepare(string $id) {
         try {
-
             $pythonScriptPath = base_path('storage/python/python-scrapping.py');
-
             $output = shell_exec('python3 ' . escapeshellarg($pythonScriptPath) . ' ' . escapeshellarg($id));
-
+    
+            if ($output === null) {
+                throw new \Exception('Error al ejecutar el script Python');
+            }
+    
             $properties = json_decode($output, true);
-
-            return $properties;
+    
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new \Exception('Error al decodificar el JSON devuelto por el script Python');
+            }
+    
+            $property = $this->convertPropertyData($properties);
+    
+            return $property;
         } catch (\Exception $e) {
             return ApiResponse::error('Inmueble no encontrado', 404);
         }
     }
+    
+    private function convertPropertyData(array $data) {
+        $property = [
+            'property_id' => $data['id'] ?? '',
+            'title' => $data['title'] ?? '',
+            'location' => $data['location'] ?? '',
+            'price' => $data['price'] ?? '',
+            'size' => $this->extractFeatureValue($data['features'] ?? [], 'm²', 'size'),
+            'rooms' => $this->extractFeatureValue($data['features'] ?? [], 'habitaci', 'rooms'),
+            'garage' => $this->hasFeature($data['features'] ?? [], 'garaje'),
+            'storage_room' => $this->hasFeature($data['features'] ?? [], 'trastero'),
+            'bath_rooms' => $this->extractFeatureValue($data['features'] ?? [], 'baño', 'bath_rooms'),
+            'description' => $data['description'] ?? '',
+            'url_image' => $data['img_url'] ?? '',
+            'type_property' => $this->determinePropertyType($data),
+            'cancellationDate' => $data['fechaBaja'] ?? null,  
+            'status' => $data['status'] ?? 'unknown' 
+        ];
+    
+        return $property;
+    }
+    
+    private function extractFeatureValue(array $features, string $keyword, string $type) {
+        foreach ($features as $category => $items) {
+            foreach ($items as $item) {
+                if (stripos($item, $keyword) !== false) {
+                    $matches = [];
+                    preg_match('/\d+/', $item, $matches);
+                    return isset($matches[0]) ? (int)$matches[0] : '';
+                }
+            }
+        }
+        return '';
+    }
+    
+    private function hasFeature(array $features, string $keyword) {
+        foreach ($features as $category => $items) {
+            foreach ($items as $item) {
+                if (stripos($item, $keyword) !== false) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    private function determinePropertyType(array $data) {
+        $keywords = [
+            'vivienda' => ['casa', 'apartamento', 'piso'],
+            'garaje' => ['garaje', 'parking']
+        ];
+    
+        $text = strtolower(json_encode($data));
+        foreach ($keywords as $type => $words) {
+            foreach ($words as $word) {
+                if (stripos($text, $word) !== false) {
+                    return $type;
+                }
+            }
+        }
+        return 'otros';
+    }
+    
 
     /**
      * @OA\Post(
@@ -151,7 +223,8 @@ class PropertyController extends Controller {
                 'garage' => 'required',
                 'storage_room' => 'required',
                 'bath_rooms' => 'integer|required',
-                'description' => 'string|required'
+                'description' => 'string|required',
+                //'type_property' => 'string|required'
             ]);
             // Convertir 'true' de string a boolean si es necesario
             $garage = filter_var($request->input('garage'), FILTER_VALIDATE_BOOLEAN);
@@ -171,6 +244,8 @@ class PropertyController extends Controller {
                 'price' => $validateHistory['price'],
             ]);
 
+            //$typeProperty = TypeProperties::where('description', $validateUserProperty['type_property'])->first();
+
             $userProperty = UserProperty::create([
                 'user_id_fk' => Auth::id(),
                 'property_id_fk' => $validateProperty['property_id'],
@@ -182,7 +257,8 @@ class PropertyController extends Controller {
                 'storage_room' => $storage_room,
                 'bath_rooms' => $validateUserProperty['bath_rooms'],
                 'description' => $validateUserProperty['description'],
-                'url_image' => $validateProperty['url_image']
+                'url_image' => $validateProperty['url_image'],
+                //'type_property' => $typeProperty->type_properties_id
             ]);
 
             DB::commit();
@@ -204,7 +280,9 @@ class PropertyController extends Controller {
                 'share_url' => $userProperty->share_url,
                 'favorite' => $userProperty->favorite,
                 'url_image' => $validateProperty['url_image'] ?? null,
+                //'type_property' => $validateUserProperty['type_property'] ?? null,
                 'cancellation_date' => $validateProperty['cancellation_date'] ?? null,
+                'notes' => '',
                 'created_at' => $userProperty->created_at,
                 'updated_at' => $userProperty->updated_at,
             ];
@@ -221,6 +299,8 @@ class PropertyController extends Controller {
 
     public function updateProperty(Request $request) {
         try {
+            $userId = Auth::id();
+            $userProperty = UserProperty::where('user_id_fk', $userId)->with('property')->get();
             DB::beginTransaction();
             $validateProperty = $request->validate([
                 'property_id' => 'numeric|required',
@@ -235,7 +315,8 @@ class PropertyController extends Controller {
                 'garage' => 'required',
                 'storage_room' => 'required',
                 'bath_rooms' => 'integer|required',
-                'description' => 'string|required'
+                'description' => 'string|required',
+                //'type_property' => 'string|required'
             ]);
 
             $garage = filter_var($request->input('garage'), FILTER_VALIDATE_BOOLEAN);
@@ -254,6 +335,9 @@ class PropertyController extends Controller {
                 'price' => $validateHistory['price'],
             ]);
 
+            //$typeProperty = TypeProperties::where('description', $validateUserProperty['type_property'])->first();
+            $notas = $userProperty->notes;
+
             UserProperty::where('property_id_fk', $validateProperty['property_id'])->update([
                 'title' => $validateUserProperty['title'],
                 'location' => $validateUserProperty['location'],
@@ -263,6 +347,7 @@ class PropertyController extends Controller {
                 'storage_room' => $storage_room,
                 'bath_rooms' => $validateUserProperty['bath_rooms'],
                 'description' => $validateUserProperty['description'],
+                //'type_property' => $typeProperty->type_properties_id
             ]);
 
             $userProperty = UserProperty::where('property_id_fk', $validateProperty['property_id'])->first();
@@ -270,7 +355,7 @@ class PropertyController extends Controller {
             DB::commit();
 
             $data = [
-                'user_id' => Auth::id(),
+                'user_id' => $userId,
                 'property_id' => $validateProperty['property_id'],
                 'title' => $validateUserProperty['title'],
                 'location' => $validateUserProperty['location'],
@@ -285,7 +370,9 @@ class PropertyController extends Controller {
                 'share_url' => $userProperty->share_url,
                 'favorite' => $userProperty->favorite,
                 'url_image' => $validateProperty['url_image'] ?? null,
+                //'type_property' => $validateUserProperty['type_property'],
                 'cancellation_date' => $validateProperty['cancellation_date'] ?? null,
+                'notes' => $notas,
                 'created_at' => $userProperty->created_at,
                 'updated_at' => $userProperty->updated_at,
             ];
@@ -408,10 +495,12 @@ class PropertyController extends Controller {
         try {
             $userId = Auth::id();
             $userProperty = UserProperty::where('user_id_fk', $userId)->with('property')->get();
+            
             // Mapear los datos para combinarlos en un solo JSON
             $inmuebles = $userProperty->map(function ($userProperty) {
                 $property = $userProperty->property;
                 $notas = $userProperty->notes;
+                //$typeProperty = TypeProperties::findOrFail($userProperty['type_property_fk']);
                 return [
                     'user_id' => $userProperty->user_id_fk,
                     "property_id" => $userProperty->property_id_fk,
@@ -428,6 +517,7 @@ class PropertyController extends Controller {
                     'is_shared' => $userProperty->is_shared,
                     'share_url' => $userProperty->share_url,
                     'favorite' => $userProperty->favorite,
+                    //'type_property' => $typeProperty->description,
                     'cancellation_date' => $property->cancellation_date,
                     'notes' => $notas,
                     'created_at' => $userProperty->created_at,
@@ -444,6 +534,8 @@ class PropertyController extends Controller {
         try {
             $property = Property::findOrFail($id);
             $userProperty = UserProperty::where('property_id_fk', $id)->first();
+            //$typeProperty = TypeProperties::findOrFail($userProperty['type_property_fk']);
+
             $data = [
                 'user_id' => $userProperty->user_id_fk,
                 'property_id' => $userProperty->property_id_fk,
@@ -460,6 +552,7 @@ class PropertyController extends Controller {
                 'is_shared' => $userProperty->is_shared,
                 'share_url' => $userProperty->share_url,
                 'favorite' => $userProperty->favorite,
+                //'type_property' => $typeProperty->description,
                 'cancellation_date' => $property->cancellation_date,
                 'created_at' => $userProperty->created_at,
                 'updated_at' => $userProperty->updated_at,
@@ -608,6 +701,7 @@ class PropertyController extends Controller {
         $userProperty = UserProperty::where('share_url', $shareUrl)->first();
         if ($userProperty) {
             $property = Property::find($userProperty->property_id_fk);
+            $typeProperty = TypeProperties::findOrFail($userProperty['type_property_fk']);
             $userInfo = User::find($userProperty->user_id_fk);
             $data = [
                 'username' => $userInfo->username,
@@ -623,6 +717,7 @@ class PropertyController extends Controller {
                 'description' => $userProperty->description,
                 'price' => $property->last_price,
                 'url_image' => $property->url_image,
+                //'type_property' => $typeProperty->description,
                 'cancellation_date' => $property->cancellation_date,
                 'created_at' => $userProperty->created_at,
                 'updated_at' => $userProperty->updated_at,

@@ -12,3 +12,15 @@ export const CheckStringTemplate = (value, template) => {
   });
   return new RegExp(`^${pattern}$`).test(value);
 };
+
+export const validateIdealistaURL = (url) => {
+  const regex = /^https?:\/\/(www\.)?idealista\.com\/inmueble\/(\d+)\/?$/;
+
+  const match = url.match(regex);
+
+  if (match) {
+    return match[2];
+  } else {
+    return '';
+  }
+};

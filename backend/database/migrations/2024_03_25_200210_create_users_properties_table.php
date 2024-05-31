@@ -23,7 +23,9 @@ return new class extends Migration {
             $table->boolean("is_shared")->default(false);
             $table->string("share_url")->nullable();
             $table->longText("description");
+            $table->unsignedBigInteger('type_property_fk')->nullable();
             $table->timestamps();
+            $table->foreign('type_property_fk')->references('type_properties_id')->on('type_properties')->onDelete('restrict');
             $table->foreign('property_id_fk')->references('property_id')->on('properties')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('user_id_fk')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });

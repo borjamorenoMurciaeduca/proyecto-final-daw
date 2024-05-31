@@ -89,7 +89,8 @@
     "storage": "Storage",
     "add-property": "Add property",
     "cancel": "Cancel",
-    "description": "Description..."
+    "description": "Description...",
+    "type_property": "Type of property"
   },
   "addButtonModal": {
     "title": "Search with IdealistaWatch",
@@ -115,6 +116,8 @@
   "property-info": {
     "header": "Details of property",
     "edit": {
+      "button-edit": "Edit",
+      "edit-property": "Edit property",
       "success": "Property updated successfully",
       "error": "Error updating property"
     },
@@ -132,7 +135,10 @@
       "size": "Size:",
       "rooms": "Rooms:",
       "bath_rooms": "Bath rooms:",
-      "share": "Share"
+      "share": "Share",
+      "property": "Property",
+      "others": "Others",
+      "in": "in"
     },
     "notes": {
       "notify": {
@@ -184,6 +190,10 @@
       "success-url": "URL generated successfully",
       "success-copy": "URL copied to clipboard",
       "fail-copy": "Error copying URL"
+    },
+    "twitter": {
+      "discover": "Discover this property found with IdealistaWatch, in",
+      "for-only": "for only"
     }
   },
   "favorite": {
@@ -203,7 +213,7 @@
   },
   "page": {
     "favorite-properties": {
-      "title": "My favourites",
+      "title": "My favorites",
       "empty": "You have not added any properties as favorites yet!"
     },
     "home": {
@@ -262,5 +272,10 @@
       "price-range": "Price range:",
       "location": "Location:"
     }
+  },
+  "select-type-property": {
+    "others": "Others",
+    "garage": "Garage",
+    "property": "Property"
   }
 }

@@ -89,7 +89,8 @@
     "storage": "Trastero",
     "add-property": "Añadir vivienda",
     "cancel": "Cancelar",
-    "description": "Descripción..."
+    "description": "Descripción...",
+    "type_property": "Tipo de propiedad"
   },
   "addButtonModal": {
     "title": "Buscar con IdealistaWatch",
@@ -115,6 +116,8 @@
   "property-info": {
     "header": "Detalles de la vivienda",
     "edit": {
+      "button-edit": "Editar",
+      "edit-property": "Editar propiedad",
       "success": "Propiedad actualizada con éxito",
       "error": "Error al actualizar la propiedad"
     },
@@ -132,7 +135,10 @@
       "size": "Tamaño:",
       "rooms": "Habitaciones:",
       "bath_rooms": "Baños:",
-      "share": "Compartir"
+      "share": "Compartir",
+      "property": "Vivienda",
+      "others": "Otros",
+      "in": "in"
     },
     "notes": {
       "notify": {
@@ -184,6 +190,10 @@
       "success-url": "¡Enlace generado!",
       "success-copy": "¡Enlace copiado en el portapapeles!",
       "fail-copy": "¡Error al copiar el enlace!"
+    },
+    "twitter": {
+      "discover": "Descubre esta propiedad encontrada con IdealistaWatch, en",
+      "for-only": "por solo"
     }
   },
   "favorite": {
@@ -262,5 +272,10 @@
       "price-range": "Rango de precios:",
       "location": "Ubicación:"
     }
+  },
+  "select-type-property": {
+    "others": "Otros",
+    "garage": "Garaje",
+    "property": "Vivienda"
   }
 }

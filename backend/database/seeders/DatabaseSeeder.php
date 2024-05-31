@@ -10,6 +10,7 @@ use App\Models\Property;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\UserProperty;
+use App\Models\TypeProperties;
 use Faker\Factory as Faker;
 
 class DatabaseSeeder extends Seeder {
@@ -46,6 +47,12 @@ class DatabaseSeeder extends Seeder {
             "phone" => "622222222"
         ]);
 
+        TypeProperties::insertOrIgnore([
+            ['type_properties_id' => 0, 'description' => 'others'],
+            ['type_properties_id' => 1, 'description' => 'property'],
+            ['type_properties_id' => 2, 'description' => 'garage'],
+        ]);
+
         //  Crea 10 propiedades usando la fábrica Property
         Property::factory(10)->create();
         Property::factory(100)->create()->each(function ($property) use ($jorge, $borja) {
@@ -61,7 +68,8 @@ class DatabaseSeeder extends Seeder {
                 'garage' => $faker->boolean(),
                 'storage_room' => $faker->boolean(),
                 'bath_rooms' => $faker->randomNumber(1),
-                'description' => $faker->sentence(200)
+                'description' => $faker->sentence(200),
+                'type_property_fk' => rand(0, 2)
             ]);
             //añadir 10 registros al historial de precios
             PriceHistory::factory(10)->create([

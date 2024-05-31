@@ -1,5 +1,5 @@
 import propertyService from '@/services/propertyService.js';
-import inputValidatorInmueble from '@/utils/inputValidatorInmueble.js';
+import { validateIdealistaURL } from '@/utils/strings';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -57,18 +57,19 @@ const AddButtonModal = () => {
   };
 
   const handleSearch = async () => {
-    const idInmueble = inputValidatorInmueble.validateIdealistaURL(textValue);
+    const idInmueble = validateIdealistaURL(textValue);
     if (idInmueble.length > 0) {
       setInputDisabled(true);
       enqueueSnackbar(t('snackbar.url-validation.ok'), { variant: 'success' });
       try {
         const data = await propertyService.prepareInmuebleForm(idInmueble);
+
         if (data?.status == 'ok') {
           setPropertyData(data);
           setShowForm(true);
         } else {
           setShowForm(false);
-          if (data?.dataStatus == 'baja') {
+          if (data?.status == 'baja') {
             enqueueSnackbar(t('snackbar.url-validation.baja'), {
               variant: 'info',
             });

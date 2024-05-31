@@ -10,6 +10,9 @@ import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import UnstyledTextareaIntroduction from './TextAreaAutoSize';
+import PropertyTypeSelect from './PropertyTypeSelect';
+import parser from '@/utils/parser';
+import i18n from '@/commons/i18n/i18n';
 
 const PropertyForm = ({
   property = {},
@@ -29,6 +32,7 @@ const PropertyForm = ({
     bath_rooms: '',
     description: '',
     url_image: '',
+    type_property: '',
   });
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
@@ -38,7 +42,7 @@ const PropertyForm = ({
       property_id: property?.property_id || '',
       title: property?.title || '',
       location: property?.location || '',
-      price: property?.price || '',
+      price: formatPrice(property?.price) || '',
       size: property?.size || '',
       rooms: property?.rooms || '',
       garage: property?.garage || false,
@@ -46,13 +50,33 @@ const PropertyForm = ({
       bath_rooms: property?.bath_rooms || '',
       description: property?.description || '',
       url_image: property?.url_image || '',
+      type_property: property?.type_property || '',
     });
   }, [property]);
+
+  const formatPrice = (value) => {
+    return parser.FormatPriceWithoutCurrency(value, i18n.language);
+  };
 
   const handleInputChange = (event) => {
     const { name, value, type, checked } = event.target;
     const newValue = type === 'checkbox' ? checked : value;
-    setPropertiesValues({ ...propertiesValues, [name]: newValue });
+    if (name === 'price') {
+      const newValueWithoutDot = newValue.replace(/\./g, '|');
+      console.log('newValueWithoutDot: ', newValueWithoutDot);
+      const newValueWithoutComma = newValueWithoutDot.replace(/,/g, '.');
+      console.log('newValueWithoutComma: ', newValueWithoutComma);
+      const newValueFormated = newValueWithoutComma.replace(/\|/g, '');
+      console.log('newValueFormated: ', newValueFormated);
+      const formated = formatPrice(newValueFormated);
+      console.log('formated: ', formated);
+      setPropertiesValues({
+        ...propertiesValues,
+        [name]: formatPrice(newValueFormated),
+      });
+    } else {
+      setPropertiesValues({ ...propertiesValues, [name]: newValue });
+    }
   };
 
   const onSubmit = async (e) => {
@@ -61,7 +85,7 @@ const PropertyForm = ({
       const inmuebleToAdd = {
         ...propertiesValues,
         property_id: Number(propertiesValues.property_id),
-        price: Number(propertiesValues.price),
+        price: Number(propertiesValues.price.replace(/,/g, '')),
       };
       await handleSubmit(inmuebleToAdd);
       handleCloseDialog();
@@ -91,7 +115,7 @@ const PropertyForm = ({
           name="property_id"
           label={t('add-property-form.reference')}
           type="number"
-          // disabled
+          disabled
           fullWidth
           value={propertiesValues.property_id}
           onChange={handleInputChange}
@@ -128,7 +152,7 @@ const PropertyForm = ({
           name="price"
           label={t('add-property-form.price')}
           fullWidth
-          type="number"
+          type="text"
           InputProps={{
             endAdornment: <InputAdornment position="end">€</InputAdornment>,
           }}
@@ -151,7 +175,7 @@ const PropertyForm = ({
           onChange={handleInputChange}
         />
       </Grid>
-      <Grid item xs={6} md={4}>
+      <Grid item xs={3} md={2}>
         <TextField
           helperText=""
           id="rooms"
@@ -163,7 +187,7 @@ const PropertyForm = ({
           onChange={handleInputChange}
         />
       </Grid>
-      <Grid item xs={6} md={4}>
+      <Grid item xs={3} md={2}>
         <TextField
           helperText=""
           id="bath_rooms"
@@ -174,6 +198,9 @@ const PropertyForm = ({
           value={propertiesValues.bath_rooms}
           onChange={handleInputChange}
         />
+      </Grid>
+      <Grid item xs={6} md={4}>
+        {/* <PropertyTypeSelect propertyValue={propertiesValues} /> */}
       </Grid>
       <Grid item xs={6} md={4}>
         <Grid

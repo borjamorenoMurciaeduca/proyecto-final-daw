@@ -28,6 +28,7 @@ const PropertyCard = ({ property }) => {
     created_at,
     favorite,
     description,
+    type_property,
     url_image,
   } = property;
 
@@ -57,7 +58,7 @@ const PropertyCard = ({ property }) => {
           component="img"
           height="120"
           image={url_image || house}
-          alt="Vivienda"
+          alt={type_property}
         />
         <CardContent sx={{ pb: 0 }}>
           <Typography
@@ -93,7 +94,8 @@ const PropertyCard = ({ property }) => {
             </Typography>
           </Box>
           <Typography variant="body2" color="text.secondary" gutterBottom>
-            {location}
+            {t(`property-info.details.${type_property}`)}{' '}
+            {t('property-info.details.in')} {location}
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Typography gutterBottom variant="span" component="span">

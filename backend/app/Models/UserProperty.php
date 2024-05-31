@@ -22,7 +22,8 @@ class UserProperty extends Model {
         'description',
         'favorite',
         'is_shared',
-        'share_url'
+        'share_url',
+        'type_property_fk'
     ];
     // Establece la relación entre UserProperty y Property
     // belongsTo: Establece que pertenece a un registro de la tabla Properties
@@ -30,6 +31,10 @@ class UserProperty extends Model {
     // property_id: Nombre de la columna en Inmueble que hace referencia a UserProperty
     public function property() {
         return $this->belongsTo(Property::class, 'property_id_fk', 'property_id');
+    }
+
+    public function type_property() {
+        return $this->belongsTo(TypeProperties::class, 'property_id_fk', 'type_properties_id');
     }
 
     public function notes()
