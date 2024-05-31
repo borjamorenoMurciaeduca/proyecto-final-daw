@@ -224,7 +224,7 @@ const MyProperties = () => {
       <Typography component="h1" variant="h2">
         {t('page.my-properties.title')}
       </Typography>
-      <Stack direction="row" spacing={2}>
+      <Stack direction="row" spacing={2} useFlexGap flexWrap="wrap">
         {orderBy === 'date' && (
           <Chip
             size="small"

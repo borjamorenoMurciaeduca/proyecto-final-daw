@@ -103,6 +103,7 @@ const AboutUs = () => {
             spacing={2}
             justifyContent="center"
             my={2}
+            useFlexGap
             flexWrap="wrap"
           >
             <ReactSvg />
