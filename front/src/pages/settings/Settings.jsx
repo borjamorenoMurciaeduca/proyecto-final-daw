@@ -42,7 +42,7 @@ const Settings = () => {
           },
         }}
       >
-        ⚙️ Configuración y gestiones
+        ⚙️ {t('page.configuration-management.title')}
       </Typography>
       <Grid
         container
@@ -80,12 +80,14 @@ const Settings = () => {
             >
               <Tab
                 icon={<ManageAccountsIcon />}
-                label="Perfil"
+                label={t('page.configuration-management.labels.profile')}
                 {...a11yProps(0)}
               />
               <Tab
                 icon={<TableViewIcon />}
-                label="Gestionar viviendas"
+                label={t(
+                  'page.configuration-management.labels.manage-properties'
+                )}
                 wrapped
                 {...a11yProps(1)}
               />
@@ -111,11 +113,13 @@ const Settings = () => {
               }}
             >
               <BottomNavigationAction
-                label="Perfil"
+                label={t('page.configuration-management.labels.profile')}
                 icon={<ManageAccountsIcon />}
               />
               <BottomNavigationAction
-                label="Gestionar viviendas"
+                label={t(
+                  'page.configuration-management.labels.manage-properties'
+                )}
                 icon={<TableViewIcon />}
               />
             </BottomNavigation>

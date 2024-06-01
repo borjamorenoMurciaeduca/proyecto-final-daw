@@ -88,41 +88,38 @@ function FixPrice(value) {
   return resultado;
 }
 
-function FormatPrice(value, lang) {
-  const precioNumero = Number(value);
+function FormatPriceToDB(value) {
+  const newValueWithoutDot = value.replace(/\./g, '');
+  const newValueWithoutComma = newValueWithoutDot.replace(/,/g, '.');
 
-  let symbol = lang === 'en' ? 'GBP' : 'EUR';
-
-  if (symbol === 'EUR') {
-    return precioNumero.toLocaleString(lang, {
-      style: 'currency',
-      currency: symbol,
-      minimumFractionDigits: 2,
-    });
-  } else {
-    const precioLibra = precioNumero * CONVERT_EURO_LIBRA;
-    return precioLibra.toLocaleString(lang, {
-      style: 'currency',
-      currency: symbol,
-      minimumFractionDigits: 2,
-    });
-  }
+  return newValueWithoutComma;
 }
 
-function FormatPriceWithoutCurrency(value, lang) {
+function FormatPrice(value, lang, includeCurrency = true) {
   const precioNumero = Number(value);
-
-  if (lang === 'es') {
-    return precioNumero.toLocaleString(lang, {
-      minimumFractionDigits: 2,
-    });
-  } else {
-    const precioLibra = precioNumero * CONVERT_EURO_LIBRA;
-    return precioLibra.toLocaleString(lang, {
-
-      minimumFractionDigits: 2,
-    });
+  if (isNaN(precioNumero)) {
+    return '';
   }
+
+  const options = { style: "decimal", minimumFractionDigits: 2,};
+
+  if (includeCurrency) {
+    options.style = 'currency';
+    options.currency = lang === 'en' ? 'GBP' : 'EUR';
+
+    if (options.currency === 'GBP') {
+      const precioLibra = precioNumero * CONVERT_EURO_LIBRA;
+      return new Intl.NumberFormat('en-GB', options).format(
+        precioLibra, );
+    } else {
+      return new Intl.NumberFormat('de-DE', options).format(
+        precioNumero, );
+    }
+  }
+
+  return new Intl.NumberFormat('de-DE', options).format(
+    precioNumero, );
+
 }
 
 function formatDate(value, lang, showHours = true) {
@@ -164,7 +161,7 @@ function getCurrency(lang) {
 export default {
   FixPrice,
   FormatPrice,
-  FormatPriceWithoutCurrency,
+  FormatPriceToDB,
   formatDate,
   CleanId,
   DateReceived,

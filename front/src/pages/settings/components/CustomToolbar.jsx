@@ -4,6 +4,7 @@ import { Box } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { useSnackbar } from 'notistack';
+import { useTranslation } from 'react-i18next';
 
 const CustomToolbar = ({
   selectedRows,
@@ -13,20 +14,23 @@ const CustomToolbar = ({
   handleOpenDialog,
 }) => {
   const { enqueueSnackbar } = useSnackbar();
+  const { t } = useTranslation();
 
   const handleRowsDelete = async (idsToDelete) => {
     try {
       const res = await propertyService.deleteMultipleProperties(idsToDelete);
       if (res.status === 200) {
         deleteProperties(idsToDelete);
-        enqueueSnackbar('Properties deleted successfully', {
+        enqueueSnackbar(t('snackbar.delete-properties.success'), {
           variant: 'success',
         });
       } else {
         throw new Error('Failed to delete properties');
       }
     } catch (error) {
-      enqueueSnackbar('Failed to delete properties', { variant: 'error' });
+      enqueueSnackbar(t('snackbar.delete-properties.error'), {
+        variant: 'error',
+      });
       console.error('Error deleting properties:', error);
     } finally {
       setSelectedRows([]);
@@ -44,8 +48,19 @@ const CustomToolbar = ({
     const len = idsToDelete.length;
     handleOpenDialog(
       {
-        title: 'Eliminar propiedades',
-        message: `Vas a eliminar un total de ${len} ${len <= 1 ? 'propiedad' : 'propiedades'}. ¿Estás seguro?`,
+        title: t(
+          'page.configuration-management.table.dialog.delete-properties.title'
+        ),
+        message: t(
+          'page.configuration-management.table.dialog.delete-properties.message',
+          { len }
+        ),
+        confirmButtonText: t(
+          'page.configuration-management.table.dialog.delete-properties.confirm-button-text'
+        ),
+        cancelButtonText: t(
+          'page.configuration-management.table.dialog.delete-properties.cancel-button-text'
+        ),
       },
       () => handleRowsDelete(idsToDelete)
     );
@@ -53,7 +68,11 @@ const CustomToolbar = ({
 
   return (
     <Box>
-      <Tooltip title="Eliminar propiedades">
+      <Tooltip
+        title={t(
+          'page.configuration-management.table.tooltip.delete-properties'
+        )}
+      >
         <IconButton onClick={confirmDelete} aria-label="delete" size="large">
           <DeleteIcon />
         </IconButton>

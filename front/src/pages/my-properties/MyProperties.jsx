@@ -246,9 +246,10 @@ const MyProperties = () => {
             size="small"
             label={`${t(
               'filter.stack-filters.price-range'
-            )} ${parser.FormatPriceWithoutCurrency(
+            )} ${parser.FormatPrice(
               price[0] * 10000,
-              i18n.language
+              i18n.language,
+              false
             )} - ${parser.FormatPrice(price[1] * 10000, i18n.language)}`}
           />
         )}

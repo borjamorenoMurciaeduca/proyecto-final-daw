@@ -217,13 +217,87 @@
       "empty": "¡No has añadido ninguna propiedad como favorita aún!"
     },
     "home": {
-      "title": "Inicio"
+      "title": "Inicio",
+      "carousel": {
+        "button": {
+          "view-text": "Ver"
+        }
+      },
+      "welcome": {
+        "title": "👋 Bienvenido",
+        "paragraph": " Nos alegra que estés aquí. IdealistaWatch es tu nuevo aliado para encontrar y guardar las viviendas de tus sueños. Entendemos lo importante que es encontrar el lugar perfecto, ya sea tu primera casa, un nuevo hogar o una inversión. Por eso, hemos creado una plataforma intuitiva y fácil de usar que te permitirá gestionar y seguir de cerca todas tus opciones inmobiliarias."
+      }
     },
     "my-properties": {
       "title": "Mis viviendas"
     },
     "last-properties": {
       "title": "Últimas viviendas"
+    },
+    "about-us": {
+      "title": "Sobre nosotros"
+    },
+    "configuration-management": {
+      "title": "Configuración y gestiones",
+      "labels": {
+        "profile": "Perfil",
+        "manage-properties": "Gestionar viviendas"
+      },
+      "table": {
+        "my-properties": "Mis viviendas",
+        "property_id": "Id de la propiedad",
+        "location": "Ubicación",
+        "title": "Título",
+        "share_url": "URL", 
+        "is_shared": "Visibilidad",
+        "created_at": "Fecha de creación",
+        "no-match": "No hay resultados",
+        "search": "Buscar",
+        "download-csv": "Descargar CSV",
+        "print": "Imprimir",
+        "filter-table": "Filtar tabla",
+        "tooltip": {
+          "copy-url": "Copiar URL",
+          "make-private": "Hacer privada",
+          "sort": "Ordenar",
+          "sort-for": "Ordenar por",
+          "delete-properties": "Eliminar propiedades"
+        },
+        "dialog": {
+          "make-private": {
+            "title": "Hacer la vivienda privada",
+            "message": "¿Estás seguro de que quieres hacer privada esta vivienda {{propertyId}}?",
+            "confirm-button-text": "Confirmar",
+            "cancel-button-text": "Cancelar"
+          },
+          "delete-properties": {
+            "title": "Eliminar propiedades",
+            "message": "Vas a eliminar un total de {{len}} propiedad(es). ¿Estás seguro?",
+            "confirm-button-text": "Confirmar",
+            "cancel-button-text": "Cancelar"
+          }
+        },
+        "pagination": {
+          "next": "Página siguiente",
+          "previous": "Página anterior",
+          "rows-per-page": "Filas por página",
+          "display-rows": "de"
+        },
+        "filter": {
+          "all": "Todas",
+          "title": "Filtros",
+          "reset": "Resetear"
+        },
+        "view-columns": {
+          "title": "Ver columnas",
+          "titleAria": "Mostrar/Ocultar columnas de la tabla"
+        },
+        "selected-rows": {
+          "text": "fila(s) seleccionada(s)",
+          "delete": "Borrar filas seleccionadas",
+          "delete-aria": "Borrar filas seleccionadas"
+        }
+      }
     }
   },
   "price-history": {

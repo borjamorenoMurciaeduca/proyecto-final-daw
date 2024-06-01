@@ -21,6 +21,8 @@ const useConfirmationDialog = () => {
     setDialogMsg({
       title: msg.title,
       message: msg.message,
+      confirmButtonText: msg.confirmButtonText,
+      cancelButtonText: msg.cancelButtonText,
     });
     setDialogOpen(true);
     setOnConfirm(() => callback);
@@ -48,8 +50,12 @@ const useConfirmationDialog = () => {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => handleCloseDialog(false)}>Cancelar</Button>
-        <Button onClick={() => handleCloseDialog(true)}>Confirmar</Button>
+        <Button onClick={() => handleCloseDialog(false)}>
+          {dialogMsg.cancelButtonText}
+        </Button>
+        <Button onClick={() => handleCloseDialog(true)}>
+          {dialogMsg.confirmButtonText}
+        </Button>
       </DialogActions>
     </Dialog>
   );

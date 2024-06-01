@@ -42,7 +42,7 @@ const PropertyForm = ({
       property_id: property?.property_id || '',
       title: property?.title || '',
       location: property?.location || '',
-      price: formatPrice(property?.price) || '',
+      price: property?.price ? formatPrice(property.price) : '',
       size: property?.size || '',
       rooms: property?.rooms || '',
       garage: property?.garage || false,
@@ -55,28 +55,30 @@ const PropertyForm = ({
   }, [property]);
 
   const formatPrice = (value) => {
-    return parser.FormatPriceWithoutCurrency(value, i18n.language);
+    console.log('formatPrice value: ', value);
+    if (!value) return '';
+    return parser.FormatPrice(value, i18n.language, false);
+  };
+
+  const formatPriceToDB = (value) => {
+    return parser.FormatPriceToDB(value);
   };
 
   const handleInputChange = (event) => {
     const { name, value, type, checked } = event.target;
-    const newValue = type === 'checkbox' ? checked : value;
+    let newValue = type === 'checkbox' ? checked : value;
+
     if (name === 'price') {
-      const newValueWithoutDot = newValue.replace(/\./g, '|');
-      console.log('newValueWithoutDot: ', newValueWithoutDot);
-      const newValueWithoutComma = newValueWithoutDot.replace(/,/g, '.');
-      console.log('newValueWithoutComma: ', newValueWithoutComma);
-      const newValueFormated = newValueWithoutComma.replace(/\|/g, '');
-      console.log('newValueFormated: ', newValueFormated);
-      const formated = formatPrice(newValueFormated);
-      console.log('formated: ', formated);
-      setPropertiesValues({
-        ...propertiesValues,
-        [name]: formatPrice(newValueFormated),
-      });
-    } else {
-      setPropertiesValues({ ...propertiesValues, [name]: newValue });
+      console.log('newValue 1 : ', newValue);
+      newValue = newValue.replace(/[^\d.,]/g, '');
+      newValue = formatPriceToDB(newValue);
+      console.log('newValue 2 : ', newValue);
+      if (newValue) {
+        newValue = formatPrice(newValue);
+      }
     }
+
+    setPropertiesValues({ ...propertiesValues, [name]: newValue });
   };
 
   const onSubmit = async (e) => {
@@ -85,7 +87,7 @@ const PropertyForm = ({
       const inmuebleToAdd = {
         ...propertiesValues,
         property_id: Number(propertiesValues.property_id),
-        price: Number(propertiesValues.price.replace(/,/g, '')),
+        price: Number(formatPriceToDB(propertiesValues.price)),
       };
       await handleSubmit(inmuebleToAdd);
       handleCloseDialog();

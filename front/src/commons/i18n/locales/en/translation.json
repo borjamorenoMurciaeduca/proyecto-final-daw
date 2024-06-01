@@ -111,7 +111,11 @@
       "error": "An error occurred while obtaining data"
     },
     "logout": "Logout successful",
-    "login": "👋 Welcome back"
+    "login": "👋 Welcome back",
+    "delete-properties": {
+      "success": "Properties successfully deleted",
+      "error": "Failed to delete properties"
+    }
   },
   "property-info": {
     "header": "Details of property",
@@ -217,13 +221,87 @@
       "empty": "You have not added any properties as favorites yet!"
     },
     "home": {
-      "title": "Home"
+      "title": "Home",
+      "carousel": {
+        "button": {
+        "view-text": "View"
+        }
+        },
+        "welcome": {
+        "title": "👋 Welcome",
+        "paragraph": " We're glad you're here. IdealistaWatch is your new ally to find and save the homes of your dreams. We understand how important it is to find the perfect place, whether it's your first home, a new home or an investment. That's why we have created an intuitive and easy-to-use platform that will allow you to manage and closely monitor all your real estate options."
+        }
     },
     "my-properties": {
       "title": "My properties"
     },
     "last-properties": {
       "title": "Last properties"
+    },
+    "about-us": {
+      "title": "About us"
+    },
+    "configuration-management": {
+      "title": "Settings and procedures",
+      "labels": {
+        "profile": "Profile",
+        "manage-properties": "Manage properties"
+      },
+      "table": {
+        "my-properties": "My properties",
+        "property_id": "Property id",
+        "location": "Location",
+        "title": "Title",
+        "share_url": "URL",
+        "is_shared": "Visibility",
+        "created_at": "Created date",
+        "no-match": "There are no results",
+        "search": "Search",
+        "download-csv": "Download CSV",
+        "print": "Print",
+        "filter-table": "Filter table",
+        "tooltip": {
+          "copy-url": "Copy URL",
+          "make-private": "Make private",
+          "sort": "Sort",
+          "sort-for": "Sort by",
+          "delete-properties": "Delete properties"
+        },
+        "dialog": {
+          "make-private": {
+            "title": "Make housing private",
+            "message": "Are you sure you want to make this property {{propertyId}} private?",
+            "confirm-button-text": "Confirm",
+            "cancel-button-text": "Cancel"
+          },
+          "delete-properties": {
+            "title": "Delete properties",
+            "message": "You are going to delete a total of {{len}} property(s). Are you sure?",
+            "confirm-button-text": "Confirm",
+            "cancel-button-text": "Cancel"
+          }
+        },
+        "pagination": {
+          "next": "Next page",
+          "previous": "Previous page",
+          "rows-per-page": "Rows per page",
+          "display-rows": "of"
+        },
+        "filter": {
+          "all": "All",
+          "title": "Filters",
+          "reset": "Reset"
+        },
+        "view-columns": {
+          "title": "View columns",
+          "titleAria": "Show/Hide table columns"
+        },
+        "selected-rows": {
+          "text": "selected row(s)",
+          "delete": "Delete selected rows",
+          "delete-aria": "Delete selected rows"
+        }
+      }
     }
   },
   "price-history": {

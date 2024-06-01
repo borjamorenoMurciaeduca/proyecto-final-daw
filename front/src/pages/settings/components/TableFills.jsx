@@ -54,40 +54,49 @@ export const Columns = (handleOpenDialog) => {
   return [
     {
       name: 'property_id',
-      label: 'Property ID',
+      label: t('page.configuration-management.table.property_id'),
       options: {
         filter: true,
         filterOptions: {
           fullWidth: true,
         },
-        customFilterListOptions: { render: (v) => `Propiedad id: ${v}` },
+        customFilterListOptions: {
+          render: (v) =>
+            `${t('page.configuration-management.table.property_id')}: ${v}`,
+        },
       },
     },
     {
       name: 'location',
-      label: 'Localización',
+      label: t('page.configuration-management.table.location'),
       options: {
         filter: true,
         filterOptions: {
           fullWidth: true,
         },
         // filterType: 'textField',
-        customFilterListOptions: { render: (v) => `Descripción: ${v}` },
+        customFilterListOptions: {
+          render: (v) =>
+            `${t('page.configuration-management.table.location')}: ${v}`,
+        },
       },
     },
     {
       name: 'title',
-      label: 'Título',
+      label: t('page.configuration-management.table.title'),
       options: {
         filter: false,
       },
     },
     {
       name: 'share_url',
-      label: 'URL',
+      label: t('page.configuration-management.table.share_url'),
       options: {
         filter: true,
-        customFilterListOptions: { render: (v) => `Url: ${v}` },
+        customFilterListOptions: {
+          render: (v) =>
+            `${t('page.configuration-management.table.share_url')}: ${v}`,
+        },
         filterOptions: {
           renderValue: (v) =>
             v ? v.replace(/^(\w).* (.*)$/, '$1. $2') : 'vacío',
@@ -96,7 +105,9 @@ export const Columns = (handleOpenDialog) => {
           return value == '❌' ? (
             value
           ) : (
-            <Tooltip title="Copiar URL">
+            <Tooltip
+              title={t('page.configuration-management.table.tooltip.copy-url')}
+            >
               <Button
                 onClick={(e) => handleCopyToClipboard(e, value)}
                 size="small"
@@ -112,7 +123,7 @@ export const Columns = (handleOpenDialog) => {
     },
     {
       name: 'is_shared',
-      label: 'Visibilidad',
+      label: t('page.configuration-management.table.is_shared'),
       options: {
         filter: false,
         sort: false,
@@ -127,15 +138,30 @@ export const Columns = (handleOpenDialog) => {
               onClick={() =>
                 handleOpenDialog(
                   {
-                    title: 'Make private property',
-                    message: `Are you sure you want to make private this property ${propertyId}?`,
+                    title: t(
+                      'page.configuration-management.table.dialog.make-private.title'
+                    ),
+                    message: t(
+                      'page.configuration-management.table.dialog.make-private.message',
+                      { propertyId }
+                    ),
+                    confirmButtonText: t(
+                      'page.configuration-management.table.dialog.make-private.confirm-button-text'
+                    ),
+                    cancelButtonText: t(
+                      'page.configuration-management.table.dialog.make-private.cancel-button-text'
+                    ),
                   },
 
                   () => handlePrivateProperty(propertyId)
                 )
               }
             >
-              <Tooltip title="Hacer privada">
+              <Tooltip
+                title={t(
+                  'page.configuration-management.table.tooltip.make-private'
+                )}
+              >
                 <PublicOffIcon />
               </Tooltip>
             </IconButton>
@@ -145,7 +171,7 @@ export const Columns = (handleOpenDialog) => {
     },
     {
       name: 'created_at',
-      label: 'Fecha de creación',
+      label: t('page.configuration-management.table.created_at'),
       options: { filter: true, sort: true, options: { sortDirection: 'desc' } },
     },
   ];
@@ -162,22 +188,4 @@ export const createRows = (data) => {
       is_shared,
     })
   );
-
-  // Agregar columna de botones solo si action_share tiene un valor
-  // otra forma de añadir, tenemos que
-  //   if (is_shared) {
-  //     row.is_shared = (
-  //       <Button
-  //         variant="contained"
-  //         color="primary"
-  //         onClick={() => console.log('Make private')}
-  //       >
-  //         Make private2
-  //       </Button>
-  //     );
-  //   }
-  //
-  //   return row;
-  // }
-  // return rows;
 };

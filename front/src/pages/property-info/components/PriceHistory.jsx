@@ -53,7 +53,7 @@ const PriceHistory = ({ propertyId }) => {
             label: parser.getCurrency(i18n.language),
             scaleType: 'linear',
             valueFormatter: (value) =>
-              parser.FormatPriceWithoutCurrency(value, i18n.language),
+              parser.FormatPrice(value, i18n.language, false),
           },
         ]}
         series={[

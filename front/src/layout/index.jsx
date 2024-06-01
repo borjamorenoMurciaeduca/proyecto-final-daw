@@ -186,7 +186,9 @@ const Layout = (props) => {
                     </Typography>
                   </MenuItem>
                   <MenuItem onClick={handleClickAboutUs}>
-                    <Typography textAlign="center">About Us</Typography>
+                    <Typography textAlign="center">
+                      {t('page.about-us.title')}
+                    </Typography>
                   </MenuItem>
                 </Menu>
               </Box>
@@ -235,7 +237,7 @@ const Layout = (props) => {
                     },
                   }}
                 >
-                  About Us
+                  {t('page.about-us.title')}
                 </Button>
               </Box>
               <Box sx={{ flexGrow: 0 }}>

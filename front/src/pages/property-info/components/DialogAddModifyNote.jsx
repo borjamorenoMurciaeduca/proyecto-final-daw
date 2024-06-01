@@ -133,6 +133,7 @@ const DialogAddModifyNote = ({
             <TextField
               multiline
               fullWidth
+              rows={4}
               value={note.description}
               onChange={(event) =>
                 setNote({
