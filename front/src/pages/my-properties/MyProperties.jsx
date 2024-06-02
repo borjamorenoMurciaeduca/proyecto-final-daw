@@ -88,6 +88,7 @@ const MyProperties = () => {
   };
 
   const handleLocationChange = (event) => {
+    setUser((prevState) => ({ ...prevState, currentPage: 1 }));
     setLocation(event.target.value);
     if (event.target.value === '') {
       enqueueSnackbar(t('filter.snackbar.location-empty'), {

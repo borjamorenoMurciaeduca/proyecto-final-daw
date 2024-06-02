@@ -10,6 +10,7 @@ export const PropertyTypeProvider = ({ children }) => {
     const fetchTypeProperties = async () => {
       try {
         const response = await typePropertiesService.getAllTypeProperties();
+        //console.log(response.data);
         setTypeProperties(response.data);
       } catch (error) {
         console.error('Error fetching type properties:', error);
@@ -17,7 +18,7 @@ export const PropertyTypeProvider = ({ children }) => {
     };
 
     fetchTypeProperties();
-  }, []);
+  }, [typeProperties]);
 
   return (
     <PropertyTypeContext.Provider value={{ typeProperties, setTypeProperties }}>

@@ -120,6 +120,7 @@ const PropertyDrawer = ({
                 <Select
                   label={t('filter.label.location')}
                   labelId="location-select-label"
+                  variant="standard"
                   id="location-select"
                   value={location}
                   onChange={setLocation}

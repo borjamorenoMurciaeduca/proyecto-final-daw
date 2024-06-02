@@ -100,7 +100,7 @@ const Login = () => {
       });
     } catch (error) {
       console.warn(error);
-      setError('Error en las credenciales');
+      setError(t('snackbar.login-error'));
       setTimeout(() => {
         setError(null);
       }, 5000);
@@ -153,7 +153,7 @@ const Login = () => {
         navigate('/app', { replace: true });
       } catch (error) {
         console.warn(error);
-        setError('Error en las credenciales');
+        setError(t('snackbar.login-error'));
         setTimeout(() => {
           setError(null);
         }, 5000);

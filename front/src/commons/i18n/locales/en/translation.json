@@ -113,6 +113,7 @@
     },
     "logout": "Logout successful",
     "login": "👋 Welcome back",
+    "login-error": "Credentials error",
     "delete-properties": {
       "success": "Properties successfully deleted",
       "error": "Failed to delete properties"

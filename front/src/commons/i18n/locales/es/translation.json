@@ -113,6 +113,7 @@
     },
     "logout": "¡Sesión cerrada con éxito!",
     "login": "👋 Bienvenido de nuevo",
+    "login-error": "Error en las credenciales",
     "delete-properties": {
       "success": "Propiedades eliminadas exitosamente",
       "error": "No se pudieron eliminar propiedades"
