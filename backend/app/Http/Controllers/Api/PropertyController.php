@@ -499,7 +499,7 @@ class PropertyController extends Controller {
             $inmuebles = $userProperty->map(function ($userProperty) {
                 $property = $userProperty->property;
                 $notas = $userProperty->notes;
-                //$typeProperty = TypeProperties::findOrFail($userProperty['type_property_fk']);
+                $typeProperty = TypeProperties::findOrFail($userProperty['type_property_fk']);
                 return [
                     'user_id' => $userProperty->user_id_fk,
                     "property_id" => $userProperty->property_id_fk,
@@ -516,7 +516,7 @@ class PropertyController extends Controller {
                     'is_shared' => $userProperty->is_shared,
                     'share_url' => $userProperty->share_url,
                     'favorite' => $userProperty->favorite,
-                    //'type_property' => $typeProperty->description,
+                    'type_property' => $typeProperty->description,
                     'cancellation_date' => $property->cancellation_date,
                     'notes' => $notas,
                     'created_at' => $userProperty->created_at,

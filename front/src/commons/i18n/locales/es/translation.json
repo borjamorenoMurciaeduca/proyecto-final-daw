@@ -11,7 +11,8 @@
     "search": "Buscar",
     "clear": "Limpiar búsqueda",
     "twitter": "Compartir en Twitter",
-    "no-twitter": "Primero tienes que compartir la vivienda"
+    "no-twitter": "Primero tienes que compartir la vivienda",
+    "day-night-switch": "Cambiar tema"
   },
   "theme-mode": {
     "light": "Modo día",
@@ -111,7 +112,11 @@
       "error": "Se ha producido un error al obtener los datos"
     },
     "logout": "¡Sesión cerrada con éxito!",
-    "login": "👋 Bienvenido de nuevo"
+    "login": "👋 Bienvenido de nuevo",
+    "delete-properties": {
+      "success": "Propiedades eliminadas exitosamente",
+      "error": "No se pudieron eliminar propiedades"
+    }
   },
   "property-info": {
     "header": "Detalles de la vivienda",

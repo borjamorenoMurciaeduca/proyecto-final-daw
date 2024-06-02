@@ -96,8 +96,13 @@ const PropertyCard = ({ property }) => {
             </Typography>
           </Box>
           <Typography variant="body2" color="text.secondary" gutterBottom>
-            {t(`property-info.details.${type_property}`)}{' '}
-            {t('property-info.details.in')} {location}
+            {type_property && (
+              <>
+                {t(`property-info.details.${type_property}`)}{' '}
+                {t('property-info.details.in')} {location}
+              </>
+            )}
+            {!type_property && location}
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Typography gutterBottom variant="span" component="span">

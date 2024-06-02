@@ -11,7 +11,8 @@
     "search": "Search",
     "clear": "Clear search",
     "twitter": "Share on Twitter",
-    "no-twitter": "First you need to share the property"
+    "no-twitter": "First you need to share the property",
+    "day-night-switch": "Change theme"
   },
   "theme-mode": {
     "light": "Day mode",
