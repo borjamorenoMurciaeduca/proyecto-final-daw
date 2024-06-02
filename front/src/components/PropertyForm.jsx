@@ -55,7 +55,6 @@ const PropertyForm = ({
   }, [property]);
 
   const formatPrice = (value) => {
-    console.log('formatPrice value: ', value);
     if (!value) return '';
     return parser.FormatPrice(value, i18n.language, false);
   };
@@ -202,7 +201,12 @@ const PropertyForm = ({
         />
       </Grid>
       <Grid item xs={6} md={4}>
-        {/* <PropertyTypeSelect propertyValue={propertiesValues} /> */}
+        <PropertyTypeSelect
+          id="type_property"
+          name="type_property"
+          propertyValue={propertiesValues.type_property}
+          onChange={handleInputChange}
+        />
       </Grid>
       <Grid item xs={6} md={4}>
         <Grid

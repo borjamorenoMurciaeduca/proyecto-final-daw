@@ -110,8 +110,8 @@ class PropertyController extends Controller {
     
     private function determinePropertyType(array $data) {
         $keywords = [
-            'vivienda' => ['casa', 'apartamento', 'piso'],
-            'garaje' => ['garaje', 'parking']
+            'property' => ['casa', 'apartamento', 'piso'],
+            'garage' => ['garaje', 'parking']
         ];
     
         $text = strtolower(json_encode($data));
@@ -122,7 +122,7 @@ class PropertyController extends Controller {
                 }
             }
         }
-        return 'otros';
+        return 'others';
     }
     
 

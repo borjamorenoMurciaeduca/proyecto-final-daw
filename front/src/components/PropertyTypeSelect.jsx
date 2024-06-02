@@ -1,35 +1,56 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { TextField, MenuItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import typePropertiesService from '@/services/typePropertiesService';
+import { PropertyTypeContext } from '@/contexts/PropertyTypeContext';
 
-const PropertyTypeSelect = ({ propertyValue }) => {
-  const [typeProperties, setTypeProperties] = useState([]);
+const PropertyTypeSelect = ({ propertyValue, onChange }) => {
   const { t } = useTranslation();
+  const { typeProperties } = useContext(PropertyTypeContext);
+
+  const findTypePropertyId = (description) => {
+    const typeProperty = typeProperties.find(
+      (prop) => prop.description === description
+    );
+    return typeProperty ? typeProperty.type_properties_id : '';
+  };
+
+  const [selectedTypeProperty, setSelectedTypeProperty] = useState(
+    findTypePropertyId(propertyValue)
+  );
 
   useEffect(() => {
-    const fetchTypeProperties = async () => {
-      try {
-        const response = await typePropertiesService.getAllTypeProperties();
-        setTypeProperties(response.data);
-      } catch (error) {
-        console.error('Error fetching type properties:', error);
+    if (propertyValue !== undefined) {
+      const typePropertyId = findTypePropertyId(propertyValue);
+      if (typePropertyId !== selectedTypeProperty) {
+        setSelectedTypeProperty(typePropertyId);
       }
-    };
+    }
+  }, [propertyValue, typeProperties]);
 
-    fetchTypeProperties();
-  }, []);
+  const handleChange = (event) => {
+    const newValue = event.target.value;
+    setSelectedTypeProperty(newValue);
+    onChange({
+      target: {
+        name: 'type_property',
+        value: typeProperties[newValue].description,
+      },
+    });
+  };
 
   return (
     <TextField
-      id="outlined-select-type_property"
       select
       fullWidth
       label={t('add-property-form.type_property')}
-      defaultValue={propertyValue.type_property}
+      value={selectedTypeProperty}
+      onChange={handleChange}
     >
       {typeProperties.map((option) => (
-        <MenuItem key={option.id} value={option.id}>
+        <MenuItem
+          key={option.type_properties_id}
+          value={option.type_properties_id}
+        >
           {t(`select-type-property.${option.description}`)}
         </MenuItem>
       ))}
