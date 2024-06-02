@@ -143,7 +143,13 @@
       "share": "Compartir",
       "property": "Vivienda",
       "others": "Otros",
-      "in": "in"
+      "in": "in",
+      "button": {
+        "update-price": "Actualizar precio"
+      },
+      "tooltip": {
+        "update-price": "Actualizar precio"
+      }
     },
     "notes": {
       "notify": {

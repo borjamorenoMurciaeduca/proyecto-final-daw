@@ -143,7 +143,13 @@
       "share": "Share",
       "property": "Property",
       "others": "Others",
-      "in": "in"
+      "in": "in",
+      "button": {
+        "update-price": "Update price"
+      },
+      "tooltip": {
+        "update-price": "Update price"
+      }
     },
     "notes": {
       "notify": {

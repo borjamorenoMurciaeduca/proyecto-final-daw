@@ -68,10 +68,8 @@ const PropertyForm = ({
     let newValue = type === 'checkbox' ? checked : value;
 
     if (name === 'price') {
-      console.log('newValue 1 : ', newValue);
       newValue = newValue.replace(/[^\d.,]/g, '');
       newValue = formatPriceToDB(newValue);
-      console.log('newValue 2 : ', newValue);
       if (newValue) {
         newValue = formatPrice(newValue);
       }

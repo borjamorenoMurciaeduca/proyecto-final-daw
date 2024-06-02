@@ -118,14 +118,14 @@ const PropertyCard = ({ property }) => {
         disableSpacing
         sx={{ justifyContent: 'space-between', p: 0 }}
       >
-        <Tooltip title={'actualizar precio'}>
+        <Tooltip title={t('property-info.details.tooltip.update-price')}>
           <Button
             size="small"
             variant="outlined"
             onClick={() => console.log('precio actualizado')}
             sx={{ ml: 1 }}
           >
-            Update
+            {t('property-info.details.button.update-price')}
           </Button>
         </Tooltip>
         <Tooltip title={t('favorite.aria-label.add')}>
