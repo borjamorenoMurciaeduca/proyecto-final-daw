@@ -131,7 +131,9 @@ const PropertyDetailsGlobal = ({
               />
               <Chip
                 color="default"
-                label={`${t('property-info.details.size')} ${property.size}m²`}
+                label={`${t(
+                  'property-info.details.size'
+                )} ${parser.FormatNumber(property.size, i18n.language)} m²`}
                 size="small"
               />
               <Chip

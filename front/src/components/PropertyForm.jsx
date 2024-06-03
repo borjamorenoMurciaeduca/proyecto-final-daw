@@ -14,6 +14,9 @@ import PropertyTypeSelect from './PropertyTypeSelect';
 import parser from '@/utils/parser';
 import i18n from '@/commons/i18n/i18n';
 import PriceTextField from './PriceTextField';
+import Chip from '@mui/material/Chip';
+import { useTheme } from '@mui/material/styles';
+import NumericTextField from './NumericTextField';
 
 const PropertyForm = ({
   property = {},
@@ -36,8 +39,13 @@ const PropertyForm = ({
     type_property: '',
   });
   const [rawPrice, setRawPrice] = useState('');
+  const [rawSize, setRawSize] = useState('');
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
+  const [errors, setErrors] = useState({});
+  const [disabledSubmit, setDisabledSubmit] = useState(false);
+
+  const theme = useTheme();
 
   useEffect(() => {
     setPropertiesValues({
@@ -56,16 +64,26 @@ const PropertyForm = ({
     });
     if (i18n.language === 'en') {
       const priceConverted = formatPrice(property.price);
+      const sizeConverted = formatNumber(property.size);
       setRawPrice(
-        property?.price ? formatPriceToDB(priceConverted).toString() : ''
+        property?.price ? formatNumberToDB(priceConverted).toString() : ''
+      );
+      setRawSize(
+        property?.size ? formatNumberToDB(sizeConverted).toString() : ''
       );
     } else {
       setRawPrice(property?.price ? property.price.toString() : '');
+      setRawSize(property?.size ? property.size.toString() : '');
     }
   }, [property]);
 
-  const formatPriceToDB = (value) => {
-    return parser.FormatPriceToDB(value, i18n.language);
+  useEffect(() => {
+    const hasErrors = Object.values(errors).some((error) => error !== '');
+    setDisabledSubmit(hasErrors);
+  }, [errors]);
+
+  const formatNumberToDB = (value) => {
+    return parser.FormatNumberToDB(value, i18n.language);
   };
 
   const formatPriceLang = (value) => {
@@ -76,18 +94,56 @@ const PropertyForm = ({
     return parser.FormatPrice(value, i18n.language, false);
   };
 
+  const formatNumber = (value) => {
+    return parser.FormatNumber(value, i18n.language);
+  };
+
   const handleInputChange = (event) => {
     const { name, value, type, checked } = event.target;
     let newValue = type === 'checkbox' ? checked : value;
 
+    let error = '';
+    if (type === 'number') {
+      if (newValue === '') {
+        error = t('validation.required-numeric');
+      }
+      if (newValue < 0) {
+        error = t('validation.no-negative');
+      }
+      if (['rooms', 'bath_rooms'].includes(name) && value % 1 !== 0) {
+        error = t('validation.integer-only');
+      }
+    } else if (type === 'text' && newValue.trim() === '') {
+      error = t('validation.required');
+    }
+
+    setErrors({ ...errors, [name]: error });
+
     if (name === 'price') {
       setRawPrice(newValue);
+    }
+    if (name === 'size') {
+      setRawSize(newValue);
     }
     setPropertiesValues({ ...propertiesValues, [name]: newValue });
   };
 
+  const handleFieldError = (name, error) => {
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
+    const formErrors = {};
+    Object.keys(propertiesValues).forEach((key) => {
+      if (propertiesValues[key] === '' || propertiesValues[key] < 0) {
+        formErrors[key] = t('validation.required');
+      }
+    });
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors);
+      return;
+    }
     try {
       const inmuebleToAdd = {
         ...propertiesValues,
@@ -117,7 +173,7 @@ const PropertyForm = ({
     >
       <Grid item xs={12} md={4}>
         <TextField
-          helperText=""
+          error={!!errors.property_id}
           id="property_id"
           name="property_id"
           label={t('add-property-form.reference')}
@@ -130,7 +186,7 @@ const PropertyForm = ({
       </Grid>
       <Grid item xs={12} md={8}>
         <TextField
-          helperText=""
+          error={!!errors.title}
           id="title"
           name="title"
           label={t('add-property-form.title')}
@@ -142,7 +198,7 @@ const PropertyForm = ({
       </Grid>
       <Grid item xs={12} md={4}>
         <TextField
-          helperText=""
+          error={!!errors.location}
           id="location"
           name="location"
           label={t('add-property-form.location')}
@@ -154,15 +210,31 @@ const PropertyForm = ({
       </Grid>
       <Grid item xs={6} md={4}>
         <PriceTextField
+          error={!!errors.price}
           id="price"
           name="price"
+          type="number"
+          nameField="price"
+          labelField={t('add-property-form.price')}
           initialPrice={rawPrice}
           onChange={handleInputChange}
+          handleError={handleFieldError}
         />
       </Grid>
       <Grid item xs={6} md={4}>
-        <TextField
-          helperText=""
+        <NumericTextField
+          error={!!errors.size}
+          id="size"
+          name="size"
+          type="number"
+          nameField="size"
+          labelField={t('add-property-form.size')}
+          initialNumber={rawSize}
+          onChange={handleInputChange}
+          handleError={handleFieldError}
+        />
+        {/* <TextField
+          error={!!errors.size}
           id="size"
           name="size"
           label={t('add-property-form.size')}
@@ -174,11 +246,11 @@ const PropertyForm = ({
             inputProps: { min: 0 },
           }}
           onChange={handleInputChange}
-        />
+        /> */}
       </Grid>
       <Grid item xs={3} md={2}>
         <TextField
-          helperText=""
+          error={!!errors.rooms}
           id="rooms"
           name="rooms"
           label={t('add-property-form.rooms')}
@@ -193,7 +265,7 @@ const PropertyForm = ({
       </Grid>
       <Grid item xs={3} md={2}>
         <TextField
-          helperText=""
+          error={!!errors.bath_rooms}
           id="bath_rooms"
           name="bath_rooms"
           label={t('add-property-form.bath_rooms')}
@@ -245,14 +317,39 @@ const PropertyForm = ({
       </Grid>
       <Grid item xs={12}>
         <UnstyledTextareaIntroduction
+          error={!!errors.description}
           desc={t('add-property-form.description')}
           name="description"
           defaultValue={propertiesValues.description}
           onChange={handleInputChange}
         />
       </Grid>
+      <Grid item xs={12}>
+        {Object.keys(errors).map(
+          (key) =>
+            errors[key] != '' && (
+              <Chip
+                key={key}
+                size="small"
+                label={`${t('validation.the-field')} "${t(
+                  `add-property-form.${key}`
+                ).toLowerCase()}" ${errors[key]}`}
+                sx={{
+                  backgroundColor: theme.palette.error.main,
+                  color: theme.palette.error.contrastText,
+                  margin: '4px',
+                }}
+              />
+            )
+        )}
+      </Grid>
       <Grid item xs={12} md={8}>
-        <Button type="submit" variant="contained" fullWidth>
+        <Button
+          type="submit"
+          variant="contained"
+          fullWidth
+          disabled={disabledSubmit}
+        >
           {edit
             ? t('property-info.edit.button-edit')
             : t('add-property-form.add-property')}

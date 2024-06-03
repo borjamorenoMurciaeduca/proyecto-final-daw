@@ -88,7 +88,7 @@ function FixPrice(value) {
   return resultado;
 }
 
-function FormatPriceToDB(value, lang) {
+function FormatNumberToDB(value, lang) {
   let result = 0;
   if (lang === 'en') {
     result = value.replace(/,/g, '');
@@ -108,6 +108,23 @@ function FormatPriceLang(value, lang) {
   return result;
 
 }
+
+function FormatNumber(value, lang) {
+  if (lang === 'en') {
+    return parseFloat(value).toLocaleString('en-GB', {
+      style: 'decimal',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  } else if (lang === 'es') {
+    return parseFloat(value).toLocaleString('de-DE', {
+      style: 'decimal',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  }
+  return value;
+};
 
 
 function FormatPrice(value, lang, includeCurrency = true) {
@@ -180,8 +197,9 @@ function getCurrency(lang) {
 
 export default {
   FixPrice,
+  FormatNumber,
   FormatPrice,
-  FormatPriceToDB,
+  FormatNumberToDB,
   FormatPriceLang,
   formatDate,
   CleanId,

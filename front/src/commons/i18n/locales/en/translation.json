@@ -119,6 +119,14 @@
       "error": "Failed to delete properties"
     }
   },
+  "validation": {
+    "the-field": "The field",
+    "required": "it is required",
+    "required-numeric": "is required and supports numeric values",
+    "no-negative": "does not support negative numbers",
+    "is-nan": "has no supported value",
+    "integer-only": "does not support decimals"
+  },
   "property-info": {
     "header": "Details of property",
     "edit": {
