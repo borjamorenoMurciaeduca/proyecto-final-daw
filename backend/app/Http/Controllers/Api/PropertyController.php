@@ -224,7 +224,7 @@ class PropertyController extends Controller {
                 'storage_room' => 'required',
                 'bath_rooms' => 'integer|required',
                 'description' => 'string|required',
-                //'type_property' => 'string|required'
+                'type_property' => 'string|required'
             ]);
             // Convertir 'true' de string a boolean si es necesario
             $garage = filter_var($request->input('garage'), FILTER_VALIDATE_BOOLEAN);
@@ -244,7 +244,7 @@ class PropertyController extends Controller {
                 'price' => $validateHistory['price'],
             ]);
 
-            //$typeProperty = TypeProperties::where('description', $validateUserProperty['type_property'])->first();
+            $typeProperty = TypeProperties::where('description', $validateUserProperty['type_property'])->first();
 
             $userProperty = UserProperty::create([
                 'user_id_fk' => Auth::id(),
@@ -258,7 +258,7 @@ class PropertyController extends Controller {
                 'bath_rooms' => $validateUserProperty['bath_rooms'],
                 'description' => $validateUserProperty['description'],
                 'url_image' => $validateProperty['url_image'],
-                //'type_property' => $typeProperty->type_properties_id
+                'type_property' => $typeProperty->type_properties_id
             ]);
 
             DB::commit();
@@ -280,7 +280,7 @@ class PropertyController extends Controller {
                 'share_url' => $userProperty->share_url,
                 'favorite' => $userProperty->favorite,
                 'url_image' => $validateProperty['url_image'] ?? null,
-                //'type_property' => $validateUserProperty['type_property'] ?? null,
+                'type_property' => $validateUserProperty['type_property'] ?? null,
                 'cancellation_date' => $validateProperty['cancellation_date'] ?? null,
                 'notes' => '',
                 'created_at' => $userProperty->created_at,
@@ -314,7 +314,7 @@ class PropertyController extends Controller {
                 'storage_room' => 'required',
                 'bath_rooms' => 'integer|required',
                 'description' => 'string|required',
-                //'type_property' => 'string|required'
+                'type_property' => 'string|required'
             ]);
 
             $garage = filter_var($request->input('garage'), FILTER_VALIDATE_BOOLEAN);
@@ -333,7 +333,7 @@ class PropertyController extends Controller {
                 'price' => $validateHistory['price'],
             ]);
 
-            //$typeProperty = TypeProperties::where('description', $validateUserProperty['type_property'])->first();
+            $typeProperty = TypeProperties::where('description', $validateUserProperty['type_property'])->first();
 
             UserProperty::where('property_id_fk', $validateProperty['property_id'])->update([
                 'title' => $validateUserProperty['title'],
@@ -344,7 +344,7 @@ class PropertyController extends Controller {
                 'storage_room' => $storage_room,
                 'bath_rooms' => $validateUserProperty['bath_rooms'],
                 'description' => $validateUserProperty['description'],
-                //'type_property' => $typeProperty->type_properties_id
+                'type_property_fk' => $typeProperty->type_properties_id
             ]);
 
             $userProperty = UserProperty::where('property_id_fk', $validateProperty['property_id'])->first();
@@ -369,7 +369,7 @@ class PropertyController extends Controller {
                 'share_url' => $userProperty->share_url,
                 'favorite' => $userProperty->favorite,
                 'url_image' => $validateProperty['url_image'] ?? null,
-                //'type_property' => $validateUserProperty['type_property'],
+                'type_property' => $validateUserProperty['type_property'],
                 'cancellation_date' => $validateProperty['cancellation_date'] ?? null,
                 'notes' => $notas ?? '',
                 'created_at' => $userProperty->created_at,
@@ -499,7 +499,7 @@ class PropertyController extends Controller {
             $inmuebles = $userProperty->map(function ($userProperty) {
                 $property = $userProperty->property;
                 $notas = $userProperty->notes;
-                $typeProperty = TypeProperties::findOrFail($userProperty['type_property_fk']);
+                $typeProperty = TypeProperties::find($userProperty['type_property_fk']);
                 return [
                     'user_id' => $userProperty->user_id_fk,
                     "property_id" => $userProperty->property_id_fk,
@@ -533,7 +533,7 @@ class PropertyController extends Controller {
         try {
             $property = Property::findOrFail($id);
             $userProperty = UserProperty::where('property_id_fk', $id)->first();
-            //$typeProperty = TypeProperties::findOrFail($userProperty['type_property_fk']);
+            $typeProperty = TypeProperties::find($userProperty['type_property_fk']);
 
             $data = [
                 'user_id' => $userProperty->user_id_fk,
@@ -551,7 +551,7 @@ class PropertyController extends Controller {
                 'is_shared' => $userProperty->is_shared,
                 'share_url' => $userProperty->share_url,
                 'favorite' => $userProperty->favorite,
-                //'type_property' => $typeProperty->description,
+                'type_property' => $typeProperty->description,
                 'cancellation_date' => $property->cancellation_date,
                 'created_at' => $userProperty->created_at,
                 'updated_at' => $userProperty->updated_at,
@@ -714,7 +714,7 @@ class PropertyController extends Controller {
                 'description' => $userProperty->description,
                 'price' => $property->last_price,
                 'url_image' => $property->url_image,
-                //'type_property' => $typeProperty->description,
+                'type_property' => $typeProperty->description,
                 'cancellation_date' => $property->cancellation_date,
                 'created_at' => $userProperty->created_at,
                 'updated_at' => $userProperty->updated_at,
