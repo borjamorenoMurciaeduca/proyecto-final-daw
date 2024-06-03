@@ -164,7 +164,7 @@ function formatDate(value, lang, showHours = true) {
   const withHoursOptions = {
     year: 'numeric',
     month: '2-digit',
-    day: 'numeric',
+    day: '2-digit',
     hour: 'numeric',
     minute: 'numeric',
     second: 'numeric',
@@ -174,7 +174,7 @@ function formatDate(value, lang, showHours = true) {
   const optionsWithoutHours = {
     year: 'numeric',
     month: '2-digit',
-    day: 'numeric',
+    day: '2-digit',
     hour12: false,
   };
 
