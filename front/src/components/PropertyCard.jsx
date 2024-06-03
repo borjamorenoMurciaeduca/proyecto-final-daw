@@ -34,7 +34,7 @@ const PropertyCard = ({ property }) => {
   } = property;
 
   const navigate = useNavigate();
-  const { changeFavoriteProperty } = useProperties();
+  const { changeFavoriteProperty, updatePriceProperty } = useProperties();
   const { enqueueSnackbar } = useSnackbar();
   const { t } = i18n;
 
@@ -43,14 +43,40 @@ const PropertyCard = ({ property }) => {
   };
 
   const handleFavorite = debounce(async (id) => {
-    const { data } = await propertyService.changeFavoriteProperty(id);
-    changeFavoriteProperty(data);
-    enqueueSnackbar(
-      data.favorite
-        ? `${t('favorite.added')} ${id}`
-        : `${t('favorite.removed')} ${id}`,
-      { variant: data.favorite ? 'success' : 'warning' }
-    );
+    try {
+      const { data } = await propertyService.changeFavoriteProperty(id);
+      changeFavoriteProperty(data);
+      enqueueSnackbar(
+        data.favorite
+          ? `${t('favorite.added')} ${id}`
+          : `${t('favorite.removed')} ${id}`,
+        { variant: data.favorite ? 'success' : 'warning' }
+      );
+    } catch (e) {
+      console.warn(e);
+      enqueueSnackbar(`${t('favorite.error')} ${id}`, { variant: 'error' });
+    }
+  }, 250);
+
+  const handleUpdatePrice = debounce(async (property_id) => {
+    try {
+      const { data } = await propertyService.updatePriceProperty(property_id);
+      updatePriceProperty(data);
+      enqueueSnackbar(
+        `${t('property-info.details.price-updated.success')} | ${property_id}`,
+        {
+          variant: 'success',
+        }
+      );
+    } catch (e) {
+      console.warn(e);
+      enqueueSnackbar(
+        `${t('property-info.details.price-updated.error')} | ${property_id}`,
+        {
+          variant: 'error',
+        }
+      );
+    }
   }, 250);
 
   return (
@@ -122,7 +148,7 @@ const PropertyCard = ({ property }) => {
           <Button
             size="small"
             variant="outlined"
-            onClick={() => console.log('precio actualizado')}
+            onClick={() => handleUpdatePrice(property_id)}
             sx={{ ml: 1 }}
           >
             {t('property-info.details.button.update-price')}

@@ -82,6 +82,13 @@ export const PropertiesProvider = ({ children }) => {
     });
   };
 
+  const updatePriceProperty = (property_id) => {
+    dispatch({
+      type: 'UPDATE_PRICE_PROPERTY',
+      payload: property_id,
+    });
+  };
+
   return (
     <PropertiesContext.Provider
       value={{
@@ -96,6 +103,7 @@ export const PropertiesProvider = ({ children }) => {
         changeFavoriteProperty,
         deleteProperties,
         revokeShareProperty,
+        updatePriceProperty,
       }}
     >
       {children}

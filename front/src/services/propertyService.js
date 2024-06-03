@@ -75,6 +75,13 @@ const revokeShareProperty = async (propertyId) => {
   return data;
 };
 
+const updatePriceProperty = async (propertyId) => {
+  const { data } = await axiosInterceptor.post(
+    `${baseURL}property/${propertyId}/update-price`
+  );
+  return data;
+};
+
 export default {
   addProperty,
   prepareInmuebleForm,
@@ -86,4 +93,5 @@ export default {
   deleteMultipleProperties,
   revokeShareProperty,
   updateProperty,
+  updatePriceProperty,
 };

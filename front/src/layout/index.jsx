@@ -16,7 +16,6 @@ import {
   Tooltip,
   Typography,
   useScrollTrigger,
-  useTheme,
 } from '@mui/material';
 
 import logoIdealista from '@/assets/logo/logo-idealistawatch.png';
@@ -26,11 +25,11 @@ import LanguageFlagSelector from '@/components/LanguageFlagSelector.jsx';
 import useUser from '@/hooks/useUser.js';
 import cookie from '@/utils/cookie.js';
 import { Logout, Settings } from '@mui/icons-material';
+import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Outlet, NavLink as RouterLink, useNavigate } from 'react-router-dom';
 import MaterialDayNight from './components/MaterialDayNight';
-import { useSnackbar } from 'notistack';
 
 function HideOnScroll(props) {
   const { children } = props;
@@ -50,7 +49,6 @@ const Layout = (props) => {
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  const theme = useTheme();
 
   const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
   const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);

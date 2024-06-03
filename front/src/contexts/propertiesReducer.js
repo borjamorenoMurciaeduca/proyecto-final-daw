@@ -123,6 +123,15 @@ export const propertiesReducer = (state, action) => {
             : el
         ),
       };
+    case 'UPDATE_PRICE_PROPERTY':
+      return {
+        ...state,
+        properties: state.properties.map((el) =>
+          el.property_id == action.payload.property_id
+            ? { ...el, ...action.payload }
+            : el
+        ),
+      };
     default:
       return state;
   }
