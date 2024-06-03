@@ -195,7 +195,8 @@
         "publicNote": "Si compartes esta propiedad, esta nota será visible",
         "privateNote": "Sólo tú puedes ver esta información"
       },
-      "by": "Por"
+      "by": "Por",
+      "empty": "No hay notas"
     }
   },
   "property-share": {

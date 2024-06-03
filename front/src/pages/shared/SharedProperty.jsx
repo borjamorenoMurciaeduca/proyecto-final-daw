@@ -33,7 +33,6 @@ const SharedProperty = () => {
       try {
         const { data } = await propertyService.getShareProperty(shared_url);
         setProperty(data);
-        console.log(data);
       } catch (error) {
         console.warn(error);
       } finally {
@@ -70,11 +69,10 @@ const SharedProperty = () => {
         {view == 0 && <PropertyDetailsGlobal property={property} />}
         {view === 1 && (
           <>
+            {property.notes?.length <= 0 && t('property-info.notes.empty')}
             {property.notes?.map((note) => (
               <Grid item xs={8} key={note.id}>
-                <Card
-                // sx={{ mb: index < property.notes.length - 1 ? 2 : 0, mt: 3 }}
-                >
+                <Card>
                   <CardContent>
                     <Typography
                       sx={{ mb: 3, textAlign: 'justify' }}
