@@ -150,6 +150,10 @@
       },
       "tooltip": {
         "update-price": "Actualizar precio"
+      },
+      "price-updated": {
+        "success": "Precio actualizado con éxito",
+        "error": "Error al actualizar el precio"
       }
     },
     "notes": {
@@ -212,6 +216,7 @@
     "add": "Añadir a favoritos",
     "added": "Añadido a favoritos",
     "removed": "Eliminado de favoritos",
+    "error": "Error al añadir a favoritos",
     "aria-label": {
       "add": "Añadir a favoritos"
     },
@@ -260,7 +265,7 @@
         "property_id": "Id de la propiedad",
         "location": "Ubicación",
         "title": "Título",
-        "share_url": "URL", 
+        "share_url": "URL",
         "is_shared": "Visibilidad",
         "created_at": "Fecha de creación",
         "no-match": "No hay resultados",
@@ -323,7 +328,7 @@
   "filter": {
     "title": "Ordenar filtros",
     "snackbar": {
-      "ordered-by":  "Ordenado por: ",
+      "ordered-by": "Ordenado por: ",
       "price-range-changed": "El rango de precios cambió",
       "date-order-changed-to": "El orden de la fecha cambió a",
       "price-order-changed-to": "Orden de precio cambiado a",
@@ -363,5 +368,22 @@
     "others": "Otros",
     "garage": "Garaje",
     "property": "Vivienda"
+  },
+  "about-us": {
+    "paragraphs": {
+      "p1": "A Somos dos estudiantes del CIFP La Conservera (ext. IES Los Albares), del ciclo formativo de <strong>Desarrollo de Aplicaciones Web (DAW)</strong>.",
+      "p2": "🧑‍🎓 Borja Moreno <small>y</small> 🧑‍🎓 Jorge M. Balibrea.",
+      "p3": "Este es nuestro proyecto final, <strong>IdealistaWatch</strong>."
+    },
+    "history": {
+      "title": "<strong>📑Historia</strong>",
+      "p1": "Nuestra app nace de la idea de proporcionar una manera fácil y atractiva para que los usuarios puedan recopilar datos de Idealista y ofrecer una visión clara  de los precios de las viviendas. <strong>IdealistaWatch</strong> permite filtrar tus viviendas por <strong>precio</strong>, <strong>fecha</strong>, <strong>lugar</strong> e incluso guardarlas en <strong>favoritos</strong>, accediendo de una manera más fácil y rápida a tus propiedades guardadas. Además, permite guardar las propiedades de manera sencilla, haciendo uso de <strong>web-scrapping</strong> autorellenando los datos.",
+      "p2": "Por otro lado, \"IdealistaWatch\" ofrece una capa adicional de seguridad al ser una página \"privada\" que requiere usuario y contraseña para acceder. Sin embargo, podrás compartir tu vivienda con quien quieras si la pones como \"pública\", creando un enlace público para compartir fácilmente con amigos, familiares o posibles interesados.",
+      "p3": "El reto de hacer la app en conjunto y trabajar con Git y GitHub nos llamó la atención. Esto nos permitió colaborar de manera eficiente y gestionar el desarrollo de la aplicación de manera organizada y estructurada."
+    },
+    "technologies": {
+      "title": "    ⚙️ 💻<strong>Tecnologías usadas</strong>",
+      "p1": "<strong> Nos apasiona desarrollar soluciones tecnológicas que hagan la vida más fácil y estamos emocionados de compartir nuestro proyecto contigo. </strong>"
+    }
   }
 }

@@ -150,6 +150,10 @@
       },
       "tooltip": {
         "update-price": "Update price"
+      },
+      "price-updated": {
+        "success": "Price updated successfully",
+        "error": "Error updating price"
       }
     },
     "notes": {
@@ -212,6 +216,7 @@
     "add": "Add to favorites",
     "added": "Added to favorites",
     "removed": "Removed from favorites",
+    "error": "Error adding to favorites",
     "aria-label": {
       "add": "Add to favorites"
     },
@@ -232,13 +237,13 @@
       "title": "Home",
       "carousel": {
         "button": {
-        "view-text": "View"
+          "view-text": "View"
         }
-        },
-        "welcome": {
+      },
+      "welcome": {
         "title": "👋 Welcome",
         "paragraph": " We're glad you're here. IdealistaWatch is your new ally to find and save the homes of your dreams. We understand how important it is to find the perfect place, whether it's your first home, a new home or an investment. That's why we have created an intuitive and easy-to-use platform that will allow you to manage and closely monitor all your real estate options."
-        }
+      }
     },
     "my-properties": {
       "title": "My properties"
@@ -363,5 +368,22 @@
     "others": "Others",
     "garage": "Garage",
     "property": "Property"
+  },
+  "about-us": {
+    "paragraphs": {
+      "p1": "We are two students from CIFP La Conservera (ext. IES Los Albares), from the <strong>Web Application Development (DAW)</strong> cycle.",
+      "p2": "🧑‍🎓 Borja Moreno <small>and</small> 🧑‍🎓 Jorge M. Balibrea.",
+      "p3": "This is our final project, <strong>IdealistaWatch</strong>."
+    },
+    "history": {
+      "title": "<strong>📑History</strong>",
+      "p1": "Our app was born from the idea of providing an easy and attractive way for users to collect data from Idealista and offer a clear view of housing prices. <strong>IdealistaWatch</strong> allows you to filter your homes by <strong>price</strong>, <strong>date</strong>, <strong>location</strong> and even save them in <strong>favorites</strong>, accessing your saved properties in an easier and faster way. In addition, it allows you to save properties easily, making use of <strong>web-scrapping</strong> by auto-filling the data.",
+      "p2": "On the other hand, \"IdealistaWatch\" offers an additional layer of security as it is a \"private\" page that requires a username and password to access. However, you can share your home with whoever you want if you set it as \"public\", creating a public link to easily share with friends, family or potential interested parties.",
+      "p3": "The challenge of making the app together and working with Git and GitHub caught our attention. This allowed us to collaborate efficiently and manage the development of the application in an organized and structured way."
+    },
+    "technologies": {
+      "title: ": "⚙️ 💻<strong>Technologies used</strong>",
+      "p1": "<strong>We are passionate about developing technological solutions that make life easier and we are excited to share our project with you.</strong>"
+    }
   }
 }
