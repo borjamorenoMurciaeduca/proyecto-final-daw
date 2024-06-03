@@ -44,25 +44,25 @@ class PropertyController extends Controller {
         try {
             $pythonScriptPath = base_path('storage/python/python-scrapping.py');
             $output = shell_exec('python3 ' . escapeshellarg($pythonScriptPath) . ' ' . escapeshellarg($id));
-    
+
             if ($output === null) {
                 throw new \Exception('Error al ejecutar el script Python');
             }
-    
+
             $properties = json_decode($output, true);
-    
+
             if (json_last_error() !== JSON_ERROR_NONE) {
                 throw new \Exception('Error al decodificar el JSON devuelto por el script Python');
             }
-    
+
             $property = $this->convertPropertyData($properties);
-    
+
             return $property;
         } catch (\Exception $e) {
             return ApiResponse::error('Inmueble no encontrado', 404);
         }
     }
-    
+
     private function convertPropertyData(array $data) {
         $property = [
             'property_id' => $data['id'] ?? '',
@@ -77,13 +77,13 @@ class PropertyController extends Controller {
             'description' => $data['description'] ?? '',
             'url_image' => $data['img_url'] ?? '',
             'type_property' => $this->determinePropertyType($data),
-            'cancellationDate' => $data['fechaBaja'] ?? null,  
-            'status' => $data['status'] ?? 'unknown' 
+            'cancellationDate' => $data['fechaBaja'] ?? null,
+            'status' => $data['status'] ?? 'unknown'
         ];
-    
+
         return $property;
     }
-    
+
     private function extractFeatureValue(array $features, string $keyword, string $type) {
         foreach ($features as $category => $items) {
             foreach ($items as $item) {
@@ -96,7 +96,7 @@ class PropertyController extends Controller {
         }
         return '';
     }
-    
+
     private function hasFeature(array $features, string $keyword) {
         foreach ($features as $category => $items) {
             foreach ($items as $item) {
@@ -107,13 +107,13 @@ class PropertyController extends Controller {
         }
         return false;
     }
-    
+
     private function determinePropertyType(array $data) {
         $keywords = [
             'property' => ['casa', 'apartamento', 'piso'],
             'garage' => ['garaje', 'parking']
         ];
-    
+
         $text = strtolower(json_encode($data));
         foreach ($keywords as $type => $words) {
             foreach ($words as $word) {
@@ -124,7 +124,7 @@ class PropertyController extends Controller {
         }
         return 'others';
     }
-    
+
 
     /**
      * @OA\Post(
@@ -262,7 +262,7 @@ class PropertyController extends Controller {
             ]);
 
             DB::commit();
- 
+
             // devolver respuesta con los datos del inmueble y userInmueble
             $data = [
                 'user_id' => Auth::id(),
@@ -494,7 +494,7 @@ class PropertyController extends Controller {
         try {
             $userId = Auth::id();
             $userProperty = UserProperty::where('user_id_fk', $userId)->with('property')->get();
-            
+
             // Mapear los datos para combinarlos en un solo JSON
             $inmuebles = $userProperty->map(function ($userProperty) {
                 $property = $userProperty->property;
@@ -585,23 +585,21 @@ class PropertyController extends Controller {
 
             $propertyId = $request->route('id');
 
-            $validateHistory = $request->validate([
-                'price' => 'numeric|required',
-            ]);
-
             if (!Property::where('property_id', $propertyId)->exists()) {
                 return ApiResponse::error('El inmueble no existe', 400);
             }
 
+            // llamar a prepare y traer los datos
+            $data = $this->prepare($propertyId);
+
             $history = PriceHistory::create([
                 'property_id_fk' => $propertyId,
-                'price' => $validateHistory['price'],
+                'price' => $data['price'],
             ]);
 
             $data = [
                 'property_id' =>  $propertyId,
                 'price' => $history->price,
-                'created_at' => $history->created_at,
             ];
             DB::commit();
             return ApiResponse::success('Price updated successfully', $data, 201);

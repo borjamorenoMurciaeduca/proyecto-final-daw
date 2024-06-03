@@ -14,6 +14,7 @@ const useProperties = () => {
     changeFavoriteProperty,
     deleteProperties,
     revokeShareProperty,
+    updatePriceProperty,
   } = useContext(PropertiesContext);
   return {
     state,
@@ -28,6 +29,7 @@ const useProperties = () => {
     changeFavoriteProperty,
     deleteProperties,
     revokeShareProperty,
+    updatePriceProperty,
   };
 };
 export default useProperties;
