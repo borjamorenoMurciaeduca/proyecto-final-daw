@@ -20,12 +20,12 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import PropertyForm from './PropertyForm';
 import { useState } from 'react';
 import { useTheme } from '@emotion/react';
 import propertyService from '@/services/propertyService';
 import { useSnackbar } from 'notistack';
 import useProperties from '@/hooks/useProperties';
+import PropertyForm from './PropertyForm';
 
 const PropertyDetailsGlobal = ({
   property,
@@ -83,7 +83,13 @@ const PropertyDetailsGlobal = ({
         <CardContent>
           <Box sx={{ p: 2 }}>
             <Typography gutterBottom variant="h5" component="div">
-              {property.location}
+              {property.type_property && (
+                <>
+                  {t(`property-info.details.${property.type_property}`)}{' '}
+                  {t('property-info.details.in')} {property.location}
+                </>
+              )}
+              {!property.type_property && property.location}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               {property.description}
@@ -135,7 +141,9 @@ const PropertyDetailsGlobal = ({
               />
               <Chip
                 color="default"
-                label={`${t('property-info.details.bath_rooms')} ${property.bath_rooms}`}
+                label={`${t('property-info.details.bath_rooms')} ${
+                  property.bath_rooms
+                }`}
                 size="small"
               />
             </Stack>

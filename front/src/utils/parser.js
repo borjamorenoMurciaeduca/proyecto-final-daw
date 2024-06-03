@@ -88,12 +88,27 @@ function FixPrice(value) {
   return resultado;
 }
 
-function FormatPriceToDB(value) {
-  const newValueWithoutDot = value.replace(/\./g, '');
-  const newValueWithoutComma = newValueWithoutDot.replace(/,/g, '.');
+function FormatPriceToDB(value, lang) {
+  let result = 0;
+  if (lang === 'en') {
+    result = value.replace(/,/g, '');
+  } else {
+    result = value.replace(/\./g, '');
+    result = result.replace(/,/g, '.');
+  }
 
-  return newValueWithoutComma;
+  return result;
 }
+
+function FormatPriceLang(value, lang) {
+  let result = value;
+  if (lang === 'en') {
+    result = value / CONVERT_EURO_LIBRA;
+  } 
+  return result;
+
+}
+
 
 function FormatPrice(value, lang, includeCurrency = true) {
   const precioNumero = Number(value);
@@ -109,17 +124,22 @@ function FormatPrice(value, lang, includeCurrency = true) {
 
     if (options.currency === 'GBP') {
       const precioLibra = precioNumero * CONVERT_EURO_LIBRA;
-      return new Intl.NumberFormat('en-GB', options).format(
+      return Intl.NumberFormat('en-GB', options).format(
         precioLibra, );
     } else {
-      return new Intl.NumberFormat('de-DE', options).format(
+      return Intl.NumberFormat('de-DE', options).format(
         precioNumero, );
     }
   }
 
-  return new Intl.NumberFormat('de-DE', options).format(
-    precioNumero, );
-
+  if (lang === 'en') {
+    const precioLibra = precioNumero * CONVERT_EURO_LIBRA;
+    return Intl.NumberFormat('en-GB', options).format(
+      precioLibra, );
+  } else {
+    return Intl.NumberFormat('de-DE', options).format(
+      precioNumero, );
+    }
 }
 
 function formatDate(value, lang, showHours = true) {
@@ -162,6 +182,7 @@ export default {
   FixPrice,
   FormatPrice,
   FormatPriceToDB,
+  FormatPriceLang,
   formatDate,
   CleanId,
   DateReceived,

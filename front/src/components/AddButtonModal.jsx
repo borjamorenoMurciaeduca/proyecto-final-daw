@@ -21,8 +21,8 @@ import {
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import PropertyForm from './PropertyForm';
 import useProperties from '@/hooks/useProperties';
+import PropertyForm from './PropertyForm';
 
 const AddButtonModal = () => {
   const [open, setOpen] = useState(false);

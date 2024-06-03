@@ -1,11 +1,16 @@
-import React, { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { TextField, MenuItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { PropertyTypeContext } from '@/contexts/PropertyTypeContext';
 
 const PropertyTypeSelect = ({ propertyValue, onChange }) => {
   const { t } = useTranslation();
-  const { typeProperties } = useContext(PropertyTypeContext);
+  const [selectedTypeProperty, setSelectedTypeProperty] = useState('');
+
+  const typeProperties = [
+    { type_properties_id: 0, description: 'others' },
+    { type_properties_id: 1, description: 'property' },
+    { type_properties_id: 2, description: 'garage' },
+  ];
 
   const findTypePropertyId = (description) => {
     const typeProperty = typeProperties.find(
@@ -14,26 +19,23 @@ const PropertyTypeSelect = ({ propertyValue, onChange }) => {
     return typeProperty ? typeProperty.type_properties_id : '';
   };
 
-  const [selectedTypeProperty, setSelectedTypeProperty] = useState(
-    findTypePropertyId(propertyValue)
-  );
-
   useEffect(() => {
     if (propertyValue !== undefined) {
       const typePropertyId = findTypePropertyId(propertyValue);
-      if (typePropertyId !== selectedTypeProperty) {
-        setSelectedTypeProperty(typePropertyId);
-      }
+      setSelectedTypeProperty(typePropertyId);
     }
-  }, [propertyValue, typeProperties]);
+  }, [propertyValue]);
 
   const handleChange = (event) => {
     const newValue = event.target.value;
     setSelectedTypeProperty(newValue);
+    const selectedProperty = typeProperties.find(
+      (prop) => prop.type_properties_id === newValue
+    );
     onChange({
       target: {
         name: 'type_property',
-        value: typeProperties[newValue].description,
+        value: selectedProperty ? selectedProperty.description : '',
       },
     });
   };

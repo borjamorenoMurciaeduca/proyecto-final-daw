@@ -13,6 +13,7 @@ import UnstyledTextareaIntroduction from './TextAreaAutoSize';
 import PropertyTypeSelect from './PropertyTypeSelect';
 import parser from '@/utils/parser';
 import i18n from '@/commons/i18n/i18n';
+import PriceTextField from './PriceTextField';
 
 const PropertyForm = ({
   property = {},
@@ -24,16 +25,17 @@ const PropertyForm = ({
     property_id: '',
     title: '',
     location: '',
-    price: '',
-    size: '',
-    rooms: '',
+    price: 0,
+    size: 0,
+    rooms: 0,
     garage: false,
     storage_room: false,
-    bath_rooms: '',
+    bath_rooms: 0,
     description: '',
     url_image: '',
     type_property: '',
   });
+  const [rawPrice, setRawPrice] = useState('');
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -42,25 +44,36 @@ const PropertyForm = ({
       property_id: property?.property_id || '',
       title: property?.title || '',
       location: property?.location || '',
-      price: property?.price ? formatPrice(property.price) : '',
-      size: property?.size || '',
-      rooms: property?.rooms || '',
+      price: property?.price || 0,
+      size: property?.size || 0,
+      rooms: property?.rooms || 0,
       garage: property?.garage || false,
       storage_room: property?.storage_room || false,
-      bath_rooms: property?.bath_rooms || '',
+      bath_rooms: property?.bath_rooms || 0,
       description: property?.description || '',
       url_image: property?.url_image || '',
       type_property: property?.type_property || '',
     });
+    if (i18n.language === 'en') {
+      const priceConverted = formatPrice(property.price);
+      setRawPrice(
+        property?.price ? formatPriceToDB(priceConverted).toString() : ''
+      );
+    } else {
+      setRawPrice(property?.price ? property.price.toString() : '');
+    }
   }, [property]);
 
-  const formatPrice = (value) => {
-    if (!value) return '';
-    return parser.FormatPrice(value, i18n.language, false);
+  const formatPriceToDB = (value) => {
+    return parser.FormatPriceToDB(value, i18n.language);
   };
 
-  const formatPriceToDB = (value) => {
-    return parser.FormatPriceToDB(value);
+  const formatPriceLang = (value) => {
+    return parser.FormatPriceLang(value, i18n.language);
+  };
+
+  const formatPrice = (value) => {
+    return parser.FormatPrice(value, i18n.language, false);
   };
 
   const handleInputChange = (event) => {
@@ -68,13 +81,8 @@ const PropertyForm = ({
     let newValue = type === 'checkbox' ? checked : value;
 
     if (name === 'price') {
-      newValue = newValue.replace(/[^\d.,]/g, '');
-      newValue = formatPriceToDB(newValue);
-      if (newValue) {
-        newValue = formatPrice(newValue);
-      }
+      setRawPrice(newValue);
     }
-
     setPropertiesValues({ ...propertiesValues, [name]: newValue });
   };
 
@@ -84,7 +92,7 @@ const PropertyForm = ({
       const inmuebleToAdd = {
         ...propertiesValues,
         property_id: Number(propertiesValues.property_id),
-        price: Number(formatPriceToDB(propertiesValues.price)),
+        price: formatPriceLang(propertiesValues.price),
       };
       await handleSubmit(inmuebleToAdd);
       handleCloseDialog();
@@ -145,17 +153,10 @@ const PropertyForm = ({
         />
       </Grid>
       <Grid item xs={6} md={4}>
-        <TextField
-          helperText=""
+        <PriceTextField
           id="price"
           name="price"
-          label={t('add-property-form.price')}
-          fullWidth
-          type="text"
-          InputProps={{
-            endAdornment: <InputAdornment position="end">€</InputAdornment>,
-          }}
-          value={propertiesValues.price}
+          initialPrice={rawPrice}
           onChange={handleInputChange}
         />
       </Grid>
@@ -170,6 +171,7 @@ const PropertyForm = ({
           value={propertiesValues.size}
           InputProps={{
             endAdornment: <InputAdornment position="end">m²</InputAdornment>,
+            inputProps: { min: 0 },
           }}
           onChange={handleInputChange}
         />
@@ -182,6 +184,9 @@ const PropertyForm = ({
           label={t('add-property-form.rooms')}
           fullWidth
           type="number"
+          InputProps={{
+            inputProps: { min: 0 },
+          }}
           value={propertiesValues.rooms}
           onChange={handleInputChange}
         />
@@ -194,6 +199,9 @@ const PropertyForm = ({
           label={t('add-property-form.bath_rooms')}
           fullWidth
           type="number"
+          InputProps={{
+            inputProps: { min: 0 },
+          }}
           value={propertiesValues.bath_rooms}
           onChange={handleInputChange}
         />
@@ -245,7 +253,9 @@ const PropertyForm = ({
       </Grid>
       <Grid item xs={12} md={8}>
         <Button type="submit" variant="contained" fullWidth>
-          {edit ? 'editar' : t('add-property-form.add-property')}
+          {edit
+            ? t('property-info.edit.button-edit')
+            : t('add-property-form.add-property')}
         </Button>
       </Grid>
       <Grid item xs={12} md={4}>

@@ -5,21 +5,18 @@ import { Notistack } from './contexts/Notistack';
 import { PropertiesProvider } from './contexts/PropertiesProvider';
 import { UserProvider } from './contexts/UserProvider';
 import Router from './router';
-import { PropertyTypeProvider } from './contexts/PropertyTypeContext';
 
 const App = () => {
   return (
     <ColorThemeProvider>
       <I18nextProvider i18n={i18n}>
-        <PropertyTypeProvider>
-          <PropertiesProvider>
-            <UserProvider>
-              <Notistack>
-                <Router />
-              </Notistack>
-            </UserProvider>
-          </PropertiesProvider>
-        </PropertyTypeProvider>
+        <PropertiesProvider>
+          <UserProvider>
+            <Notistack>
+              <Router />
+            </Notistack>
+          </UserProvider>
+        </PropertiesProvider>
       </I18nextProvider>
     </ColorThemeProvider>
   );
