@@ -186,7 +186,8 @@
       "tooltip": {
         "publicNote": "If you share this property, this note will be visible",
         "privateNote": "Only you can see this information"
-      }
+      },
+      "by": "By"
     }
   },
   "property-share": {
