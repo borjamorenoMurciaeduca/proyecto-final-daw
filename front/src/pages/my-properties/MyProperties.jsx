@@ -35,6 +35,7 @@ const MyProperties = () => {
   const [priceOrder, setPriceOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('date');
   const [location, setLocation] = useState('');
+  const [typeProperty, setTypeProperty] = useState('');
 
   const { user, setUser } = useUser();
   const theme = useTheme();
@@ -63,6 +64,17 @@ const MyProperties = () => {
     });
 
     return Array.from(locationsSet);
+  };
+
+  const getUniqueTypeProperties = () => {
+    const typePropertiesSet = new Set();
+    properties.forEach((property) => {
+      if (property.type_property) {
+        typePropertiesSet.add(property.type_property);
+      }
+    });
+
+    return Array.from(typePropertiesSet);
   };
 
   const handleChangePrices = (_, newValue, activeThumb) => {
@@ -106,6 +118,27 @@ const MyProperties = () => {
     }
   };
 
+  const handleTypePropertyChange = (event) => {
+    setUser((prevState) => ({ ...prevState, currentPage: 1 }));
+    setTypeProperty(event.target.value);
+    if (event.target.value === '') {
+      enqueueSnackbar(t('filter.snackbar.type-property-empty'), {
+        variant: 'info',
+        preventDuplicate: true,
+      });
+    } else {
+      enqueueSnackbar(
+        `${t('filter.snackbar.type-property-changed-to')} ${t(
+          `select-type-property.${event.target.value}`
+        )}`,
+        {
+          variant: 'info',
+          preventDuplicate: true,
+        }
+      );
+    }
+  };
+
   const filterPropertiesByPrice = () => {
     const x = properties.filter((property) => {
       return (
@@ -140,6 +173,13 @@ const MyProperties = () => {
     );
   };
 
+  const filterPropertiesByTypeProperty = (properties) => {
+    if (!typeProperty) return properties;
+    return properties.filter((property) =>
+      property.type_property.includes(typeProperty)
+    );
+  };
+
   /**
    * Se crea una array vacío y se le añade las propiedades que cumplen con el filtro de precio
    */
@@ -151,8 +191,10 @@ const MyProperties = () => {
   }
 
   filteredProperties = filterPropertiesByLocation(filteredProperties);
+  filteredProperties = filterPropertiesByTypeProperty(filteredProperties);
 
   let locations = getUniqueLocations();
+  let type_properties = getUniqueTypeProperties();
 
   /**
    * Se ordenan las propiedades por fecha
@@ -208,6 +250,7 @@ const MyProperties = () => {
     setDateOrder('desc');
     setOrderBy('date');
     setLocation('');
+    setTypeProperty('');
     enqueueSnackbar(t('filter.snackbar.filters-reseted'), {
       variant: 'info',
       preventDuplicate: true,
@@ -260,6 +303,14 @@ const MyProperties = () => {
             label={`${t('filter.stack-filters.location')} ${location}`}
           />
         )}
+        {typeProperty && (
+          <Chip
+            size="small"
+            label={`${t('filter.stack-filters.type-property')} ${t(
+              `select-type-property.${typeProperty}`
+            )}`}
+          />
+        )}
       </Stack>
       <Zoom
         in={!isDrawerOpen}
@@ -301,6 +352,9 @@ const MyProperties = () => {
         location={location}
         setLocation={handleLocationChange}
         locations={locations}
+        typeProperty={typeProperty}
+        setTypeProperty={handleTypePropertyChange}
+        typeProperties={type_properties}
       />
       <Grid
         container

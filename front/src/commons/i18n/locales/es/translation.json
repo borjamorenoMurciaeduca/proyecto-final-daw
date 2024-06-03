@@ -344,13 +344,17 @@
       "price-order-changed-to": "Orden de precio cambiado a",
       "filters-reseted": "Filtros restablecidos",
       "location-changed-to": "Ubicación cambiada a",
-      "location-empty": "Filtro de ubicación restablecido"
+      "location-empty": "Filtro de ubicación restablecido",
+      "type-property-changed-to": "Tipo de propiedad cambiada a",
+      "type-property-empty": "Filtro de tipo de propiedad restablecido"
     },
     "label": {
       "order-by": "Ordenar por",
       "minimum-distance.shift": "Cambio de distancia mínima",
       "location": "Ubicación",
-      "location-empty": "Mostrar todas las ubicaciones"
+      "location-empty": "Mostrar todas las ubicaciones",
+      "type-property": "Tipo de propiedad",
+      "type-property-empty": "Mostrar todos los tipos de propiedades"
     },
     "tooltip": {
       "filter": "Filtro"
@@ -371,7 +375,8 @@
       "date": "Fecha",
       "price": "Precio",
       "price-range": "Rango de precios:",
-      "location": "Ubicación:"
+      "location": "Ubicación:",
+      "type-property": "Tipo de propiedad:"
     }
   },
   "select-type-property": {

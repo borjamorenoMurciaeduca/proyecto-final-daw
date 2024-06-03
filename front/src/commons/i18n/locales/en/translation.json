@@ -344,13 +344,17 @@
       "price-order-changed-to": "Price order changed to",
       "filters-reseted": "Filters reset",
       "location-changed-to": "Location changed to",
-      "location-empty": "Location filter reset"
+      "location-empty": "Location filter reset",
+      "type-property-changed-to": "Property type changed to",
+      "type-property-empty": "Property type filter reset"
     },
     "label": {
       "order-by": "Order by",
       "minimum-distance.shift": "Minimum distance shift",
       "location": "Location",
-      "location-empty": "Show all locations"
+      "location-empty": "Show all locations",
+      "type-property": "Property type",
+      "type-property-empty": "Show all property types"
     },
     "tooltip": {
       "filter": "Filter"
@@ -371,7 +375,8 @@
       "date": "Date",
       "price": "Price",
       "price-range": "Price range:",
-      "location": "Location:"
+      "location": "Location:",
+      "type-property": "Property type:"
     }
   },
   "select-type-property": {

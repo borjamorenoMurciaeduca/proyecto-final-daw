@@ -36,6 +36,9 @@ const PropertyDrawer = ({
   location,
   setLocation,
   locations,
+  typeProperty,
+  setTypeProperty,
+  typeProperties,
 }) => {
   const { marks, valueLabelFormat, valuetext } = PropertyDrawerFormat;
   const theme = useTheme();
@@ -131,6 +134,30 @@ const PropertyDrawer = ({
                   {locations.map((location, index) => (
                     <MenuItem key={index} value={location}>
                       {location}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </ListItem>
+            <ListItem>
+              <FormControl fullWidth>
+                <InputLabel id="type-property-select-label">
+                  {t('filter.label.type-property')}
+                </InputLabel>
+                <Select
+                  label={t('filter.label.type-property')}
+                  labelId="type-property-select-label"
+                  variant="standard"
+                  id="type-property-select"
+                  value={typeProperty}
+                  onChange={setTypeProperty}
+                >
+                  <MenuItem value={''}>
+                    {t('filter.label.type-property-empty')}
+                  </MenuItem>
+                  {typeProperties.map((typeProperty, index) => (
+                    <MenuItem key={index} value={typeProperty}>
+                      {t(`select-type-property.${typeProperty}`)}
                     </MenuItem>
                   ))}
                 </Select>
