@@ -119,6 +119,14 @@
       "error": "No se pudieron eliminar propiedades"
     }
   },
+  "validation": {
+    "the-field": "El campo",
+    "required": "es requerido",
+    "required-numeric": "es requerido y admite valores numéricos",
+    "no-negative": "no admite números negativos",
+    "is-nan": "no tiene un valor admitido",
+    "integer-only": " no admite decimales"
+  },
   "property-info": {
     "header": "Detalles de la vivienda",
     "edit": {

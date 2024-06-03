@@ -1,32 +1,47 @@
 import { useState, useEffect } from 'react';
 import { TextField, InputAdornment } from '@mui/material';
 import i18n from '@/commons/i18n/i18n';
-import { useTranslation } from 'react-i18next';
 import parser from '@/utils/parser';
+import { useTranslation } from 'react-i18next';
 
-const PriceTextField = ({ initialPrice, onChange }) => {
+const PriceTextField = ({
+  initialPrice,
+  onChange,
+  nameField,
+  labelField,
+  handleError,
+  error,
+}) => {
+  const [price, setPrice] = useState('');
+  const [customNameField] = useState(nameField);
+  const [customLabelField] = useState(labelField);
   const { t } = useTranslation();
-  const [price, setPrice] = useState(initialPrice);
 
   useEffect(() => {
-    if (i18n.language === 'en' && initialPrice) {
-      const formattedPrice = parseFloat(initialPrice).toLocaleString('en-GB', {
-        style: 'decimal',
-        minimumFractionDigits: 2,
-      });
-      setPrice(formattedPrice);
-    } else if (i18n.language === 'es' && initialPrice) {
-      const formattedPrice = parseFloat(initialPrice).toLocaleString('de-DE', {
-        style: 'decimal',
-        minimumFractionDigits: 2,
-      });
+    if (initialPrice) {
+      const formattedPrice = formatPrice(initialPrice);
       setPrice(formattedPrice);
     }
-  }, [i18n.language, initialPrice]);
+  }, [initialPrice]);
+
+  const formatPrice = (value) => {
+    if (i18n.language === 'en') {
+      return parseFloat(value).toLocaleString('en-GB', {
+        style: 'decimal',
+        minimumFractionDigits: 2,
+      });
+    } else if (i18n.language === 'es') {
+      return parseFloat(value).toLocaleString('de-DE', {
+        style: 'decimal',
+        minimumFractionDigits: 2,
+      });
+    }
+    return value;
+  };
 
   const handleChange = (event) => {
-    const newValue = event;
-    setPrice(newValue.target.value);
+    const newValue = event.target.value;
+    setPrice(newValue);
   };
 
   const handleBlur = () => {
@@ -40,30 +55,29 @@ const PriceTextField = ({ initialPrice, onChange }) => {
 
     if (isNaN(parsedPrice)) {
       setPrice('');
+      handleError(customNameField, t('validation.required-numeric'));
       return;
     }
 
-    let formattedPrice;
-    if (i18n.language === 'en') {
-      formattedPrice = parsedPrice.toLocaleString('en-GB', {
-        style: 'decimal',
-        minimumFractionDigits: 2,
-      });
-    } else {
-      formattedPrice = parsedPrice.toLocaleString('de-DE', {
-        style: 'decimal',
-        minimumFractionDigits: 2,
-      });
+    if (parsedPrice < 0) {
+      handleError(customNameField, t('validation.no-negative'));
+      return;
     }
 
+    const formattedPrice = formatPrice(parsedPrice);
     setPrice(formattedPrice);
-    onChange({ target: { name: 'price', value: parsedPrice } });
+    onChange({
+      target: { name: customNameField, value: parsedPrice },
+      type: 'number',
+    });
+    handleError(customNameField, '');
   };
 
   return (
     <TextField
-      label={t('add-property-form.price')}
+      label={customLabelField}
       fullWidth
+      error={!!error}
       value={price}
       onChange={handleChange}
       onBlur={handleBlur}

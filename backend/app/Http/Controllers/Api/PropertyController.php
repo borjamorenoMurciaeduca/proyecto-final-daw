@@ -258,7 +258,7 @@ class PropertyController extends Controller {
                 'bath_rooms' => $validateUserProperty['bath_rooms'],
                 'description' => $validateUserProperty['description'],
                 'url_image' => $validateProperty['url_image'],
-                'type_property' => $typeProperty->type_properties_id
+                'type_property_fk' => $typeProperty->type_properties_id
             ]);
 
             DB::commit();
