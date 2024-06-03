@@ -118,7 +118,7 @@ const PropertyNotes = ({ propertyId }) => {
         </Grid>
         {notes?.map((noteItem, index) => (
           <Card
-            key={index}
+            key={noteItem.id}
             id={noteItem.id}
             sx={{ mb: index < notes.length - 1 ? 2 : 0, mt: 3 }}
           >

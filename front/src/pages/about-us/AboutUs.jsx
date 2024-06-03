@@ -46,7 +46,7 @@ const AboutUs = () => {
               },
             }}
           >
-            🚀 About Us
+            🚀 {t('page.about-us.title')}
           </Typography>
           <Box py={2}>
             <Typography variant="body1">

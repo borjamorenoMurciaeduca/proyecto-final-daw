@@ -346,7 +346,7 @@
       "location-changed-to": "Ubicación cambiada a",
       "location-empty": "Filtro de ubicación restablecido",
       "type-property-changed-to": "Tipo de propiedad cambiada a",
-      "type-property-empty": "Filtro de tipo de propiedad restablecido"
+      "type-property-empty": "Filtro de tipo de propiedad re"
     },
     "label": {
       "order-by": "Ordenar por",
@@ -397,7 +397,7 @@
       "p3": "El reto de hacer la app en conjunto y trabajar con Git y GitHub nos llamó la atención. Esto nos permitió colaborar de manera eficiente y gestionar el desarrollo de la aplicación de manera organizada y estructurada."
     },
     "technologies": {
-      "title": "    ⚙️ 💻<strong>Tecnologías usadas</strong>",
+      "title": "⚙️ 💻<strong>Tecnologías usadas</strong>",
       "p1": "<strong> Nos apasiona desarrollar soluciones tecnológicas que hagan la vida más fácil y estamos emocionados de compartir nuestro proyecto contigo. </strong>"
     }
   }
