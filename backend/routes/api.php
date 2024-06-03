@@ -45,7 +45,7 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::get('/shared-property/{share_url}', [PropertyController::class, 'getSharedProperty']);
-
+Route::get('/shared-property/{share_url}/notes', [PropertyController::class, 'getPublicNotes']);	
 // Route::get('/properties', [InmuebleController::class, 'getAllUserProperties'])->middleware('auth:sanctum');
 // Route::post('/properties', [InmuebleController::class, 'store'])->middleware('auth:sanctum');
 // Route::get('/inmueble/{id}', [InmuebleController::class, 'show'])->middleware('auth:sanctum');

@@ -19,6 +19,7 @@ import useProperties from '@/hooks/useProperties';
 import PriceHistory from './components/PriceHistory';
 import PropertyDetails from './components/PropertyDetails';
 import PropertyNotes from './components/PropertyNotes';
+import { useNavigate } from 'react-router-dom';
 
 function a11yProps(index) {
   return {
@@ -35,6 +36,7 @@ const PropertyInfo = () => {
   let { property_id } = useParams();
   const theme = useTheme();
   const lessThanMedium = useMediaQuery(theme.breakpoints.down('md'));
+  const navigate = useNavigate();
 
   useEffect(() => {
     const propertyMatch = properties.find(

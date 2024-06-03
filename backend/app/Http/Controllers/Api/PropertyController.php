@@ -649,15 +649,16 @@ class PropertyController extends Controller {
     //     //
     // }
     public function shareProperty($propertyId) {
+        $user = auth()->user();
         $property = Property::find($propertyId);
-        $userProperty = UserProperty::where('property_id_fk', $propertyId)->first();
+        $userProperty = UserProperty::where('property_id_fk', $propertyId)->where('user_id_fk', $user->id)->first();
         if ($property && $userProperty) {
             // Generar el URL compartido
             $randomUrl = Str::random(8);
             while (UserProperty::where('share_url', $randomUrl)->exists()) {
                 $randomUrl = Str::random(8);
             }
-            UserProperty::where('property_id_fk', $propertyId)
+            UserProperty::where('property_id_fk', $propertyId)->where('user_id_fk', $user->id)
                 ->update(['is_shared' => true, 'share_url' => $randomUrl]);
             return ApiResponse::success('Property shared successfully', ['share_url' => $randomUrl], 200);
         } else {
@@ -668,11 +669,12 @@ class PropertyController extends Controller {
     public function revokeShareProperty($propertyId) {
         try {
             DB::beginTransaction();
-            $userProperty = UserProperty::where('property_id_fk', $propertyId)->first();
+            $user = auth()->user();
+            $userProperty = UserProperty::where('property_id_fk', $propertyId)->where('user_id_fk', $user->id)->first();
             if ($userProperty) {
                 $isShared = !$userProperty->is_shared;
 
-                UserProperty::where('property_id_fk', $propertyId)->update([
+                UserProperty::where('property_id_fk', $propertyId)->where('user_id_fk', $user->id)->update([
                     'is_shared' => false,
                     'share_url' => null
                 ]);
@@ -700,6 +702,14 @@ class PropertyController extends Controller {
             $property = Property::find($userProperty->property_id_fk);
             $typeProperty = TypeProperties::findOrFail($userProperty['type_property_fk']);
             $userInfo = User::find($userProperty->user_id_fk);
+
+            //obtener todas las notes publicas de ese inmueble y el nombre del usuario que la creo
+            $notes = UserPropertyNote::where('property_id_fk', $userProperty->property_id_fk)->where('public', true)->orderBy('created_at', 'desc')->get();
+            foreach ($notes as $note) {
+                $userNote = User::find($note->user_id_fk);
+                $note->username = $userNote->username;
+            }
+
             $data = [
                 'username' => $userInfo->username,
                 'name' => $userInfo->name,
@@ -715,6 +725,7 @@ class PropertyController extends Controller {
                 'price' => $property->last_price,
                 'url_image' => $property->url_image,
                 'type_property' => $typeProperty->description,
+                "notes" => $notes,
                 'cancellation_date' => $property->cancellation_date,
                 'created_at' => $userProperty->created_at,
                 'updated_at' => $userProperty->updated_at,
@@ -726,11 +737,13 @@ class PropertyController extends Controller {
     }
 
     public function favoriteProperty($propertyId) {
-        $userProperty = UserProperty::where('property_id_fk', $propertyId)->first();
+        $user = auth()->user();
+        $userProperty = UserProperty::where('property_id_fk', $propertyId)->where('user_id_fk', $user->id)->first();
         if ($userProperty) {
             $fav = !$userProperty->favorite;
-            UserProperty::where('property_id_fk', $propertyId)
+            UserProperty::where('property_id_fk', $propertyId)->where('user_id_fk', $user->id)
                 ->update(['favorite' => $fav]);
+            // $userProperty->update(['favorite' => $fav]);
             $data = [
                 'property_id' => $userProperty->property_id_fk,
                 'favorite' => $fav,
