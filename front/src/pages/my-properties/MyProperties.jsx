@@ -1,7 +1,10 @@
+import i18n from '@/commons/i18n/i18n';
 import AddButtonModal from '@/components/AddButtonModal';
 import PropertyCard from '@/components/PropertyCard';
+import StepperEmpty from '@/components/StepperEmpty';
 import useProperties from '@/hooks/useProperties';
 import useUser from '@/hooks/useUser';
+import parser from '@/utils/parser';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import {
   Chip,
@@ -16,12 +19,10 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
+import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropertyDrawer from './components/PropertyDrawer';
-import { useSnackbar } from 'notistack';
-import parser from '@/utils/parser';
-import i18n from '@/commons/i18n/i18n';
 
 const PROPERTIES_MAX = 6;
 const PROPERTIES_MIN = 0;
@@ -265,148 +266,155 @@ const MyProperties = () => {
   return (
     <>
       <AddButtonModal />
-      <Typography component="h1" variant="h2">
-        {t('page.my-properties.title')}
-      </Typography>
-      <Stack direction="row" spacing={2} useFlexGap flexWrap="wrap">
-        {orderBy === 'date' && (
-          <Chip
-            size="small"
-            label={`${t(`filter.stack-filters.${orderBy}`)} ${t(
-              `filter.switch.${dateOrder}`
-            )}`}
+      {!properties.length ? (
+        <StepperEmpty />
+      ) : (
+        <>
+          <Typography component="h1" variant="h2">
+            {t('page.my-properties.title')}
+          </Typography>
+          <Stack direction="row" spacing={2} useFlexGap flexWrap="wrap">
+            {orderBy === 'date' && (
+              <Chip
+                size="small"
+                label={`${t(`filter.stack-filters.${orderBy}`)} ${t(
+                  `filter.switch.${dateOrder}`
+                )}`}
+              />
+            )}
+            {orderBy === 'price' && (
+              <Chip
+                size="small"
+                label={`${t(`filter.stack-filters.${orderBy}`)} ${t(
+                  `filter.switch.${priceOrder}`
+                )}`}
+              />
+            )}
+            {price == INITIAL_PRICE ||
+            (price[0] == 0 && price[1] == 100) ? null : (
+              <Chip
+                size="small"
+                label={`${t(
+                  'filter.stack-filters.price-range'
+                )} ${parser.FormatPrice(
+                  price[0] * 10000,
+                  i18n.language,
+                  false
+                )} - ${parser.FormatPrice(price[1] * 10000, i18n.language)}`}
+              />
+            )}
+            {location && (
+              <Chip
+                size="small"
+                label={`${t('filter.stack-filters.location')} ${location}`}
+              />
+            )}
+            {typeProperty && (
+              <Chip
+                size="small"
+                label={`${t('filter.stack-filters.type-property')} ${t(
+                  `select-type-property.${typeProperty}`
+                )}`}
+              />
+            )}
+          </Stack>
+          <Zoom
+            in={!isDrawerOpen}
+            timeout={transitionDuration}
+            style={{
+              transitionDelay: `${transitionDuration.exit}ms`,
+            }}
+            unmountOnExit
+          >
+            <Tooltip title={t('filter.tooltip.filter')}>
+              <Fab
+                variant="extended"
+                size="small"
+                color="primary"
+                onClick={toggleDrawer(true)}
+                sx={{
+                  position: 'fixed',
+                  left: { xs: 5, lg: 45 },
+                  top: '20%',
+                }}
+              >
+                <FilterAltIcon />
+              </Fab>
+            </Tooltip>
+          </Zoom>
+          <PropertyDrawer
+            isDrawerOpen={isDrawerOpen}
+            toggleDrawer={toggleDrawer}
+            price={price}
+            setPrice={setPrice}
+            handleChangePrices={handleChangePrices}
+            toggleDateOrder={toggleDateOrder}
+            resetFilters={resetFilters}
+            dateOrder={dateOrder}
+            setOrderBy={setOrderBy}
+            orderBy={orderBy}
+            priceOrder={priceOrder}
+            togglePriceOrder={togglePriceOrder}
+            location={location}
+            setLocation={handleLocationChange}
+            locations={locations}
+            typeProperty={typeProperty}
+            setTypeProperty={handleTypePropertyChange}
+            typeProperties={type_properties}
           />
-        )}
-        {orderBy === 'price' && (
-          <Chip
-            size="small"
-            label={`${t(`filter.stack-filters.${orderBy}`)} ${t(
-              `filter.switch.${priceOrder}`
-            )}`}
-          />
-        )}
-        {price == INITIAL_PRICE || (price[0] == 0 && price[1] == 100) ? null : (
-          <Chip
-            size="small"
-            label={`${t(
-              'filter.stack-filters.price-range'
-            )} ${parser.FormatPrice(
-              price[0] * 10000,
-              i18n.language,
-              false
-            )} - ${parser.FormatPrice(price[1] * 10000, i18n.language)}`}
-          />
-        )}
-        {location && (
-          <Chip
-            size="small"
-            label={`${t('filter.stack-filters.location')} ${location}`}
-          />
-        )}
-        {typeProperty && (
-          <Chip
-            size="small"
-            label={`${t('filter.stack-filters.type-property')} ${t(
-              `select-type-property.${typeProperty}`
-            )}`}
-          />
-        )}
-      </Stack>
-      <Zoom
-        in={!isDrawerOpen}
-        timeout={transitionDuration}
-        style={{
-          transitionDelay: `${transitionDuration.exit}ms`,
-        }}
-        unmountOnExit
-      >
-        <Tooltip title={t('filter.tooltip.filter')}>
-          <Fab
-            variant="extended"
-            size="small"
-            color="primary"
-            onClick={toggleDrawer(true)}
+          <Grid
+            container
             sx={{
-              position: 'fixed',
-              left: { xs: 5, lg: 45 },
-              top: '20%',
+              minHeight: '75vh',
+              mt: 1,
+              mb: { md: 4, lg: 'auto' },
             }}
           >
-            <FilterAltIcon />
-          </Fab>
-        </Tooltip>
-      </Zoom>
-      <PropertyDrawer
-        isDrawerOpen={isDrawerOpen}
-        toggleDrawer={toggleDrawer}
-        price={price}
-        setPrice={setPrice}
-        handleChangePrices={handleChangePrices}
-        toggleDateOrder={toggleDateOrder}
-        resetFilters={resetFilters}
-        dateOrder={dateOrder}
-        setOrderBy={setOrderBy}
-        orderBy={orderBy}
-        priceOrder={priceOrder}
-        togglePriceOrder={togglePriceOrder}
-        location={location}
-        setLocation={handleLocationChange}
-        locations={locations}
-        typeProperty={typeProperty}
-        setTypeProperty={handleTypePropertyChange}
-        typeProperties={type_properties}
-      />
-      <Grid
-        container
-        sx={{
-          minHeight: '75vh',
-          mt: 1,
-          mb: { md: 4, lg: 'auto' },
-        }}
-      >
-        <Grid
-          container
-          item
-          spacing={2}
-          direction="row"
-          justifyContent="left"
-          alignItems="flex-start"
-          pb={{ xs: 7, md: 0 }}
-        >
-          {propertiesPage.map((property) => (
-            <Grid item xs={12} sm={6} lg={4} key={property.property_id}>
-              <PropertyCard property={property} />
-            </Grid>
-          ))}
-          <Grid item xs={12}>
-            <Paper
-              elevation={3}
-              sx={{
-                position: 'fixed',
-                bottom: 0,
-                left: 0,
-                right: 0,
-              }}
+            <Grid
+              container
+              item
+              spacing={2}
+              direction="row"
+              justifyContent="left"
+              alignItems="flex-start"
+              pb={{ xs: 7, md: 0 }}
             >
-              <Stack
-                spacing={2}
-                p={1}
-                justifyContent={'center'}
-                alignItems={'center'}
-              >
-                <Pagination
-                  size={lessThanMedium ? 'small' : 'medium'}
-                  count={countPages}
-                  page={user.currentPage || 1}
-                  onChange={handlePage}
-                  variant="text"
-                  shape="circular"
-                />
-              </Stack>
-            </Paper>
+              {propertiesPage.map((property) => (
+                <Grid item xs={12} sm={6} lg={4} key={property.property_id}>
+                  <PropertyCard property={property} />
+                </Grid>
+              ))}
+              <Grid item xs={12}>
+                <Paper
+                  elevation={3}
+                  sx={{
+                    position: 'fixed',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                  }}
+                >
+                  <Stack
+                    spacing={2}
+                    p={1}
+                    justifyContent={'center'}
+                    alignItems={'center'}
+                  >
+                    <Pagination
+                      size={lessThanMedium ? 'small' : 'medium'}
+                      count={countPages}
+                      page={user.currentPage || 1}
+                      onChange={handlePage}
+                      variant="text"
+                      shape="circular"
+                    />
+                  </Stack>
+                </Paper>
+              </Grid>
+            </Grid>
           </Grid>
-        </Grid>
-      </Grid>
+        </>
+      )}
     </>
   );
 };

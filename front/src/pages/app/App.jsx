@@ -1,6 +1,7 @@
 import house from '@/assets/house.jpg';
 import i18n from '@/commons/i18n/i18n';
 import AddButtonModal from '@/components/AddButtonModal';
+import StepperEmpty from '@/components/StepperEmpty';
 import useProperties from '@/hooks/useProperties';
 import useUser from '@/hooks/useUser';
 import parser from '@/utils/parser';
@@ -15,7 +16,6 @@ import {
 import { useTranslation } from 'react-i18next';
 import Carousel from 'react-material-ui-carousel';
 import { useNavigate } from 'react-router-dom';
-import StepperEmpty from './components/StepperEmpty';
 import './style.css';
 
 const App = () => {

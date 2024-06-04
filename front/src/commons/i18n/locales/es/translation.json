@@ -400,5 +400,20 @@
       "title": "⚙️ 💻<strong>Tecnologías usadas</strong>",
       "p1": "<strong> Nos apasiona desarrollar soluciones tecnológicas que hagan la vida más fácil y estamos emocionados de compartir nuestro proyecto contigo. </strong>"
     }
+  },
+  "stepper": {
+    "title": "Ooops! Parece que no tienes propiedades guardadas",
+    "p1_label": "Busca una vivienda en idealista",
+    "p1_desc": "En la web de idealista, busca una vivienda que te guste y copia la URL",
+    "p2_label": "Buscar y añadir la vivienda",
+    "p2_desc": "Haz clic en el botón que se muestra de color amarillo en la parte derecha",
+    "p3_label": "Guardar vivienda",
+    "p3_desc": "Una vez dentro pega la URL y deja que IdealistaWatch busque la información de la vivienda. Podrás configurar los datos de la vivienda y guardarla en tu lista de propiedades",
+    "last_step": "Último paso",
+    "finish": "Terminado",
+    "continue": "Continuar",
+    "previous": "Anterior",
+    "done": "Todos los pasos realizados, disfruta de IdealistaWatch",
+    "restart": "Reiniciar"
   }
 }
