@@ -12,11 +12,28 @@ import re
 from datetime import datetime
 
 # Establecer cabeceras HTTP similares a las de un navegador para evitar bloqueos
+# BASE_HEADERS = {
+#     "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36",
+#     "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+#     "accept-language": "en-US;en;q=0.9",
+#     "accept-encoding": "gzip, deflate, br",
+# }
+
 BASE_HEADERS = {
-    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36",
-    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
-    "accept-language": "en-US;en;q=0.9",
-    "accept-encoding": "gzip, deflate, br",
+    "accept": "text/plain, */*; q=0.01",
+    "accept-language": "es-ES,es;q=0.9",
+    "cache-control": "no-cache",
+    "origin": "https://www.idealista.com",
+    "pragma": "no-cache",
+    "priority": "u=1, i",
+    "referer": "https://www.idealista.com/",
+    "sec-ch-ua": '"Google Chrome";v="125", "Chromium";v="125", "Not.A/Brand";v="24"',
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": '"Windows"',
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
 }
 
 async def scrape_property(property_id: str) -> Dict:
