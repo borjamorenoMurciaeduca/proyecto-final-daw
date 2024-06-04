@@ -1,0 +1,65 @@
+###
+POST http://127.0.0.1:8000/api/login
+Content-Type: application/json
+
+{
+    "username": "jorge",
+    "password": "1234"
+}
+
+###
+POST http://127.0.0.1:8000/api/register
+Content-Type: application/json
+
+{
+    "username": "jorge41",
+    "password": "1234",
+    "password_confirmation": "1234"
+}
+
+###
+POST http://127.0.0.1:8000/api/properties
+Content-Type: application/json
+Authorization: Bearer 1|OWc3odlVCREXkPYgv46avC4LrZ1G7Lkurp4qFvqR3ad497db
+
+{
+    "property_id": 2414231,
+    "title": "Casa do",
+    "description": "Casa en Juan",
+    "price": 100000,
+    "location": "Calle 123444",
+    "size": 100,
+    "rooms": 3,
+    "garage": 1,
+    "storage_room": 1,
+    "bath_rooms": 2
+}
+
+###
+POST http://127.0.0.1:8000/api/property/2414231/share
+Content-Type: application/json
+Authorization: Bearer 4|CPhAxdjEW3pxubV14NfdctHmrLu2lcEZpTMVtj58f51e6ab9
+
+###
+GET http://127.0.0.1:8000/api/shared-property/SJRJtskE
+Content-Type: application/json
+Authorization: Bearer 1|PY2TBZWnCUthRsvghRfBP3mSbm7wTm8ZylgkWT8w5f1ff70d
+
+
+###
+PUT http://127.0.0.1:8000/api/edit-profile
+Content-Type: application/json
+Authorization: Bearer 14|Ga6O3n5D6N78JsSyRSKS4W9N4KZeDYx2wNfEeq7o1a2e5462
+
+{
+    "name":"Jorge",
+    "surname":"Lopez",
+    "phone":"123456789",
+    "password": "12345",
+    "password_confirmation": "12345"
+}
+
+###
+POST http://127.0.0.1:8000/api/property/2414231/favorite
+Content-Type: application/json
+Authorization: Bearer 1|OWc3odlVCREXkPYgv46avC4LrZ1G7Lkurp4qFvqR3ad497db

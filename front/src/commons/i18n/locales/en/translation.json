@@ -1,0 +1,404 @@
+{
+  "languages": {
+    "select-input": "Language",
+    "es": "Spanish",
+    "en": "English"
+  },
+  "tooltip": {
+    "open-settings": "Open settings",
+    "change-language": "Change language",
+    "close": "Close",
+    "search": "Search",
+    "clear": "Clear search",
+    "twitter": "Share on Twitter",
+    "no-twitter": "First you need to share the property",
+    "day-night-switch": "Change theme"
+  },
+  "theme-mode": {
+    "light": "Day mode",
+    "dark": "Night mode"
+  },
+  "login-form": {
+    "title": "Sign in",
+    "form": {
+      "password": "Password",
+      "confirm-password": "Confirm password",
+      "username": "User",
+      "identifier": "User or email",
+      "login": "Login"
+    },
+    "register": "Need an account? Sign up"
+  },
+  "register-form": {
+    "title": "Sign up",
+    "form": {
+      "username": "User",
+      "username-placeholder": "Username must be unique",
+      "name": "Name",
+      "surname": "Surname",
+      "email": "Email",
+      "email-helper": "You can also use your email to login",
+      "phone": "Phone",
+      "birth-date": "Birth date",
+      "password": "Password",
+      "confirm-password": "Confirm password",
+      "confirm": "Confirm",
+      "additional-info": "Aditional information",
+      "register": "Create account",
+      "success": "User registered successfully"
+    },
+    "login": "Already have an account? Sign in"
+  },
+  "edit-profile-form": {
+    "title": "Edit profile",
+    "form": {
+      "username": "User",
+      "name": "Name",
+      "surname": "Surname",
+      "email": "Email",
+      "phone": "Phone",
+      "birth-date": "Birth date",
+      "password": "Password",
+      "confirm-password": "Confirm password",
+      "edit": "Edit",
+      "save": "Save changes",
+      "success": "Profile updated successfully"
+    }
+  },
+  "top-menu": {
+    "settings": {
+      "profile": "Profile",
+      "account": "Account",
+      "dashboard": "Dashboard",
+      "logout": "Logout",
+      "conf": "Settings"
+    }
+  },
+  "revoke": {
+    "success": "Property removed successfully",
+    "error": "Error removing property"
+  },
+  "add-property-form": {
+    "reference": "Reference",
+    "title": "Title",
+    "location": "Location",
+    "price": "Price",
+    "size": "Size",
+    "rooms": "Rooms",
+    "bath_rooms": "Bath rooms",
+    "garage": "Garage",
+    "storage": "Storage",
+    "add-property": "Add property",
+    "cancel": "Cancel",
+    "description": "Description...",
+    "type_property": "Type of property"
+  },
+  "addButtonModal": {
+    "title": "Search with IdealistaWatch",
+    "url": "Enter the URL",
+    "validation": {
+      "error": "The URL must be in the correct format"
+    },
+    "added": "Property added successfully"
+  },
+  "snackbar": {
+    "url-validation": {
+      "ok": "Valid URL",
+      "ko": "The provided URL does not return results",
+      "ko-format": "The provided URL is not in the expected format",
+      "baja": "The selected property has been deregistered"
+    },
+    "prepare-inmueble-form": {
+      "error": "An error occurred while obtaining data"
+    },
+    "logout": "Logout successful",
+    "login": "👋 Welcome back",
+    "login-error": "Credentials error",
+    "delete-properties": {
+      "success": "Properties successfully deleted",
+      "error": "Failed to delete properties"
+    }
+  },
+  "validation": {
+    "the-field": "The field",
+    "required": "it is required",
+    "required-numeric": "is required and supports numeric values",
+    "no-negative": "does not support negative numbers",
+    "is-nan": "has no supported value",
+    "integer-only": "does not support decimals"
+  },
+  "property-info": {
+    "header": "Details of property",
+    "edit": {
+      "button-edit": "Edit",
+      "edit-property": "Edit property",
+      "success": "Property updated successfully",
+      "error": "Error updating property"
+    },
+    "side-panel": {
+      "aria-label": "Property information",
+      "price-history": "Prices",
+      "details": "Details",
+      "notes": "Notes"
+    },
+    "details": {
+      "title-details": "Details",
+      "storage-room": "Storage room",
+      "garage": "Garage",
+      "price": "Price:",
+      "size": "Size:",
+      "rooms": "Rooms:",
+      "bath_rooms": "Bath rooms:",
+      "share": "Share",
+      "property": "Property",
+      "others": "Others",
+      "in": "in",
+      "button": {
+        "update-price": "Update price"
+      },
+      "tooltip": {
+        "update-price": "Update price"
+      },
+      "price-updated": {
+        "success": "Price updated successfully",
+        "error": "Error updating price"
+      }
+    },
+    "notes": {
+      "notify": {
+        "success": {
+          "add": "Note added successfully",
+          "update": "Note updated successfully",
+          "remove": "Note removed successfully"
+        },
+        "error": {
+          "adding-emty": "Can't add an empty note",
+          "note-generic": "Error adding note"
+        }
+      },
+      "aria-label": {
+        "edit": "Edit the note",
+        "remove": "Delete the note"
+      },
+      "addNote": "Add comment",
+      "note": "Note",
+      "isPublic": "Public",
+      "publicNote": "Public",
+      "privateNote": "Private",
+      "save": "Save",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "dialog-title-edit": "Editing the note:",
+      "dialog-title-add": "Adding note:",
+      "updated_at": "updated at ",
+      "tooltip": {
+        "publicNote": "If you share this property, this note will be visible",
+        "privateNote": "Only you can see this information"
+      },
+      "by": "By",
+      "empty": "There are no notes yet"
+    }
+  },
+  "property-share": {
+    "title": "Share property",
+    "share": "Share",
+    "copy": "Copy",
+    "copied": "Copied",
+    "close": "Close",
+    "generator": {
+      "title": "Share property",
+      "description": "Share this property with the following URL",
+      "regenerate": "Generate new URL",
+      "label": "URL to share",
+      "helper": "If you generate a new URL, the previous one will be invalid",
+      "send": "Send",
+      "exit": "Exit",
+      "success-url": "URL generated successfully",
+      "success-copy": "URL copied to clipboard",
+      "fail-copy": "Error copying URL"
+    },
+    "twitter": {
+      "discover": "Discover this property found with IdealistaWatch, in",
+      "for-only": "for only"
+    }
+  },
+  "favorite": {
+    "add": "Add to favorites",
+    "added": "Added to favorites",
+    "removed": "Removed from favorites",
+    "error": "Error adding to favorites",
+    "aria-label": {
+      "add": "Add to favorites"
+    },
+    "tooltip": {
+      "helper-click": "Click here to add this property to 'Favorites'!"
+    }
+  },
+  "fakePropertyCard": {
+    "location": "Here",
+    "title": "This is an example!"
+  },
+  "page": {
+    "favorite-properties": {
+      "title": "My favorites",
+      "empty": "You have not added any properties as favorites yet!"
+    },
+    "home": {
+      "title": "Home",
+      "carousel": {
+        "button": {
+          "view-text": "View"
+        }
+      },
+      "welcome": {
+        "title": "👋 Welcome",
+        "paragraph": " We're glad you're here. IdealistaWatch is your new ally to find and save the homes of your dreams. We understand how important it is to find the perfect place, whether it's your first home, a new home or an investment. That's why we have created an intuitive and easy-to-use platform that will allow you to manage and closely monitor all your real estate options."
+      }
+    },
+    "my-properties": {
+      "title": "My properties"
+    },
+    "last-properties": {
+      "title": "Last properties"
+    },
+    "about-us": {
+      "title": "About us"
+    },
+    "configuration-management": {
+      "title": "Settings and procedures",
+      "labels": {
+        "profile": "Profile",
+        "manage-properties": "Manage properties"
+      },
+      "table": {
+        "my-properties": "My properties",
+        "property_id": "Property id",
+        "location": "Location",
+        "title": "Title",
+        "share_url": "URL",
+        "is_shared": "Visibility",
+        "created_at": "Created date",
+        "no-match": "There are no results",
+        "search": "Search",
+        "download-csv": "Download CSV",
+        "print": "Print",
+        "filter-table": "Filter table",
+        "tooltip": {
+          "copy-url": "Copy URL",
+          "make-private": "Make private",
+          "sort": "Sort",
+          "sort-for": "Sort by",
+          "delete-properties": "Delete properties"
+        },
+        "dialog": {
+          "make-private": {
+            "title": "Make housing private",
+            "message": "Are you sure you want to make this property {{propertyId}} private?",
+            "confirm-button-text": "Confirm",
+            "cancel-button-text": "Cancel"
+          },
+          "delete-properties": {
+            "title": "Delete properties",
+            "message": "You are going to delete a total of {{len}} property(s). Are you sure?",
+            "confirm-button-text": "Confirm",
+            "cancel-button-text": "Cancel"
+          }
+        },
+        "pagination": {
+          "next": "Next page",
+          "previous": "Previous page",
+          "rows-per-page": "Rows per page",
+          "display-rows": "of"
+        },
+        "filter": {
+          "all": "All",
+          "title": "Filters",
+          "reset": "Reset"
+        },
+        "view-columns": {
+          "title": "View columns",
+          "titleAria": "Show/Hide table columns"
+        },
+        "selected-rows": {
+          "text": "selected row(s)",
+          "delete": "Delete selected rows",
+          "delete-aria": "Delete selected rows"
+        }
+      }
+    }
+  },
+  "price-history": {
+    "xAxis": {
+      "dates": "Dates"
+    },
+    "property-average": "The average of this property is:",
+    "property-max-price": "With a maximum price of:",
+    "property-min-price": "With a minimum price of:"
+  },
+  "filter": {
+    "title": "Sort filters",
+    "snackbar": {
+      "ordered-by": "Ordered by: ",
+      "price-range-changed": "The price range changed",
+      "date-order-changed-to": "Date order changed to",
+      "price-order-changed-to": "Price order changed to",
+      "filters-reseted": "Filters reset",
+      "location-changed-to": "Location changed to",
+      "location-empty": "Location filter reset",
+      "type-property-changed-to": "Property type changed to",
+      "type-property-empty": "Property type filter reset"
+    },
+    "label": {
+      "order-by": "Order by",
+      "minimum-distance.shift": "Minimum distance shift",
+      "location": "Location",
+      "location-empty": "Show all locations",
+      "type-property": "Property type",
+      "type-property-empty": "Show all property types"
+    },
+    "tooltip": {
+      "filter": "Filter"
+    },
+    "order-item-options": {
+      "date": "Date",
+      "price": "Price",
+      "price-range": "Price range"
+    },
+    "buttons": {
+      "reset": "Reset"
+    },
+    "switch": {
+      "asc": "ascending",
+      "desc": "descending"
+    },
+    "stack-filters": {
+      "date": "Date",
+      "price": "Price",
+      "price-range": "Price range:",
+      "location": "Location:",
+      "type-property": "Property type:"
+    }
+  },
+  "select-type-property": {
+    "others": "Others",
+    "garage": "Garage",
+    "property": "Property"
+  },
+  "about-us": {
+    "paragraphs": {
+      "p1": "We are two students from CIFP La Conservera (ext. IES Los Albares), from the <strong>Web Application Development (DAW)</strong> cycle.",
+      "p2": "🧑‍🎓 Borja Moreno <small>and</small> 🧑‍🎓 Jorge M. Balibrea.",
+      "p3": "This is our final project, <strong>IdealistaWatch</strong>."
+    },
+    "history": {
+      "title": "<strong>📑History</strong>",
+      "p1": "Our app was born from the idea of providing an easy and attractive way for users to collect data from Idealista and offer a clear view of housing prices. <strong>IdealistaWatch</strong> allows you to filter your homes by <strong>price</strong>, <strong>date</strong>, <strong>location</strong> and even save them in <strong>favorites</strong>, accessing your saved properties in an easier and faster way. In addition, it allows you to save properties easily, making use of <strong>web-scrapping</strong> by auto-filling the data.",
+      "p2": "On the other hand, \"IdealistaWatch\" offers an additional layer of security as it is a \"private\" page that requires a username and password to access. However, you can share your home with whoever you want if you set it as \"public\", creating a public link to easily share with friends, family or potential interested parties.",
+      "p3": "The challenge of making the app together and working with Git and GitHub caught our attention. This allowed us to collaborate efficiently and manage the development of the application in an organized and structured way."
+    },
+    "technologies": {
+      "title": "⚙️ 💻<strong>Technologies used</strong>",
+      "p1": "<strong>We are passionate about developing technological solutions that make life easier and we are excited to share our project with you.</strong>"
+    }
+  }
+}

@@ -1,0 +1,404 @@
+{
+  "languages": {
+    "select-input": "Idioma",
+    "es": "Español",
+    "en": "Inglés"
+  },
+  "tooltip": {
+    "open-settings": "Abrir configuración",
+    "change-language": "Cambiar idioma",
+    "close": "Cerrar",
+    "search": "Buscar",
+    "clear": "Limpiar búsqueda",
+    "twitter": "Compartir en Twitter",
+    "no-twitter": "Primero tienes que compartir la vivienda",
+    "day-night-switch": "Cambiar tema"
+  },
+  "theme-mode": {
+    "light": "Modo día",
+    "dark": "Modo noche"
+  },
+  "login-form": {
+    "title": "Iniciar sesión",
+    "form": {
+      "password": "Contraseña",
+      "confirm-password": "Confirmar contraseña",
+      "username": "Usuario",
+      "identifier": "Usuario o correo electrónico",
+      "login": "Iniciar sesión"
+    },
+    "register": "¿No tienes cuenta? Crea una"
+  },
+  "register-form": {
+    "title": "Regístrate",
+    "form": {
+      "username": "Usuario",
+      "username-placeholder": "El usuario debe ser único",
+      "name": "Nombre",
+      "surname": "Apellido/s",
+      "email": "Correo electrónico",
+      "email-helper": "Podras utilizarlo para iniciar sesión",
+      "phone": "Teléfono",
+      "birth-date": "Fecha de nacimiento",
+      "password": "Contraseña",
+      "confirm-password": "Confirmar contraseña",
+      "confirm": "Confirmar",
+      "additional-info": "Información adicional",
+      "register": "Crear cuenta",
+      "success": "¡Registro completado con éxito!"
+    },
+    "login": "¿Ya tienes cuenta? Inicia sesión"
+  },
+  "edit-profile-form": {
+    "title": "Editar perfil",
+    "form": {
+      "username": "Usuario",
+      "name": "Nombre",
+      "surname": "Apellido/s",
+      "email": "Correo electrónico",
+      "phone": "Teléfono",
+      "birth-date": "Fecha de nacimiento",
+      "password": "Contraseña",
+      "confirm-password": "Confirmar contraseña",
+      "edit": "Editar",
+      "save": "Guardar cambios",
+      "success": "¡Perfil actualizado con éxito!"
+    }
+  },
+  "top-menu": {
+    "settings": {
+      "profile": "Perfil",
+      "account": "Cuenta",
+      "dashboard": "Escritorio",
+      "logout": "Salir",
+      "conf": "Configuración"
+    }
+  },
+  "revoke": {
+    "success": "Propiedad eliminada con éxito",
+    "error": "Error al eliminar la propiedad"
+  },
+  "add-property-form": {
+    "reference": "Referencia",
+    "title": "Título",
+    "location": "Localización",
+    "price": "Precio",
+    "size": "Tamaño",
+    "rooms": "Habitaciones",
+    "bath_rooms": "Baños",
+    "garage": "Garaje",
+    "storage": "Trastero",
+    "add-property": "Añadir vivienda",
+    "cancel": "Cancelar",
+    "description": "Descripción...",
+    "type_property": "Tipo de propiedad"
+  },
+  "addButtonModal": {
+    "title": "Buscar con IdealistaWatch",
+    "url": "Introduce la URL",
+    "validation": {
+      "error": "La URL debe tener el formato correcto"
+    },
+    "added": "¡Vivienda añadida!"
+  },
+  "snackbar": {
+    "url-validation": {
+      "ok": "URL válida",
+      "ko": "La URL proporcionada no devuelve resultados",
+      "ko-format": "La URL proporcionada no tiene el formato esperado",
+      "baja": "El inmueble seleccionado ha sido dado de baja"
+    },
+    "prepare-inmueble-form": {
+      "error": "Se ha producido un error al obtener los datos"
+    },
+    "logout": "¡Sesión cerrada con éxito!",
+    "login": "👋 Bienvenido de nuevo",
+    "login-error": "Error en las credenciales",
+    "delete-properties": {
+      "success": "Propiedades eliminadas exitosamente",
+      "error": "No se pudieron eliminar propiedades"
+    }
+  },
+  "validation": {
+    "the-field": "El campo",
+    "required": "es requerido",
+    "required-numeric": "es requerido y admite valores numéricos",
+    "no-negative": "no admite números negativos",
+    "is-nan": "no tiene un valor admitido",
+    "integer-only": " no admite decimales"
+  },
+  "property-info": {
+    "header": "Detalles de la vivienda",
+    "edit": {
+      "button-edit": "Editar",
+      "edit-property": "Editar propiedad",
+      "success": "Propiedad actualizada con éxito",
+      "error": "Error al actualizar la propiedad"
+    },
+    "side-panel": {
+      "aria-label": "Información de la vivienda",
+      "price-history": "Precios",
+      "details": "Detalles",
+      "notes": "Notas"
+    },
+    "details": {
+      "title-details": "Detalles",
+      "storage-room": "Trastero",
+      "garage": "Garaje",
+      "price": "Precio:",
+      "size": "Tamaño:",
+      "rooms": "Habitaciones:",
+      "bath_rooms": "Baños:",
+      "share": "Compartir",
+      "property": "Vivienda",
+      "others": "Otros",
+      "in": "en",
+      "button": {
+        "update-price": "Actualizar precio"
+      },
+      "tooltip": {
+        "update-price": "Actualizar precio"
+      },
+      "price-updated": {
+        "success": "Precio actualizado con éxito",
+        "error": "Error al actualizar el precio"
+      }
+    },
+    "notes": {
+      "notify": {
+        "success": {
+          "add": "Nota añadida con éxito",
+          "update": "Nota actualizada con éxito",
+          "remove": "Nota borrada"
+        },
+        "error": {
+          "adding-emty": "No se puede añadir una nota vacía",
+          "note-generic": "Error al añadir nota"
+        }
+      },
+      "aria-label": {
+        "edit": "Edita la nota",
+        "remove": "Borra la nota"
+      },
+      "addNote": "Añadir comentario",
+      "note": "Nota",
+      "isPublic": "Público",
+      "publicNote": "Pública",
+      "privateNote": "Privada",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "edit": "Editar",
+      "dialog-title-edit": "Editando la nota:",
+      "dialog-title-add": "Añadiendo la nota:",
+      "updated_at": "editado el ",
+      "tooltip": {
+        "publicNote": "Si compartes esta propiedad, esta nota será visible",
+        "privateNote": "Sólo tú puedes ver esta información"
+      },
+      "by": "Por",
+      "empty": "No hay notas"
+    }
+  },
+  "property-share": {
+    "title": "Compartir vivienda",
+    "share": "Compartir",
+    "copy": "Copiar",
+    "copied": "¡Copiado!",
+    "close": "Cerrar",
+    "generator": {
+      "title": "Generador de enlaces",
+      "description": "Comparte esta vivienda con el siguiente enlace",
+      "regenerate": "Generar nuevo enlace",
+      "label": "Enlace para compartir",
+      "helper": "*Si generas un enlace nuevo, el anterior dejará de funcionar",
+      "close": "Cerrar",
+      "exit": "Salir",
+      "success-url": "¡Enlace generado!",
+      "success-copy": "¡Enlace copiado en el portapapeles!",
+      "fail-copy": "¡Error al copiar el enlace!"
+    },
+    "twitter": {
+      "discover": "Descubre esta propiedad encontrada con IdealistaWatch, en",
+      "for-only": "por solo"
+    }
+  },
+  "favorite": {
+    "add": "Añadir a favoritos",
+    "added": "Añadido a favoritos",
+    "removed": "Eliminado de favoritos",
+    "error": "Error al añadir a favoritos",
+    "aria-label": {
+      "add": "Añadir a favoritos"
+    },
+    "tooltip": {
+      "helper-click": "¡Haz click aquí para añadir esta propiedad a 'Favoritos'!"
+    }
+  },
+  "fakePropertyCard": {
+    "location": "Aquí",
+    "title": "¡Esto es un ejemplo!"
+  },
+  "page": {
+    "favorite-properties": {
+      "title": "Mis favoritas",
+      "empty": "¡No has añadido ninguna propiedad como favorita aún!"
+    },
+    "home": {
+      "title": "Inicio",
+      "carousel": {
+        "button": {
+          "view-text": "Ver"
+        }
+      },
+      "welcome": {
+        "title": "👋 Bienvenido",
+        "paragraph": " Nos alegra que estés aquí. IdealistaWatch es tu nuevo aliado para encontrar y guardar las viviendas de tus sueños. Entendemos lo importante que es encontrar el lugar perfecto, ya sea tu primera casa, un nuevo hogar o una inversión. Por eso, hemos creado una plataforma intuitiva y fácil de usar que te permitirá gestionar y seguir de cerca todas tus opciones inmobiliarias."
+      }
+    },
+    "my-properties": {
+      "title": "Mis viviendas"
+    },
+    "last-properties": {
+      "title": "Últimas viviendas"
+    },
+    "about-us": {
+      "title": "Sobre nosotros"
+    },
+    "configuration-management": {
+      "title": "Configuración y gestiones",
+      "labels": {
+        "profile": "Perfil",
+        "manage-properties": "Gestionar viviendas"
+      },
+      "table": {
+        "my-properties": "Mis viviendas",
+        "property_id": "Id de la propiedad",
+        "location": "Ubicación",
+        "title": "Título",
+        "share_url": "URL",
+        "is_shared": "Visibilidad",
+        "created_at": "Fecha de creación",
+        "no-match": "No hay resultados",
+        "search": "Buscar",
+        "download-csv": "Descargar CSV",
+        "print": "Imprimir",
+        "filter-table": "Filtar tabla",
+        "tooltip": {
+          "copy-url": "Copiar URL",
+          "make-private": "Hacer privada",
+          "sort": "Ordenar",
+          "sort-for": "Ordenar por",
+          "delete-properties": "Eliminar propiedades"
+        },
+        "dialog": {
+          "make-private": {
+            "title": "Hacer la vivienda privada",
+            "message": "¿Estás seguro de que quieres hacer privada esta vivienda {{propertyId}}?",
+            "confirm-button-text": "Confirmar",
+            "cancel-button-text": "Cancelar"
+          },
+          "delete-properties": {
+            "title": "Eliminar propiedades",
+            "message": "Vas a eliminar un total de {{len}} propiedad(es). ¿Estás seguro?",
+            "confirm-button-text": "Confirmar",
+            "cancel-button-text": "Cancelar"
+          }
+        },
+        "pagination": {
+          "next": "Página siguiente",
+          "previous": "Página anterior",
+          "rows-per-page": "Filas por página",
+          "display-rows": "de"
+        },
+        "filter": {
+          "all": "Todas",
+          "title": "Filtros",
+          "reset": "Resetear"
+        },
+        "view-columns": {
+          "title": "Ver columnas",
+          "titleAria": "Mostrar/Ocultar columnas de la tabla"
+        },
+        "selected-rows": {
+          "text": "fila(s) seleccionada(s)",
+          "delete": "Borrar filas seleccionadas",
+          "delete-aria": "Borrar filas seleccionadas"
+        }
+      }
+    }
+  },
+  "price-history": {
+    "xAxis": {
+      "dates": "Fechas"
+    },
+    "property-average": "La media de este inmueble es:",
+    "property-max-price": "Con un precio máximo de:",
+    "property-min-price": "Con un precio mínimo de:"
+  },
+  "filter": {
+    "title": "Ordenar filtros",
+    "snackbar": {
+      "ordered-by": "Ordenado por: ",
+      "price-range-changed": "El rango de precios cambió",
+      "date-order-changed-to": "El orden de la fecha cambió a",
+      "price-order-changed-to": "Orden de precio cambiado a",
+      "filters-reseted": "Filtros restablecidos",
+      "location-changed-to": "Ubicación cambiada a",
+      "location-empty": "Filtro de ubicación restablecido",
+      "type-property-changed-to": "Tipo de propiedad cambiada a",
+      "type-property-empty": "Filtro de tipo de propiedad re"
+    },
+    "label": {
+      "order-by": "Ordenar por",
+      "minimum-distance.shift": "Cambio de distancia mínima",
+      "location": "Ubicación",
+      "location-empty": "Mostrar todas las ubicaciones",
+      "type-property": "Tipo de propiedad",
+      "type-property-empty": "Mostrar todos los tipos de propiedades"
+    },
+    "tooltip": {
+      "filter": "Filtro"
+    },
+    "order-item-options": {
+      "date": "Fecha",
+      "price": "Precio",
+      "price-range": "Rango de precios"
+    },
+    "buttons": {
+      "reset": "Resetear"
+    },
+    "switch": {
+      "asc": "ascendente",
+      "desc": "descendente"
+    },
+    "stack-filters": {
+      "date": "Fecha",
+      "price": "Precio",
+      "price-range": "Rango de precios:",
+      "location": "Ubicación:",
+      "type-property": "Tipo de propiedad:"
+    }
+  },
+  "select-type-property": {
+    "others": "Otros",
+    "garage": "Garaje",
+    "property": "Vivienda"
+  },
+  "about-us": {
+    "paragraphs": {
+      "p1": "A Somos dos estudiantes del CIFP La Conservera (ext. IES Los Albares), del ciclo formativo de <strong>Desarrollo de Aplicaciones Web (DAW)</strong>.",
+      "p2": "🧑‍🎓 Borja Moreno <small>y</small> 🧑‍🎓 Jorge M. Balibrea.",
+      "p3": "Este es nuestro proyecto final, <strong>IdealistaWatch</strong>."
+    },
+    "history": {
+      "title": "<strong>📑Historia</strong>",
+      "p1": "Nuestra app nace de la idea de proporcionar una manera fácil y atractiva para que los usuarios puedan recopilar datos de Idealista y ofrecer una visión clara  de los precios de las viviendas. <strong>IdealistaWatch</strong> permite filtrar tus viviendas por <strong>precio</strong>, <strong>fecha</strong>, <strong>lugar</strong> e incluso guardarlas en <strong>favoritos</strong>, accediendo de una manera más fácil y rápida a tus propiedades guardadas. Además, permite guardar las propiedades de manera sencilla, haciendo uso de <strong>web-scrapping</strong> autorellenando los datos.",
+      "p2": "Por otro lado, \"IdealistaWatch\" ofrece una capa adicional de seguridad al ser una página \"privada\" que requiere usuario y contraseña para acceder. Sin embargo, podrás compartir tu vivienda con quien quieras si la pones como \"pública\", creando un enlace público para compartir fácilmente con amigos, familiares o posibles interesados.",
+      "p3": "El reto de hacer la app en conjunto y trabajar con Git y GitHub nos llamó la atención. Esto nos permitió colaborar de manera eficiente y gestionar el desarrollo de la aplicación de manera organizada y estructurada."
+    },
+    "technologies": {
+      "title": "⚙️ 💻<strong>Tecnologías usadas</strong>",
+      "p1": "<strong> Nos apasiona desarrollar soluciones tecnológicas que hagan la vida más fácil y estamos emocionados de compartir nuestro proyecto contigo. </strong>"
+    }
+  }
+}
