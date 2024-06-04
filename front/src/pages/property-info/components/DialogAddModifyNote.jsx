@@ -2,7 +2,10 @@ import { Transition } from '@/components/Transition';
 import { useTheme } from '@emotion/react';
 import {
   Checkbox,
+  FormControlLabel,
+  FormGroup,
   Grid,
+  Stack,
   TextField,
   Typography,
   useMediaQuery,
@@ -118,21 +121,24 @@ const DialogAddModifyNote = ({
       TransitionComponent={Transition}
       keepMounted
       aria-describedby="creating-or-editing-note"
-      maxWidth="xs"
+      maxWidth="md"
       fullWidth
       fullScreen={lessThanSm}
       onClose={handleClose}
     >
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
-        <Grid container spacing={2} alignItems="center" pb={2}>
-          <Grid item xs={12} md={12}>
-            <Typography variant="body1">
-              {t('property-info.notes.note')}
-            </Typography>
+        <Grid
+          container
+          spacing={2}
+          alignItems="center"
+          justifyContent="flex-end"
+        >
+          <Grid item xs={12}>
             <TextField
               multiline
               fullWidth
+              placeholder={t('property-info.notes.note')}
               rows={4}
               value={note.description}
               onChange={(event) =>
@@ -144,34 +150,45 @@ const DialogAddModifyNote = ({
               }
             />
           </Grid>
-          <Grid item xs={12} md={12}>
-            <Typography variant="body1">
-              {t('property-info.notes.isPublic')}
-            </Typography>
-            <Checkbox
-              checked={note.public === 1 ? true : false}
-              onChange={handlePublicCheckboxChange}
-            />
-          </Grid>
+          <Stack direction="row" justifyContent="flex-end">
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    defaultChecked
+                    checked={note.public === 1 ? true : false}
+                    onChange={handlePublicCheckboxChange}
+                  />
+                }
+                label={t('property-info.notes.isPublic')}
+              />
+            </FormGroup>
+          </Stack>
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => handleSaveNote()}
-          fullWidth
-        >
-          {t('property-info.notes.save')}
-        </Button>
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={() => handleCancelNote()}
-          fullWidth
-        >
-          {t('property-info.notes.cancel')}
-        </Button>
+        <Grid container spacing={2}>
+          <Grid item xs={8}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => handleSaveNote()}
+              fullWidth
+            >
+              {t('property-info.notes.save')}
+            </Button>
+          </Grid>
+          <Grid item xs={4}>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => handleCancelNote()}
+              fullWidth
+            >
+              {t('property-info.notes.cancel')}
+            </Button>
+          </Grid>
+        </Grid>
       </DialogActions>
     </Dialog>
   );
