@@ -167,6 +167,9 @@ const AddButtonModal = () => {
         fullScreen={lessThanMedium}
         maxWidth="md"
         fullWidth
+        sx={{
+          zIndex: 13000,
+        }}
       >
         <Grid
           container
