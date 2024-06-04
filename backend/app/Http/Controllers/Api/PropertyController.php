@@ -42,8 +42,15 @@ class PropertyController extends Controller {
      */
     public function prepare(string $id) {
         try {
-            $pythonScriptPath = base_path('storage/python/python-scrapping.py');
-            $output = shell_exec('python3 ' . escapeshellarg($pythonScriptPath) . ' ' . escapeshellarg($id));
+            // Ruta base
+            $basePath = base_path();
+            // Ruta al script Python
+            $pythonScriptPath = $basePath . '/storage/python/python-scrapping.py';
+            // Ruta al entorno virtual de Python
+            $pythonEnvPath = $basePath . '/storage/python/env/bin/python';
+
+            $command = escapeshellarg($pythonEnvPath) . ' ' . escapeshellarg($pythonScriptPath) . ' ' . escapeshellarg($id);
+            $output = shell_exec($command);
 
             if ($output === null) {
                 throw new \Exception('Error al ejecutar el script Python');

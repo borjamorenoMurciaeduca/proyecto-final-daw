@@ -10,22 +10,25 @@ Detalles para puesta en marcha del proyecto IdealistaWatch
 
 - Apache
 - MySQL, phpMyAdmin
-- python (https y parsel como dependencias)
+- python y dependencias necesarias
 
 ```bash
 $ sudo apt install apache2 mysql-server php libapache2-mod-php php-mysql
 $ sudo apt install phpmyadmin
-$ sudo apt install python3
-$ sudo apt install python3-pip
--- Dependecias de python
-$ pip3 install httpx parsel
-or
-$ sudo apt install python3-httpx python3-parsel
+$ sudo apt install python3 python3-pip python3-venv
+# Nos movemos a la ruta donde se encuentra el archivo python
+$ cd ./backend/storage/python/
+# Crear un entorno virtual
+$ python3 -m venv myenv
+# Activar el entorno virtual
+$ source myenv/bin/activate
+# Ahora puedes instalar las dependencias con pip3
+$ pip3 install -r requirements.txt
+# Desactivar el entorno virtual
+$ deactivate
 ```
 
-_Si usamos pip3 y tenemos un error a la hora de instalar podemos eliminar el archivo `$ sudo rm /usr/lib/python3.11/EXTERNALLY-MANAGED` y en nuestro archivo de nuestra shell, .bashrc .zshrc etc. añadimos `export PATH="$PATH:/home/{usuario}/.local/bin"`_
-
-_Comprobamos que el archivo ./backend/storage/python-scrapping.py tiene privilegios de lectura y ejecución, de no ser así ejecturar `$ chmod +rx python-scrapping.py`_
+_Comprobamos que el archivo ./backend/storage/python-scrapping.py tiene privilegios de lectura y ejecución, de no ser así ejecutar `$ chmod +rx python-scrapping.py`_
 
 _Debemos tener un usuario en MySQL con todos los privilegios habilitados_
 
