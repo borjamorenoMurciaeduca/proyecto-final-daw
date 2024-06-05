@@ -8,7 +8,6 @@ import TimelineIcon from '@mui/icons-material/Timeline';
 import {
   BottomNavigation,
   BottomNavigationAction,
-  Box,
   Card,
   CardContent,
   Container,
@@ -97,7 +96,9 @@ const SharedProperty = () => {
                         sx={{ mb: 1.5, textAlign: 'right' }}
                       >
                         {note.updated_at
-                          ? `${t('property-info.notes.updated_at')} ${parser.formatDate(
+                          ? `${t(
+                              'property-info.notes.updated_at'
+                            )} ${parser.formatDate(
                               note?.updated_at,
                               i18n.language
                             )}`

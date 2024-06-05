@@ -1,4 +1,5 @@
 import { Transition } from '@/components/Transition';
+import noteService from '@/services/noteService.js';
 import { useTheme } from '@emotion/react';
 import {
   Checkbox,
@@ -7,7 +8,6 @@ import {
   Grid,
   Stack,
   TextField,
-  Typography,
   useMediaQuery,
 } from '@mui/material';
 import Button from '@mui/material/Button';
@@ -17,7 +17,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useSnackbar } from 'notistack';
 import { useTranslation } from 'react-i18next';
-import noteService from '@/services/noteService.js';
 
 const DialogAddModifyNote = ({
   open,

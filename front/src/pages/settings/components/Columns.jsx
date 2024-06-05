@@ -9,7 +9,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { useSnackbar } from 'notistack';
 import { useTranslation } from 'react-i18next';
 
-export const Columns = (handleOpenDialog) => {
+const Columns = (handleOpenDialog) => {
   const { enqueueSnackbar } = useSnackbar();
   const { revokeShareProperty } = useProperties();
   const { t } = useTranslation();
@@ -177,15 +177,4 @@ export const Columns = (handleOpenDialog) => {
   ];
 };
 
-export const createRows = (data) => {
-  return data.map(
-    ({ property_id, title, location, share_url, created_at, is_shared }) => ({
-      property_id,
-      title,
-      location,
-      share_url: !share_url ? '❌' : `${share_url}`,
-      created_at: parser.DateReceived(created_at),
-      is_shared,
-    })
-  );
-};
+export default Columns;

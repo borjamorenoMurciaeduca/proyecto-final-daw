@@ -1,7 +1,7 @@
 import LayoutNotLogged from '@/layout/LayoutNotLogged';
 import Register from '@/pages/register/Register';
 
-const LayoutRoutes = [
+const RegisterRoutes = [
   {
     element: <LayoutNotLogged />,
     children: [
@@ -11,8 +11,4 @@ const LayoutRoutes = [
   },
 ];
 
-export default [
-  {
-    children: LayoutRoutes,
-  },
-];
+export default RegisterRoutes;

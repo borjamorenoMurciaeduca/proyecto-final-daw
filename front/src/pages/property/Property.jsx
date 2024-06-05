@@ -42,7 +42,7 @@ const Property = () => {
       (el) => el.property_id == property_id
     );
     !propertyMatch ? navigate('/404') : setTitle(propertyMatch.title);
-  }, [properties]);
+  }, [properties, property_id, navigate]);
 
   return (
     <>

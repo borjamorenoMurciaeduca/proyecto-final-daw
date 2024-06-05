@@ -1,22 +1,21 @@
+import i18n from '@/commons/i18n/i18n';
+import parser from '@/utils/parser';
 import {
   Button,
   Checkbox,
   FormControlLabel,
   Grid,
-  InputAdornment,
   TextField,
 } from '@mui/material';
+import Chip from '@mui/material/Chip';
+import { useTheme } from '@mui/material/styles';
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import UnstyledTextareaIntroduction from './TextAreaAutoSize';
-import PropertyTypeSelect from './PropertyTypeSelect';
-import parser from '@/utils/parser';
-import i18n from '@/commons/i18n/i18n';
-import PriceTextField from './PriceTextField';
-import Chip from '@mui/material/Chip';
-import { useTheme } from '@mui/material/styles';
 import NumericTextField from './NumericTextField';
+import PriceTextField from './PriceTextField';
+import PropertyTypeSelect from './PropertyTypeSelect';
+import UnstyledTextareaIntroduction from './TextAreaAutoSize';
 
 const PropertyForm = ({
   property = {},

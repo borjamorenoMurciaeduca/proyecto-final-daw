@@ -1,5 +1,3 @@
-/* eslint-disable no-unneeded-ternary */
-/* eslint-disable eol-last */
 export const CheckStringAlphanumeric = (value) =>
   value.match(/^[0-9]+$/) === null ? true : false;
 

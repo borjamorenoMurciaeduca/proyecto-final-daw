@@ -1,17 +1,27 @@
 import useConfirmationDialog from '@/hooks/useConfirmationDialog';
 import useProperties from '@/hooks/useProperties';
+import parser from '@/utils/parser';
 import { Grid } from '@mui/material';
 import MUIDataTable from 'mui-datatables';
-import CustomToolbar from './CustomToolbar';
-import { Columns, createRows } from './TableFills';
 import { useTranslation } from 'react-i18next';
+import Columns from './Columns';
+import CustomToolbar from './CustomToolbar';
 
 const PropertiesTable = () => {
   const { properties, deleteProperties } = useProperties();
   const { handleOpenDialog, IdealConfirmDialog } = useConfirmationDialog();
   const { t } = useTranslation();
 
-  const rows = createRows(properties);
+  const rows = properties.map(
+    ({ property_id, title, location, share_url, created_at, is_shared }) => ({
+      property_id,
+      title,
+      location,
+      share_url: !share_url ? '❌' : `${share_url}`,
+      created_at: parser.DateReceived(created_at),
+      is_shared,
+    })
+  );
 
   const options = {
     search: true,
