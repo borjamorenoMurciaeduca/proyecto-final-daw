@@ -157,7 +157,8 @@
         "update-price": "Update price"
       },
       "tooltip": {
-        "update-price": "Update price"
+        "update-price": "Update price",
+        "update-price-disabled" : "Property deregistered"
       },
       "price-updated": {
         "success": "Price updated successfully",

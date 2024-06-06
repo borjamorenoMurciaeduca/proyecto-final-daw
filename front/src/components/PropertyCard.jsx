@@ -31,6 +31,7 @@ const PropertyCard = ({ property }) => {
     description,
     type_property,
     url_image,
+    cancellation_date,
   } = property;
 
   const navigate = useNavigate();
@@ -144,15 +145,26 @@ const PropertyCard = ({ property }) => {
         disableSpacing
         sx={{ justifyContent: 'space-between', p: 0 }}
       >
-        <Tooltip title={t('property-info.details.tooltip.update-price')}>
-          <Button
-            size="small"
-            variant="outlined"
-            onClick={() => handleUpdatePrice(property_id)}
-            sx={{ ml: 1 }}
-          >
-            {t('property-info.details.button.update-price')}
-          </Button>
+        <Tooltip
+          title={
+            cancellation_date
+              ? t('property-info.details.tooltip.update-price-disabled')
+              : t('property-info.details.tooltip.update-price')
+          }
+        >
+          <span>
+            <Button
+              size="small"
+              variant="outlined"
+              disabled={cancellation_date ? true : false}
+              onClick={() => handleUpdatePrice(property_id)}
+              sx={{ ml: 1 }}
+            >
+              {cancellation_date
+                ? t('property-info.details.tooltip.update-price-disabled')
+                : t('property-info.details.tooltip.update-price')}
+            </Button>
+          </span>
         </Tooltip>
         <Tooltip title={t('favorite.aria-label.add')}>
           <IconButton

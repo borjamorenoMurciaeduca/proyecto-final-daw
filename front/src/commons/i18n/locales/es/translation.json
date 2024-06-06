@@ -157,7 +157,8 @@
         "update-price": "Actualizar precio"
       },
       "tooltip": {
-        "update-price": "Actualizar precio"
+        "update-price": "Actualizar precio",
+        "update-price-disabled" : "Vivienda de baja"
       },
       "price-updated": {
         "success": "Precio actualizado con éxito",
