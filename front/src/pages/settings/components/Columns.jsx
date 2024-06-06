@@ -3,11 +3,12 @@ import propertyService from '@/services/propertyService';
 import parser from '@/utils/parser';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import PublicOffIcon from '@mui/icons-material/PublicOff';
-import { Button } from '@mui/material';
+import { Button, Link } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { useSnackbar } from 'notistack';
 import { useTranslation } from 'react-i18next';
+import { NavLink as RouterLink } from 'react-router-dom';
 
 const Columns = (handleOpenDialog) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -63,6 +64,17 @@ const Columns = (handleOpenDialog) => {
         customFilterListOptions: {
           render: (v) =>
             `${t('page.configuration-management.table.property_id')}: ${v}`,
+        },
+        customBodyRender: (value) => {
+          return (
+            <Link
+              component={RouterLink}
+              to={`/app/property/${value}`}
+              target="_blank"
+            >
+              {value}
+            </Link>
+          );
         },
       },
     },
