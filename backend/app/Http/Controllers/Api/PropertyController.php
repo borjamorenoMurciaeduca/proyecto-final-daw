@@ -66,7 +66,7 @@ class PropertyController extends Controller {
 
             return $property;
         } catch (\Exception $e) {
-            return ApiResponse::error('Inmueble no encontrado', 404);
+            return ApiResponse::error('Inmueble no encontrado: ' . $e->getMessage(), 404);
         }
     }
 
