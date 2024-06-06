@@ -7,7 +7,7 @@ import Property from '@/pages/property/Property';
 import Settings from '@/pages/settings/Settings';
 import { Navigate } from 'react-router-dom';
 
-const LayoutRoutes = [
+const AppRoutes = [
   {
     element: <Layout />,
     children: [
@@ -22,8 +22,4 @@ const LayoutRoutes = [
   },
 ];
 
-export default [
-  {
-    children: LayoutRoutes,
-  },
-];
+export default AppRoutes;

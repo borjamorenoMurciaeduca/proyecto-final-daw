@@ -47,68 +47,6 @@ const Login = () => {
     event.preventDefault();
   };
 
-  const handleLoginSubmit = async (e) => {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    const identifier = data.get('identifier');
-    const password = data.get('password');
-    setLoading(true);
-    try {
-      if (!password) throw new Error('Password is required');
-
-      /**
-       * userService.login
-       * Obtenemos los datos del usuario
-       *   guardamos en el estado global de UserProvider los datos del usuario
-       *
-       * propertyService.getAllUserProperties
-       * Obtenemos los inmuebles del usuario
-       *  guardamos en el estado global de ViviendasProvider los inmuebles del usuario
-       */
-      const res = await userService.login({
-        identifier,
-        password,
-      });
-      let { token, user } = res.data;
-
-      // Guardamos el token en una cookie con una duración de 8 horas
-
-      const expirationDateCookie = Date.now() + 8 * 60 * 60 * 1000;
-      const expirationSeconds = parseInt(
-        ((expirationDateCookie - Date.now()) / 1000).toFixed()
-      );
-      cookie.set(USER_COOKIE_TOKEN, token, expirationSeconds);
-
-      //Obtener los datos del usuario y los inmuebles
-      const property = await propertyService.getAllUserProperties();
-      // Seteamos la página actual a 1
-      setUser({ ...user, currentPage: 1 });
-      setProperties(property.data);
-
-      e.target.identifier.value = '';
-      e.target.password.value = '';
-
-      setError(false);
-      navigate('/app', { replace: true });
-      enqueueSnackbar(`${t('snackbar.login')} ${user.username}`, {
-        variant: 'info',
-        anchorOrigin: {
-          vertical: 'top',
-          horizontal: 'center',
-        },
-        autoHideDuration: 2000,
-      });
-    } catch (error) {
-      console.warn(error);
-      setError(t('snackbar.login-error'));
-      setTimeout(() => {
-        setError(null);
-      }, 5000);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const formik = useFormik({
     initialValues: { identifier: '', password: '' },
     validationSchema: loginValidationSchema, // Our Yup schema

@@ -335,7 +335,7 @@ const MyProperties = () => {
                 sx={{
                   position: 'fixed',
                   left: { xs: 5, lg: 45 },
-                  top: '20%',
+                  top: '24%',
                 }}
               >
                 <FilterAltIcon />
@@ -367,7 +367,7 @@ const MyProperties = () => {
             sx={{
               minHeight: '75vh',
               mt: 1,
-              mb: { md: 4, lg: 'auto' },
+              mb: { md: 3 },
             }}
           >
             <Grid

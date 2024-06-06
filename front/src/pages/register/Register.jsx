@@ -1,7 +1,6 @@
 import Copyright from '@/components/Copyright';
 import LanguageSelector from '@/components/LanguageSelector';
 import userService from '@/services/userService';
-import parser from '@/utils/parser';
 import registerValidationSchema from '@/validation/registerValidation';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';

@@ -1,5 +1,5 @@
-import { CheckStringAlphanumeric } from './strings';
 import { CONVERT_EURO_LIBRA } from '@/commons/config/config.js';
+import { CheckStringAlphanumeric } from './strings';
 
 function CleanId(id) {
   try {
@@ -104,9 +104,8 @@ function FormatPriceLang(value, lang) {
   let result = value;
   if (lang === 'en') {
     result = value / CONVERT_EURO_LIBRA;
-  } 
+  }
   return result;
-
 }
 
 function FormatNumber(value, lang) {
@@ -124,8 +123,7 @@ function FormatNumber(value, lang) {
     });
   }
   return value;
-};
-
+}
 
 function FormatPrice(value, lang, includeCurrency = true) {
   const precioNumero = Number(value);
@@ -133,7 +131,7 @@ function FormatPrice(value, lang, includeCurrency = true) {
     return '';
   }
 
-  const options = { style: "decimal", minimumFractionDigits: 2,};
+  const options = { style: 'decimal', minimumFractionDigits: 2 };
 
   if (includeCurrency) {
     options.style = 'currency';
@@ -141,22 +139,18 @@ function FormatPrice(value, lang, includeCurrency = true) {
 
     if (options.currency === 'GBP') {
       const precioLibra = precioNumero * CONVERT_EURO_LIBRA;
-      return Intl.NumberFormat('en-GB', options).format(
-        precioLibra, );
+      return Intl.NumberFormat('en-GB', options).format(precioLibra);
     } else {
-      return Intl.NumberFormat('de-DE', options).format(
-        precioNumero, );
+      return Intl.NumberFormat('de-DE', options).format(precioNumero);
     }
   }
 
   if (lang === 'en') {
     const precioLibra = precioNumero * CONVERT_EURO_LIBRA;
-    return Intl.NumberFormat('en-GB', options).format(
-      precioLibra, );
+    return Intl.NumberFormat('en-GB', options).format(precioLibra);
   } else {
-    return Intl.NumberFormat('de-DE', options).format(
-      precioNumero, );
-    }
+    return Intl.NumberFormat('de-DE', options).format(precioNumero);
+  }
 }
 
 function formatDate(value, lang, showHours = true) {
@@ -191,7 +185,6 @@ function getFullURL(value) {
 }
 
 function getCurrency(lang) {
-
   return lang === 'en' ? '£' : '€';
 }
 
@@ -210,5 +203,5 @@ export default {
   DateToUrl,
   AddSpaces,
   getFullURL,
-  getCurrency
+  getCurrency,
 };
