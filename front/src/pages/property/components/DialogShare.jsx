@@ -24,7 +24,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useSnackbar } from 'notistack';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const DialogShare = ({ open, setOpen, isShared, propertyURL, propertyId }) => {
@@ -36,15 +36,30 @@ const DialogShare = ({ open, setOpen, isShared, propertyURL, propertyId }) => {
   const lessThanSm = useMediaQuery(theme.breakpoints.down('sm'));
   const { t } = useTranslation();
 
-  useEffect(() => {
-    if (open && !isShared) {
-      handleShare();
-    } else if (isShared && propertyURL) {
-      setShareUrlId(propertyURL);
-    }
-  }, [open, isShared, propertyURL]);
+  const handleCopyToClipboard = useCallback(
+    (e, url = shareUrlId) => {
+      if (e) e.preventDefault();
 
-  const handleShare = async () => {
+      const urlToCopy = parser.getFullURL(url);
+
+      navigator.clipboard
+        .writeText(urlToCopy)
+        .then(() => {
+          enqueueSnackbar(t('property-share.generator.success-copy'), {
+            variant: 'info',
+          });
+        })
+        .catch((error) => {
+          enqueueSnackbar(t('property-share.generator.fail-copy'), {
+            variant: 'error',
+          });
+          console.warn(error);
+        });
+    },
+    [shareUrlId, enqueueSnackbar, t]
+  );
+
+  const handleShare = useCallback(async () => {
     setLoading(true);
     try {
       const { data } = await propertyService.shareProperty(propertyId);
@@ -68,27 +83,15 @@ const DialogShare = ({ open, setOpen, isShared, propertyURL, propertyId }) => {
         setLoading(false);
       }, 1000);
     }
-  };
+  }, [propertyId, updateProperty, handleCopyToClipboard, enqueueSnackbar, t]);
 
-  const handleCopyToClipboard = (e, url = shareUrlId) => {
-    if (e) e.preventDefault();
-
-    const urlToCopy = parser.getFullURL(url);
-
-    navigator.clipboard
-      .writeText(urlToCopy)
-      .then(() => {
-        enqueueSnackbar(t('property-share.generator.success-copy'), {
-          variant: 'info',
-        });
-      })
-      .catch((error) => {
-        enqueueSnackbar(t('property-share.generator.fail-copy'), {
-          variant: 'error',
-        });
-        console.warn(error);
-      });
-  };
+  useEffect(() => {
+    if (open && !isShared) {
+      handleShare();
+    } else if (isShared && propertyURL) {
+      setShareUrlId(propertyURL);
+    }
+  }, [open, isShared, propertyURL, handleShare]);
 
   const handleClose = (_, reason) => {
     if (reason === 'backdropClick' && loading) {

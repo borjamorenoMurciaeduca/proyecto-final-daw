@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { TextField, MenuItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
@@ -6,25 +6,31 @@ const PropertyTypeSelect = ({ propertyValue, onChange }) => {
   const { t } = useTranslation();
   const [selectedTypeProperty, setSelectedTypeProperty] = useState('');
 
-  const typeProperties = [
-    { type_properties_id: 0, description: 'others' },
-    { type_properties_id: 1, description: 'property' },
-    { type_properties_id: 2, description: 'garage' },
-  ];
+  const typeProperties = useMemo(
+    () => [
+      { type_properties_id: 0, description: 'others' },
+      { type_properties_id: 1, description: 'property' },
+      { type_properties_id: 2, description: 'garage' },
+    ],
+    []
+  );
 
-  const findTypePropertyId = (description) => {
-    const typeProperty = typeProperties.find(
-      (prop) => prop.description === description
-    );
-    return typeProperty ? typeProperty.type_properties_id : '';
-  };
+  const findTypePropertyId = useCallback(
+    (description) => {
+      const typeProperty = typeProperties.find(
+        (prop) => prop.description === description
+      );
+      return typeProperty ? typeProperty.type_properties_id : '';
+    },
+    [typeProperties]
+  );
 
   useEffect(() => {
     if (propertyValue !== undefined) {
       const typePropertyId = findTypePropertyId(propertyValue);
       setSelectedTypeProperty(typePropertyId);
     }
-  }, [propertyValue]);
+  }, [propertyValue, findTypePropertyId]);
 
   const handleChange = (event) => {
     const newValue = event.target.value;
