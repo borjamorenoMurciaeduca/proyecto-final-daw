@@ -154,7 +154,6 @@ const DialogAddModifyNote = ({
               <FormControlLabel
                 control={
                   <Checkbox
-                    defaultChecked
                     checked={note.public === 1 ? true : false}
                     onChange={handlePublicCheckboxChange}
                   />
