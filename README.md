@@ -19,9 +19,9 @@ $ sudo apt install python3 python3-pip python3-venv
 # Nos movemos a la ruta donde se encuentra el archivo python
 $ cd ./backend/storage/python/
 # Crear un entorno virtual
-$ python3 -m venv myenv
+$ python3 -m venv env
 # Activar el entorno virtual
-$ source myenv/bin/activate
+$ source env/bin/activate
 # Ahora puedes instalar las dependencias con pip3
 $ pip3 install -r requirements.txt
 # Desactivar el entorno virtual
@@ -77,7 +77,7 @@ $ cd ./backend
 $ composer install
 $ php artisan migrate
  *Aceptamos la creación de la tabla*
-$ php artisan migrate:fresh --seed`
+$ php artisan migrate:fresh --seed
 $ php artisan serve
 ```
 
@@ -96,9 +96,9 @@ $ pnpm dev
 - En ./front tendremos un archivo .env que apunta a la api, en caso de cambiar la dirección de nuestra api tan solo tenemos que cambiarlo en este archivo, tendremos la dirección centralizada en una variable de entorno
 
 ```properties
-VITE_API_URL= '{URL_API}'
+VITE_API_URL='{API_URL}'
 ```
 
-_Donde URL_API apuntara a la dirección de nuestra api_
+_Donde API_URL apuntara a la dirección de nuestra api_
 
 - Para compilar y exportar el proyecto `$ pnpm build`
