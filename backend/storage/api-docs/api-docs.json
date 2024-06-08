@@ -31,17 +31,95 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "password_confirmation",
+                        "in": "query",
+                        "description": "User's password confirmation",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "User's name",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "surname",
+                        "in": "query",
+                        "description": "User's surname",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "birth_date",
+                        "in": "query",
+                        "description": "User's birth date",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "avatar_url",
+                        "in": "query",
+                        "description": "User's avatar url",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "User's phone",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "User's email",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 ],
                 "responses": {
                     "201": {
-                        "description": "Usuario creado con éxito"
+                        "description": "Usuario creado con éxito",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "404": {
-                        "description": "No se ha podido procesar"
+                        "description": "No se ha podido procesar",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "422": {
-                        "description": "Error de validación"
+                        "description": "Error de validación",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 }
             }
@@ -55,9 +133,9 @@
                 "operationId": "222b2625838e3c57e017987f73598fda",
                 "parameters": [
                     {
-                        "name": "username",
+                        "name": "identifier",
                         "in": "query",
-                        "description": "User's name",
+                        "description": "User's name or email",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -71,20 +149,16 @@
                         "schema": {
                             "type": "string"
                         }
-                    },
-                    {
-                        "name": "remember",
-                        "in": "query",
-                        "description": "Flag to remember the user",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
                     }
                 ],
                 "responses": {
                     "401": {
-                        "description": "Unauthenticated"
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 }
             }
@@ -98,12 +172,27 @@
                 "operationId": "961ad57987905b44ae2e2f40b82e76de",
                 "responses": {
                     "200": {
-                        "description": "success"
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "404": {
-                        "description": "No se ha podido procesar"
+                        "description": "No se ha podido procesar",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "/api/logout": {
@@ -115,12 +204,27 @@
                 "operationId": "ad65cbbd4e9f201619eae184a5961a98",
                 "responses": {
                     "200": {
-                        "description": "Successfully logged out"
+                        "description": "Successfully logged out",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "400": {
-                        "description": "Error logging out"
+                        "description": "Error logging out",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "/api/prepare-inmueble": {
@@ -129,7 +233,7 @@
                     "Inmueble"
                 ],
                 "summary": " Display the specified resource.",
-                "operationId": "78cf3182557080939a229ceead193285",
+                "operationId": "c4131b35682a39459d790cfb598dfda9",
                 "parameters": [
                     {
                         "name": "id",
@@ -152,32 +256,12 @@
             }
         },
         "/api/inmueble": {
-            "get": {
-                "tags": [
-                    "Inmueble"
-                ],
-                "summary": " Display the specified resource.",
-                "operationId": "43261e5c1c31a8be3633cb041cd8a2f2",
-                "responses": {
-                    "200": {
-                        "description": "Inmuebles encontrados"
-                    },
-                    "404": {
-                        "description": "Inmuebles no encontrados"
-                    }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
-            },
             "post": {
                 "tags": [
                     "Inmueble"
                 ],
                 "summary": "Store a newly created resource in storage.",
-                "operationId": "7cef008ae823717ea855b2450a27f0e7",
+                "operationId": "ecc47c53b85ae9d0ae8d590e56689d3c",
                 "parameters": [
                     {
                         "name": "referencia",
@@ -285,7 +369,7 @@
                     "Inmueble"
                 ],
                 "summary": " Store a new price.",
-                "operationId": "19be59e3681a84876bcb0dbe1c441846",
+                "operationId": "4e8e83bb9db1c481ab54f805d4ce872d",
                 "parameters": [
                     {
                         "name": "id",
