@@ -849,6 +849,7 @@ class PropertyController extends Controller {
      *    path="/api/property/{id}/prices",
      *    summary="Get prices for a property.",
      *    tags={"Inmueble"},
+     *    security={{"sanctum":{}}},
      *    @OA\Parameter(
      *        name="id",
      *        in="path",
@@ -878,12 +879,12 @@ class PropertyController extends Controller {
 
     /**
      * @OA\Post(
-     *    path="/api/property/{propertyId}/share",
+     *    path="/api/property/{id}/share",
      *    summary="Share a property.",
      *    tags={"Inmueble"},
      *    security={{"sanctum":{}}},
      *    @OA\Parameter(
-     *        name="propertyId",
+     *        name="id",
      *        in="path",
      *        description="ID del inmueble",
      *        required=true,
@@ -960,11 +961,11 @@ class PropertyController extends Controller {
 
     /**
      * @OA\Get(
-     *    path="/api/shared-property/{shareUrl}",
+     *    path="/api/shared-property/{share_url}",
      *    summary="Get shared property details.",
      *    tags={"Inmueble"},
      *    @OA\Parameter(
-     *        name="shareUrl",
+     *        name="share_url",
      *        in="path",
      *        description="URL compartida",
      *        required=true,
@@ -1038,7 +1039,6 @@ class PropertyController extends Controller {
             $fav = !$userProperty->favorite;
             UserProperty::where('property_id_fk', $propertyId)->where('user_id_fk', $user->id)
                 ->update(['favorite' => $fav]);
-            // $userProperty->update(['favorite' => $fav]);
             $data = [
                 'property_id' => $userProperty->property_id_fk,
                 'favorite' => $fav,
