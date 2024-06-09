@@ -247,10 +247,20 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Inmueble encontrado"
+                        "description": "Inmueble encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Inmueble no encontrado"
+                        "description": "Inmueble no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -269,10 +279,20 @@
                 "operationId": "01aae039e0b1c7a931146c9370e4ac3a",
                 "responses": {
                     "200": {
-                        "description": "Inmuebles encontrados"
+                        "description": "Inmuebles encontrados",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Inmuebles no encontrados"
+                        "description": "Inmuebles no encontrados",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -409,13 +429,28 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "Inmueble creado exitosamente"
+                        "description": "Inmueble creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "400": {
-                        "description": "Error de validación"
+                        "description": "Error de validación",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "500": {
-                        "description": "Error del servidor"
+                        "description": "Error del servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -445,10 +480,20 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Inmueble encontrado"
+                        "description": "Inmueble encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Inmueble no encontrado"
+                        "description": "Inmueble no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -566,13 +611,28 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Inmueble actualizado exitosamente"
+                        "description": "Inmueble actualizado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "400": {
-                        "description": "Error de validación"
+                        "description": "Error de validación",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "500": {
-                        "description": "Error del servidor"
+                        "description": "Error del servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -620,13 +680,28 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "Nota creada exitosamente"
+                        "description": "Nota creada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "400": {
-                        "description": "Error de validación"
+                        "description": "Error de validación",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "500": {
-                        "description": "Error del servidor"
+                        "description": "Error del servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -656,16 +731,36 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Nota eliminada exitosamente"
+                        "description": "Nota eliminada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "403": {
-                        "description": "No autorizado para eliminar esta nota"
+                        "description": "No autorizado para eliminar esta nota",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Nota no encontrada"
+                        "description": "Nota no encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "500": {
-                        "description": "Error del servidor"
+                        "description": "Error del servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -722,13 +817,28 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Nota actualizada exitosamente"
+                        "description": "Nota actualizada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Nota no encontrada"
+                        "description": "Nota no encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "500": {
-                        "description": "Error del servidor"
+                        "description": "Error del servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -758,13 +868,28 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "Precio añadido exitosamente"
+                        "description": "Precio añadido exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "400": {
-                        "description": "El inmueble no existe"
+                        "description": "El inmueble no existe",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "500": {
-                        "description": "Error genérico"
+                        "description": "Error genérico",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -774,13 +899,13 @@
                 ]
             }
         },
-        "/api/getPrices/{id}": {
+        "/api/property/{id}/prices": {
             "get": {
                 "tags": [
                     "Inmueble"
                 ],
                 "summary": "Get prices for a property.",
-                "operationId": "df862cf4576faf5b257f8390165e919f",
+                "operationId": "79b507527d69644ae5d37cc14edaadb2",
                 "parameters": [
                     {
                         "name": "id",
@@ -794,21 +919,31 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Precios encontrados"
+                        "description": "Precios encontrados",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Precios no encontrados"
+                        "description": "Precios no encontrados",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 }
             }
         },
-        "/api/shareProperty/{propertyId}": {
+        "/api/property/{propertyId}/share": {
             "post": {
                 "tags": [
                     "Inmueble"
                 ],
                 "summary": "Share a property.",
-                "operationId": "c422218e2f1751a43599ac5a15c2d965",
+                "operationId": "5e2aed7fa2bcd4379ab969acf6576dec",
                 "parameters": [
                     {
                         "name": "propertyId",
@@ -822,10 +957,20 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Inmueble compartido exitosamente"
+                        "description": "Inmueble compartido exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Inmueble no encontrado"
+                        "description": "Inmueble no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -835,13 +980,13 @@
                 ]
             }
         },
-        "/api/revokeShareProperty/{propertyId}": {
+        "/api/property/{id}/revoke-share": {
             "post": {
                 "tags": [
                     "Inmueble"
                 ],
                 "summary": "Revoke sharing of a property.",
-                "operationId": "3a251a6b3773428d5b933d534646daf6",
+                "operationId": "76fa3e3f02762e7ec0d9b7f6a85ae795",
                 "parameters": [
                     {
                         "name": "propertyId",
@@ -855,10 +1000,20 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Compartir del inmueble revocado exitosamente"
+                        "description": "Compartir del inmueble revocado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Inmueble no encontrado"
+                        "description": "Inmueble no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -868,13 +1023,13 @@
                 ]
             }
         },
-        "/api/sharedProperty/{shareUrl}": {
+        "/api/shared-property/{shareUrl}": {
             "get": {
                 "tags": [
                     "Inmueble"
                 ],
                 "summary": "Get shared property details.",
-                "operationId": "42a6f22b255a8c0735cecbc69af68e0a",
+                "operationId": "030a43b8157c613550346bd63fc89d23",
                 "parameters": [
                     {
                         "name": "shareUrl",
@@ -888,21 +1043,31 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Detalles del inmueble compartido encontrados"
+                        "description": "Detalles del inmueble compartido encontrados",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Inmueble no encontrado"
+                        "description": "Inmueble no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 }
             }
         },
-        "/api/favoriteProperty/{propertyId}": {
+        "/api/property/{id}/favorite": {
             "post": {
                 "tags": [
                     "Inmueble"
                 ],
                 "summary": "Mark a property as favorite.",
-                "operationId": "b7e0a0bdcbaa580111974922a5866e0a",
+                "operationId": "c9afb45e26a2ca70f5167360063aeba6",
                 "parameters": [
                     {
                         "name": "propertyId",
@@ -916,10 +1081,20 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Inmueble marcado como favorito"
+                        "description": "Inmueble marcado como favorito",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Inmueble no encontrado"
+                        "description": "Inmueble no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -952,13 +1127,28 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Inmuebles eliminados exitosamente"
+                        "description": "Inmuebles eliminados exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Inmuebles no encontrados"
+                        "description": "Inmuebles no encontrados",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "500": {
-                        "description": "Error del servidor"
+                        "description": "Error del servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 },
                 "security": [

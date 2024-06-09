@@ -37,8 +37,8 @@ class PropertyController extends Controller {
      *        required=true,
      *        @OA\Schema(type="string")
      *    ),
-     *    @OA\Response(response="200", description="Inmueble encontrado"),
-     *    @OA\Response(response="404", description="Inmueble no encontrado")
+     *    @OA\Response(response="200", description="Inmueble encontrado",@OA\JsonContent()),
+     *    @OA\Response(response="404", description="Inmueble no encontrado",@OA\JsonContent())
      * )
      */
     public function prepare(string $id) {
@@ -231,9 +231,9 @@ class PropertyController extends Controller {
      *        required=true,
      *        @OA\Schema(type="number")
      *    ),
-     *    @OA\Response(response="201", description="Inmueble creado exitosamente"),
-     *    @OA\Response(response="400", description="Error de validación"),
-     *    @OA\Response(response="500", description="Error del servidor")
+     *    @OA\Response(response="201", description="Inmueble creado exitosamente",@OA\JsonContent()),
+     *    @OA\Response(response="400", description="Error de validación",@OA\JsonContent()),
+     *    @OA\Response(response="500", description="Error del servidor",@OA\JsonContent())
      * )
      */
     public function store(Request $request) {
@@ -416,9 +416,9 @@ class PropertyController extends Controller {
      *        required=true,
      *        @OA\Schema(type="number")
      *    ),
-     *    @OA\Response(response="200", description="Inmueble actualizado exitosamente"),
-     *    @OA\Response(response="400", description="Error de validación"),
-     *    @OA\Response(response="500", description="Error del servidor")
+     *    @OA\Response(response="200", description="Inmueble actualizado exitosamente",@OA\JsonContent()),
+     *    @OA\Response(response="400", description="Error de validación",@OA\JsonContent()),
+     *    @OA\Response(response="500", description="Error del servidor",@OA\JsonContent())
      * )
      */
     public function updateProperty(Request $request) {
@@ -536,9 +536,9 @@ class PropertyController extends Controller {
      *        required=true,
      *        @OA\Schema(type="boolean")
      *    ),
-     *    @OA\Response(response="201", description="Nota creada exitosamente"),
-     *    @OA\Response(response="400", description="Error de validación"),
-     *    @OA\Response(response="500", description="Error del servidor")
+     *    @OA\Response(response="201", description="Nota creada exitosamente",@OA\JsonContent()),
+     *    @OA\Response(response="400", description="Error de validación",@OA\JsonContent()),
+     *    @OA\Response(response="500", description="Error del servidor",@OA\JsonContent())
      * )
      */
     public function storeNewNote(Request $request) {
@@ -594,10 +594,10 @@ class PropertyController extends Controller {
      *        required=true,
      *        @OA\Schema(type="integer")
      *    ),
-     *    @OA\Response(response="200", description="Nota eliminada exitosamente"),
-     *    @OA\Response(response="403", description="No autorizado para eliminar esta nota"),
-     *    @OA\Response(response="404", description="Nota no encontrada"),
-     *    @OA\Response(response="500", description="Error del servidor")
+     *    @OA\Response(response="200", description="Nota eliminada exitosamente",@OA\JsonContent()),
+     *    @OA\Response(response="403", description="No autorizado para eliminar esta nota",@OA\JsonContent()),
+     *    @OA\Response(response="404", description="Nota no encontrada",@OA\JsonContent()),
+     *    @OA\Response(response="500", description="Error del servidor",@OA\JsonContent())
      * )
      */
     public function deleteNote(int $noteId) {
@@ -656,9 +656,9 @@ class PropertyController extends Controller {
      *        required=true,
      *        @OA\Schema(type="boolean")
      *    ),
-     *    @OA\Response(response="200", description="Nota actualizada exitosamente"),
-     *    @OA\Response(response="404", description="Nota no encontrada"),
-     *    @OA\Response(response="500", description="Error del servidor")
+     *    @OA\Response(response="200", description="Nota actualizada exitosamente",@OA\JsonContent()),
+     *    @OA\Response(response="404", description="Nota no encontrada",@OA\JsonContent()),
+     *    @OA\Response(response="500", description="Error del servidor",@OA\JsonContent())
      * )
      */
     public function updateNote(Request $request, int $noteId) {
@@ -695,8 +695,8 @@ class PropertyController extends Controller {
      *    summary="Display all user properties.",
      *    tags={"Inmueble"},
      *    security={{"sanctum":{}}},
-     *    @OA\Response(response="200", description="Inmuebles encontrados"),
-     *    @OA\Response(response="404", description="Inmuebles no encontrados")
+     *    @OA\Response(response="200", description="Inmuebles encontrados",@OA\JsonContent()),
+     *    @OA\Response(response="404", description="Inmuebles no encontrados",@OA\JsonContent())
      * )
      */
     public function getAllUserProperties() {
@@ -756,8 +756,8 @@ class PropertyController extends Controller {
      *        required=true,
      *        @OA\Schema(type="string")
      *    ),
-     *    @OA\Response(response="200", description="Inmueble encontrado"),
-     *    @OA\Response(response="404", description="Inmueble no encontrado")
+     *    @OA\Response(response="200", description="Inmueble encontrado",@OA\JsonContent()),
+     *    @OA\Response(response="404", description="Inmueble no encontrado",@OA\JsonContent())
      * )
      */
     public function show(string $id) {
@@ -806,9 +806,9 @@ class PropertyController extends Controller {
      *        required=true,
      *        @OA\Schema(type="string")
      *    ),
-     *    @OA\Response(response="201", description="Precio añadido exitosamente"),
-     *    @OA\Response(response="400", description="El inmueble no existe"),
-     *    @OA\Response(response="500", description="Error genérico")
+     *    @OA\Response(response="201", description="Precio añadido exitosamente",@OA\JsonContent()),
+     *    @OA\Response(response="400", description="El inmueble no existe",@OA\JsonContent()),
+     *    @OA\Response(response="500", description="Error genérico",@OA\JsonContent())
      * )
      */
     public function storeNewPrice(Request $request) {
@@ -846,7 +846,7 @@ class PropertyController extends Controller {
 
     /**
      * @OA\Get(
-     *    path="/api/getPrices/{id}",
+     *    path="/api/property/{id}/prices",
      *    summary="Get prices for a property.",
      *    tags={"Inmueble"},
      *    @OA\Parameter(
@@ -856,8 +856,8 @@ class PropertyController extends Controller {
      *        required=true,
      *        @OA\Schema(type="string")
      *    ),
-     *    @OA\Response(response="200", description="Precios encontrados"),
-     *    @OA\Response(response="404", description="Precios no encontrados")
+     *    @OA\Response(response="200", description="Precios encontrados",@OA\JsonContent()),
+     *    @OA\Response(response="404", description="Precios no encontrados",@OA\JsonContent())
      * )
      */
     public function getPrices(string $id) {
@@ -878,7 +878,7 @@ class PropertyController extends Controller {
 
     /**
      * @OA\Post(
-     *    path="/api/shareProperty/{propertyId}",
+     *    path="/api/property/{propertyId}/share",
      *    summary="Share a property.",
      *    tags={"Inmueble"},
      *    security={{"sanctum":{}}},
@@ -889,8 +889,8 @@ class PropertyController extends Controller {
      *        required=true,
      *        @OA\Schema(type="integer")
      *    ),
-     *    @OA\Response(response="200", description="Inmueble compartido exitosamente"),
-     *    @OA\Response(response="404", description="Inmueble no encontrado")
+     *    @OA\Response(response="200", description="Inmueble compartido exitosamente",@OA\JsonContent()),
+     *    @OA\Response(response="404", description="Inmueble no encontrado",@OA\JsonContent())
      * )
      */
     public function shareProperty($propertyId) {
@@ -913,7 +913,7 @@ class PropertyController extends Controller {
 
     /**
      * @OA\Post(
-     *    path="/api/revokeShareProperty/{propertyId}",
+     *    path="/api/property/{id}/revoke-share",
      *    summary="Revoke sharing of a property.",
      *    tags={"Inmueble"},
      *    security={{"sanctum":{}}},
@@ -924,8 +924,8 @@ class PropertyController extends Controller {
      *        required=true,
      *        @OA\Schema(type="integer")
      *    ),
-     *    @OA\Response(response="200", description="Compartir del inmueble revocado exitosamente"),
-     *    @OA\Response(response="404", description="Inmueble no encontrado")
+     *    @OA\Response(response="200", description="Compartir del inmueble revocado exitosamente",@OA\JsonContent()),
+     *    @OA\Response(response="404", description="Inmueble no encontrado",@OA\JsonContent())
      * )
      */
     public function revokeShareProperty($propertyId) {
@@ -960,7 +960,7 @@ class PropertyController extends Controller {
 
     /**
      * @OA\Get(
-     *    path="/api/sharedProperty/{shareUrl}",
+     *    path="/api/shared-property/{shareUrl}",
      *    summary="Get shared property details.",
      *    tags={"Inmueble"},
      *    @OA\Parameter(
@@ -970,8 +970,8 @@ class PropertyController extends Controller {
      *        required=true,
      *        @OA\Schema(type="string")
      *    ),
-     *    @OA\Response(response="200", description="Detalles del inmueble compartido encontrados"),
-     *    @OA\Response(response="404", description="Inmueble no encontrado")
+     *    @OA\Response(response="200", description="Detalles del inmueble compartido encontrados",@OA\JsonContent()),
+     *    @OA\Response(response="404", description="Inmueble no encontrado",@OA\JsonContent())
      * )
      */
     public function getSharedProperty($shareUrl) {
@@ -1016,7 +1016,7 @@ class PropertyController extends Controller {
 
     /**
      * @OA\Post(
-     *    path="/api/favoriteProperty/{propertyId}",
+     *    path="/api/property/{id}/favorite",
      *    summary="Mark a property as favorite.",
      *    tags={"Inmueble"},
      *    security={{"sanctum":{}}},
@@ -1027,8 +1027,8 @@ class PropertyController extends Controller {
      *        required=true,
      *        @OA\Schema(type="integer")
      *    ),
-     *    @OA\Response(response="200", description="Inmueble marcado como favorito"),
-     *    @OA\Response(response="404", description="Inmueble no encontrado")
+     *    @OA\Response(response="200", description="Inmueble marcado como favorito",@OA\JsonContent()),
+     *    @OA\Response(response="404", description="Inmueble no encontrado",@OA\JsonContent())
      * )
      */
     public function favoriteProperty($propertyId) {
@@ -1062,9 +1062,9 @@ class PropertyController extends Controller {
      *        required=true,
      *        @OA\Schema(type="array", @OA\Items(type="integer"))
      *    ),
-     *    @OA\Response(response="200", description="Inmuebles eliminados exitosamente"),
-     *    @OA\Response(response="404", description="Inmuebles no encontrados"),
-     *    @OA\Response(response="500", description="Error del servidor")
+     *    @OA\Response(response="200", description="Inmuebles eliminados exitosamente",@OA\JsonContent()),
+     *    @OA\Response(response="404", description="Inmuebles no encontrados",@OA\JsonContent()),
+     *    @OA\Response(response="500", description="Error del servidor",@OA\JsonContent())
      * )
      */
     public function deleteMultiple(Request $request) {
