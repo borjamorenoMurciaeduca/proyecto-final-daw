@@ -63,6 +63,10 @@
       "edit": "Editar",
       "save": "Guardar cambios",
       "success": "¡Perfil actualizado con éxito!"
+    },
+    "error": {
+      "password": "Las contraseñas no coinciden",
+      "400": "Error al actualizar el perfil"
     }
   },
   "top-menu": {
@@ -158,7 +162,7 @@
       },
       "tooltip": {
         "update-price": "Actualizar precio",
-        "update-price-disabled" : "Vivienda de baja"
+        "update-price-disabled": "Vivienda de baja"
       },
       "price-updated": {
         "success": "Precio actualizado con éxito",
@@ -173,7 +177,7 @@
           "remove": "Nota borrada"
         },
         "error": {
-          "adding-emty": "No se puede añadir una nota vacía",
+          "adding-empty": "No se puede añadir una nota vacía",
           "note-generic": "Error al añadir nota"
         }
       },
@@ -206,6 +210,10 @@
     "copy": "Copiar",
     "copied": "¡Copiado!",
     "close": "Cerrar",
+    "shared": {
+      "by": "Compartida por",
+      "not-found": "No se ha encontrado la propiedad compartida"
+    },
     "generator": {
       "title": "Generador de enlaces",
       "description": "Comparte esta vivienda con el siguiente enlace",

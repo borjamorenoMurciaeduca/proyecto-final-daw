@@ -232,20 +232,6 @@ const PropertyForm = ({
           onChange={handleInputChange}
           handleError={handleFieldError}
         />
-        {/* <TextField
-          error={!!errors.size}
-          id="size"
-          name="size"
-          label={t('add-property-form.size')}
-          type="number"
-          fullWidth
-          value={propertiesValues.size}
-          InputProps={{
-            endAdornment: <InputAdornment position="end">m²</InputAdornment>,
-            inputProps: { min: 0 },
-          }}
-          onChange={handleInputChange}
-        /> */}
       </Grid>
       <Grid item xs={3} md={2}>
         <TextField

@@ -88,7 +88,7 @@ const DialogAddModifyNote = ({
           }
         }
       } else {
-        enqueueSnackbar(t('property-info.notes.notify.error.adding-emty'), {
+        enqueueSnackbar(t('property-info.notes.notify.error.adding-empty'), {
           variant: 'warning',
         });
       }
@@ -107,7 +107,7 @@ const DialogAddModifyNote = ({
     setOpen(false);
   };
 
-  const handleClose = (event, reason) => {
+  const handleClose = (_, reason) => {
     if (reason === 'backdropClick') {
       setOpen(false);
       return;

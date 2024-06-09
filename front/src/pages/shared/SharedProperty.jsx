@@ -44,14 +44,14 @@ const SharedProperty = () => {
   if (!loading && !property)
     return (
       <Typography variant="h4">
-        No se encontró la propiedad compartida
+        {t('property-share.shared.not-found')}
       </Typography>
     );
 
   return (
     <Container maxWidth="lg">
       <Typography variant="h2" gutterBottom>
-        Vivienda compartida por {property.username}
+        {t('property-share.shared.by')} {property.username}
       </Typography>
       <Grid
         container

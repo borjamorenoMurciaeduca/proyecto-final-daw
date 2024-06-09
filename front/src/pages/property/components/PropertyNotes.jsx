@@ -3,9 +3,9 @@ import PageLoader from '@/components/PageLoader';
 import useProperties from '@/hooks/useProperties';
 import noteService from '@/services/noteService.js';
 import parser from '@/utils/parser';
+import AddCommentIcon from '@mui/icons-material/AddComment';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import AddCommentIcon from '@mui/icons-material/AddComment';
 import {
   Button,
   Card,
@@ -42,11 +42,9 @@ const PropertyNotes = ({ propertyId }) => {
   };
 
   useEffect(() => {
-    const propertieMatch = properties.find(
-      (el) => el.property_id == propertyId
-    );
+    const propertyMatch = properties.find((el) => el.property_id == propertyId);
     setNotes(
-      [...propertieMatch.notes].sort(
+      [...propertyMatch.notes].sort(
         (a, b) => new Date(b.created_at) - new Date(a.created_at)
       )
     );
