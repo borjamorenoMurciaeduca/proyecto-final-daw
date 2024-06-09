@@ -378,7 +378,11 @@
                         "description": "Tiene garaje",
                         "required": true,
                         "schema": {
-                            "type": "boolean"
+                            "type": "integer",
+                            "enum": [
+                                0,
+                                1
+                            ]
                         }
                     },
                     {
@@ -387,7 +391,11 @@
                         "description": "Tiene trastero",
                         "required": true,
                         "schema": {
-                            "type": "boolean"
+                            "type": "integer",
+                            "enum": [
+                                0,
+                                1
+                            ]
                         }
                     },
                     {
@@ -512,7 +520,7 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID del inmueble",
+                        "description": "ID del inmueble de Idealista",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -560,7 +568,11 @@
                         "description": "Tiene garaje",
                         "required": true,
                         "schema": {
-                            "type": "boolean"
+                            "type": "integer",
+                            "enum": [
+                                0,
+                                1
+                            ]
                         }
                     },
                     {
@@ -569,7 +581,11 @@
                         "description": "Tiene trastero",
                         "required": true,
                         "schema": {
-                            "type": "boolean"
+                            "type": "integer",
+                            "enum": [
+                                0,
+                                1
+                            ]
                         }
                     },
                     {
@@ -671,10 +687,14 @@
                     {
                         "name": "public",
                         "in": "query",
-                        "description": "Nota pública",
+                        "description": "Nota pública (1 para sí, 0 para no)",
                         "required": true,
                         "schema": {
-                            "type": "boolean"
+                            "type": "integer",
+                            "enum": [
+                                0,
+                                1
+                            ]
                         }
                     }
                 ],
@@ -808,10 +828,14 @@
                     {
                         "name": "public",
                         "in": "query",
-                        "description": "Nota pública",
+                        "description": "Nota pública (1 para sí, 0 para no)",
                         "required": true,
                         "schema": {
-                            "type": "boolean"
+                            "type": "integer",
+                            "enum": [
+                                0,
+                                1
+                            ]
                         }
                     }
                 ],
@@ -934,19 +958,24 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
-        "/api/property/{propertyId}/share": {
+        "/api/property/{id}/share": {
             "post": {
                 "tags": [
                     "Inmueble"
                 ],
                 "summary": "Share a property.",
-                "operationId": "5e2aed7fa2bcd4379ab969acf6576dec",
+                "operationId": "2b8cece242fb46a624a1a733841edfa0",
                 "parameters": [
                     {
-                        "name": "propertyId",
+                        "name": "id",
                         "in": "path",
                         "description": "ID del inmueble",
                         "required": true,
@@ -1023,16 +1052,16 @@
                 ]
             }
         },
-        "/api/shared-property/{shareUrl}": {
+        "/api/shared-property/{share_url}": {
             "get": {
                 "tags": [
                     "Inmueble"
                 ],
                 "summary": "Get shared property details.",
-                "operationId": "030a43b8157c613550346bd63fc89d23",
+                "operationId": "82e59b226c3cad6b9cbd0b04b44aab87",
                 "parameters": [
                     {
-                        "name": "shareUrl",
+                        "name": "share_url",
                         "in": "path",
                         "description": "URL compartida",
                         "required": true,

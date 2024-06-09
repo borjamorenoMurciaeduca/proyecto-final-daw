@@ -194,14 +194,18 @@ class PropertyController extends Controller {
      *        in="query",
      *        description="Tiene garaje",
      *        required=true,
-     *        @OA\Schema(type="boolean")
+     *        @OA\Schema(type="integer",
+     *          enum={0, 1}
+     *        )
      *    ),
      *    @OA\Parameter(
      *        name="storage_room",
      *        in="query",
      *        description="Tiene trastero",
      *        required=true,
-     *        @OA\Schema(type="boolean")
+     *        @OA\Schema(type="integer",
+     *          enum={0, 1}
+     *        )
      *    ),
      *    @OA\Parameter(
      *        name="bath_rooms",
@@ -379,14 +383,18 @@ class PropertyController extends Controller {
      *        in="query",
      *        description="Tiene garaje",
      *        required=true,
-     *        @OA\Schema(type="boolean")
+     *        @OA\Schema(type="integer",
+     *          enum={0, 1}
+     *        )
      *    ),
      *    @OA\Parameter(
      *        name="storage_room",
      *        in="query",
      *        description="Tiene trastero",
      *        required=true,
-     *        @OA\Schema(type="boolean")
+     *        @OA\Schema(type="integer",
+     *          enum={0, 1}
+     *        )
      *    ),
      *    @OA\Parameter(
      *        name="bath_rooms",
@@ -532,9 +540,11 @@ class PropertyController extends Controller {
      *    @OA\Parameter(
      *        name="public",
      *        in="query",
-     *        description="Nota pública",
+     *        description="Nota pública (1 para sí, 0 para no)",
      *        required=true,
-     *        @OA\Schema(type="boolean")
+     *        @OA\Schema(type="integer",
+     *          enum={0, 1}
+     *        )
      *    ),
      *    @OA\Response(response="201", description="Nota creada exitosamente",@OA\JsonContent()),
      *    @OA\Response(response="400", description="Error de validación",@OA\JsonContent()),
@@ -652,9 +662,11 @@ class PropertyController extends Controller {
      *    @OA\Parameter(
      *        name="public",
      *        in="query",
-     *        description="Nota pública",
+     *        description="Nota pública (1 para sí, 0 para no)",
      *        required=true,
-     *        @OA\Schema(type="boolean")
+     *        @OA\Schema(type="integer",
+     *          enum={0, 1}
+     *        )
      *    ),
      *    @OA\Response(response="200", description="Nota actualizada exitosamente",@OA\JsonContent()),
      *    @OA\Response(response="404", description="Nota no encontrada",@OA\JsonContent()),
