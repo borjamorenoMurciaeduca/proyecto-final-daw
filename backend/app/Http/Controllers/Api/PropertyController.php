@@ -348,6 +348,13 @@ class PropertyController extends Controller {
      *    @OA\Parameter(
      *        name="id",
      *        in="path",
+     *        description="ID del path",
+     *        required=true,
+     *        @OA\Schema(type="string")
+     *    ),
+     *    @OA\Parameter(
+     *        name="property_id",
+     *        in="query",
      *        description="ID del inmueble de Idealista",
      *        required=true,
      *        @OA\Schema(type="string")
@@ -504,7 +511,7 @@ class PropertyController extends Controller {
                 'is_shared' => $userProperty->is_shared,
                 'share_url' => $userProperty->share_url,
                 'favorite' => $userProperty->favorite,
-                'url_image' => $validateProperty['url_image'] ?? null,
+                'url_image' => $userProperty['url_image'] ?? null,
                 'type_property' => $validateUserProperty['type_property'],
                 'cancellation_date' => $validateProperty['cancellation_date'] ?? null,
                 'notes' => $notas ?? '',
@@ -521,7 +528,7 @@ class PropertyController extends Controller {
         }
     }
 
-     /**
+    /**
      * @OA\Post(
      *    path="/api/notes",
      *    summary="Store a new note.",
@@ -650,13 +657,6 @@ class PropertyController extends Controller {
      *        @OA\Schema(type="integer")
      *    ),
      *    @OA\Parameter(
-     *        name="property_id",
-     *        in="query",
-     *        description="ID del inmueble",
-     *        required=true,
-     *        @OA\Schema(type="number")
-     *    ),
-     *    @OA\Parameter(
      *        name="description",
      *        in="query",
      *        description="Descripción de la nota",
@@ -680,13 +680,15 @@ class PropertyController extends Controller {
     public function updateNote(Request $request, int $noteId) {
         try {
             $validatedData = $request->validate([
-                'property_id' => 'numeric|required',
                 'description' => 'string|required',
                 'public' => 'boolean|required',
             ]);
 
-            $note = UserPropertyNote::findOrFail($noteId);
-
+            $userId = Auth::id();
+            $note = UserPropertyNote::where('id', $noteId)->where('user_id_fk', $userId)->first();
+            if (!$note) {
+                return ApiResponse::error('Note not found', 404);
+            }
             $note->update($validatedData);
 
             $data = [
@@ -698,7 +700,7 @@ class PropertyController extends Controller {
                 'created_at' => $note->created_at,
                 'updated_at' => $note->updated_at,
             ];
-            return ApiResponse::success('Note created successfully', $data, 201);
+            return ApiResponse::success('Note updated successfully', $data, 201);
         } catch (\Exception $e) {
             DB::rollBack();
             return ApiResponse::error('Error:' . $e->getMessage(), 500);
@@ -929,13 +931,13 @@ class PropertyController extends Controller {
     }
 
     /**
-     * @OA\Post(
+     * @OA\Put(
      *    path="/api/property/{id}/revoke-share",
      *    summary="Revoke sharing of a property.",
      *    tags={"Inmueble"},
      *    security={{"sanctum":{}}},
      *    @OA\Parameter(
-     *        name="propertyId",
+     *        name="id",
      *        in="path",
      *        description="ID del inmueble",
      *        required=true,
@@ -1038,7 +1040,7 @@ class PropertyController extends Controller {
      *    tags={"Inmueble"},
      *    security={{"sanctum":{}}},
      *    @OA\Parameter(
-     *        name="propertyId",
+     *        name="id",
      *        in="path",
      *        description="ID del inmueble",
      *        required=true,
@@ -1071,16 +1073,22 @@ class PropertyController extends Controller {
      *    summary="Delete multiple properties.",
      *    tags={"Inmueble"},
      *    security={{"sanctum":{}}},
-     *    @OA\Parameter(
-     *        name="ids",
-     *        in="query",
-     *        description="Array de IDs de los inmuebles",
+     *    @OA\RequestBody(
      *        required=true,
-     *        @OA\Schema(type="array", @OA\Items(type="integer"))
+     *        @OA\JsonContent(
+     *            type="object",
+     *            @OA\Property(
+     *                property="ids",
+     *                type="array",
+     *                @OA\Items(type="integer"),
+     *                description="Array de IDs de los inmuebles"
+     *            )
+     *        )
      *    ),
-     *    @OA\Response(response="200", description="Inmuebles eliminados exitosamente",@OA\JsonContent()),
-     *    @OA\Response(response="404", description="Inmuebles no encontrados",@OA\JsonContent()),
-     *    @OA\Response(response="500", description="Error del servidor",@OA\JsonContent())
+     *    @OA\Response(response="200", description="Inmuebles eliminados exitosamente", @OA\JsonContent()),
+     *    @OA\Response(response="400", description="Datos inválidos", @OA\JsonContent()),
+     *    @OA\Response(response="404", description="Inmuebles no encontrados", @OA\JsonContent()),
+     *    @OA\Response(response="500", description="Error del servidor", @OA\JsonContent())
      * )
      */
     public function deleteMultiple(Request $request) {
@@ -1090,8 +1098,9 @@ class PropertyController extends Controller {
             return ApiResponse::error('Invalid data', 400);
         }
         try {
-            $deleteRows = UserProperty::whereIn('property_id_fk', $ids)->delete();
-            if ($deleteRows === 0) {
+            $userId = Auth::id();
+            $deleteRows = UserProperty::whereIn('property_id_fk', $ids)->where('user_id_fk', $userId)->delete();
+            if (!$deleteRows || $deleteRows === 0) {
                 return ApiResponse::error('Properties not found', 404);
             }
             return ApiResponse::success('Properties deleted successfully', null, 200);
