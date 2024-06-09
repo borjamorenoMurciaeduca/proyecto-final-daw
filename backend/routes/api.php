@@ -37,6 +37,5 @@ Route::middleware('auth:sanctum')->group(function () {
   // Rutas protegidas correspondientes a los favoritos
   Route::post('/property/{id}/favorite', [PropertyController::class, 'favoriteProperty']);
 });
-
+ // Ruta sin proteger correspondiente a las propiedades compartidas
 Route::get('/shared-property/{share_url}', [PropertyController::class, 'getSharedProperty']);
-Route::get('/shared-property/{share_url}/notes', [PropertyController::class, 'getPublicNotes']);
