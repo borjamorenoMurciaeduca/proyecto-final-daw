@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { TextField, InputAdornment } from '@mui/material';
 import i18n from '@/commons/i18n/i18n';
 import parser from '@/utils/parser';
+import { InputAdornment, TextField } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const NumericTextField = ({
@@ -11,6 +11,7 @@ const NumericTextField = ({
   labelField,
   handleError,
   error,
+  disabled,
 }) => {
   const [numberGiven, setNumberGiven] = useState('');
   const [customNameField] = useState(nameField);
@@ -72,6 +73,7 @@ const NumericTextField = ({
       value={numberGiven}
       onChange={handleChange}
       onBlur={handleBlur}
+      disabled={disabled}
       InputProps={{
         endAdornment: <InputAdornment position="end">m²</InputAdornment>,
         inputProps: { min: 0 },

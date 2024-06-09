@@ -22,11 +22,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
 import { useSnackbar } from 'notistack';
-import { useRef } from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 
 const EditProfile = () => {
   const [loading, setLoading] = useState(false);
@@ -35,7 +32,6 @@ const EditProfile = () => {
   const { user, setUser } = useUser();
   const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -62,12 +58,11 @@ const EditProfile = () => {
 
     try {
       if (credentials.password !== credentials.password_confirmation)
-        throw new Error('Las contraseñas no coinciden');
+        throw new Error(t('edit-profile-form.error.password'));
 
       const res = await userService.editProfile(credentials);
 
-      if (res.status == 400)
-        throw new Error('No se ha podido actualizar el usuario');
+      if (res.status == 400) throw new Error(t('edit-profile-form.error.400'));
       if (res.error) throw new Error(res.error);
 
       e.target.password.value = '';
@@ -76,7 +71,6 @@ const EditProfile = () => {
       setUser((prev) => ({ ...prev, ...res.data }));
       setTimeout(() => {
         setLoading(false);
-        navigate('/app');
         enqueueSnackbar(t('edit-profile-form.form.success'), {
           variant: 'success',
         });
@@ -163,6 +157,7 @@ const EditProfile = () => {
                   defaultValue={user.name || undefined}
                   id="name"
                   label={t('edit-profile-form.form.name')}
+                  disabled={loading}
                 />
               </Grid>
               <Grid item xs={12} md={6}>
@@ -173,6 +168,7 @@ const EditProfile = () => {
                   defaultValue={user.surname || undefined}
                   id="surname"
                   label={t('edit-profile-form.form.surname')}
+                  disabled={loading}
                 />
               </Grid>
               <Grid item xs={12} md={6}>
@@ -183,6 +179,7 @@ const EditProfile = () => {
                   defaultValue={user.phone || undefined}
                   id="phone"
                   label={t('edit-profile-form.form.phone')}
+                  disabled={loading}
                 />
               </Grid>
               <Grid item xs={12} md={6}>
@@ -194,10 +191,11 @@ const EditProfile = () => {
                   defaultValue={
                     user.birth_date ? dayjs(user.birth_date) : undefined
                   }
+                  disabled={loading}
                 />
               </Grid>
               <Grid item xs={12} md={6}>
-                <FormControl fullWidth>
+                <FormControl fullWidth disabled={loading}>
                   <InputLabel htmlFor="password">
                     {t('edit-profile-form.form.password')}
                   </InputLabel>
@@ -214,6 +212,7 @@ const EditProfile = () => {
                           onClick={handleClickShowPassword}
                           onMouseDown={handleMouseDownPassword}
                           edge="end"
+                          disabled={loading}
                         >
                           {showPassword ? <VisibilityOff /> : <Visibility />}
                         </IconButton>
@@ -223,7 +222,7 @@ const EditProfile = () => {
                 </FormControl>
               </Grid>
               <Grid item xs={12} md={6}>
-                <FormControl fullWidth>
+                <FormControl fullWidth disabled={loading}>
                   <InputLabel htmlFor="password_confirmation">
                     {t('edit-profile-form.form.confirm-password')}
                   </InputLabel>
@@ -240,6 +239,7 @@ const EditProfile = () => {
                           onClick={handleClickShowConfirmPassword}
                           onMouseDown={handleMouseDownPassword}
                           edge="end"
+                          disabled={loading}
                         >
                           {showConfirmPassword ? (
                             <VisibilityOff />

@@ -73,27 +73,28 @@ const DialogAddModifyNote = ({
             noteToAdd: theNote,
           });
         }
-
-        if (res.status === 201) {
-          if (noteId) {
-            updateNote(res.data);
-            const updatedNotes = notes.map((n) =>
-              n.id === noteId ? res.data : n
-            );
-            setNotes(updatedNotes);
-            enqueueSnackbar(t('property-info.notes.notify.success.update'), {
-              variant: 'success',
-            });
-          } else {
-            addNote(res.data);
-            setNotes([res.data, ...notes]);
-            enqueueSnackbar(t('property-info.notes.notify.success.add'), {
-              variant: 'success',
-            });
+        setTimeout(() => {
+          if (res.status === 201) {
+            if (noteId) {
+              updateNote(res.data);
+              const updatedNotes = notes.map((n) =>
+                n.id === noteId ? res.data : n
+              );
+              setNotes(updatedNotes);
+              enqueueSnackbar(t('property-info.notes.notify.success.update'), {
+                variant: 'success',
+              });
+            } else {
+              addNote(res.data);
+              setNotes([res.data, ...notes]);
+              enqueueSnackbar(t('property-info.notes.notify.success.add'), {
+                variant: 'success',
+              });
+            }
           }
-        }
+        }, 1000);
       } else {
-        enqueueSnackbar(t('property-info.notes.notify.error.adding-emty'), {
+        enqueueSnackbar(t('property-info.notes.notify.error.adding-empty'), {
           variant: 'warning',
         });
       }
@@ -106,8 +107,8 @@ const DialogAddModifyNote = ({
     } finally {
       setTimeout(() => {
         setLoading(false);
+        setOpen(false);
       }, 1000);
-      setOpen(false);
     }
   };
 
@@ -116,7 +117,7 @@ const DialogAddModifyNote = ({
   };
 
   const handleClose = (_, reason) => {
-    if (reason === 'backdropClick' || loading) {
+    if (reason === 'backdropClick') {
       return;
     }
     setOpen(false);
@@ -148,6 +149,7 @@ const DialogAddModifyNote = ({
               placeholder={t('property-info.notes.note')}
               rows={4}
               value={note.description}
+              disabled={loading}
               onChange={(event) =>
                 setNote({
                   ...note,
@@ -164,6 +166,7 @@ const DialogAddModifyNote = ({
                   <Checkbox
                     checked={note.public === 1 ? true : false}
                     onChange={handlePublicCheckboxChange}
+                    disabled={loading}
                   />
                 }
                 label={t('property-info.notes.isPublic')}

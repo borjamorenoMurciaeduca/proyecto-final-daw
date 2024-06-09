@@ -1,6 +1,9 @@
 import house from '@/assets/house.jpg';
 import i18n from '@/commons/i18n/i18n';
+import useProperties from '@/hooks/useProperties';
+import propertyService from '@/services/propertyService';
 import parser from '@/utils/parser';
+import { useTheme } from '@emotion/react';
 import { Twitter } from '@mui/icons-material';
 import {
   Box,
@@ -19,12 +22,9 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
-import { useTheme } from '@emotion/react';
-import propertyService from '@/services/propertyService';
 import { useSnackbar } from 'notistack';
-import useProperties from '@/hooks/useProperties';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import PropertyForm from './PropertyForm';
 
 const PropertyDetailsGlobal = ({
@@ -50,7 +50,7 @@ const PropertyDetailsGlobal = ({
     window.open(`https://twitter.com/intent/tweet?url=${data}`);
   };
 
-  const handleOpenProperty = () => setOpenEditProperty(true);
+  const handleOpenEditProperty = () => setOpenEditProperty(true);
 
   const handleCloseEditProperty = () => setOpenEditProperty(false);
 
@@ -69,6 +69,13 @@ const PropertyDetailsGlobal = ({
       enqueueSnackbar(msg, { variant: 'error' });
       console.error(t('property-info.edit.error'), error);
     }
+  };
+
+  const handleCloseEditDialog = (_, reason) => {
+    if (reason === 'backdropClick') {
+      return;
+    }
+    setOpenEditProperty(false);
   };
 
   return (
@@ -185,7 +192,7 @@ const PropertyDetailsGlobal = ({
               size="small"
               variant="text"
               color="warning"
-              onClick={() => handleOpenProperty(property.property_id)}
+              onClick={() => handleOpenEditProperty(property.property_id)}
             >
               {t('property-info.edit.button-edit')}
             </Button>
@@ -194,7 +201,7 @@ const PropertyDetailsGlobal = ({
       </Card>
       <Dialog
         open={openEditProperty}
-        onClose={() => setOpenEditProperty(false)}
+        onClose={handleCloseEditDialog}
         maxWidth="md"
         fullWidth
         fullScreen={lessThanSm}

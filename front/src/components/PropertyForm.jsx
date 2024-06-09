@@ -1,8 +1,10 @@
 import i18n from '@/commons/i18n/i18n';
 import parser from '@/utils/parser';
 import {
+  Box,
   Button,
   Checkbox,
+  CircularProgress,
   FormControlLabel,
   Grid,
   TextField,
@@ -43,6 +45,7 @@ const PropertyForm = ({
   const { enqueueSnackbar } = useSnackbar();
   const [errors, setErrors] = useState({});
   const [disabledSubmit, setDisabledSubmit] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const theme = useTheme();
 
@@ -132,6 +135,8 @@ const PropertyForm = ({
   };
 
   const onSubmit = async (e) => {
+    setLoading(true);
+
     e.preventDefault();
     const formErrors = {};
     Object.keys(propertiesValues).forEach((key) => {
@@ -156,6 +161,8 @@ const PropertyForm = ({
         error?.response?.data?.message || 'Error al procesar la propiedad';
       enqueueSnackbar(msg, { variant: 'error' });
       console.error('Error al procesar la propiedad:', error);
+    } finally {
+      setLoading(false), 1000;
     }
   };
 
@@ -193,6 +200,7 @@ const PropertyForm = ({
           autoFocus
           value={propertiesValues.title}
           onChange={handleInputChange}
+          disabled={loading}
         />
       </Grid>
       <Grid item xs={12} md={4}>
@@ -205,6 +213,7 @@ const PropertyForm = ({
           autoFocus
           value={propertiesValues.location}
           onChange={handleInputChange}
+          disabled={loading}
         />
       </Grid>
       <Grid item xs={6} md={4}>
@@ -218,6 +227,7 @@ const PropertyForm = ({
           initialPrice={rawPrice}
           onChange={handleInputChange}
           handleError={handleFieldError}
+          disabled={loading}
         />
       </Grid>
       <Grid item xs={6} md={4}>
@@ -231,21 +241,8 @@ const PropertyForm = ({
           initialNumber={rawSize}
           onChange={handleInputChange}
           handleError={handleFieldError}
+          disabled={loading}
         />
-        {/* <TextField
-          error={!!errors.size}
-          id="size"
-          name="size"
-          label={t('add-property-form.size')}
-          type="number"
-          fullWidth
-          value={propertiesValues.size}
-          InputProps={{
-            endAdornment: <InputAdornment position="end">m²</InputAdornment>,
-            inputProps: { min: 0 },
-          }}
-          onChange={handleInputChange}
-        /> */}
       </Grid>
       <Grid item xs={3} md={2}>
         <TextField
@@ -260,6 +257,7 @@ const PropertyForm = ({
           }}
           value={propertiesValues.rooms}
           onChange={handleInputChange}
+          disabled={loading}
         />
       </Grid>
       <Grid item xs={3} md={2}>
@@ -275,6 +273,7 @@ const PropertyForm = ({
           }}
           value={propertiesValues.bath_rooms}
           onChange={handleInputChange}
+          disabled={loading}
         />
       </Grid>
       <Grid item xs={6} md={4}>
@@ -283,14 +282,15 @@ const PropertyForm = ({
           name="type_property"
           propertyValue={propertiesValues.type_property}
           onChange={handleInputChange}
+          disabled={loading}
         />
       </Grid>
-      <Grid item xs={6} md={4}>
+      <Grid item xs={12} md={4}>
         <Grid
           container
           direction="row"
           alignContent="center"
-          justifyContent={{ xs: 'space-evenly', md: 'flex-start' }}
+          justifyContent={{ xs: 'center', md: 'flex-start' }}
         >
           <FormControlLabel
             control={
@@ -298,6 +298,7 @@ const PropertyForm = ({
                 checked={propertiesValues.garage}
                 name="garage"
                 onChange={handleInputChange}
+                disabled={loading}
               />
             }
             label={t('add-property-form.garage')}
@@ -308,6 +309,7 @@ const PropertyForm = ({
                 checked={propertiesValues.storage_room}
                 name="storage_room"
                 onChange={handleInputChange}
+                disabled={loading}
               />
             }
             label={t('add-property-form.storage')}
@@ -321,6 +323,7 @@ const PropertyForm = ({
           name="description"
           defaultValue={propertiesValues.description}
           onChange={handleInputChange}
+          disabled={loading}
         />
       </Grid>
       <Grid item xs={12}>
@@ -343,16 +346,30 @@ const PropertyForm = ({
         )}
       </Grid>
       <Grid item xs={12} md={8}>
-        <Button
-          type="submit"
-          variant="contained"
-          fullWidth
-          disabled={disabledSubmit}
-        >
-          {edit
-            ? t('property-info.edit.button-edit')
-            : t('add-property-form.add-property')}
-        </Button>
+        <Box sx={{ position: 'relative' }}>
+          <Button
+            type="submit"
+            variant="contained"
+            fullWidth
+            disabled={disabledSubmit || loading}
+          >
+            {edit
+              ? t('property-info.edit.button-edit')
+              : t('add-property-form.add-property')}
+          </Button>
+          {loading && (
+            <CircularProgress
+              size={24}
+              sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                marginTop: '-12px',
+                marginLeft: '-12px',
+              }}
+            />
+          )}
+        </Box>
       </Grid>
       <Grid item xs={12} md={4}>
         <Button
@@ -361,6 +378,7 @@ const PropertyForm = ({
           fullWidth
           color="error"
           onClick={handleCloseDialog}
+          disabled={loading}
         >
           {t('add-property-form.cancel')}
         </Button>

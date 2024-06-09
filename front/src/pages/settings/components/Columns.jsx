@@ -86,7 +86,6 @@ const Columns = (handleOpenDialog) => {
         filterOptions: {
           fullWidth: true,
         },
-        // filterType: 'textField',
         customFilterListOptions: {
           render: (v) =>
             `${t('page.configuration-management.table.location')}: ${v}`,

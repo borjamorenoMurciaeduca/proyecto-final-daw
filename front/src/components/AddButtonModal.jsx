@@ -1,3 +1,4 @@
+import useProperties from '@/hooks/useProperties';
 import propertyService from '@/services/propertyService.js';
 import { validateIdealistaURL } from '@/utils/strings';
 import AddIcon from '@mui/icons-material/Add';
@@ -18,10 +19,10 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
+import { debounce } from 'lodash';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import useProperties from '@/hooks/useProperties';
 import PropertyForm from './PropertyForm';
 
 const AddButtonModal = () => {
@@ -45,7 +46,10 @@ const AddButtonModal = () => {
     setInputDisabled(false);
   };
 
-  const handleClose = () => {
+  const handleClose = (_, reason) => {
+    if (reason === 'backdropClick') {
+      return;
+    }
     setOpen(false);
     setShowForm(false);
   };
@@ -56,7 +60,7 @@ const AddButtonModal = () => {
     setError(false);
   };
 
-  const handleSearch = async () => {
+  const handleSearch = debounce(async () => {
     const idInmueble = validateIdealistaURL(textValue);
     if (idInmueble.length > 0) {
       setInputDisabled(true);
@@ -93,7 +97,7 @@ const AddButtonModal = () => {
         variant: 'error',
       });
     }
-  };
+  }, 250);
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
@@ -222,6 +226,7 @@ const AddButtonModal = () => {
                 type="button"
                 aria-label="search"
                 onClick={handleSearch}
+                disabled={inputDisabled}
               >
                 <SearchIcon />
               </IconButton>

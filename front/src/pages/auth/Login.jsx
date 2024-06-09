@@ -162,10 +162,11 @@ const Login = () => {
                 }
                 fullWidth
                 autoFocus
+                disabled={loading}
               />
             </Grid>
             <Grid item xs={12}>
-              <FormControl fullWidth>
+              <FormControl fullWidth disabled={loading}>
                 <InputLabel
                   htmlFor="password"
                   error={
@@ -186,7 +187,6 @@ const Login = () => {
                   error={
                     formik.touched.password && Boolean(formik.errors.password)
                   }
-                  // helperText={formik.touched.password && formik.errors.password}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
@@ -194,6 +194,7 @@ const Login = () => {
                         onClick={handleClickShowPassword}
                         onMouseDown={handleMouseDownPassword}
                         edge="end"
+                        disabled={loading}
                       >
                         {showPassword ? <VisibilityOff /> : <Visibility />}
                       </IconButton>

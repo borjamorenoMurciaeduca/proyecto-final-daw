@@ -63,6 +63,10 @@
       "edit": "Edit",
       "save": "Save changes",
       "success": "Profile updated successfully"
+    },
+    "error": {
+      "password": "Passwords do not match",
+      "400": "Error updating profile"
     }
   },
   "top-menu": {
@@ -158,7 +162,7 @@
       },
       "tooltip": {
         "update-price": "Update price",
-        "update-price-disabled" : "Property deregistered"
+        "update-price-disabled": "Property deregistered"
       },
       "price-updated": {
         "success": "Price updated successfully",
@@ -173,7 +177,7 @@
           "remove": "Note removed successfully"
         },
         "error": {
-          "adding-emty": "Can't add an empty note",
+          "adding-empty": "Can't add an empty note",
           "note-generic": "Error adding note"
         }
       },
@@ -206,6 +210,10 @@
     "copy": "Copy",
     "copied": "Copied",
     "close": "Close",
+    "shared": {
+      "by": "Shared by",
+      "not-found": "Property not found"
+    },
     "generator": {
       "title": "Share property",
       "description": "Share this property with the following URL",
