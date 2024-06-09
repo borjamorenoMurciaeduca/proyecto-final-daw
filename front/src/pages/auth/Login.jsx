@@ -186,7 +186,6 @@ const Login = () => {
                   error={
                     formik.touched.password && Boolean(formik.errors.password)
                   }
-                  // helperText={formik.touched.password && formik.errors.password}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
