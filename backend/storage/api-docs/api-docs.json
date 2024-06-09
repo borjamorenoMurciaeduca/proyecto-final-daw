@@ -422,7 +422,12 @@
                         "description": "Tipo de inmueble",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "enum": [
+                                "others",
+                                "garage",
+                                "property"
+                            ]
                         }
                     },
                     {
@@ -612,7 +617,12 @@
                         "description": "Tipo de inmueble",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "enum": [
+                                "others",
+                                "garage",
+                                "property"
+                            ]
                         }
                     },
                     {

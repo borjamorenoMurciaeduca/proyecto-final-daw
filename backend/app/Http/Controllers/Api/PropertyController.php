@@ -226,7 +226,9 @@ class PropertyController extends Controller {
      *        in="query",
      *        description="Tipo de inmueble",
      *        required=true,
-     *        @OA\Schema(type="string")
+     *        @OA\Schema(type="string",
+     *          enum={"others", "garage", "property"}
+     *        )
      *    ),
      *    @OA\Parameter(
      *        name="price",
@@ -415,7 +417,9 @@ class PropertyController extends Controller {
      *        in="query",
      *        description="Tipo de inmueble",
      *        required=true,
-     *        @OA\Schema(type="string")
+     *        @OA\Schema(type="string",
+     *          enum={"others", "garage", "property"}
+     *        )
      *    ),
      *    @OA\Parameter(
      *        name="price",
