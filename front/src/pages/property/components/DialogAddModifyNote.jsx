@@ -16,6 +16,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useSnackbar } from 'notistack';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const DialogAddModifyNote = ({
@@ -30,6 +31,7 @@ const DialogAddModifyNote = ({
   updateNote,
   title,
 }) => {
+  const [loading, setLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const theme = useTheme();
   const lessThanSm = useMediaQuery(theme.breakpoints.down('sm'));
@@ -44,6 +46,7 @@ const DialogAddModifyNote = ({
   };
 
   const handleSaveNote = async () => {
+    setLoading(true);
     try {
       const theNote = {
         ...note,
@@ -99,6 +102,9 @@ const DialogAddModifyNote = ({
       enqueueSnackbar(msg, { variant: 'error' });
       console.error('Error al obtener datos del usuario:', error);
     } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
       setOpen(false);
     }
   };
@@ -107,11 +113,11 @@ const DialogAddModifyNote = ({
     setOpen(false);
   };
 
-  const handleClose = (event, reason) => {
+  const handleClose = (_, reason) => {
     if (reason === 'backdropClick') {
-      setOpen(false);
       return;
     }
+    setOpen(false);
   };
 
   return (
@@ -171,6 +177,7 @@ const DialogAddModifyNote = ({
               variant="contained"
               color="primary"
               onClick={() => handleSaveNote()}
+              disabled={loading}
               fullWidth
             >
               {t('property-info.notes.save')}
@@ -181,6 +188,7 @@ const DialogAddModifyNote = ({
               variant="outlined"
               color="primary"
               onClick={() => handleCancelNote()}
+              disabled={loading}
               fullWidth
             >
               {t('property-info.notes.cancel')}
