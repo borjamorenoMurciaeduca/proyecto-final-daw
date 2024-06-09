@@ -227,18 +227,18 @@
                 ]
             }
         },
-        "/api/prepare-inmueble": {
+        "/api/prepare-inmueble/{id}": {
             "get": {
                 "tags": [
                     "Inmueble"
                 ],
                 "summary": " Display the specified resource.",
-                "operationId": "c4131b35682a39459d790cfb598dfda9",
+                "operationId": "af8c3f8824df03592fd6e1cc975c26ed",
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "query",
-                        "description": "id",
+                        "in": "path",
+                        "description": "ID del inmueble",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -250,84 +250,65 @@
                         "description": "Inmueble encontrado"
                     },
                     "404": {
-                        "description": "Inmueble encontrado"
+                        "description": "Inmueble no encontrado"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
-        "/api/inmueble": {
+        "/api/properties": {
+            "get": {
+                "tags": [
+                    "Inmueble"
+                ],
+                "summary": "Display all user properties.",
+                "operationId": "01aae039e0b1c7a931146c9370e4ac3a",
+                "responses": {
+                    "200": {
+                        "description": "Inmuebles encontrados"
+                    },
+                    "404": {
+                        "description": "Inmuebles no encontrados"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
             "post": {
                 "tags": [
                     "Inmueble"
                 ],
                 "summary": "Store a newly created resource in storage.",
-                "operationId": "ecc47c53b85ae9d0ae8d590e56689d3c",
+                "operationId": "70bf627c7a3b7593179b22a21956b41e",
                 "parameters": [
                     {
-                        "name": "referencia",
+                        "name": "property_id",
                         "in": "query",
-                        "description": "Referencia",
+                        "description": "ID del inmueble",
                         "required": true,
                         "schema": {
                             "type": "number"
                         }
                     },
                     {
-                        "name": "ubicacion",
+                        "name": "cancellation_date",
                         "in": "query",
-                        "description": "Ubicación",
-                        "required": true,
+                        "description": "Fecha de baja",
+                        "required": false,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "format": "date"
                         }
                     },
                     {
-                        "name": "tamano",
-                        "in": "query",
-                        "description": "Tamaño",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "habitaciones",
-                        "in": "query",
-                        "description": "Habitaciones",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "garaje",
-                        "in": "query",
-                        "description": "Garaje",
-                        "required": true,
-                        "schema": {
-                            "type": "boolean"
-                        }
-                    },
-                    {
-                        "name": "trastero",
-                        "in": "query",
-                        "description": "Trastero",
-                        "required": true,
-                        "schema": {
-                            "type": "boolean"
-                        }
-                    },
-                    {
-                        "name": "precio",
-                        "in": "query",
-                        "description": "Precio",
-                        "required": true,
-                        "schema": {
-                            "type": "number"
-                        }
-                    },
-                    {
-                        "name": "urlImagen",
+                        "name": "url_image",
                         "in": "query",
                         "description": "URL de la imagen",
                         "required": false,
@@ -336,12 +317,93 @@
                         }
                     },
                     {
-                        "name": "fechaBajaAnuncio",
+                        "name": "title",
                         "in": "query",
-                        "description": "fecha baja anuncio",
-                        "required": false,
+                        "description": "Título del inmueble",
+                        "required": true,
                         "schema": {
-                            "type": "date"
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "location",
+                        "in": "query",
+                        "description": "Ubicación del inmueble",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Tamaño del inmueble",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "rooms",
+                        "in": "query",
+                        "description": "Número de habitaciones",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "garage",
+                        "in": "query",
+                        "description": "Tiene garaje",
+                        "required": true,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "storage_room",
+                        "in": "query",
+                        "description": "Tiene trastero",
+                        "required": true,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "bath_rooms",
+                        "in": "query",
+                        "description": "Número de baños",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Descripción del inmueble",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "type_property",
+                        "in": "query",
+                        "description": "Tipo de inmueble",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "price",
+                        "in": "query",
+                        "description": "Precio del inmueble",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
                         }
                     }
                 ],
@@ -353,7 +415,7 @@
                         "description": "Error de validación"
                     },
                     "500": {
-                        "description": "Error"
+                        "description": "Error del servidor"
                     }
                 },
                 "security": [
@@ -363,18 +425,331 @@
                 ]
             }
         },
-        "/api/storeNewPrice": {
+        "/api/property/{id}": {
+            "get": {
+                "tags": [
+                    "Inmueble"
+                ],
+                "summary": "Display the specified resource.",
+                "operationId": "1b313e387046dfb2764a37ae8d53faee",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del inmueble",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Inmueble encontrado"
+                    },
+                    "404": {
+                        "description": "Inmueble no encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Inmueble"
+                ],
+                "summary": "Update the specified resource in storage.",
+                "operationId": "2d1eedd2701f7057d9a3b026ba048aab",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del inmueble",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "Título del inmueble",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "location",
+                        "in": "query",
+                        "description": "Ubicación del inmueble",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Tamaño del inmueble",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "rooms",
+                        "in": "query",
+                        "description": "Número de habitaciones",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "garage",
+                        "in": "query",
+                        "description": "Tiene garaje",
+                        "required": true,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "storage_room",
+                        "in": "query",
+                        "description": "Tiene trastero",
+                        "required": true,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "bath_rooms",
+                        "in": "query",
+                        "description": "Número de baños",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Descripción del inmueble",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "type_property",
+                        "in": "query",
+                        "description": "Tipo de inmueble",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "price",
+                        "in": "query",
+                        "description": "Precio del inmueble",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Inmueble actualizado exitosamente"
+                    },
+                    "400": {
+                        "description": "Error de validación"
+                    },
+                    "500": {
+                        "description": "Error del servidor"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/notes": {
             "post": {
                 "tags": [
                     "Inmueble"
                 ],
-                "summary": " Store a new price.",
-                "operationId": "4e8e83bb9db1c481ab54f805d4ce872d",
+                "summary": "Store a new note.",
+                "operationId": "9e38e353a01f0854ed69b241061d14d4",
+                "parameters": [
+                    {
+                        "name": "property_id",
+                        "in": "query",
+                        "description": "ID del inmueble",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Descripción de la nota",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "public",
+                        "in": "query",
+                        "description": "Nota pública",
+                        "required": true,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Nota creada exitosamente"
+                    },
+                    "400": {
+                        "description": "Error de validación"
+                    },
+                    "500": {
+                        "description": "Error del servidor"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/remove-note/{id}": {
+            "delete": {
+                "tags": [
+                    "Inmueble"
+                ],
+                "summary": "Delete a note.",
+                "operationId": "9392f6a984dbd5008fc7ce56879631c8",
                 "parameters": [
                     {
                         "name": "id",
+                        "in": "path",
+                        "description": "ID de la nota",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Nota eliminada exitosamente"
+                    },
+                    "403": {
+                        "description": "No autorizado para eliminar esta nota"
+                    },
+                    "404": {
+                        "description": "Nota no encontrada"
+                    },
+                    "500": {
+                        "description": "Error del servidor"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/update-note/{id}": {
+            "put": {
+                "tags": [
+                    "Inmueble"
+                ],
+                "summary": "Update a note.",
+                "operationId": "d66ec9a00e54bc4390d32aba97a0ce88",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la nota",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "property_id",
                         "in": "query",
-                        "description": "id",
+                        "description": "ID del inmueble",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Descripción de la nota",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "public",
+                        "in": "query",
+                        "description": "Nota pública",
+                        "required": true,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Nota actualizada exitosamente"
+                    },
+                    "404": {
+                        "description": "Nota no encontrada"
+                    },
+                    "500": {
+                        "description": "Error del servidor"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/property/{id}/update-price": {
+            "post": {
+                "tags": [
+                    "Inmueble"
+                ],
+                "summary": "Store a new price.",
+                "operationId": "460a0006b711975e73ded348eb712720",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del inmueble",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -391,7 +766,206 @@
                     "500": {
                         "description": "Error genérico"
                     }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/getPrices/{id}": {
+            "get": {
+                "tags": [
+                    "Inmueble"
+                ],
+                "summary": "Get prices for a property.",
+                "operationId": "df862cf4576faf5b257f8390165e919f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del inmueble",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Precios encontrados"
+                    },
+                    "404": {
+                        "description": "Precios no encontrados"
+                    }
                 }
+            }
+        },
+        "/api/shareProperty/{propertyId}": {
+            "post": {
+                "tags": [
+                    "Inmueble"
+                ],
+                "summary": "Share a property.",
+                "operationId": "c422218e2f1751a43599ac5a15c2d965",
+                "parameters": [
+                    {
+                        "name": "propertyId",
+                        "in": "path",
+                        "description": "ID del inmueble",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Inmueble compartido exitosamente"
+                    },
+                    "404": {
+                        "description": "Inmueble no encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/revokeShareProperty/{propertyId}": {
+            "post": {
+                "tags": [
+                    "Inmueble"
+                ],
+                "summary": "Revoke sharing of a property.",
+                "operationId": "3a251a6b3773428d5b933d534646daf6",
+                "parameters": [
+                    {
+                        "name": "propertyId",
+                        "in": "path",
+                        "description": "ID del inmueble",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Compartir del inmueble revocado exitosamente"
+                    },
+                    "404": {
+                        "description": "Inmueble no encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/sharedProperty/{shareUrl}": {
+            "get": {
+                "tags": [
+                    "Inmueble"
+                ],
+                "summary": "Get shared property details.",
+                "operationId": "42a6f22b255a8c0735cecbc69af68e0a",
+                "parameters": [
+                    {
+                        "name": "shareUrl",
+                        "in": "path",
+                        "description": "URL compartida",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles del inmueble compartido encontrados"
+                    },
+                    "404": {
+                        "description": "Inmueble no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/favoriteProperty/{propertyId}": {
+            "post": {
+                "tags": [
+                    "Inmueble"
+                ],
+                "summary": "Mark a property as favorite.",
+                "operationId": "b7e0a0bdcbaa580111974922a5866e0a",
+                "parameters": [
+                    {
+                        "name": "propertyId",
+                        "in": "path",
+                        "description": "ID del inmueble",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Inmueble marcado como favorito"
+                    },
+                    "404": {
+                        "description": "Inmueble no encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/properties/delete-multiple": {
+            "delete": {
+                "tags": [
+                    "Inmueble"
+                ],
+                "summary": "Delete multiple properties.",
+                "operationId": "23743a6ffaa328953ce336783cff0052",
+                "parameters": [
+                    {
+                        "name": "ids",
+                        "in": "query",
+                        "description": "Array de IDs de los inmuebles",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Inmuebles eliminados exitosamente"
+                    },
+                    "404": {
+                        "description": "Inmuebles no encontrados"
+                    },
+                    "500": {
+                        "description": "Error del servidor"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         }
     },

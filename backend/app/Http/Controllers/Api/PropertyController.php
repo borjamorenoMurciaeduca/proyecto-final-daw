@@ -26,18 +26,19 @@ use Illuminate\Validation\ValidationException;
 class PropertyController extends Controller {
     /**
      * @OA\Get(
-     *    path="/api/prepare-inmueble",
+     *    path="/api/prepare-inmueble/{id}",
      *    summary=" Display the specified resource.",
      *    tags={"Inmueble"},
+     * security={{"sanctum":{}}},
      *    @OA\Parameter(
      *        name="id",
-     *        in="query",
-     *        description="id",
+     *        in="path",
+     *        description="ID del inmueble",
      *        required=true,
      *        @OA\Schema(type="string")
      *    ),
      *    @OA\Response(response="200", description="Inmueble encontrado"),
-     *    @OA\Response(response="404", description="Inmueble encontrado")
+     *    @OA\Response(response="404", description="Inmueble no encontrado")
      * )
      */
     public function prepare(string $id) {
@@ -135,76 +136,104 @@ class PropertyController extends Controller {
 
     /**
      * @OA\Post(
-     *    path="/api/inmueble",
+     *    path="/api/properties",
      *    summary="Store a newly created resource in storage.",
      *    tags={"Inmueble"},
      *    security={{"sanctum":{}}},
      *    @OA\Parameter(
-     *        name="referencia",
+     *        name="property_id",
      *        in="query",
-     *        description="Referencia",
+     *        description="ID del inmueble",
      *        required=true,
      *        @OA\Schema(type="number")
      *    ),
      *    @OA\Parameter(
-     *        name="ubicacion",
+     *        name="cancellation_date",
      *        in="query",
-     *        description="Ubicación",
+     *        description="Fecha de baja",
+     *        required=false,
+     *        @OA\Schema(type="string", format="date")
+     *    ),
+     *    @OA\Parameter(
+     *        name="url_image",
+     *        in="query",
+     *        description="URL de la imagen",
+     *        required=false,
+     *        @OA\Schema(type="string")
+     *    ),
+     *    @OA\Parameter(
+     *        name="title",
+     *        in="query",
+     *        description="Título del inmueble",
      *        required=true,
      *        @OA\Schema(type="string")
      *    ),
      *    @OA\Parameter(
-     *        name="tamano",
+     *        name="location",
      *        in="query",
-     *        description="Tamaño",
+     *        description="Ubicación del inmueble",
+     *        required=true,
+     *        @OA\Schema(type="string")
+     *    ),
+     *    @OA\Parameter(
+     *        name="size",
+     *        in="query",
+     *        description="Tamaño del inmueble",
+     *        required=true,
+     *        @OA\Schema(type="number")
+     *    ),
+     *    @OA\Parameter(
+     *        name="rooms",
+     *        in="query",
+     *        description="Número de habitaciones",
      *        required=true,
      *        @OA\Schema(type="integer")
      *    ),
      *    @OA\Parameter(
-     *        name="habitaciones",
+     *        name="garage",
      *        in="query",
-     *        description="Habitaciones",
+     *        description="Tiene garaje",
+     *        required=true,
+     *        @OA\Schema(type="boolean")
+     *    ),
+     *    @OA\Parameter(
+     *        name="storage_room",
+     *        in="query",
+     *        description="Tiene trastero",
+     *        required=true,
+     *        @OA\Schema(type="boolean")
+     *    ),
+     *    @OA\Parameter(
+     *        name="bath_rooms",
+     *        in="query",
+     *        description="Número de baños",
      *        required=true,
      *        @OA\Schema(type="integer")
      *    ),
      *    @OA\Parameter(
-     *        name="garaje",
+     *        name="description",
      *        in="query",
-     *        description="Garaje",
+     *        description="Descripción del inmueble",
      *        required=true,
-     *        @OA\Schema(type="boolean")
+     *        @OA\Schema(type="string")
      *    ),
      *    @OA\Parameter(
-     *        name="trastero",
+     *        name="type_property",
      *        in="query",
-     *        description="Trastero",
+     *        description="Tipo de inmueble",
      *        required=true,
-     *        @OA\Schema(type="boolean")
+     *        @OA\Schema(type="string")
      *    ),
      *    @OA\Parameter(
-     *      name="precio",
-     *      in="query",
-     *      description="Precio",
-     *      required=true,
-     *      @OA\Schema(type="number")
-     *   ),
-     *    @OA\Parameter(
-     *      name="urlImagen",
-     *      in="query",
-     *      description="URL de la imagen",
-     *      required=false,
-     *      @OA\Schema(type="string")
-     *      ),
-     *    @OA\Parameter(
-     *        name="fechaBajaAnuncio",
+     *        name="price",
      *        in="query",
-     *        description="fecha baja anuncio",
-     *        required=false,
-     *        @OA\Schema(type="date")
+     *        description="Precio del inmueble",
+     *        required=true,
+     *        @OA\Schema(type="number")
      *    ),
      *    @OA\Response(response="201", description="Inmueble creado exitosamente"),
      *    @OA\Response(response="400", description="Error de validación"),
-     *    @OA\Response(response="500", description="Error")
+     *    @OA\Response(response="500", description="Error del servidor")
      * )
      */
     public function store(Request $request) {
@@ -304,6 +333,94 @@ class PropertyController extends Controller {
         }
     }
 
+    /**
+     * @OA\Put(
+     *    path="/api/property/{id}",
+     *    summary="Update the specified resource in storage.",
+     *    tags={"Inmueble"},
+     *    security={{"sanctum":{}}},
+     *    @OA\Parameter(
+     *        name="id",
+     *        in="path",
+     *        description="ID del inmueble",
+     *        required=true,
+     *        @OA\Schema(type="string")
+     *    ),
+     *    @OA\Parameter(
+     *        name="title",
+     *        in="query",
+     *        description="Título del inmueble",
+     *        required=true,
+     *        @OA\Schema(type="string")
+     *    ),
+     *    @OA\Parameter(
+     *        name="location",
+     *        in="query",
+     *        description="Ubicación del inmueble",
+     *        required=true,
+     *        @OA\Schema(type="string")
+     *    ),
+     *    @OA\Parameter(
+     *        name="size",
+     *        in="query",
+     *        description="Tamaño del inmueble",
+     *        required=true,
+     *        @OA\Schema(type="number")
+     *    ),
+     *    @OA\Parameter(
+     *        name="rooms",
+     *        in="query",
+     *        description="Número de habitaciones",
+     *        required=true,
+     *        @OA\Schema(type="integer")
+     *    ),
+     *    @OA\Parameter(
+     *        name="garage",
+     *        in="query",
+     *        description="Tiene garaje",
+     *        required=true,
+     *        @OA\Schema(type="boolean")
+     *    ),
+     *    @OA\Parameter(
+     *        name="storage_room",
+     *        in="query",
+     *        description="Tiene trastero",
+     *        required=true,
+     *        @OA\Schema(type="boolean")
+     *    ),
+     *    @OA\Parameter(
+     *        name="bath_rooms",
+     *        in="query",
+     *        description="Número de baños",
+     *        required=true,
+     *        @OA\Schema(type="integer")
+     *    ),
+     *    @OA\Parameter(
+     *        name="description",
+     *        in="query",
+     *        description="Descripción del inmueble",
+     *        required=true,
+     *        @OA\Schema(type="string")
+     *    ),
+     *    @OA\Parameter(
+     *        name="type_property",
+     *        in="query",
+     *        description="Tipo de inmueble",
+     *        required=true,
+     *        @OA\Schema(type="string")
+     *    ),
+     *    @OA\Parameter(
+     *        name="price",
+     *        in="query",
+     *        description="Precio del inmueble",
+     *        required=true,
+     *        @OA\Schema(type="number")
+     *    ),
+     *    @OA\Response(response="200", description="Inmueble actualizado exitosamente"),
+     *    @OA\Response(response="400", description="Error de validación"),
+     *    @OA\Response(response="500", description="Error del servidor")
+     * )
+     */
     public function updateProperty(Request $request) {
         try {
             DB::beginTransaction();
@@ -392,6 +509,38 @@ class PropertyController extends Controller {
         }
     }
 
+     /**
+     * @OA\Post(
+     *    path="/api/notes",
+     *    summary="Store a new note.",
+     *    tags={"Inmueble"},
+     *    security={{"sanctum":{}}},
+     *    @OA\Parameter(
+     *        name="property_id",
+     *        in="query",
+     *        description="ID del inmueble",
+     *        required=true,
+     *        @OA\Schema(type="number")
+     *    ),
+     *    @OA\Parameter(
+     *        name="description",
+     *        in="query",
+     *        description="Descripción de la nota",
+     *        required=true,
+     *        @OA\Schema(type="string")
+     *    ),
+     *    @OA\Parameter(
+     *        name="public",
+     *        in="query",
+     *        description="Nota pública",
+     *        required=true,
+     *        @OA\Schema(type="boolean")
+     *    ),
+     *    @OA\Response(response="201", description="Nota creada exitosamente"),
+     *    @OA\Response(response="400", description="Error de validación"),
+     *    @OA\Response(response="500", description="Error del servidor")
+     * )
+     */
     public function storeNewNote(Request $request) {
         try {
             DB::beginTransaction();
@@ -432,6 +581,25 @@ class PropertyController extends Controller {
         }
     }
 
+    /**
+     * @OA\Delete(
+     *    path="/api/remove-note/{id}",
+     *    summary="Delete a note.",
+     *    tags={"Inmueble"},
+     *    security={{"sanctum":{}}},
+     *    @OA\Parameter(
+     *        name="id",
+     *        in="path",
+     *        description="ID de la nota",
+     *        required=true,
+     *        @OA\Schema(type="integer")
+     *    ),
+     *    @OA\Response(response="200", description="Nota eliminada exitosamente"),
+     *    @OA\Response(response="403", description="No autorizado para eliminar esta nota"),
+     *    @OA\Response(response="404", description="Nota no encontrada"),
+     *    @OA\Response(response="500", description="Error del servidor")
+     * )
+     */
     public function deleteNote(int $noteId) {
         try {
 
@@ -454,6 +622,45 @@ class PropertyController extends Controller {
         }
     }
 
+    /**
+     * @OA\Put(
+     *    path="/api/update-note/{id}",
+     *    summary="Update a note.",
+     *    tags={"Inmueble"},
+     *    security={{"sanctum":{}}},
+     *    @OA\Parameter(
+     *        name="id",
+     *        in="path",
+     *        description="ID de la nota",
+     *        required=true,
+     *        @OA\Schema(type="integer")
+     *    ),
+     *    @OA\Parameter(
+     *        name="property_id",
+     *        in="query",
+     *        description="ID del inmueble",
+     *        required=true,
+     *        @OA\Schema(type="number")
+     *    ),
+     *    @OA\Parameter(
+     *        name="description",
+     *        in="query",
+     *        description="Descripción de la nota",
+     *        required=true,
+     *        @OA\Schema(type="string")
+     *    ),
+     *    @OA\Parameter(
+     *        name="public",
+     *        in="query",
+     *        description="Nota pública",
+     *        required=true,
+     *        @OA\Schema(type="boolean")
+     *    ),
+     *    @OA\Response(response="200", description="Nota actualizada exitosamente"),
+     *    @OA\Response(response="404", description="Nota no encontrada"),
+     *    @OA\Response(response="500", description="Error del servidor")
+     * )
+     */
     public function updateNote(Request $request, int $noteId) {
         try {
             $validatedData = $request->validate([
@@ -484,20 +691,20 @@ class PropertyController extends Controller {
 
     /**
      * @OA\Get(
-     *    path="/api/inmueble",
-     *    summary=" Display the specified resource.",
+     *    path="/api/properties",
+     *    summary="Display all user properties.",
      *    tags={"Inmueble"},
-     * security={{"sanctum":{}}},
+     *    security={{"sanctum":{}}},
      *    @OA\Response(response="200", description="Inmuebles encontrados"),
      *    @OA\Response(response="404", description="Inmuebles no encontrados")
      * )
      */
-    /**
-     * Muestra la lista de inmuebles de un usuario autenticado con sus precios pero sin el historial de precios
-     * userId = usuario que está autenticado
-     * with('property') = traer los datos del inmueble (property es el nombre de la relación en UserProperty)
-     */
     public function getAllUserProperties() {
+        /**
+         * Muestra la lista de inmuebles de un usuario autenticado con sus precios pero sin el historial de precios
+         * userId = usuario que está autenticado
+         * with('property') = traer los datos del inmueble (property es el nombre de la relación en UserProperty)
+         */
         try {
             $userId = Auth::id();
             $userProperty = UserProperty::where('user_id_fk', $userId)->with('property')->get();
@@ -536,6 +743,23 @@ class PropertyController extends Controller {
         }
     }
 
+    /**
+     * @OA\Get(
+     *    path="/api/property/{id}",
+     *    summary="Display the specified resource.",
+     *    tags={"Inmueble"},
+     *    security={{"sanctum":{}}},
+     *    @OA\Parameter(
+     *        name="id",
+     *        in="path",
+     *        description="ID del inmueble",
+     *        required=true,
+     *        @OA\Schema(type="string")
+     *    ),
+     *    @OA\Response(response="200", description="Inmueble encontrado"),
+     *    @OA\Response(response="404", description="Inmueble no encontrado")
+     * )
+     */
     public function show(string $id) {
         try {
             $property = Property::findOrFail($id);
@@ -571,13 +795,14 @@ class PropertyController extends Controller {
 
     /**
      * @OA\Post(
-     *    path="/api/storeNewPrice",
-     *    summary=" Store a new price.",
+     *    path="/api/property/{id}/update-price",
+     *    summary="Store a new price.",
      *    tags={"Inmueble"},
+     *    security={{"sanctum":{}}},
      *    @OA\Parameter(
      *        name="id",
-     *         in="query",
-     *        description="id",
+     *        in="path",
+     *        description="ID del inmueble",
      *        required=true,
      *        @OA\Schema(type="string")
      *    ),
@@ -619,7 +844,22 @@ class PropertyController extends Controller {
         }
     }
 
-
+    /**
+     * @OA\Get(
+     *    path="/api/getPrices/{id}",
+     *    summary="Get prices for a property.",
+     *    tags={"Inmueble"},
+     *    @OA\Parameter(
+     *        name="id",
+     *        in="path",
+     *        description="ID del inmueble",
+     *        required=true,
+     *        @OA\Schema(type="string")
+     *    ),
+     *    @OA\Response(response="200", description="Precios encontrados"),
+     *    @OA\Response(response="404", description="Precios no encontrados")
+     * )
+     */
     public function getPrices(string $id) {
         try {
             $property = Property::findOrFail($id);
@@ -635,26 +875,24 @@ class PropertyController extends Controller {
             return ApiResponse::error('Prices not found', 404);
         }
     }
-    /**
-     * Show the form for editing the specified resource.
-     */
-    // public function edit(string $id) {
-    //     //
-    // }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Post(
+     *    path="/api/shareProperty/{propertyId}",
+     *    summary="Share a property.",
+     *    tags={"Inmueble"},
+     *    security={{"sanctum":{}}},
+     *    @OA\Parameter(
+     *        name="propertyId",
+     *        in="path",
+     *        description="ID del inmueble",
+     *        required=true,
+     *        @OA\Schema(type="integer")
+     *    ),
+     *    @OA\Response(response="200", description="Inmueble compartido exitosamente"),
+     *    @OA\Response(response="404", description="Inmueble no encontrado")
+     * )
      */
-    // public function update(Request $request, string $id) {
-    //     //
-    // }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    // public function destroy(string $id) {
-    //     //
-    // }
     public function shareProperty($propertyId) {
         $user = auth()->user();
         $property = Property::find($propertyId);
@@ -673,6 +911,23 @@ class PropertyController extends Controller {
         }
     }
 
+    /**
+     * @OA\Post(
+     *    path="/api/revokeShareProperty/{propertyId}",
+     *    summary="Revoke sharing of a property.",
+     *    tags={"Inmueble"},
+     *    security={{"sanctum":{}}},
+     *    @OA\Parameter(
+     *        name="propertyId",
+     *        in="path",
+     *        description="ID del inmueble",
+     *        required=true,
+     *        @OA\Schema(type="integer")
+     *    ),
+     *    @OA\Response(response="200", description="Compartir del inmueble revocado exitosamente"),
+     *    @OA\Response(response="404", description="Inmueble no encontrado")
+     * )
+     */
     public function revokeShareProperty($propertyId) {
         try {
             DB::beginTransaction();
@@ -703,6 +958,22 @@ class PropertyController extends Controller {
         }
     }
 
+    /**
+     * @OA\Get(
+     *    path="/api/sharedProperty/{shareUrl}",
+     *    summary="Get shared property details.",
+     *    tags={"Inmueble"},
+     *    @OA\Parameter(
+     *        name="shareUrl",
+     *        in="path",
+     *        description="URL compartida",
+     *        required=true,
+     *        @OA\Schema(type="string")
+     *    ),
+     *    @OA\Response(response="200", description="Detalles del inmueble compartido encontrados"),
+     *    @OA\Response(response="404", description="Inmueble no encontrado")
+     * )
+     */
     public function getSharedProperty($shareUrl) {
         $userProperty = UserProperty::where('share_url', $shareUrl)->first();
         if ($userProperty) {
@@ -743,6 +1014,23 @@ class PropertyController extends Controller {
         }
     }
 
+    /**
+     * @OA\Post(
+     *    path="/api/favoriteProperty/{propertyId}",
+     *    summary="Mark a property as favorite.",
+     *    tags={"Inmueble"},
+     *    security={{"sanctum":{}}},
+     *    @OA\Parameter(
+     *        name="propertyId",
+     *        in="path",
+     *        description="ID del inmueble",
+     *        required=true,
+     *        @OA\Schema(type="integer")
+     *    ),
+     *    @OA\Response(response="200", description="Inmueble marcado como favorito"),
+     *    @OA\Response(response="404", description="Inmueble no encontrado")
+     * )
+     */
     public function favoriteProperty($propertyId) {
         $user = auth()->user();
         $userProperty = UserProperty::where('property_id_fk', $propertyId)->where('user_id_fk', $user->id)->first();
@@ -761,6 +1049,24 @@ class PropertyController extends Controller {
         }
     }
 
+    /**
+     * @OA\Delete(
+     *    path="/api/properties/delete-multiple",
+     *    summary="Delete multiple properties.",
+     *    tags={"Inmueble"},
+     *    security={{"sanctum":{}}},
+     *    @OA\Parameter(
+     *        name="ids",
+     *        in="query",
+     *        description="Array de IDs de los inmuebles",
+     *        required=true,
+     *        @OA\Schema(type="array", @OA\Items(type="integer"))
+     *    ),
+     *    @OA\Response(response="200", description="Inmuebles eliminados exitosamente"),
+     *    @OA\Response(response="404", description="Inmuebles no encontrados"),
+     *    @OA\Response(response="500", description="Error del servidor")
+     * )
+     */
     public function deleteMultiple(Request $request) {
         $ids = $request->input('ids');
 
