@@ -342,7 +342,7 @@ class PropertyController extends Controller {
      *    @OA\Parameter(
      *        name="id",
      *        in="path",
-     *        description="ID del inmueble",
+     *        description="ID del inmueble de Idealista",
      *        required=true,
      *        @OA\Schema(type="string")
      *    ),
