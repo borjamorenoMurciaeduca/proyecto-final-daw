@@ -2,7 +2,9 @@ import { Transition } from '@/components/Transition';
 import noteService from '@/services/noteService.js';
 import { useTheme } from '@emotion/react';
 import {
+  Box,
   Checkbox,
+  CircularProgress,
   FormControlLabel,
   FormGroup,
   Grid,
@@ -114,7 +116,7 @@ const DialogAddModifyNote = ({
   };
 
   const handleClose = (_, reason) => {
-    if (reason === 'backdropClick' && loading) {
+    if (reason === 'backdropClick' || loading) {
       return;
     }
     setOpen(false);
@@ -173,20 +175,34 @@ const DialogAddModifyNote = ({
       <DialogActions>
         <Grid container spacing={2}>
           <Grid item xs={8}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => handleSaveNote()}
-              disabled={loading}
-              fullWidth
-            >
-              {t('property-info.notes.save')}
-            </Button>
+            <Box sx={{ position: 'relative' }}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => handleSaveNote()}
+                disabled={loading}
+                fullWidth
+              >
+                {t('property-info.notes.save')}
+              </Button>
+              {loading && (
+                <CircularProgress
+                  size={24}
+                  sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    marginTop: '-12px',
+                    marginLeft: '-12px',
+                  }}
+                />
+              )}
+            </Box>
           </Grid>
           <Grid item xs={4}>
             <Button
               variant="outlined"
-              color="primary"
+              color="error"
               onClick={() => handleCancelNote()}
               disabled={loading}
               fullWidth
