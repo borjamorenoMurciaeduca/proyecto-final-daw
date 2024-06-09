@@ -4,9 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
-use App\Models\HistorialPrecio;
 use App\Models\User;
-use App\Models\UsuarioInmueble;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
@@ -29,7 +27,7 @@ class AuthController extends Controller {
      *    tags={"Autenticación"},
      *    @OA\Parameter(
      *        name="username",
-     *         in="query",
+     *        in="query",
      *        description="User's name",
      *        required=true,
      *        @OA\Schema(type="string")
@@ -41,9 +39,58 @@ class AuthController extends Controller {
      *        required=true,
      *        @OA\Schema(type="string")
      *    ),
-     *    @OA\Response(response="201", description="Usuario creado con éxito"),
-     *    @OA\Response(response="404", description="No se ha podido procesar"),
-     *    @OA\Response(response="422", description="Error de validación")
+     *     @OA\Parameter(
+     *        name="password_confirmation",
+     *        in="query",
+     *        description="User's password confirmation",
+     *        required=true,
+     *        @OA\Schema(type="string")
+     *    ),
+     *     @OA\Parameter(
+     *        name="name",
+     *       in="query",
+     *       description="User's name",
+     *      required=false,
+     *     @OA\Schema(type="string")
+     *      ),
+     *      @OA\Parameter(
+     *       name="surname",
+     *       in="query",
+     *      description="User's surname",
+     *      required=false,
+     *       @OA\Schema(type="string")
+     *       ),
+     *       @OA\Parameter(
+     *       name="birth_date",
+     *       in="query",
+     *       description="User's birth date",
+     *       required=false,
+     *       @OA\Schema(type="string")
+     *       ),
+     *       @OA\Parameter(
+     *       name="avatar_url",
+     *       in="query",
+     *       description="User's avatar url",
+     *       required=false,
+     *       @OA\Schema(type="string")
+     *       ),
+     *       @OA\Parameter(
+     *       name="phone",
+     *       in="query",
+     *       description="User's phone",
+     *       required=false,
+     *       @OA\Schema(type="string")
+     *       ),
+     *       @OA\Parameter(
+     *       name="email",
+     *       in="query",
+     *       description="User's email",
+     *       required=false,
+     *       @OA\Schema(type="string")
+     *       ),
+     *    @OA\Response(response="201", description="Usuario creado con éxito",@OA\JsonContent()),
+     *    @OA\Response(response="404", description="No se ha podido procesar",@OA\JsonContent()),
+     *    @OA\Response(response="422", description="Error de validación",@OA\JsonContent())
      * )
      */
     public function register(Request $request) {
@@ -62,7 +109,6 @@ class AuthController extends Controller {
             $validatedData['password'] = bcrypt($request->password);
             $user = User::create($validatedData);
             $token = $user->createToken('authToken')->plainTextToken;
-            $cookie =  cookie('user_token', $token, 60 * 8);
             $data = [
                 'user' => [
                     'id' => $user->id,
@@ -78,20 +124,7 @@ class AuthController extends Controller {
                 ],
                 'token' => $token
             ];
-            // $data = (object) [
-            //     'id' => $user->id,
-            //     'username' => $user->username,
-            //     'name' => $user->name,
-            //     'surname' => $user->surname,
-            //     'birthday' => $user->birthday,
-            //     'avatar_url' => $user->avatar_url,
-            //     'phone' => $user->phone,
-            //     'email' => $user->email,
-            //     'created_at' => $user->created_at,
-            //     'updated_at' => $user->updated_at,
-            //     'token' => $token,
-            // ];
-            // return ApiResponse::success('User created successfully!', $data, 201)->withCookie($cookie);
+
             return ApiResponse::success('User created successfully!', $data, 201);
         } catch (ValidationException $e) {
             return ApiResponse::error("Validation error!", 422, $e->validator->errors());
@@ -106,9 +139,9 @@ class AuthController extends Controller {
      *    summary="Log in a known user",
      *    tags={"Autenticación"},
      *    @OA\Parameter(
-     *        name="username",
+     *        name="identifier",
      *         in="query",
-     *        description="User's name",
+     *        description="User's name or email",
      *        required=true,
      *        @OA\Schema(type="string")
      *    ),
@@ -119,14 +152,7 @@ class AuthController extends Controller {
      *        required=true,
      *        @OA\Schema(type="string")
      *    ),
-     *    @OA\Parameter(
-     *        name="remember",
-     *        in="query",
-     *        description="Flag to remember the user",
-     *        required=false,
-     *        @OA\Schema(type="string")
-     *    ),
-     *    @OA\Response(response="401", description="Unauthenticated")
+     *    @OA\Response(response="401", description="Unauthenticated",@OA\JsonContent())
      * )
      */
     public function login(Request $request) {
@@ -163,25 +189,12 @@ class AuthController extends Controller {
      *    path="/api/user",
      *    summary="Show the user panel",
      *    tags={"Autenticación"},
-     *    @OA\Response(response="200", description="success"),
-     *    @OA\Response(response="404", description="No se ha podido procesar")
+     *    security={{"sanctum":{}}},
+     *
+     *    @OA\Response(response="200", description="success",@OA\JsonContent()),
+     *    @OA\Response(response="404", description="No se ha podido procesar",@OA\JsonContent())
      * )
      */
-    //!POSIBLE PEINE
-    // public function user() {
-    //     try {
-    //         $userId = Auth::id();
-    //         $user = User::find($userId);
-
-    //         // Buscamos los inmuebles del usuario y sus precios
-    //         // inmueble e historialPrecio son relaciones definidas en los modelos
-    //         $usuarioInmuebles = UsuarioInmueble::with('inmueble.historialPrecio')->where('userId', $userId)->get();
-    //         $data = ['user' => $user, 'usuarioInmuebles' => $usuarioInmuebles];
-    //         return ApiResponse::success('success', $data, 200);
-    //     } catch (\Exception $e) {
-    //         return ApiResponse::error('No se ha podido procesar: ' . $e->getMessage(), 404);
-    //     }
-    // }
     public function user() {
         try {
             $user = User::find(Auth::id());
@@ -225,8 +238,9 @@ class AuthController extends Controller {
      *      path="/api/logout",
      *      summary="Log out the user session",
      *      tags={"Autenticación"},
-     *      @OA\Response(response="200", description="Successfully logged out"),
-     *     @OA\Response(response="400", description="Error logging out")
+     *    security={{"sanctum":{}}},
+     *      @OA\Response(response="200", description="Successfully logged out",@OA\JsonContent()),
+     *     @OA\Response(response="400", description="Error logging out",@OA\JsonContent())
      * )
      */
     public function logout(Request $request) {

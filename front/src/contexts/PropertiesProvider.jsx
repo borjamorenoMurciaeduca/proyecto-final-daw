@@ -6,7 +6,7 @@ export const PropertiesContext = createContext();
 const initialState = {
   properties: [],
 };
-// eslint-disable-next-line react/prop-types
+
 /**
  * * Estado global con los datos de la vivienda
  */

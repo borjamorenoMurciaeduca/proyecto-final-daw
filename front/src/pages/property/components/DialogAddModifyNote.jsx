@@ -1,13 +1,15 @@
 import { Transition } from '@/components/Transition';
+import noteService from '@/services/noteService.js';
 import { useTheme } from '@emotion/react';
 import {
+  Box,
   Checkbox,
+  CircularProgress,
   FormControlLabel,
   FormGroup,
   Grid,
   Stack,
   TextField,
-  Typography,
   useMediaQuery,
 } from '@mui/material';
 import Button from '@mui/material/Button';
@@ -16,8 +18,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useSnackbar } from 'notistack';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import noteService from '@/services/noteService.js';
 
 const DialogAddModifyNote = ({
   open,
@@ -31,6 +33,7 @@ const DialogAddModifyNote = ({
   updateNote,
   title,
 }) => {
+  const [loading, setLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const theme = useTheme();
   const lessThanSm = useMediaQuery(theme.breakpoints.down('sm'));
@@ -45,6 +48,7 @@ const DialogAddModifyNote = ({
   };
 
   const handleSaveNote = async () => {
+    setLoading(true);
     try {
       const theNote = {
         ...note,
@@ -69,27 +73,28 @@ const DialogAddModifyNote = ({
             noteToAdd: theNote,
           });
         }
-
-        if (res.status === 201) {
-          if (noteId) {
-            updateNote(res.data);
-            const updatedNotes = notes.map((n) =>
-              n.id === noteId ? res.data : n
-            );
-            setNotes(updatedNotes);
-            enqueueSnackbar(t('property-info.notes.notify.success.update'), {
-              variant: 'success',
-            });
-          } else {
-            addNote(res.data);
-            setNotes([res.data, ...notes]);
-            enqueueSnackbar(t('property-info.notes.notify.success.add'), {
-              variant: 'success',
-            });
+        setTimeout(() => {
+          if (res.status === 201) {
+            if (noteId) {
+              updateNote(res.data);
+              const updatedNotes = notes.map((n) =>
+                n.id === noteId ? res.data : n
+              );
+              setNotes(updatedNotes);
+              enqueueSnackbar(t('property-info.notes.notify.success.update'), {
+                variant: 'success',
+              });
+            } else {
+              addNote(res.data);
+              setNotes([res.data, ...notes]);
+              enqueueSnackbar(t('property-info.notes.notify.success.add'), {
+                variant: 'success',
+              });
+            }
           }
-        }
+        }, 1000);
       } else {
-        enqueueSnackbar(t('property-info.notes.notify.error.adding-emty'), {
+        enqueueSnackbar(t('property-info.notes.notify.error.adding-empty'), {
           variant: 'warning',
         });
       }
@@ -100,7 +105,10 @@ const DialogAddModifyNote = ({
       enqueueSnackbar(msg, { variant: 'error' });
       console.error('Error al obtener datos del usuario:', error);
     } finally {
-      setOpen(false);
+      setTimeout(() => {
+        setLoading(false);
+        setOpen(false);
+      }, 1000);
     }
   };
 
@@ -108,11 +116,11 @@ const DialogAddModifyNote = ({
     setOpen(false);
   };
 
-  const handleClose = (event, reason) => {
+  const handleClose = (_, reason) => {
     if (reason === 'backdropClick') {
-      setOpen(false);
       return;
     }
+    setOpen(false);
   };
 
   return (
@@ -141,6 +149,7 @@ const DialogAddModifyNote = ({
               placeholder={t('property-info.notes.note')}
               rows={4}
               value={note.description}
+              disabled={loading}
               onChange={(event) =>
                 setNote({
                   ...note,
@@ -155,9 +164,9 @@ const DialogAddModifyNote = ({
               <FormControlLabel
                 control={
                   <Checkbox
-                    defaultChecked
                     checked={note.public === 1 ? true : false}
                     onChange={handlePublicCheckboxChange}
+                    disabled={loading}
                   />
                 }
                 label={t('property-info.notes.isPublic')}
@@ -169,20 +178,36 @@ const DialogAddModifyNote = ({
       <DialogActions>
         <Grid container spacing={2}>
           <Grid item xs={8}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => handleSaveNote()}
-              fullWidth
-            >
-              {t('property-info.notes.save')}
-            </Button>
+            <Box sx={{ position: 'relative' }}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => handleSaveNote()}
+                disabled={loading}
+                fullWidth
+              >
+                {t('property-info.notes.save')}
+              </Button>
+              {loading && (
+                <CircularProgress
+                  size={24}
+                  sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    marginTop: '-12px',
+                    marginLeft: '-12px',
+                  }}
+                />
+              )}
+            </Box>
           </Grid>
           <Grid item xs={4}>
             <Button
               variant="outlined"
-              color="primary"
+              color="error"
               onClick={() => handleCancelNote()}
+              disabled={loading}
               fullWidth
             >
               {t('property-info.notes.cancel')}

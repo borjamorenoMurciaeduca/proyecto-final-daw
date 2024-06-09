@@ -1,7 +1,6 @@
 import Copyright from '@/components/Copyright';
 import LanguageSelector from '@/components/LanguageSelector';
 import userService from '@/services/userService';
-import parser from '@/utils/parser';
 import registerValidationSchema from '@/validation/registerValidation';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -162,10 +161,11 @@ const Register = () => {
                     formik.touched.username && Boolean(formik.errors.username)
                   }
                   helperText={formik.touched.username && formik.errors.username}
+                  disabled={loading}
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormControl fullWidth>
+                <FormControl fullWidth disabled={loading}>
                   <InputLabel
                     required
                     htmlFor="password"
@@ -195,6 +195,7 @@ const Register = () => {
                           onClick={handleClickShowPassword}
                           onMouseDown={handleMouseDownPassword}
                           edge="end"
+                          disabled={loading}
                         >
                           {showPassword ? <VisibilityOff /> : <Visibility />}
                         </IconButton>
@@ -213,7 +214,7 @@ const Register = () => {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <FormControl fullWidth>
+                <FormControl fullWidth disabled={loading}>
                   <InputLabel
                     required
                     htmlFor="password_confirmation"
@@ -245,6 +246,7 @@ const Register = () => {
                           onClick={handleClickShowConfirmPassword}
                           onMouseDown={handleMouseDownPassword}
                           edge="end"
+                          disabled={loading}
                         >
                           {showConfirmPassword ? (
                             <VisibilityOff />
@@ -293,6 +295,7 @@ const Register = () => {
                             formik.touched.name && Boolean(formik.errors.name)
                           }
                           helperText={formik.touched.name && formik.errors.name}
+                          disabled={loading}
                         />
                       </Grid>
                       <Grid item xs={12} md={6}>
@@ -312,6 +315,7 @@ const Register = () => {
                           helperText={
                             formik.touched.surname && formik.errors.surname
                           }
+                          disabled={loading}
                         />
                       </Grid>
                       <Grid item xs={12}>
@@ -334,6 +338,7 @@ const Register = () => {
                               ? formik.errors.email
                               : t('register-form.form.email-helper')
                           }
+                          disabled={loading}
                         />
                       </Grid>
                       <Grid item xs={12} md={6}>
@@ -353,6 +358,7 @@ const Register = () => {
                           helperText={
                             formik.touched.phone && formik.errors.phone
                           }
+                          disabled={loading}
                         />
                       </Grid>
                       <Grid item xs={12} md={6}>
@@ -378,6 +384,7 @@ const Register = () => {
                             formik.touched.birth_date &&
                             formik.errors.birth_date
                           }
+                          disabled={loading}
                         />
                       </Grid>
                     </Grid>
@@ -446,59 +453,3 @@ const Register = () => {
 };
 
 export default Register;
-
-/*
- *  // en desuso con el uso de formik
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    const dataForm = new FormData(e.currentTarget);
-    const credentials = {
-      username: dataForm.get('username'),
-      password: dataForm.get('password'),
-      password_confirmation: dataForm.get('password_confirmation'),
-      name: dataForm.get('name'),
-      surname: dataForm.get('surname'),
-      email: dataForm.get('email'),
-      phone: dataForm.get('phone'),
-      birth_date: parser.DateToInsert(dataForm.get('birth_date')),
-    };
-
-    try {
-      if (credentials.password !== credentials.password_confirmation)
-        throw new Error('Las contraseñas no coinciden');
-      const res = await userService.register(credentials);
-
-      if (res.error) {
-        throw new Error(res.error);
-      }
-
-      if (res.status === 201) {
-        setTimeout(() => {
-          enqueueSnackbar(t('register-form.form.'), {
-            variant: 'success',
-          });
-          navigate('/auth');
-        }, 1000);
-      }
-
-      e.target.username.value = '';
-      e.target.password.value = '';
-      e.target.password_confirmation.value = '';
-    } catch (error) {
-      console.warn(error);
-      let msg = error.response?.data?.message || error.message;
-      enqueueSnackbar(msg, { variant: 'error' });
-      setError(msg);
-      setTimeout(() => {
-        setError(null);
-      }, 3000);
-    } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
-    }
-  };
-
-*/

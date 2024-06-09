@@ -1,6 +1,7 @@
 import house from '@/assets/house.jpg';
 import i18n from '@/commons/i18n/i18n';
 import AddButtonModal from '@/components/AddButtonModal';
+import StepperEmpty from '@/components/StepperEmpty';
 import useProperties from '@/hooks/useProperties';
 import useUser from '@/hooks/useUser';
 import parser from '@/utils/parser';
@@ -15,7 +16,6 @@ import {
 import { useTranslation } from 'react-i18next';
 import Carousel from 'react-material-ui-carousel';
 import { useNavigate } from 'react-router-dom';
-import StepperEmpty from './components/StepperEmpty';
 import './style.css';
 
 const App = () => {
@@ -131,29 +131,3 @@ const App = () => {
   );
 };
 export default App;
-
-//          <Grid
-//            container
-//            sx={{
-//              minHeight: '75vh',
-//              mt: 4,
-//              mb: { md: 4, lg: 'auto' },
-//            }}
-//          >
-//            <Grid
-//              container
-//              item
-//              spacing={2}
-//              direction="row"
-//              justifyContent="left"
-//              pb={{ xs: 7, md: 5 }}
-//              alignItems="stretch"
-//            >
-//              {propertiesPage.map((property) => (
-//                <Grid item xs={12} sm={6} lg={4} key={property.property_id}>
-//                  <PropertyCard property={property} />
-//                </Grid>
-//              ))}
-//            </Grid>
-//          </Grid>
-//

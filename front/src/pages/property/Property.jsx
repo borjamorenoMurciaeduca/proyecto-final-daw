@@ -1,3 +1,4 @@
+import useProperties from '@/hooks/useProperties';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import TimelineIcon from '@mui/icons-material/Timeline';
 import {
@@ -14,12 +15,10 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
-import useProperties from '@/hooks/useProperties';
+import { useNavigate, useParams } from 'react-router-dom';
 import PriceHistory from './components/PriceHistory';
 import PropertyDetails from './components/PropertyDetails';
 import PropertyNotes from './components/PropertyNotes';
-import { useNavigate } from 'react-router-dom';
 
 function a11yProps(index) {
   return {
@@ -28,7 +27,7 @@ function a11yProps(index) {
   };
 }
 
-const PropertyInfo = () => {
+const Property = () => {
   const [title, setTitle] = useState();
   const [view, setView] = useState(0);
   const { t } = useTranslation();
@@ -43,7 +42,7 @@ const PropertyInfo = () => {
       (el) => el.property_id == property_id
     );
     !propertyMatch ? navigate('/404') : setTitle(propertyMatch.title);
-  }, [properties]);
+  }, [properties, property_id, navigate]);
 
   return (
     <>
@@ -140,4 +139,4 @@ const PropertyInfo = () => {
     </>
   );
 };
-export default PropertyInfo;
+export default Property;

@@ -1,7 +1,7 @@
 import LayoutNotLogged from '@/layout/LayoutNotLogged';
 import Login from '@/pages/auth/Login';
 
-const LayoutRoutes = [
+const AuthRoutes = [
   {
     element: <LayoutNotLogged />,
     children: [
@@ -11,8 +11,4 @@ const LayoutRoutes = [
   },
 ];
 
-export default [
-  {
-    children: LayoutRoutes,
-  },
-];
+export default AuthRoutes;

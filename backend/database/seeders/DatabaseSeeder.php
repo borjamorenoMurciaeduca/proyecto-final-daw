@@ -53,16 +53,37 @@ class DatabaseSeeder extends Seeder {
             ['type_properties_id' => 2, 'description' => 'garage'],
         ]);
 
+        $municipiosMurcia = array(
+            "Abanilla",
+            "Águilas",
+            "Alhama de Murcia",
+            "Archena",
+            "Bullas",
+            "Calasparra",
+            "Caravaca de la Cruz",
+            "Cartagena",
+            "Cieza",
+            "Mazarrón",
+            "Molina de Segura",
+            "Moratalla",
+            "Mula",
+            "Murcia",
+            "Ricote",
+            "San Javier",
+            "Totana",
+            "Yecla"
+        );
+
         //  Crea 10 propiedades usando la fábrica Property
         Property::factory(10)->create();
-        Property::factory(100)->create()->each(function ($property) use ($jorge, $borja) {
+        Property::factory(100)->create()->each(function ($property) use ($jorge, $borja,  $municipiosMurcia) {
             $faker = Faker::create();
             $user = rand(0, 1) ? $jorge : $borja;
             UserProperty::factory()->create([
                 'user_id_fk' => $user->id,
                 'property_id_fk' => $property->property_id,
                 'title' => $faker->word(),
-                'location' => $faker->word(),
+                'location' => $municipiosMurcia[rand(0, count($municipiosMurcia) - 1)],
                 'size' => $faker->numberBetween(50, 300),
                 'rooms' => $faker->randomNumber(1),
                 'garage' => $faker->boolean(),

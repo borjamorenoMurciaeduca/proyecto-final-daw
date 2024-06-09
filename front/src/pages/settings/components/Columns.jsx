@@ -3,13 +3,14 @@ import propertyService from '@/services/propertyService';
 import parser from '@/utils/parser';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import PublicOffIcon from '@mui/icons-material/PublicOff';
-import { Button } from '@mui/material';
+import { Button, Link } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { useSnackbar } from 'notistack';
 import { useTranslation } from 'react-i18next';
+import { NavLink as RouterLink } from 'react-router-dom';
 
-export const Columns = (handleOpenDialog) => {
+const Columns = (handleOpenDialog) => {
   const { enqueueSnackbar } = useSnackbar();
   const { revokeShareProperty } = useProperties();
   const { t } = useTranslation();
@@ -64,6 +65,17 @@ export const Columns = (handleOpenDialog) => {
           render: (v) =>
             `${t('page.configuration-management.table.property_id')}: ${v}`,
         },
+        customBodyRender: (value) => {
+          return (
+            <Link
+              component={RouterLink}
+              to={`/app/property/${value}`}
+              target="_blank"
+            >
+              {value}
+            </Link>
+          );
+        },
       },
     },
     {
@@ -74,7 +86,6 @@ export const Columns = (handleOpenDialog) => {
         filterOptions: {
           fullWidth: true,
         },
-        // filterType: 'textField',
         customFilterListOptions: {
           render: (v) =>
             `${t('page.configuration-management.table.location')}: ${v}`,
@@ -177,15 +188,4 @@ export const Columns = (handleOpenDialog) => {
   ];
 };
 
-export const createRows = (data) => {
-  return data.map(
-    ({ property_id, title, location, share_url, created_at, is_shared }) => ({
-      property_id,
-      title,
-      location,
-      share_url: !share_url ? '❌' : `${share_url}`,
-      created_at: parser.DateReceived(created_at),
-      is_shared,
-    })
-  );
-};
+export default Columns;

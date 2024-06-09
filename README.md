@@ -10,22 +10,25 @@ Detalles para puesta en marcha del proyecto IdealistaWatch
 
 - Apache
 - MySQL, phpMyAdmin
-- python (https y parsel como dependencias)
+- python y dependencias necesarias
 
 ```bash
 $ sudo apt install apache2 mysql-server php libapache2-mod-php php-mysql
 $ sudo apt install phpmyadmin
-$ sudo apt install python3
-$ sudo apt install python3-pip
--- Dependecias de python
-$ pip3 install httpx parsel
-or
-$ sudo apt install python3-httpx python3-parsel
+$ sudo apt install python3 python3-pip python3-venv
+# Nos movemos a la ruta donde se encuentra el archivo python
+$ cd ./backend/storage/python/
+# Crear un entorno virtual
+$ python3 -m venv env
+# Activar el entorno virtual
+$ source env/bin/activate
+# Ahora puedes instalar las dependencias con pip3
+$ pip3 install -r requirements.txt
+# Desactivar el entorno virtual
+$ deactivate
 ```
 
-_Si usamos pip3 y tenemos un error a la hora de instalar podemos eliminar el archivo `$ sudo rm /usr/lib/python3.11/EXTERNALLY-MANAGED` y en nuestro archivo de nuestra shell, .bashrc .zshrc etc. añadimos `export PATH="$PATH:/home/{usuario}/.local/bin"`_
-
-_Comprobamos que el archivo ./backend/storage/python-scrapping.py tiene privilegios de lectura y ejecución, de no ser así ejecturar `$ chmod +rx python-scrapping.py`_
+_Comprobamos que el archivo ./backend/storage/python-scrapping.py tiene privilegios de lectura y ejecución, de no ser así ejecutar `$ chmod +rx python-scrapping.py`_
 
 _Debemos tener un usuario en MySQL con todos los privilegios habilitados_
 
@@ -74,7 +77,7 @@ $ cd ./backend
 $ composer install
 $ php artisan migrate
  *Aceptamos la creación de la tabla*
-$ php artisan migrate:fresh --seed`
+$ php artisan migrate:fresh --seed
 $ php artisan serve
 ```
 
@@ -93,9 +96,9 @@ $ pnpm dev
 - En ./front tendremos un archivo .env que apunta a la api, en caso de cambiar la dirección de nuestra api tan solo tenemos que cambiarlo en este archivo, tendremos la dirección centralizada en una variable de entorno
 
 ```properties
-VITE_API_URL= '{URL_API}'
+VITE_API_URL='{API_URL}'
 ```
 
-_Donde URL_API apuntara a la dirección de nuestra api_
+_Donde API_URL apuntara a la dirección de nuestra api_
 
 - Para compilar y exportar el proyecto `$ pnpm build`

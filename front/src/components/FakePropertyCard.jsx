@@ -105,7 +105,10 @@ const FakePropertyCard = ({ disabledCard = false }) => {
           arrow
           placement="bottom"
           open={!disabledCard}
-          sx={{ animation: !disabledCard ? `${growShrink} 1s infinite` : '' }}
+          sx={{
+            animation: !disabledCard ? `${growShrink} 1s infinite` : '',
+            zIndex: 10,
+          }}
         >
           <IconButton aria-label={t('favorite.tooltip.helper-click')}>
             <FavoriteIcon color={favorite ? 'error' : 'disabled'} />

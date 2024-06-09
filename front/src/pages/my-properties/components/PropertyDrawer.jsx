@@ -2,24 +2,24 @@ import Copyright from '@/components/Copyright.jsx';
 import SwitchIdeal from '@/components/SwitchIdeal.jsx';
 import { useTheme } from '@emotion/react';
 import {
+  Box,
   FormControl,
+  InputLabel,
   ListItemButton,
   MenuItem,
   Paper,
   Select,
   Slider,
   Toolbar,
-  Box,
-  InputLabel,
 } from '@mui/material';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import PropertyDrawerStyle from './PropertyDrawer.styles.js';
-import PropertyDrawerFormat from './propertyDrawerFormats.js';
 import { useSnackbar } from 'notistack';
 import { useTranslation } from 'react-i18next';
+import PropertyDrawerStyle from './PropertyDrawer.styles.js';
+import PropertyDrawerFormat from './propertyDrawerFormats.js';
 
 const PropertyDrawer = ({
   isDrawerOpen,
@@ -163,7 +163,6 @@ const PropertyDrawer = ({
                 </Select>
               </FormControl>
             </ListItem>
-            <ListItem></ListItem>
             <Divider>{t('filter.order-item-options.price-range')}</Divider>
             <ListItem sx={{ px: 4 }}>
               <Slider

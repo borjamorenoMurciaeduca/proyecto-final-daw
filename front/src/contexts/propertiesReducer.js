@@ -15,7 +15,7 @@ export const propertiesReducer = (state, action) => {
         ...state,
         properties: [],
       };
-    case 'UPDATE_NOTE':
+    case 'UPDATE_NOTE': {
       const updatedNote = action.payload;
       const propertyIdToUpdateNote = updatedNote.property_id;
       const updatedPropertiesWithUpdatedNote = state.properties.map(
@@ -37,7 +37,8 @@ export const propertiesReducer = (state, action) => {
         ...state,
         properties: updatedPropertiesWithUpdatedNote,
       };
-    case 'REMOVE_NOTE':
+    }
+    case 'REMOVE_NOTE': {
       const noteIdToRemove = action.payload;
       const updatedProperties = state.properties.map((property) => {
         if (property.notes && property.notes.length > 0) {
@@ -56,7 +57,8 @@ export const propertiesReducer = (state, action) => {
         ...state,
         properties: updatedProperties,
       };
-    case 'ADD_NOTE':
+    }
+    case 'ADD_NOTE': {
       const newNote = action.payload;
       const propertyIdToAddNote = newNote.property_id;
       const updatedPropertiesWithNewNote = state.properties.map((property) => {
@@ -73,6 +75,7 @@ export const propertiesReducer = (state, action) => {
         ...state,
         properties: updatedPropertiesWithNewNote,
       };
+    }
     case 'ADD_PROPERTY':
       return {
         ...state,

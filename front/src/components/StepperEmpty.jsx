@@ -1,50 +1,45 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import StepContent from '@mui/material/StepContent';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
+import Step from '@mui/material/Step';
+import StepContent from '@mui/material/StepContent';
+import StepLabel from '@mui/material/StepLabel';
+import Stepper from '@mui/material/Stepper';
 import Typography from '@mui/material/Typography';
-
-const steps = [
-  {
-    label: 'Busca una vivienda en idealista',
-    description:
-      'En la web de idealista, busca una vivienda que te guste y copia la URL',
-  },
-  {
-    label: 'Buscar y añadir la vivienda',
-    description:
-      'Haz clic en el botón que se muestra de color amarillo en la parte derecha',
-  },
-  {
-    label: 'Guardar vivienda',
-    description: `Una vez dentro pega la URL y deja que IdealistaWatch busque la información de la vivienda. Podrás configurar
-  los datos de la vivienda y guardarla en tu lista de propiedades.`,
-  },
-];
+import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const StepperEmpty = () => {
   const [activeStep, setActiveStep] = React.useState(0);
+  const { t } = useTranslation();
 
-  const handleNext = () => {
+  const steps = [
+    {
+      label: t('stepper.p1_label'),
+      description: t('stepper.p1_desc'),
+    },
+    {
+      label: t('stepper.p2_label'),
+      description: t('stepper.p2_desc'),
+    },
+    {
+      label: t('stepper.p3_label'),
+      description: t('stepper.p3_desc'),
+    },
+  ];
+
+  const handleNext = () =>
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
 
-  const handleBack = () => {
+  const handleBack = () =>
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
+  const handleReset = () => setActiveStep(0);
 
   return (
     <>
       <Typography variant="h4" gutterBottom>
-        Opps! Parece que no tienes propiedades guardadas
+        {t('stepper.title')}
       </Typography>
       <Box
         sx={{
@@ -69,7 +64,9 @@ const StepperEmpty = () => {
                 <StepLabel
                   optional={
                     index === 2 ? (
-                      <Typography variant="caption">Last step</Typography>
+                      <Typography variant="caption">
+                        {t('stepper.last_step')}
+                      </Typography>
                     ) : null
                   }
                 >
@@ -84,14 +81,16 @@ const StepperEmpty = () => {
                         onClick={handleNext}
                         sx={{ mt: 1, mr: 1 }}
                       >
-                        {index === steps.length - 1 ? 'Terminado' : 'Continuar'}
+                        {index === steps.length - 1
+                          ? t('stepper.finish')
+                          : t('stepper.continue')}
                       </Button>
                       <Button
                         disabled={index === 0}
                         onClick={handleBack}
                         sx={{ mt: 1, mr: 1 }}
                       >
-                        Atrás
+                        {t('stepper.previous')}
                       </Button>
                     </div>
                   </Box>
@@ -101,12 +100,9 @@ const StepperEmpty = () => {
           </Stepper>
           {activeStep === steps.length && (
             <Paper square elevation={0} sx={{ p: 3 }}>
-              <Typography>
-                Todos los pasos realizados, ahora ve y guarda tu primera
-                vivienda.
-              </Typography>
+              <Typography>{t('stepper.done')}</Typography>
               <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
-                Reiniciar
+                {t('stepper.restart')}
               </Button>
             </Paper>
           )}

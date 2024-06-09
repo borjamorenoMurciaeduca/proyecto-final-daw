@@ -7,6 +7,7 @@ export default function UnstyledTextareaIntroduction({
   defaultValue,
   readOnly,
   onChange,
+  disabled,
 }) {
   return (
     <TextareaAutosize
@@ -18,6 +19,7 @@ export default function UnstyledTextareaIntroduction({
       defaultValue={defaultValue}
       readOnly={readOnly}
       onChange={onChange}
+      disabled={disabled}
     />
   );
 }

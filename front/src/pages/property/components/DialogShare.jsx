@@ -42,6 +42,7 @@ const DialogShare = ({ open, setOpen, isShared, propertyURL, propertyId }) => {
     } else if (isShared && propertyURL) {
       setShareUrlId(propertyURL);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, isShared, propertyURL]);
 
   const handleShare = async () => {
@@ -91,7 +92,7 @@ const DialogShare = ({ open, setOpen, isShared, propertyURL, propertyId }) => {
   };
 
   const handleClose = (_, reason) => {
-    if (reason === 'backdropClick' && loading) {
+    if (reason === 'backdropClick' || loading) {
       return;
     }
     setOpen(false);
@@ -168,7 +169,12 @@ const DialogShare = ({ open, setOpen, isShared, propertyURL, propertyId }) => {
         >
           {t('property-share.generator.regenerate')}
         </Button>
-        <Button onClick={() => setOpen(false)} disabled={loading}>
+        <Button
+          onClick={() => setOpen(false)}
+          disabled={loading}
+          color="error"
+          variant="text"
+        >
           {t('property-share.generator.exit')}
         </Button>
       </DialogActions>

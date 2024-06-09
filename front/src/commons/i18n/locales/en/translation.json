@@ -63,6 +63,10 @@
       "edit": "Edit",
       "save": "Save changes",
       "success": "Profile updated successfully"
+    },
+    "error": {
+      "password": "Passwords do not match",
+      "400": "Error updating profile"
     }
   },
   "top-menu": {
@@ -157,7 +161,8 @@
         "update-price": "Update price"
       },
       "tooltip": {
-        "update-price": "Update price"
+        "update-price": "Update price",
+        "update-price-disabled": "Property deregistered"
       },
       "price-updated": {
         "success": "Price updated successfully",
@@ -172,7 +177,7 @@
           "remove": "Note removed successfully"
         },
         "error": {
-          "adding-emty": "Can't add an empty note",
+          "adding-empty": "Can't add an empty note",
           "note-generic": "Error adding note"
         }
       },
@@ -205,6 +210,10 @@
     "copy": "Copy",
     "copied": "Copied",
     "close": "Close",
+    "shared": {
+      "by": "Shared by",
+      "not-found": "Property not found"
+    },
     "generator": {
       "title": "Share property",
       "description": "Share this property with the following URL",
@@ -400,5 +409,20 @@
       "title": "⚙️ 💻<strong>Technologies used</strong>",
       "p1": "<strong>We are passionate about developing technological solutions that make life easier and we are excited to share our project with you.</strong>"
     }
+  },
+  "stepper": {
+    "title": "Ooops! It seems you don't have any saved properties",
+    "p1_label": "Search for a property on Idealista",
+    "p1_desc": "On the idealista website, search for a property you like and copy the URL",
+    "p2_label": "Search and add the property",
+    "p2_desc": "Click on the button that is shown in yellow on the right side",
+    "p3_label": "Save property",
+    "p3_desc": "Once inside paste the URL and let IdealistaWatch search for the property information. You can configure the property data and save it to your property list",
+    "last_step": "Last step",
+    "finish": "Finish",
+    "continue": "Continue",
+    "previous": "Previous",
+    "done": "All steps completed, enjoy IdealistaWatch",
+    "restart": "Restart"
   }
 }
