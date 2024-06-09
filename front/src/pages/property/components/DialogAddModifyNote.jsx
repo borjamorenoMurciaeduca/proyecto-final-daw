@@ -114,7 +114,7 @@ const DialogAddModifyNote = ({
   };
 
   const handleClose = (_, reason) => {
-    if (reason === 'backdropClick') {
+    if (reason === 'backdropClick' && loading) {
       return;
     }
     setOpen(false);
