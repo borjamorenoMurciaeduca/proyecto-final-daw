@@ -161,10 +161,11 @@ const Register = () => {
                     formik.touched.username && Boolean(formik.errors.username)
                   }
                   helperText={formik.touched.username && formik.errors.username}
+                  disabled={loading}
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormControl fullWidth>
+                <FormControl fullWidth disabled={loading}>
                   <InputLabel
                     required
                     htmlFor="password"
@@ -194,6 +195,7 @@ const Register = () => {
                           onClick={handleClickShowPassword}
                           onMouseDown={handleMouseDownPassword}
                           edge="end"
+                          disabled={loading}
                         >
                           {showPassword ? <VisibilityOff /> : <Visibility />}
                         </IconButton>
@@ -212,7 +214,7 @@ const Register = () => {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <FormControl fullWidth>
+                <FormControl fullWidth disabled={loading}>
                   <InputLabel
                     required
                     htmlFor="password_confirmation"
@@ -244,6 +246,7 @@ const Register = () => {
                           onClick={handleClickShowConfirmPassword}
                           onMouseDown={handleMouseDownPassword}
                           edge="end"
+                          disabled={loading}
                         >
                           {showConfirmPassword ? (
                             <VisibilityOff />
@@ -292,6 +295,7 @@ const Register = () => {
                             formik.touched.name && Boolean(formik.errors.name)
                           }
                           helperText={formik.touched.name && formik.errors.name}
+                          disabled={loading}
                         />
                       </Grid>
                       <Grid item xs={12} md={6}>
@@ -311,6 +315,7 @@ const Register = () => {
                           helperText={
                             formik.touched.surname && formik.errors.surname
                           }
+                          disabled={loading}
                         />
                       </Grid>
                       <Grid item xs={12}>
@@ -333,6 +338,7 @@ const Register = () => {
                               ? formik.errors.email
                               : t('register-form.form.email-helper')
                           }
+                          disabled={loading}
                         />
                       </Grid>
                       <Grid item xs={12} md={6}>
@@ -352,6 +358,7 @@ const Register = () => {
                           helperText={
                             formik.touched.phone && formik.errors.phone
                           }
+                          disabled={loading}
                         />
                       </Grid>
                       <Grid item xs={12} md={6}>
@@ -377,6 +384,7 @@ const Register = () => {
                             formik.touched.birth_date &&
                             formik.errors.birth_date
                           }
+                          disabled={loading}
                         />
                       </Grid>
                     </Grid>

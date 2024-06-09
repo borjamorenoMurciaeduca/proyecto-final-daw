@@ -1,8 +1,8 @@
-import { useEffect, useState, useCallback, useMemo } from 'react';
-import { TextField, MenuItem } from '@mui/material';
+import { MenuItem, TextField } from '@mui/material';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const PropertyTypeSelect = ({ propertyValue, onChange }) => {
+const PropertyTypeSelect = ({ propertyValue, onChange, disabled }) => {
   const { t } = useTranslation();
   const [selectedTypeProperty, setSelectedTypeProperty] = useState('');
 
@@ -53,6 +53,7 @@ const PropertyTypeSelect = ({ propertyValue, onChange }) => {
       label={t('add-property-form.type_property')}
       value={selectedTypeProperty}
       onChange={handleChange}
+      disabled={disabled}
     >
       {typeProperties.map((option) => (
         <MenuItem
