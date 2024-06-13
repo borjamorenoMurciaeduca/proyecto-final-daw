@@ -75,8 +75,11 @@ const Register = () => {
 
         const valuesParser = {
           ...values,
-          birth_date: dayjs(values.birth_date).format('YYYY/MM/DD'),
+          birth_date: values.birth_date
+            ? dayjs(values.birth_date).format('YYYY/MM/DD')
+            : '',
         };
+
         const res = await userService.register(valuesParser);
 
         if (res.error) {
