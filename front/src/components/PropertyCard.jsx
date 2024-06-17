@@ -12,12 +12,14 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  CircularProgress,
   IconButton,
   Tooltip,
   Typography,
 } from '@mui/material';
 import { debounce } from 'lodash';
 import { useSnackbar } from 'notistack';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const PropertyCard = ({ property }) => {
@@ -34,6 +36,7 @@ const PropertyCard = ({ property }) => {
     cancellation_date,
   } = property;
 
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { changeFavoriteProperty, updatePriceProperty } = useProperties();
   const { enqueueSnackbar } = useSnackbar();
@@ -60,6 +63,7 @@ const PropertyCard = ({ property }) => {
   }, 250);
 
   const handleUpdatePrice = debounce(async (property_id) => {
+    setLoading(true);
     try {
       const { data } = await propertyService.updatePriceProperty(property_id);
       updatePriceProperty(data);
@@ -77,6 +81,8 @@ const PropertyCard = ({ property }) => {
           variant: 'error',
         }
       );
+    } finally {
+      setLoading(false);
     }
   }, 250);
 
@@ -152,11 +158,11 @@ const PropertyCard = ({ property }) => {
               : t('property-info.details.tooltip.update-price')
           }
         >
-          <span>
+          <Box component={'span'} sx={{ position: 'relative' }}>
             <Button
               size="small"
               variant="outlined"
-              disabled={cancellation_date ? true : false}
+              disabled={cancellation_date || loading ? true : false}
               onClick={() => handleUpdatePrice(property_id)}
               sx={{ ml: 1 }}
             >
@@ -164,7 +170,19 @@ const PropertyCard = ({ property }) => {
                 ? t('property-info.details.tooltip.update-price-disabled')
                 : t('property-info.details.tooltip.update-price')}
             </Button>
-          </span>
+            {loading && (
+              <CircularProgress
+                size={24}
+                sx={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  marginTop: '-12px',
+                  marginLeft: '-12px',
+                }}
+              />
+            )}
+          </Box>
         </Tooltip>
         <Tooltip title={t('favorite.aria-label.add')}>
           <IconButton

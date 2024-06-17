@@ -162,7 +162,9 @@ const PropertyForm = ({
       enqueueSnackbar(msg, { variant: 'error' });
       console.error('Error al procesar la propiedad:', error);
     } finally {
-      setLoading(false), 1000;
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
     }
   };
 
